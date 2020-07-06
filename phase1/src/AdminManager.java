@@ -13,8 +13,8 @@ public class AdminManager extends AccountManager {
      * @param initialAdmin first Admin in the system
      */
     public AdminManager(Admin initialAdmin) {
-        allAdmins = new ArrayList<Admin>();
-        initialAdmin.isInitialAdmin = true;
+        allAdmins = new ArrayList<>();
+        initialAdmin.setIsInitialAdmin(true);
         allAdmins.add(initialAdmin);
     }
 

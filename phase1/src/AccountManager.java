@@ -13,7 +13,7 @@ public abstract class AccountManager {
      * @return whether the login attempt was successful
      */
     public boolean attemptLogin(Account username, String password) {
-        return password.equals(Account.getPassword);
+        return password.equals(username.getPassword());
     }
 
     /**

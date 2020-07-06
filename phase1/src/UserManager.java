@@ -13,7 +13,7 @@ public class UserManager extends AccountManager {
      * TODO: Consider implementing a constructor with an ArrayList<User> parameter
      */
     public UserManager() {
-        allUsers = new ArrayList<User>();
+        allUsers = new ArrayList<>();
     }
 
     /**
@@ -42,7 +42,7 @@ public class UserManager extends AccountManager {
      * @param user User account to be frozen
      */
     public void freeze(User user) {
-        user.isFrozen = true;
+        user.setIsFrozen(true);
     }
 
     /**
@@ -51,7 +51,7 @@ public class UserManager extends AccountManager {
      * @param user User account to be unfrozen
      */
     public void unfreeze(User user) {
-        user.isFrozen = false;
+        user.setIsFrozen(false);
     }
     /*
     ItemManager methods
