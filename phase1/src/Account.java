@@ -1,10 +1,15 @@
-public class Account {
-    private String name;
-    private String Password;
 
-    public Account(String name,String password){
-        this.name = name;
-        this.password = password;
-    }
+
+public abstract class Account {
+     protected String name;
+     protected String password;
+
+     /**
+      * getter for an account password
+      * @return this account password
+      */
+     public String getPassword() {
+          return password;
+     }
 }
 
