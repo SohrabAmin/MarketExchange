@@ -16,6 +16,7 @@ public class User extends Account{
         draftInventory= new ArrayList<Item>();
     }
 
+
     public ArrayList<Item> getWishlist(){
         return wishlist;
     }

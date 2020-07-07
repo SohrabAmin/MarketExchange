@@ -11,5 +11,9 @@ public abstract class Account {
      public String getPassword() {
           return password;
      }
+
+     public String getName(){
+          return name;
+     }
 }
 

@@ -34,6 +34,7 @@ public class UserManager extends AccountManager {
     public void createUser(String newUserUsername, String newUserPassword) {
         User newUser = new User(newUserUsername, newUserPassword);
         allUsers.add(newUser);
+
     }
 
     /**
