@@ -5,7 +5,7 @@ import java.util.List;
  * Creates, keeps track of, and changes the frozen status of Users
  */
 public class UserManager extends AccountManager {
-    private List<User> allUsers;
+    public List<User> allUsers;
 
     /**
      * Constructs the instance of UserManager with an empty list of Users

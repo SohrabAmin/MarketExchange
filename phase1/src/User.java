@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class User extends Account{
 
-    private ArrayList<Item> wishlist;
+    public ArrayList<Item> wishlist;
     private ArrayList<Item> inventory;
     private ArrayList<Item> draftInventory;
     private boolean isFrozen;
@@ -12,6 +12,12 @@ public class User extends Account{
         this.name = name;
         this.password = password;
         wishlist = new ArrayList<Item>();
+        Item thing = new Item();
+        thing.Name = "book";
+        wishlist.add(thing);
+        Item thingy = new Item();
+        thingy.Name = "sock";
+        wishlist.add(thingy);
         inventory = new ArrayList<Item>();
         draftInventory= new ArrayList<Item>();
     }

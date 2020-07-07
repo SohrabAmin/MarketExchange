@@ -5,8 +5,7 @@ import java.util.ArrayList;
 
 public class Login {
 
-    public User run(UserManager allUsers){
-
+    public User run(UserManager allUsers) {
 
 
         //we fill out allUsers with whatever is in csv file
@@ -24,7 +23,7 @@ public class Login {
             boolean usergot = false;
             if (input.equals("signup")) {
 
-                while (!input.equals("exit") && !prompts.usergot/*&& curr < 2*/ ) {
+                while (!input.equals("exit") && !prompts.usergot/*&& curr < 2*/) {
                     if (prompts.hasNext()) {
                         System.out.println(prompts.next());
 
@@ -45,11 +44,10 @@ public class Login {
 
                 }
                 allUsers.createUser(temp.get(0), temp.get(1));
-                return (allUsers.getAllUsers().get(allUsers.getAllUsers().size()-1));
+                return (allUsers.getAllUsers().get(allUsers.getAllUsers().size() - 1));
 
 
-            }
-            else if (input.equals("login")){
+            } else if (input.equals("login")) {
                 while (!input.equals("exit") && curr < 2) {
                     if (prompts.hasNext()) {
                         System.out.println(prompts.next());
@@ -64,7 +62,7 @@ public class Login {
                 User TempUser = new User(temp.get(0), temp.get(1));
                 boolean iExist = false;
                 //check if temp exists in allusers
-                for (int i = 0; i < allUsers.getAllUsers().size(); i++){
+                for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
                     if (allUsers.getAllUsers().get(i).getName().equals(temp.get(0)))
                         if (allUsers.getAllUsers().get(i).getPassword().equals(temp.get(1))) {
                             iExist = true;
@@ -73,10 +71,10 @@ public class Login {
                         }
 
                 }
-                if (!iExist){ //if it doesnt exist
-                    System.out.println("Wrong username or password. Please try Again");
-                    curr = 0;
-                return null; }
+                //if user doesnt exist
+                System.out.println("Wrong username or password. Please try Again");
+                //curr = 0;
+                return run(allUsers);
 
             }
 
@@ -85,10 +83,9 @@ public class Login {
         }
 
 
-
-
-
 //it will only get here if the person pressed exit
-    return (new User ("123456765432345676543234567876543", "123456123456789876543212345678"));}
-   // System.exit(0);
+        return null;
+        //(new User ("123456765432345676543234567876543", "123456123456789876543212345678"));}
+        // System.exit(0);
+    }
 }

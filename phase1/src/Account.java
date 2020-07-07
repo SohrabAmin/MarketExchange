@@ -1,6 +1,6 @@
+import java.io.Serializable;
 
-
-public abstract class Account {
+public abstract class Account implements Serializable {
      protected String name;
      protected String password;
 

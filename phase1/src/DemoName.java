@@ -10,9 +10,9 @@ public class DemoName {
         Login system1 = new Login();
         UserManager allUsers = new UserManager();
         allUsers.createUser("Tina", "123");
-        User hello = null;
-        while (hello == null){
-         hello = system1.run(allUsers);}
+        //User hello = null;
+        //while (hello == null){
+        User hello = system1.run(allUsers);//}
 
         System.out.println(hello.name);
 
