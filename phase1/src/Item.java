@@ -4,6 +4,7 @@ public class Item implements Serializable {
     private String name;
     private final User owner;
     private String description;
+    
 
     public Item(String a, User b, String description){
         this.name = a;
@@ -19,5 +20,9 @@ public class Item implements Serializable {
 
     public User getOwner(){
         return this.owner;
+    }
+    
+    public String getDescription() {
+        return description; 
     }
 }

@@ -22,7 +22,6 @@ public class InputGetter {
         try {
             String input = br.readLine();
 
-            boolean usergot = false;
             if (input.equals("signup")) {
 
                 while (!input.equals("exit") && !prompts.usergot/*&& curr < 2*/) {
@@ -36,7 +35,6 @@ public class InputGetter {
                         curr++;
                         if (curr == 2)
                             prompts.usergot = true;
-
 
                     }
 
@@ -85,26 +83,50 @@ public class InputGetter {
         return null;
     }
 
-    public void mainMenu(User user) {
+    public void mainMenu(User user, ItemManager allItems) {
         Scanner sc= new Scanner(System.in);    //System.in is a standard input stream
-        System.out.print("Please select from the following: \n 'View Wishlist' \n 'View Inventory' \n 'Log out' \n");
+        System.out.print("Please select from the following: \n 'View Wishlist' \n 'View Inventory' \n 'Log out' \n 'Browse' \n");
         String a= sc.nextLine();
 
-        if (a.equals("View Wishlist")){
-            List<Item> wishlist = user.getWishlist();
-            for (int i = 0; i < wishlist.size(); i++) {
-                System.out.println(wishlist.get(i).getName());
+
+        while (!a.equals("Exit")) {
+            if (a.equals("View Wishlist")) {
+                List<Item> wishlist = user.getWishlist();
+                if (wishlist.size() == 0)
+                    System.out.print("List is empty!\n\n");
+                else {
+                    System.out.print("Your wishlist: \n\n");
+                for (int i = 0; i < wishlist.size(); i++) {
+                    System.out.println(wishlist.get(i).getName());
+                }}
+                mainMenu(user, allItems);
+            } else if (a.equals("View Inventory")) {
+                List<Item> in = user.getInventory();
+                if (in.size() == 0)
+                    System.out.print("List is empty!\n\n");
+                else {
+                    System.out.print("Your inventory: \n\n");
+                for (int i = 0; i < in.size(); i++) {
+                    System.out.println(in.get(i).getName());
+                }}
+                mainMenu(user, allItems);
+            } else if (a.equals("Browse")) {
+                // "1. Sock : white clear "
+                List<Item> allItems2 = allItems.getSystemInventory();
+                for (int i = 0; i < allItems2.size(); i++) {
+                    System.out.println(i + 1 + ". " + allItems2.get(i).getName() + " : " + allItems2.get(i).getDescription() + "\n");
+                }
+                mainMenu(user, allItems);
+
+            } else if (a.equals("Exit")) {
+                return;
             }
-        }
-        else if (a.equals("View Inventory")){
-            List<Item> in = user.getInventory();
-            for (int i = 0; i < in.size(); i++) {
-                System.out.println(in.get(i).getName());
-            }
-        }
-        else if (a.equals("Log out")){
-            return;
         }
         System.out.print("your command was " + a);
+        return;
     }
+
+
+
+
 }

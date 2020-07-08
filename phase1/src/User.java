@@ -3,7 +3,7 @@ import java.util.List;
 
 public class User extends Account{
 
-    private ArrayList<Item> wishlist;
+    public ArrayList<Item> wishlist;
     private ArrayList<Item> inventory;
     private ArrayList<Item> draftInventory;
     private boolean isFrozen;

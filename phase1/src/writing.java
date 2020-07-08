@@ -10,14 +10,13 @@ public class writing {
      * Read and writes the UserList file in order to populate UserManager.
      */
     public static void demoUserRead(String s, UserManager u) throws IOException, ClassNotFoundException {
-
-        String serializedUserInfo = "src/UserList3.ser";
+        
         // creates UserReadWrite which manages the saving and loading users.
-        UserReadWrite userRW = new UserReadWrite(serializedUserInfo);
+        UserReadWrite userRW = new UserReadWrite(s);
 
 
 //    // Deserializes contents of the SER file
-        userRW.readFromFile(serializedUserInfo);
+        userRW.readFromFile(s);
         userRW.populateUserManager(u);
 
     }
