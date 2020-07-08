@@ -1,22 +1,17 @@
-import sun.rmi.runtime.Log;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 
 public class DemoName {
-    public static void main(String[] args) {
-        Login system1 = new Login();
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        InputGetter system1 = new InputGetter();
         UserManager allUsers = new UserManager();
+        writing x = new writing();
+        User hello = system1.authenticator(allUsers);
+        x.demoUserRead("src/UserList3.ser", allUsers);
+        System.out.println(allUsers.getAllUsers());
         allUsers.createUser("Tina", "123");
-        //User hello = null;
-        //while (hello == null){
-        User hello = system1.run(allUsers);//}
-
-        System.out.println(hello.name);
-
-
+        x.demoUserSave(allUsers);
+        System.out.println(allUsers.getAllUsers());
+        //system1.mainMenu(hello);
 
     }
 

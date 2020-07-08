@@ -6,31 +6,35 @@ import java.io.IOException;
  */
 public class writing {
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-        UserManager um = new UserManager();
-        um.createUser("123", "123");
-        demoUserReadWrite(um);
-    }
+    //public static void main(String[] args) throws IOException, ClassNotFoundException {
 
-    public static void demoUserReadWrite(UserManager u) throws IOException, ClassNotFoundException {
+    //}
 
-        String serializedUserInfo = "src/UserList2.ser";
+    public static void demoUserRead(String s, UserManager u) throws IOException, ClassNotFoundException {
+
+        String serializedUserInfo = "src/UserList3.ser";
         // creates UserReadWrite which manages the saving and loading users.
         UserReadWrite userRW = new UserReadWrite(serializedUserInfo);
-        System.out.println("Initial state:\n" + userRW);
+        //System.out.println("Initial state:\n" + userRW);
 
 
 //    // Deserializes contents of the SER file
         userRW.readFromFile(serializedUserInfo);
-        System.out.println("Users from ser:\n" + userRW.toString(u));
+        userRW.populateUserManager(u);
 
         // adds a new student to UserReadWrite sm's records
-        userRW.add(new User("Tina", "123"));
+        //userRW.add(new User("Tina", "123"));
         //userRW.add(new User("yoyoo", "12322"));
         //System.out.println("After:\n" + userRW);
 
         // Writes the existing Student objects to file.
         // This data is serialized and written to file as a sequence of bytes.
-        userRW.saveToFile(serializedUserInfo);
+        //userRW.saveToFile(serializedUserInfo);
+    }
+
+    public static void demoUserSave(UserManager u) throws IOException, ClassNotFoundException {
+        String serializedUserInfo = "src/UserList3.ser";
+        UserReadWrite userRW = new UserReadWrite(serializedUserInfo);
+        userRW.saveToFile(serializedUserInfo, u);
     }
 }
