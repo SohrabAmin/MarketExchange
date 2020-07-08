@@ -17,7 +17,7 @@ public class Meeting {
     }
 
     /**
-     *
+     * gets date for Meeting
      * @return this Meetings date
      */
     public String getDate() {
@@ -25,7 +25,7 @@ public class Meeting {
     }
 
     /**
-     *
+     * gets time for Meeting
      * @return this Meetings time
      */
     public String getTime() {
@@ -33,7 +33,7 @@ public class Meeting {
     }
 
     /**
-     *
+     * gets place of Meeting
      * @return this Meeting place
      */
     public String getPlace() {
