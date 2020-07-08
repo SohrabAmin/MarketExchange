@@ -23,4 +23,12 @@ public class MeetingManager {
         meeting.setTime(time);
         meeting.setPlace(place);
     }
+
+    /**
+     * confirms meeting
+     * @param meeting meeting to be confirmed
+     */
+    public void confirmMeeting(Meeting meeting) {
+        meeting.setConfirmedTrue();
+    }
 }
