@@ -13,11 +13,8 @@ public class User extends Account{
         this.password = password;
         wishlist = new ArrayList<Item>();
         Item thing = new Item();
-        thing.Name = "book";
+        thing.setName("book");
         wishlist.add(thing);
-        Item thingy = new Item();
-        thingy.Name = "sock";
-        wishlist.add(thingy);
         inventory = new ArrayList<Item>();
         draftInventory= new ArrayList<Item>();
     }

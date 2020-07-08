@@ -2,10 +2,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.List;
 
-public class Login {
+public class InputGetter {
 
-    public User run(UserManager allUsers) {
+    public User authenticator(UserManager allUsers) {
 
 
         //we fill out allUsers with whatever is in csv file
@@ -37,10 +39,6 @@ public class Login {
 
 
                     }
-
-
-                    //  System.out.println(temp);
-
 
                 }
                 allUsers.createUser(temp.get(0), temp.get(1));
@@ -74,7 +72,7 @@ public class Login {
                 //if user doesnt exist
                 System.out.println("Wrong username or password. Please try Again");
                 //curr = 0;
-                return run(allUsers);
+                return authenticator(allUsers);
 
             }
 
@@ -85,7 +83,28 @@ public class Login {
 
 //it will only get here if the person pressed exit
         return null;
-        //(new User ("123456765432345676543234567876543", "123456123456789876543212345678"));}
-        // System.exit(0);
+    }
+
+    public void mainMenu(User user) {
+        Scanner sc= new Scanner(System.in);    //System.in is a standard input stream
+        System.out.print("Please select from the following: \n 'View Wishlist' \n 'View Inventory' \n 'Log out' \n");
+        String a= sc.nextLine();
+
+        if (a.equals("View Wishlist")){
+            List<Item> wishlist = user.getWishlist();
+            for (int i = 0; i < wishlist.size(); i++) {
+                System.out.println(wishlist.get(i).getName());
+            }
+        }
+        else if (a.equals("View Inventory")){
+            List<Item> in = user.getInventory();
+            for (int i = 0; i < in.size(); i++) {
+                System.out.println(in.get(i).getName());
+            }
+        }
+        else if (a.equals("Log out")){
+            return;
+        }
+        System.out.print("your command was " + a);
     }
 }
