@@ -22,6 +22,7 @@ public class MeetingManager {
         meeting.setDate(date);
         meeting.setTime(time);
         meeting.setPlace(place);
+        meeting.setEdits(meeting.getEdits()+1);
     }
 
     /**
