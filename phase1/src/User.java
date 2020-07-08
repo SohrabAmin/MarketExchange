@@ -3,24 +3,21 @@ import java.util.List;
 
 public class User extends Account{
 
-    public ArrayList<Item> wishlist;
+    private ArrayList<Item> wishlist;
     private ArrayList<Item> inventory;
     private ArrayList<Item> draftInventory;
     private boolean isFrozen;
     private int eligibility;
-    //private List<Transaction> tradeHistory;
+    private List<Transaction> tradeHistory;
 
 
     public User(String name,String password){
         this.name = name;
         this.password = password;
         wishlist = new ArrayList<Item>();
-        Item thing = new Item();
-        thing.setName("book");
-        wishlist.add(thing);
         inventory = new ArrayList<Item>();
         draftInventory= new ArrayList<Item>();
-        //this.tradeHistory = new ArrayList<Transaction>();
+        this.tradeHistory = new ArrayList<Transaction>();
     }
 
 
