@@ -4,6 +4,7 @@ public class Meeting {
     private String time;
     private String place;
     private Boolean confirmed;
+    private int edits;
 
     /**
      *
@@ -50,6 +51,14 @@ public class Meeting {
     }
 
     /**
+     * gets number of times meeting was edited
+     * @return number of meeting edits
+     */
+    public int getEdits() {
+        return edits;
+    }
+
+    /**
      * sets date for Meeting
      * @param date date to be set for Meeting
      */
@@ -78,5 +87,13 @@ public class Meeting {
      */
     public void setConfirmedTrue() {
         this.confirmed = true;
+    }
+
+    /**
+     * sets value of edits
+     * @param edits new number of edits
+     */
+    public void setEdits(int edits) {
+        this.edits = edits;
     }
 }
