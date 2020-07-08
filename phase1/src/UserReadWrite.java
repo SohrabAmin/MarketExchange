@@ -119,7 +119,7 @@ public class UserReadWrite implements Serializable {
         UserManager nm = new UserManager();
         for (User r : users.values()) {
             for (int i = 0 ; i < r.getWishlist().size();i++){
-                result += r.getWishlist().get(i).Name.toString() + "\n";
+                result += r.getWishlist().get(i).getName() + "\n";
                 input.allUsers.add(r);
             }
         }
