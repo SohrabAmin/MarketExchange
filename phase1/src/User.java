@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class User extends Account{
 
@@ -7,6 +8,8 @@ public class User extends Account{
     private ArrayList<Item> draftInventory;
     private boolean isFrozen;
     private int eligibility;
+    //private List<Transaction> tradeHistory;
+
 
     public User(String name,String password){
         this.name = name;
@@ -17,6 +20,7 @@ public class User extends Account{
         wishlist.add(thing);
         inventory = new ArrayList<Item>();
         draftInventory= new ArrayList<Item>();
+        //this.tradeHistory = new ArrayList<Transaction>();
     }
 
 
@@ -49,5 +53,7 @@ public class User extends Account{
     public void decreaseEligibility(int itemsBorrowed){
         this.eligibility -= itemsBorrowed;
     }
+
 }
+
 

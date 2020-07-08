@@ -1,12 +1,21 @@
 import java.io.Serializable;
 
 public class Item implements Serializable {
-    private String Name;
+    private String name;
+    private final User owner;
 
-    public String getName(){return Name;
+    public Item(String a, User b){
+        this.name = a;
+        this.owner = b;
+    }
+    public String getName(){return name;
     }
 
-    public void setName(String name) {
-        Name = name;
+    public void setName(String x) {
+        name = x;
+    }
+
+    public User getOwner(){
+        return this.owner;
     }
 }
