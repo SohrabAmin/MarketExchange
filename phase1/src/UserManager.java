@@ -54,22 +54,20 @@ public class UserManager extends AccountManager {
     public void unfreeze(User user) {
         user.setIsFrozen(false);
     }
-    /*
-    ItemManager methods
-    public void addToDraftedInventory(User user, Item item) {
-        user.getDraftedInventory.add(item);
+
+    public void addToDraftInventory(User user, Item item) {
+        user.getDraftInventory().add(item);
     }
 
     public void addToWishlist(User user, Item item) {
-        user.getWishlist.add(item);
+        user.getWishlist().add(item);
     }
 
-    public void removeFromDraftedInventory(User user, Item item) {
-        user.getDraftedInventory.remove(item);
+    public void removeFromDraftInventory(User user, Item item) {
+        user.getDraftInventory().remove(item);
     }
 
     public void removeFromWishlist(User user, Item item) {
-        user.getWishlist.remove(item);
+        user.getWishlist().remove(item);
     }
-    */
 }

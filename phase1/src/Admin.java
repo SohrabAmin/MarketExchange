@@ -1,5 +1,5 @@
 
-public class Admin extends Account{
+public class Admin extends Account {
     private boolean isInitialAdmin;
 
     public Admin(String name, String password) {
@@ -7,11 +7,11 @@ public class Admin extends Account{
         this.password = password;
     }
 
-    public boolean getIsInitialAdmin(){
+    public boolean getIsInitialAdmin() {
         return isInitialAdmin;
     }
 
-    public void setIsInitialAdmin(boolean b){
-        this.isInitialAdmin= b;
+    public void setIsInitialAdmin(boolean isInitialAdmin) {
+        this.isInitialAdmin = isInitialAdmin;
     }
 }
