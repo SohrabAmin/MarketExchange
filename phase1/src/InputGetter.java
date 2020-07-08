@@ -83,47 +83,80 @@ public class InputGetter {
         return null;
     }
 
-    public void mainMenu(User user, ItemManager allItems) {
+    public void wishlist (User user, ItemManager allItems, InputGetter system1){
+        List<Item> wishlist = user.getWishlist();
+        if (wishlist.size() == 0)
+            System.out.print("List is empty!\n\n");
+        else {
+            System.out.print("Your wishlist: \n\n");
+            for (int i = 0; i < wishlist.size(); i++) {
+                System.out.println(wishlist.get(i).getName());
+            }}
+        system1.mainMenu(user, allItems, system1);
+
+    }
+
+
+    public void inventory (User user, ItemManager allItems, InputGetter system1){
+        List<Item> in = user.getInventory();
+        if (in.size() == 0)
+            System.out.print("List is empty!\n\n");
+        else {
+            System.out.print("Your inventory: \n\n");
+            for (int i = 0; i < in.size(); i++) {
+                System.out.println(in.get(i).getName());
+            }}
+        system1.mainMenu(user, allItems, system1);
+    }
+
+    public void Browse (User user, ItemManager allItems, InputGetter system1){
+        // "1. Sock : white clear "
+        List<Item> allItems2 = allItems.getSystemInventory();
+        for (int i = 0; i < allItems2.size(); i++) {
+            System.out.println(i + 1 + ". " + allItems2.get(i).getName() + " : " + allItems2.get(i).getDescription() + "\n");
+        }
+        system1.mainMenu(user, allItems, system1);
+    }
+
+
+    public void mainMenu(User user, ItemManager allItems, InputGetter system1) {
         Scanner sc= new Scanner(System.in);    //System.in is a standard input stream
         System.out.print("Please select from the following: \n 'View Wishlist' \n 'View Inventory' \n 'Log out' \n 'Browse' \n");
         String a= sc.nextLine();
-
-
         while (!a.equals("Exit")) {
             if (a.equals("View Wishlist")) {
-                List<Item> wishlist = user.getWishlist();
-                if (wishlist.size() == 0)
-                    System.out.print("List is empty!\n\n");
-                else {
-                    System.out.print("Your wishlist: \n\n");
-                for (int i = 0; i < wishlist.size(); i++) {
-                    System.out.println(wishlist.get(i).getName());
-                }}
-                mainMenu(user, allItems);
+                system1.wishlist(user, allItems, system1);
             } else if (a.equals("View Inventory")) {
-                List<Item> in = user.getInventory();
-                if (in.size() == 0)
-                    System.out.print("List is empty!\n\n");
-                else {
-                    System.out.print("Your inventory: \n\n");
-                for (int i = 0; i < in.size(); i++) {
-                    System.out.println(in.get(i).getName());
-                }}
-                mainMenu(user, allItems);
+            system1.inventory(user, allItems, system1);
             } else if (a.equals("Browse")) {
-                // "1. Sock : white clear "
-                List<Item> allItems2 = allItems.getSystemInventory();
-                for (int i = 0; i < allItems2.size(); i++) {
-                    System.out.println(i + 1 + ". " + allItems2.get(i).getName() + " : " + allItems2.get(i).getDescription() + "\n");
-                }
-                mainMenu(user, allItems);
-
+             system1.Browse(user, allItems, system1);
             } else if (a.equals("Exit")) {
+                a="";
                 return;
+            }
+            else if (a.equals("Log out")){
+                //implement logout
+
+            }
+
+            else if (a.equals("Trade")){
+                //choose the id?
+                System.out.print("Please input trade \n\n");
+                String b = sc.nextLine();
+                System.out.print(b);
+
+
+            }
+            else {
+                System.out.print("Invalid command.  \n\n");
+                mainMenu(user, allItems, system1);
             }
         }
         System.out.print("your command was " + a);
-        return;
+        a = "";
+        System.exit(0);
+
+
     }
 
 

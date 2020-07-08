@@ -34,7 +34,7 @@ public class DemoName {
 
        //x.demoUserSave(allUsers);
         System.out.println(allUsers.getAllUsers());
-        system1.mainMenu(hello, AllItems);
+        system1.mainMenu(hello, AllItems, system1);
 
     }
 
