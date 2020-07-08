@@ -18,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Logger;
 
+// NOTE: This class is based off of StudentManager from logging in Week 6 Modules on Quercus.
 
 /**
  * Manages the saving and loading of User.
@@ -72,8 +73,9 @@ public class UserReadWrite implements Serializable {
             InputStream buffer = new BufferedInputStream(file);
             ObjectInput input = new ObjectInputStream(buffer);
 
-            // deserialize the list
+            // deserialize the list in the file by reading
             List temp = (List<User>) input.readObject();
+            //closes the file
             input.close();
             // as long as the file is not empty, it will populate users with the list stored in the file
             if (temp != null){
@@ -88,17 +90,17 @@ public class UserReadWrite implements Serializable {
         }
     }
 
-        /**
-     * Adds record to this UserReadWrite.
-     *
-     * @param record a record to be added.
-     */
-    public void add(User record) {
-        users.add(record);
+     //   /**
+     //* Adds a record to this UserReadWrite.
+     //*
+     //* @param record a record to be added.
+     //*/
+    //public void add(User record) {
+     //   users.add(record);
 
-        // Log the addition of a student.
-        logger.log(Level.INFO, "Added a new user " + record.toString());
-    }
+        // Log the addition of a user.
+     //   logger.log(Level.INFO, "Added a new user " + record.toString());
+    //}
 
     /**
      * Writes the users from UserManager u to file at filePath.
@@ -106,14 +108,14 @@ public class UserReadWrite implements Serializable {
      * @param filePath the file to write the records to
      * @throws IOException
      */
-    public void saveToFile(String filePath, UserManager u) throws IOException {
+    public void saveToFile(String filePath, UserManager userManager) throws IOException {
 
         OutputStream file = new FileOutputStream(filePath);
         OutputStream buffer = new BufferedOutputStream(file);
         ObjectOutput output = new ObjectOutputStream(buffer);
 
-        // serialize the list of all Users in UserManager u
-        output.writeObject(u.allUsers);
+        // serialize the list of all Users in UserManager userManager
+        output.writeObject(userManager.allUsers);
         output.close();
     }
 
@@ -123,6 +125,8 @@ public class UserReadWrite implements Serializable {
      * @param um the UserManager that is to be populated.
      */
     public void populateUserManager(UserManager um) {
+        // As long as users is not null and contains a list of Users from the file
+        // (i.e. file is not empty), then populate the UserManager of the system.
         if(users != null){
             um.allUsers = users;
         }
