@@ -3,6 +3,7 @@ public class Meeting {
     private String date;
     private String time;
     private String place;
+    private Boolean confirmed;
 
     /**
      *
@@ -41,6 +42,14 @@ public class Meeting {
     }
 
     /**
+     * gets confirmed value of Meeting
+     * @return this Meetings confirmed value
+     */
+    public Boolean getConfirmed() {
+        return confirmed;
+    }
+
+    /**
      * sets date for Meeting
      * @param date date to be set for Meeting
      */
@@ -62,5 +71,12 @@ public class Meeting {
      */
     public void setPlace(String place) {
         this.place = place;
+    }
+
+    /**
+     * sets value of confirmed to true
+     */
+    public void setConfirmedTrue() {
+        this.confirmed = true;
     }
 }
