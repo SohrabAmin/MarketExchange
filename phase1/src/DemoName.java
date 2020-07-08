@@ -11,7 +11,7 @@ public class DemoName {
         allUsers.createUser("Tina", "123");
         x.demoUserSave(allUsers);
         System.out.println(allUsers.getAllUsers());
-        //system1.mainMenu(hello);
+        system1.mainMenu(hello);
 
     }
 
