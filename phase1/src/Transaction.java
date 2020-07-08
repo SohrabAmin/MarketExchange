@@ -1,4 +1,4 @@
-public abstract class Transaction {
+public class Transaction {
 
         private int tradeStatus = 0; // 0- in progress 1- completed 2- cancelled
 
