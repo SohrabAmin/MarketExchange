@@ -1,3 +1,8 @@
+/**
+ * Superclass for OneWay and TwoWay. Stores essential values for a Transaction Object. Should never be instantiated.
+ */
+
+
 public class Transaction {
 
         private int tradeStatus = 0; // 0- in progress 1- completed 2- cancelled
@@ -8,22 +13,42 @@ public class Transaction {
 
         private Meeting returnMeeting;
 
+    /**
+     * Getter for trade status. 0: transaction in progress, 1: transaction completed, 2: transaction cancelled
+     * @return this transaction's tradeStatus
+     */
 
-        public int getTradeStatus(){
+
+    public int getTradeStatus(){
             return this.tradeStatus;
 
         }
 
+    /**
+     * Setter for trade status.  0: transaction in progress, 1: transaction completed, 2: transaction cancelled
+     * @param tradeStatus this transaction's trade status
+     */
 
-        public void setTradeStatus(int tradeStatus){
+
+    public void setTradeStatus(int tradeStatus){
             this.tradeStatus = tradeStatus;
         }
 
-        public boolean getTemp(){
+    /**
+     * getter for type of transaction; True: transaction is temporary. False: Transaction is permanent
+     * @return If this transaction is temporary
+     */
+
+    public boolean getTemp(){
             return this.temp;
         }
 
-        public void setTemp(boolean temp) {
+    /**
+     * Setter for temporary transaction. Should be set to True if temporary, False if permanent.
+     * @param temp If this transaction is temporary.
+     */
+
+    public void setTemp(boolean temp) {
 
             this.temp = temp;
         }
