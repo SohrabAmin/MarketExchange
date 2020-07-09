@@ -24,6 +24,7 @@ public class User extends Account {
         draftInventory = new ArrayList<>();
         this.tradeHistory = new ArrayList<>();
         this.topTradingPartners = new ArrayList<>();
+        this.pendingRequests = new ArrayList<>();
 
     }
 
@@ -46,6 +47,11 @@ public class User extends Account {
 
     public void addTradeHistory(Transaction x){
         this.tradeHistory.add(x);
+    }
+
+    public List<TradeRequest> getPendingRequests(){
+        return this.pendingRequests;
+
     }
 
     public void setTopTradingPartners(User x, User y, User z){

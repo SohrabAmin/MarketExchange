@@ -9,11 +9,10 @@ public class OneWay extends Transaction {
 
 
     public OneWay(User borrower, Item item, boolean temp) {
-        this.temp = temp;
+        super(temp);
         this.borrower = borrower;
         this.lender = item.getOwner();
         this.item = item;
-
     }
 
     public User getBorrower(){

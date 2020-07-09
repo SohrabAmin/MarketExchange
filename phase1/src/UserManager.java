@@ -69,6 +69,14 @@ public class UserManager extends AccountManager {
         user.getWishlist().add(item);
     }
 
+    public void addToPendingRequests(User user, TradeRequest request){
+        user.getPendingRequests().add(request);
+    }
+
+    public void removeFromPendingRequests(User user, TradeRequest request){
+        user.getPendingRequests().remove(request);
+    }
+
     public void removeFromDraftInventory(User user, Item item) {
         user.getDraftInventory().remove(item);
     }

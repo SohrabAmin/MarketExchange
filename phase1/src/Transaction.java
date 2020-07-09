@@ -2,12 +2,18 @@ public class Transaction {
 
         private int tradeStatus = 0; // 0- in progress 1- completed 2- cancelled
 
-        public boolean temp; //Set true is this transaction in temporary (must revert in a month) should be able to change easily for phase 2
+        private boolean temp; //Set true is this transaction in temporary (must revert in a month) should be able to change easily for phase 2
 
         private Meeting initialMeeting;
 
         private Meeting returnMeeting;
 
+
+        public Transaction(boolean temp){
+            this.temp = temp;
+            this.initialMeeting = null;
+            this.returnMeeting = null;
+        }
 
         public int getTradeStatus(){
             return this.tradeStatus;
