@@ -29,8 +29,8 @@ public class UserReadWrite implements Serializable {
     // static.
     // We use this name as the name of our Logger object.
     // Using the class class is called "reflection".
-    private static final Logger logger = Logger.getLogger(UserReadWrite.class.getName());
-    private static final Handler consoleHandler = new ConsoleHandler();
+    //private static final Logger logger = Logger.getLogger(UserReadWrite.class.getName());
+    //private static final Handler consoleHandler = new ConsoleHandler();
 
     /**
      * A List containing all users.
@@ -45,9 +45,9 @@ public class UserReadWrite implements Serializable {
      */
     public UserReadWrite(String fileName) throws ClassNotFoundException, IOException {
         // Associate the handler with the logger.
-        logger.setLevel(Level.ALL);
-        consoleHandler.setLevel(Level.ALL);
-        logger.addHandler(consoleHandler);
+        //logger.setLevel(Level.ALL);
+        //consoleHandler.setLevel(Level.ALL);
+        //logger.addHandler(consoleHandler);
 
         // Reads serializable objects from file.
         // Populates the record list using stored data, if it exists.
@@ -89,7 +89,7 @@ public class UserReadWrite implements Serializable {
             }
         } catch (
                 IOException ex) {
-            logger.log(Level.SEVERE, "Cannot read from input.", ex);
+            //logger.log(Level.SEVERE, "Cannot read from input.", ex);
         }
     }
 
