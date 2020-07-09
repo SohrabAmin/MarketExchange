@@ -6,18 +6,16 @@ import java.io.IOException;
 
 public class writing {
 
-    /**
-     * Read and writes the UserList file in order to populate UserManager.
-     */
-    public static void demoUserRead(String s, UserManager u) throws IOException, ClassNotFoundException {
+    public static void demoUserRead(String fileName, UserManager u) throws IOException, ClassNotFoundException {
         
         // creates UserReadWrite which manages the saving and loading users.
-        UserReadWrite userRW = new UserReadWrite(s);
+        UserReadWrite userRW = new UserReadWrite(fileName);
 
 
 //    // Deserializes contents of the SER file
-        userRW.readFromFile(s);
+        userRW.readFromFile(fileName);
         userRW.populateUserManager(u);
+
 
     }
 
@@ -28,9 +26,8 @@ public class writing {
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    public static void demoUserSave(UserManager userManager) throws IOException, ClassNotFoundException {
-        String serializedUserInfo = "src/UserList3.ser";
-        UserReadWrite userRW = new UserReadWrite(serializedUserInfo);
-        userRW.saveToFile(serializedUserInfo, userManager);
+    public static void demoUserSave(String fileName, UserManager userManager) throws IOException, ClassNotFoundException {
+        UserReadWrite userRW = new UserReadWrite(fileName);
+        userRW.saveToFile(fileName, userManager);
     }
 }

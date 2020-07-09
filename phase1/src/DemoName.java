@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.IOException;
  
 public class DemoName {
@@ -11,30 +12,32 @@ public class DemoName {
         MeetingManager allMeetings = new MeetingManager();
         //searchmanager maybe?
 
+        //allUsers.createUser("Tina", "123");
+        writing x = new writing();
+
+        
+      //  hello.wishlist.add(myitem);
+        System.out.println("The current number of users in the file is:" + allUsers.getAllUsers().size());
+        File findFile = new File("UserList3.ser");
+        String filePath = findFile.getAbsolutePath();
+        System.out.println("The file location is:" + filePath);
+        x.demoUserRead("UserList3.ser", allUsers);
+        System.out.println("The current number of users in the file is:" + allUsers.getAllUsers().size());
+        System.out.println("the user manager contains the following:" + allUsers.getAllUsers());
 
 
-
-
-        allUsers.createUser("Tina", "123");
-      //  writing x = new writing();
         User hello = system1.authenticator(allUsers);
-
 
         Item myitem = new Item("sock" , hello, "its cute");
         Item myitem2 = new Item("sock3" , hello, "its 2cute");
 
         AllItems.addItem(myitem);
-        
-      //  hello.wishlist.add(myitem);
+        //system1.mainMenu(hello, AllItems, system1);
 
-
-
-       // x.demoUserRead("/Users/tina.tavallaeianibm.com/CSC207July7/CSC207July8/group_0041/phase1/src/UserList3.ser", allUsers);
+        x.demoUserSave("UserList3.ser", allUsers);
         System.out.println(allUsers.getAllUsers());
-
-       //x.demoUserSave(allUsers);
-        System.out.println(allUsers.getAllUsers());
-        system1.mainMenu(hello, AllItems, system1);
+        System.out.println("The current number of users in the file is:" + allUsers.getAllUsers().size());
+        System.out.println("the user manager contains the following:" + allUsers.getAllUsers());
 
     }
 
