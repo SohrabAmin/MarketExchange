@@ -11,7 +11,8 @@ public class TwoWay extends Transaction {
 
 
     public TwoWay(Item item1, Item item2, boolean temp) {
-        this.temp = temp;
+
+        super(temp);
         this.firstTrader = item1.getOwner();
         this.secondTrader = item2.getOwner();
         this.items.add(item1);

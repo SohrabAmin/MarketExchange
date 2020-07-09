@@ -46,6 +46,15 @@ public class TransactionManager {
         transaction.setReturnMeeting(meeting);
     }
 
+    public void receiveTransaction(Transaction transaction){
+        if (transaction.getTradeStatus() == 0) {
+            this.inProgressTransaction.add(transaction);
+        } else if (transaction.getTradeStatus() == 1) {
+            this.completedTransaction.add(transaction);
+        } else {
+            this.cancelledTransaction.add(transaction);
+        }
+    }
 
     public void handleCompletedTrade(ItemManager itemManager, UserManager userManager, Transaction transaction) {
 
