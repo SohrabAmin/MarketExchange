@@ -1,13 +1,19 @@
 
 import java.util.*;
 
+/**
+ * Manages all Transactions. Changing their values by accessing their setters/getters. Stores all instances of Transactions. Should only be instantiated once.
+ */
 public class TransactionManager {
 
     private List<Transaction> inProgressTransaction;
     private List<Transaction> completedTransaction;
     private List<Transaction> cancelledTransaction;
 
-
+    /**
+     * Constructs TransactionManager. Creates three ArrayList which store all instances of Transaction: inProgressTransaction, completedTransaction, cancelledTransaction.
+     * Does not require argument for instantiation.
+     */
     public TransactionManager() {
         this.inProgressTransaction = new ArrayList<>();
         this.completedTransaction = new ArrayList<>();
@@ -15,6 +21,13 @@ public class TransactionManager {
 
     }
 
+    /**
+     * Updates the tradeStatus of a given Transaction. 0: In progress, 1: Cancelled, 2: Completed
+     * @param itemManager Class that manages Items
+     * @param userManager Class that manages Users
+     * @param transaction The given Transaction
+     * @param tradeStatus The current status of a given Transaction
+     */
     public void updateTransactionStatus(ItemManager itemManager, UserManager userManager, Transaction transaction, int tradeStatus) {
         if (transaction.getTradeStatus() == 0) {
             this.inProgressTransaction.remove(transaction);
@@ -38,14 +51,28 @@ public class TransactionManager {
 
     }
 
-    public void setInitialMeeting(Transaction transaction, Meeting meeting) {
+    /**
+     * Initiates and stores the InitialMeeting of a given Transaction. Required for all types of Transactions.
+     * @param transaction The given Transaction
+     * @param meeting The given Meeting
+     */
+    public void setInitialMeeting(Transaction transaction, Meeting meeting) { /* yo*/
         transaction.setInitialMeeting(meeting);
     }
 
+    /**
+     * Initiates and stores the finalMeeting within Transaction. Only accessed if Transaction temp = True, otherwise is kept Null
+     * @param transaction The given transaction. InitialMeeting is stored in this instance
+     * @param meeting The intial meeting, which is stored in the given Transaction
+     */
     public void setFinalMeeting(Transaction transaction, Meeting meeting) {
         transaction.setReturnMeeting(meeting);
     }
 
+    /**
+     * come back to this
+     * @param transaction
+     */
     public void receiveTransaction(Transaction transaction){
         if (transaction.getTradeStatus() == 0) {
             this.inProgressTransaction.add(transaction);
@@ -56,6 +83,12 @@ public class TransactionManager {
         }
     }
 
+    /**
+     * come back to this
+     * @param itemManager
+     * @param userManager
+     * @param transaction
+     */
     public void handleCompletedTrade(ItemManager itemManager, UserManager userManager, Transaction transaction) {
 
         if (transaction instanceof OneWay) {
