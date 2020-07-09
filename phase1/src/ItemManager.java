@@ -18,9 +18,18 @@ public class ItemManager {
     }
 
     
-    public void addItem (Item aitem){
-        systemInventory.add(aitem); 
+    public void addItem (Item item){
+        systemInventory.add(item);
         
+    }
+
+
+    public void setOwner(Item y, User x){
+        y.setOwner(x);
+    }
+
+    public void setCurrentHolder(Item y, User x){
+        y.setCurrentHolder(x);
     }
 
     

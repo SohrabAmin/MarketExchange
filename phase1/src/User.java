@@ -9,6 +9,7 @@ public class User extends Account {
     private boolean isFrozen;
     private int eligibility;
     private List<Transaction> tradeHistory;
+    private List<User> topTradingPartners;
 
     public User() {
 
@@ -21,6 +22,7 @@ public class User extends Account {
         inventory = new ArrayList<>();
         draftInventory = new ArrayList<>();
         this.tradeHistory = new ArrayList<>();
+        this.topTradingPartners = new ArrayList<>();
     }
 
 
@@ -34,6 +36,21 @@ public class User extends Account {
 
     public ArrayList<Item> getDraftInventory() {
         return draftInventory;
+    }
+
+    public List<Transaction> getTradeHistory(){
+        return this.tradeHistory;
+    }
+
+    public void addTradeHistory(Transaction x){
+        this.tradeHistory.add(x);
+    }
+
+    public void setTopTradingPartners(User x, User y, User z){
+        this.topTradingPartners.clear();
+        this.topTradingPartners.add(x);
+        this.topTradingPartners.add(y);
+        this.topTradingPartners.add(z);
     }
 
     public boolean getIsFrozen() {

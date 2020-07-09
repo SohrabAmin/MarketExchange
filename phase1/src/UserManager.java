@@ -63,6 +63,8 @@ public class UserManager extends AccountManager {
         user.getInventory().remove(item);
     }
 
+    public void addToInventory(User user, Item item){user.getInventory().add(item);}
+
     public void addToWishlist(User user, Item item) {
         user.getWishlist().add(item);
     }
@@ -80,4 +82,16 @@ public class UserManager extends AccountManager {
         user.getInventory().add(item);
     }
 
+    public void updateTradeHistory(User x, Transaction y){
+        x.addTradeHistory(y);
+        this.updateTopTradingPartners(x);
+    }
+
+    public void updateTopTradingPartners(User x){
+        List<Transaction> temp = x.getTradeHistory();
+
+        for(Transaction trade: temp){
+
+        }
+    }
 }
