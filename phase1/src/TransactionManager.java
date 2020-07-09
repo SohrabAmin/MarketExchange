@@ -50,7 +50,7 @@ public class TransactionManager {
 
             ((OneWay) x).getBorrower().decreaseEligibility();
             ((OneWay) x).getLender().increaseEligibility();
-            ((OneWay) x).getLender().
+         //   ((OneWay) x).getLender().
         }else{
 
         }

@@ -110,14 +110,43 @@ public class InputGetter {
     }
 
     public void Browse (User user, ItemManager allItems, InputGetter system1){
-        // "1. Sock : white clear "
-        List<Item> allItems2 = allItems.getSystemInventory();
-        for (int i = 0; i < allItems2.size(); i++) {
-            System.out.println(i + 1 + ". " + allItems2.get(i).getName() + " : " + allItems2.get(i).getDescription() + "\n");
-        }
-        system1.mainMenu(user, allItems, system1);
+            // "1. Sock : white clear "
+            List<Item> allItems2 = allItems.getSystemInventory();
+            for (int i = 0; i < allItems2.size(); i++) {
+                System.out.println(i + 1 + ". " + allItems2.get(i).getName() + " : " + allItems2.get(i).getDescription() + "\n");
+            }
+            system1.mainMenu(user, allItems, system1);
     }
 
+    public void Trade (User user, ItemManager allItems, InputGetter system1){
+        Scanner sc= new Scanner(System.in);    //System.in is a standard input stream
+        System.out.print("Please type in the ID of the item you would like to trade\n");
+        int inum = Integer.parseInt(sc.next());
+        Item tradeItem = allItems.getSystemInventory().get(inum-1);
+        System.out.print("Please type '1' for one way trade and '2' for two way trade. \n");
+
+        int tType = Integer.parseInt(sc.next());
+        System.out.print("if you would like, Please put a message for the owner of the item\n");
+        String message = sc.next();
+        if (tType == 1){
+            System.out.println("You have selected 1 way trade for item: " + tradeItem.getName() + "\nyour message was:\n" + message);
+
+        }
+        else if (tType == 2){
+            System.out.println("You have selected 2 way trade for item: " + tradeItem.getName() + "\nyour message was:\n" + message);
+
+        }
+        else{
+            System.out.println("Invalid Request");
+
+        }
+
+
+
+
+
+
+    }
 
     public void mainMenu(User user, ItemManager allItems, InputGetter system1) {
         Scanner sc= new Scanner(System.in);    //System.in is a standard input stream
@@ -141,9 +170,9 @@ public class InputGetter {
 
             else if (a.equals("Trade")){
                 //choose the id?
-                System.out.print("Please input item id: \n\n");
-                String b = sc.nextLine();
-                System.out.print(b);
+                system1.Trade(user, allItems, system1);
+                mainMenu(user, allItems, system1);
+
 
 
 
