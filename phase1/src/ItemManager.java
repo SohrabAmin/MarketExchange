@@ -24,12 +24,12 @@ public class ItemManager {
     }
 
 
-    public void setOwner(Item y, User x){
-        y.setOwner(x);
+    public void setOwner(Item item, User user){
+        item.setOwner(user);
     }
 
-    public void setCurrentHolder(Item y, User x){
-        y.setCurrentHolder(x);
+    public void setCurrentHolder(Item item, User user){
+        item.setCurrentHolder(user);
     }
 
     

@@ -15,74 +15,74 @@ public class TransactionManager {
 
     }
 
-    public void updateTransactionStatus(ItemManager z, UserManager v, Transaction x, int y) {
-        if (x.getTradeStatus() == 0) {
-            this.inProgressTransaction.remove(x);
-        } else if (x.getTradeStatus() == 1) {
-            this.completedTransaction.remove(x);
+    public void updateTransactionStatus(ItemManager itemManager, UserManager userManager, Transaction transaction, int tradeStatus) {
+        if (transaction.getTradeStatus() == 0) {
+            this.inProgressTransaction.remove(transaction);
+        } else if (transaction.getTradeStatus() == 1) {
+            this.completedTransaction.remove(transaction);
         } else {
-            this.cancelledTransaction.remove(x);
+            this.cancelledTransaction.remove(transaction);
         }
 
-        if (y == 0) {
-            this.inProgressTransaction.add(x);
-        } else if (y == 1) {
-            this.completedTransaction.add(x);
-            this.handleCompletedTrade(z, v, x);
+        if (tradeStatus == 0) {
+            this.inProgressTransaction.add(transaction);
+        } else if (tradeStatus == 1) {
+            this.completedTransaction.add(transaction);
+            this.handleCompletedTrade(itemManager, userManager, transaction);
         } else {
-            this.cancelledTransaction.add(x);
+            this.cancelledTransaction.add(transaction);
 
         }
 
-        x.setTradeStatus(y);
+        transaction.setTradeStatus(tradeStatus);
 
     }
 
-    public void setInitialMeeting(Transaction a, Meeting x) {
-        a.setInitialMeeting(x);
+    public void setInitialMeeting(Transaction transaction, Meeting meeting) {
+        transaction.setInitialMeeting(meeting);
     }
 
-    public void setFinalMeeting(Transaction a, Meeting x) {
-        a.setReturnMeeting(x);
+    public void setFinalMeeting(Transaction transaction, Meeting meeting) {
+        transaction.setReturnMeeting(meeting);
     }
 
 
-    public void handleCompletedTrade(ItemManager z, UserManager y, Transaction x) {
+    public void handleCompletedTrade(ItemManager itemManager, UserManager userManager, Transaction transaction) {
 
-        if (x instanceof OneWay) {
+        if (transaction instanceof OneWay) {
 
-            ((OneWay) x).getBorrower().decreaseEligibility();
-            ((OneWay) x).getLender().increaseEligibility();
-            y.removeFromInventory(((OneWay) x).getLender(), ((OneWay) x).getLenderItem());
-            y.addToInventory(((OneWay) x).getBorrower(), ((OneWay) x).getLenderItem());
+            ((OneWay) transaction).getBorrower().decreaseEligibility();
+            ((OneWay) transaction).getLender().increaseEligibility();
+            userManager.removeFromInventory(((OneWay) transaction).getLender(), ((OneWay) transaction).getLenderItem());
+            userManager.addToInventory(((OneWay) transaction).getBorrower(), ((OneWay) transaction).getLenderItem());
 
-            y.updateTradeHistory(((OneWay) x).getLender(), x);
-            y.updateTradeHistory(((OneWay) x).getBorrower(), x);
+            userManager.updateTradeHistory(((OneWay) transaction).getLender(), transaction);
+            userManager.updateTradeHistory(((OneWay) transaction).getBorrower(), transaction);
 
-            if (x.getTemp()) {
-                z.setCurrentHolder(((OneWay) x).getLenderItem(), ((OneWay) x).getBorrower());
+            if (transaction.getTemp()) {
+                itemManager.setCurrentHolder(((OneWay) transaction).getLenderItem(), ((OneWay) transaction).getBorrower());
             } else {
-                z.setCurrentHolder(((OneWay) x).getLenderItem(), ((OneWay) x).getBorrower());
-                z.setOwner(((OneWay) x).getLenderItem(), ((OneWay) x).getBorrower());
+                itemManager.setCurrentHolder(((OneWay) transaction).getLenderItem(), ((OneWay) transaction).getBorrower());
+                itemManager.setOwner(((OneWay) transaction).getLenderItem(), ((OneWay) transaction).getBorrower());
             }
 
         } else {
-            y.removeFromInventory(((TwoWay) x).getFirstTrader(), ((TwoWay) x).getFirstItem());
-            y.removeFromInventory(((TwoWay) x).getSecondTrader(), ((TwoWay) x).getSecondItem());
-            y.addToInventory(((TwoWay) x).getFirstTrader(), ((TwoWay) x).getSecondItem());
-            y.addToInventory(((TwoWay) x).getSecondTrader(), ((TwoWay) x).getFirstItem());
+            userManager.removeFromInventory(((TwoWay) transaction).getFirstTrader(), ((TwoWay) transaction).getFirstItem());
+            userManager.removeFromInventory(((TwoWay) transaction).getSecondTrader(), ((TwoWay) transaction).getSecondItem());
+            userManager.addToInventory(((TwoWay) transaction).getFirstTrader(), ((TwoWay) transaction).getSecondItem());
+            userManager.addToInventory(((TwoWay) transaction).getSecondTrader(), ((TwoWay) transaction).getFirstItem());
 
-            y.updateTradeHistory(((TwoWay) x).getFirstTrader(), x);
-            y.updateTradeHistory(((TwoWay) x).getSecondTrader(), x);
+            userManager.updateTradeHistory(((TwoWay) transaction).getFirstTrader(), transaction);
+            userManager.updateTradeHistory(((TwoWay) transaction).getSecondTrader(), transaction);
 
-            if (x.getTemp()) {
-                z.setCurrentHolder(((TwoWay) x).getFirstItem(), ((TwoWay) x).getSecondTrader());
-                z.setCurrentHolder(((TwoWay) x).getSecondItem(), ((TwoWay) x).getFirstTrader());
+            if (transaction.getTemp()) {
+                itemManager.setCurrentHolder(((TwoWay) transaction).getFirstItem(), ((TwoWay) transaction).getSecondTrader());
+                itemManager.setCurrentHolder(((TwoWay) transaction).getSecondItem(), ((TwoWay) transaction).getFirstTrader());
             } else {
-                z.setCurrentHolder(((TwoWay) x).getFirstItem(), ((TwoWay) x).getSecondTrader());
-                z.setCurrentHolder(((TwoWay) x).getSecondItem(), ((TwoWay) x).getFirstTrader());
-                z.setOwner(((TwoWay) x).getFirstItem(), ((TwoWay) x).getSecondTrader());
-                z.setOwner(((TwoWay) x).getSecondItem(), ((TwoWay) x).getFirstTrader());
+                itemManager.setCurrentHolder(((TwoWay) transaction).getFirstItem(), ((TwoWay) transaction).getSecondTrader());
+                itemManager.setCurrentHolder(((TwoWay) transaction).getSecondItem(), ((TwoWay) transaction).getFirstTrader());
+                itemManager.setOwner(((TwoWay) transaction).getFirstItem(), ((TwoWay) transaction).getSecondTrader());
+                itemManager.setOwner(((TwoWay) transaction).getSecondItem(), ((TwoWay) transaction).getFirstTrader());
             }
 
 

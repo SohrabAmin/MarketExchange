@@ -10,18 +10,18 @@ public class TradeRequest {
     private Boolean pending;
     private int status;
 
-    public TradeRequest(int f, User a, User b, List<Item> c, String e){
+    public TradeRequest(int requestType, User requester, User receiver, List<Item> itemList, String message){
         this.pending = true;
-        this.requestType = f;
-        this.requester = a;
-        this.receiver = b;
-        this.message = e;
+        this.requestType = requestType;
+        this.requester = requester;
+        this.receiver = receiver;
+        this.message = message;
         if(this.requestType == 1){
            this.requesterItem = null;
-           this.receiverItem = c.get(0);
+           this.receiverItem = itemList.get(0);
         }else{
-            this.requesterItem = c.get(0);
-            this.receiverItem = c.get(1);
+            this.requesterItem = itemList.get(0);
+            this.receiverItem = itemList.get(1);
 
         }
     }
@@ -35,16 +35,16 @@ public class TradeRequest {
         }
     }
 
-    public void setRequestType(int x){
-        this.requestType = x;
+    public void setRequestType(int requestType){
+        this.requestType = requestType;
     }
 
     public Boolean getPending(){
         return this.pending;
     }
 
-    public void setPending(Boolean x){
-        this.pending = x;
+    public void setPending(Boolean pending){
+        this.pending = pending;
     }
 
 

@@ -15,33 +15,33 @@ public class Transaction {
         }
 
 
-        public void setTradeStatus(int x){
-            this.tradeStatus = x;
+        public void setTradeStatus(int tradeStatus){
+            this.tradeStatus = tradeStatus;
         }
 
         public boolean getTemp(){
             return this.temp;
         }
 
-        public void setTemp(boolean x) {
+        public void setTemp(boolean temp) {
 
-            this.temp = x;
+            this.temp = temp;
         }
 
         public Meeting getInitialMeeting(){
             return this.initialMeeting;
         }
 
-        public void setInitialMeeting(Meeting m){
-            this.initialMeeting = m;
+        public void setInitialMeeting(Meeting meeting){
+            this.initialMeeting = meeting;
         }
 
         public Meeting getReturnMeeting(){
             return this.returnMeeting;
         }
 
-        public void setReturnMeeting(Meeting m){
-            this.returnMeeting = m;
+        public void setReturnMeeting(Meeting meeting){
+            this.returnMeeting = meeting;
         }
 }
 
