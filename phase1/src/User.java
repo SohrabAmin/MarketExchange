@@ -23,9 +23,7 @@ public class User extends Account {
         this.tradeHistory = new ArrayList<>();
     }
 
-    
-    
-    
+
     public ArrayList<Item> getWishlist() {
         return wishlist;
     }
@@ -61,5 +59,3 @@ public class User extends Account {
     }
 
 }
-
-

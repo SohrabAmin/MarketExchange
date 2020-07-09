@@ -28,11 +28,5 @@ public class AdminManager extends AccountManager {
         Admin newAdmin = new Admin(newAdminUsername, newAdminPassword);
         allAdmins.add(newAdmin);
     }
-    /*
-    ItemManager method
-    public void approveDraftedInventoryItem(User user, Item item) {
-        user.getDraftedInventory.remove(item);
-        user.getInventory.add(item);
-    }
-    */
+
 }

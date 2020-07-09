@@ -59,9 +59,8 @@ public class UserManager extends AccountManager {
         user.getDraftInventory().add(item);
     }
 
-    public void removeFromInventory(Item item){
-        if()
-
+    public void removeFromInventory(User user, Item item) {
+        user.getInventory().remove(item);
     }
 
     public void addToWishlist(User user, Item item) {
@@ -75,4 +74,10 @@ public class UserManager extends AccountManager {
     public void removeFromWishlist(User user, Item item) {
         user.getWishlist().remove(item);
     }
+
+    public void approveDraftInventoryItem(User user, Item item) {
+        user.getDraftInventory().remove(item);
+        user.getInventory().add(item);
+    }
+
 }
