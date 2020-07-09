@@ -15,15 +15,17 @@ public class DemoName {
         //allUsers.createUser("Tina", "123");
         writing x = new writing();
 
-        
-      //  hello.wishlist.add(myitem);
-        System.out.println("The current number of users in the file is:" + allUsers.getAllUsers().size());
-        File findFile = new File("UserList3.ser");
+
+        //  hello.wishlist.add(myitem);
+        System.out.println("UserManager is initiated. There should be no Users. There are: "
+                + allUsers.getAllUsers().size() + " users");
+        File findFile = new File("UserList4.ser");
         String filePath = findFile.getAbsolutePath();
         System.out.println("The file location is:" + filePath);
-        x.demoUserRead("UserList3.ser", allUsers);
-        System.out.println("The current number of users in the file is:" + allUsers.getAllUsers().size());
-        System.out.println("the user manager contains the following:" + allUsers.getAllUsers());
+        x.demoUserRead("UserList4.ser", allUsers);
+        System.out.println("UserManager is now populated." +
+                "The current number of users in the file is:" + allUsers.getAllUsers().size());
+        System.out.println("the user manager contains the following users:" + allUsers.getAllUsers());
 
 
         User hello = system1.authenticator(allUsers);
@@ -32,9 +34,9 @@ public class DemoName {
         Item myitem2 = new Item("sock3" , hello, "its 2cute");
 
         AllItems.addItem(myitem);
-        system1.mainMenu(hello, AllItems, system1);
+        //system1.mainMenu(hello, AllItems, system1);
 
-        x.demoUserSave("UserList3.ser", allUsers);
+        x.demoUserSave("UserList4.ser", allUsers);
         System.out.println(allUsers.getAllUsers());
         System.out.println("The current number of users in the file is:" + allUsers.getAllUsers().size());
         System.out.println("the user manager contains the following:" + allUsers.getAllUsers());

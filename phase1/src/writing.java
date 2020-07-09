@@ -15,8 +15,6 @@ public class writing {
 //    // Deserializes contents of the SER file
         userRW.readFromFile(fileName);
         userRW.populateUserManager(u);
-
-
     }
 
     /**
