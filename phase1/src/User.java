@@ -52,12 +52,12 @@ public class User extends Account {
 
     }
 
-    public void increaseEligibility(int itemsLent) {
-        this.eligibility += itemsLent;
+    public void increaseEligibility() {
+        this.eligibility += 1;
     }
 
-    public void decreaseEligibility(int itemsBorrowed) {
-        this.eligibility -= itemsBorrowed;
+    public void decreaseEligibility() {
+        this.eligibility -= 1;
     }
 
 }

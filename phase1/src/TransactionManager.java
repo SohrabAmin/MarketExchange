@@ -44,6 +44,17 @@ public class TransactionManager {
     public void setFinalMeeting(Transaction a, Meeting x){a.setReturnMeeting(x);}
 
 
+    public void handleUser(Transaction x){
+
+        if(x instanceof OneWay){
+
+            ((OneWay) x).getBorrower().decreaseEligibility();
+            ((OneWay) x).getLender().increaseEligibility();
+            ((OneWay) x).getLender().
+        }else{
+
+        }
+    }
 
 
 

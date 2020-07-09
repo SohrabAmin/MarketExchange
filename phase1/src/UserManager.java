@@ -59,6 +59,11 @@ public class UserManager extends AccountManager {
         user.getDraftInventory().add(item);
     }
 
+    public void removeFromInventory(Item item){
+        if()
+
+    }
+
     public void addToWishlist(User user, Item item) {
         user.getWishlist().add(item);
     }

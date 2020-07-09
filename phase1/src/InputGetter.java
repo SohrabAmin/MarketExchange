@@ -141,9 +141,10 @@ public class InputGetter {
 
             else if (a.equals("Trade")){
                 //choose the id?
-                System.out.print("Please input trade \n\n");
+                System.out.print("Please input item id: \n\n");
                 String b = sc.nextLine();
                 System.out.print(b);
+
 
 
             }
@@ -158,7 +159,6 @@ public class InputGetter {
 
 
     }
-
 
 
 
