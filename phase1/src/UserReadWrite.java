@@ -43,7 +43,7 @@ public class UserReadWrite implements Serializable {
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    public UserReadWrite(String filePath) throws ClassNotFoundException, IOException {
+    public UserReadWrite(String fileName) throws ClassNotFoundException, IOException {
         // Associate the handler with the logger.
         logger.setLevel(Level.ALL);
         consoleHandler.setLevel(Level.ALL);
@@ -51,23 +51,26 @@ public class UserReadWrite implements Serializable {
 
         // Reads serializable objects from file.
         // Populates the record list using stored data, if it exists.
-        File file = new File(filePath);
-        if (file.exists()) {
+        File file = new File(fileName);
+        String filePath = file.getAbsolutePath();
+        File theFile = new File(filePath);
+        if (theFile.exists()) {
             readFromFile(filePath);
         } else {
-            file.createNewFile();
+            theFile.createNewFile();
         }
     }
 
     /**
      * Stores the users from the file at path filePath.
      *
-     * @param filepath the path of the data file
+     * @param fileName the path of the data file
      * @throws FileNotFoundException if filePath is not a valid path
      */
 
-    public void readFromFile(String filepath) throws ClassNotFoundException, IOException {
-
+    public void readFromFile(String fileName) throws ClassNotFoundException, IOException {
+        File findFile = new File(fileName);
+        String filepath = findFile.getAbsolutePath();
         try {
             InputStream file = new FileInputStream(filepath);
             InputStream buffer = new BufferedInputStream(file);
@@ -105,11 +108,12 @@ public class UserReadWrite implements Serializable {
     /**
      * Writes the users from UserManager u to file at filePath.
      *
-     * @param filePath the file to write the records to
+     * @param fileName the file to write the records to
      * @throws IOException
      */
-    public void saveToFile(String filePath, UserManager userManager) throws IOException {
-
+    public void saveToFile(String fileName, UserManager userManager) throws IOException {
+        File findFile = new File(fileName);
+        String filePath = findFile.getAbsolutePath();
         OutputStream file = new FileOutputStream(filePath);
         OutputStream buffer = new BufferedOutputStream(file);
         ObjectOutput output = new ObjectOutputStream(buffer);
