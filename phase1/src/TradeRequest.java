@@ -8,7 +8,7 @@ public class TradeRequest {
     private Item receiverItem;
     private String message;
     private Boolean pending;
-
+    private int status;
 
     public TradeRequest(int f, User a, User b, List<Item> c, String e){
         this.pending = true;

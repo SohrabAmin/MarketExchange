@@ -32,7 +32,7 @@ public class DemoName {
         Item myitem2 = new Item("sock3" , hello, "its 2cute");
 
         AllItems.addItem(myitem);
-        //system1.mainMenu(hello, AllItems, system1);
+        system1.mainMenu(hello, AllItems, system1);
 
         x.demoUserSave("UserList3.ser", allUsers);
         System.out.println(allUsers.getAllUsers());

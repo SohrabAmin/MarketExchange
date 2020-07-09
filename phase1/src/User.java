@@ -10,6 +10,7 @@ public class User extends Account {
     private int eligibility;
     private List<Transaction> tradeHistory;
     private List<User> topTradingPartners;
+    private List<TradeRequest> pendingRequests;
 
     public User() {
 
@@ -23,6 +24,7 @@ public class User extends Account {
         draftInventory = new ArrayList<>();
         this.tradeHistory = new ArrayList<>();
         this.topTradingPartners = new ArrayList<>();
+
     }
 
 
