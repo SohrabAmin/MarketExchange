@@ -13,6 +13,13 @@ public class MeetingManager {
         return new Meeting(createDate(date, time), place);
     }
 
+
+    public Meeting createReturnMeeting(Meeting meeting, int months){
+        Calendar returnDate = meeting.getDate();
+        returnDate.add(Calendar.MONTH, months);
+        return new Meeting(returnDate, meeting.getPlace());
+    }
+
     /**
      * Creates a Calendar object from date string
      * @param date String version of date

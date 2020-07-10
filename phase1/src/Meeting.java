@@ -82,6 +82,6 @@ public class Meeting {
 
     @Override
     public String toString() {
-        return "Date: " + getDate() + ", Place: " + place;
+        return "Date: " + getDate().getTime().toString() + ", Place: " + place;
     }
 }
