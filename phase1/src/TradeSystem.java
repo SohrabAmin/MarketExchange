@@ -18,6 +18,20 @@ public class TradeSystem {
     }
 
     public void run() throws IOException, ClassNotFoundException {
+
+        //creating users to test
+        allUsers.createUser("Tina", "123");
+        allUsers.createUser("Mo", "123");
+
+        User hello = new User("Tina", "123");
+        User hi = new User("Mo", "123");
+        Item myitem = new Item("sock", hi, "its cute");
+        Item myitem2 = new Item("sock3", hello, "its 2cute");
+
+        AllItems.addItem(myitem);
+
+
+
         System.out.println("UserManager is initiated. There should be no Users. There are: "
                 + allUsers.getAllUsers().size() + " users");
 
@@ -61,16 +75,7 @@ public class TradeSystem {
             currentUser = null;
 
         }
-        //creating users to test
-        allUsers.createUser("Tina", "123");
-        allUsers.createUser("Mo", "123");
 
-        User hello = new User("Tina", "123");
-        User hi = new User("Mo", "123");
-        Item myitem = new Item("sock", hi, "its cute");
-        Item myitem2 = new Item("sock3", hello, "its 2cute");
-
-        AllItems.addItem(myitem);
 
 
         //saves all the users in UserManager
