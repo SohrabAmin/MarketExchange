@@ -3,7 +3,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class AdminInputGetter {
+/**
+ * Deals with the input of an Admin user-- particularly deals with the login system and displaying of main menu.
+ */
+
+public class AdminInputGetter{
 
     public Admin authenticator(AdminManager allAdmins) {
 
@@ -60,6 +64,21 @@ public class AdminInputGetter {
      * @param admin Account of the Admin.
      */
     public void mainMenu(Admin admin) {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
+        System.out.println("Please select from the following by entering the number beside the option:" +
+                " \n '1. Add new admin' \n '2. Change system threshold' \n" +
+                "'3. View items that need to be approved' \n '4. Freeze and unfreeze users' \n '5. Log out'" +
+                "Enter 'exit' to exit at any time.");
+        try {
+            String input = br.readLine();
+            if (input.equals('1')) {
+
+            }
+
+
+        } catch (IOException e) {
+            System.out.println("Something went wrong");
+        }
     }
 }
