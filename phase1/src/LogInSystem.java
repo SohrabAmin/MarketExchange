@@ -28,11 +28,9 @@ public class LogInSystem {
                     System.exit(0);
                 }
                 else if (input.equals("user")) {
-                    InputGetter newUser = new InputGetter();
-                    return newUser.authenticator(usermanager);
+                    return inputgetter.authenticator(usermanager);
                 } else if (input.equals("admin")) {
-                    AdminInputGetter newAdmin = new AdminInputGetter();
-                    Admin temp = newAdmin.authenticator(adminmanager);
+                    Admin temp = admininputgetter.authenticator(adminmanager);
                     if (temp == null){
                         LogIn(inputgetter, admininputgetter);
                     }
