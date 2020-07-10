@@ -1,3 +1,5 @@
+import java.util.Calendar;
+
 public class MeetingManager {
 
     /**
@@ -12,6 +14,16 @@ public class MeetingManager {
     }
 
     /**
+     * Creates a Calendar object from date string
+     * @param date String version of date
+     * @return Calendar version of date
+     */
+    private Calendar createDate(String date) {
+        Calendar cal = Calendar.getInstance();
+        return cal;
+    }
+
+    /**
      * Edits the meetings date, time and place
      * @param meeting Meeting to be edited
      * @param date New date for meeting
@@ -23,8 +35,6 @@ public class MeetingManager {
         meeting.setTime(time);
         meeting.setPlace(place);
         meeting.setEdits(meeting.getEdits()+1);
-
-
     }
 
     /**
