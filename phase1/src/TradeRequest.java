@@ -40,6 +40,10 @@ public class TradeRequest {
         }
     }
 
+
+    public String getMessage(){
+        return message;
+    }
     /**
      * Gets whether the User who initiated the TradeRequest wants a OneWay or TwoWay Transaction.
      * @return Integer representing initiating User's requestType. 1: OneWay, 2: TwoWay.
