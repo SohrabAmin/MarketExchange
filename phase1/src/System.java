@@ -1,7 +1,7 @@
 import java.io.File;
 import java.io.IOException;
 
-public class TradeSystem {
+public class System {
     public InputGetter inputgetter = new InputGetter();
     public AdminInputGetter admininputgetter = new AdminInputGetter();
     public UserManager allUsers = new UserManager();
