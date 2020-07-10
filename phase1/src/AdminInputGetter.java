@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class AdminInputGetter {
 
-    public User authenticator(AdminManager allUsers) {
+    public Admin authenticator(AdminManager allAdmins) {
 
         //we fill out allUsers with whatever is in ser file
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -14,11 +14,12 @@ public class AdminInputGetter {
 
         ArrayList<String> temp = new ArrayList<>();
 
-        System.out.println("Hello Admin. Please enter 'login' to log in or 'exit' to exit at anytime.");
+        System.out.println("Hello Admin. Please enter 'login' to log in, 'back' to return to the main page or " +
+                "'exit' to exit at anytime.");
         try {
             String input = br.readLine();
 
-           if (input.equals("login")) {
+            if (input.equals("login")) {
                 while (!input.equals("exit") && curr < 2) {
                     if (prompts.hasNext()) {
                         System.out.println(prompts.next());
@@ -31,25 +32,25 @@ public class AdminInputGetter {
                 }
 
                 Admin tempAdmin = new Admin(temp.get(0), temp.get(1));
-                boolean iExist = false;
-                //check if temp exists in allusers
-                for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
-                    if (allUsers.getAllUsers().get(i).getName().equals(temp.get(0)))
-                        if (allUsers.getAllUsers().get(i).getPassword().equals(temp.get(1))) {
-                            iExist = true;
+                for (int i = 0; i < allAdmins.getAllAdmins().size(); i++) {
+                    if (allAdmins.getAllAdmins().get(i).getName().equals(temp.get(0)))
+                        if (allAdmins.getAllAdmins().get(i).getPassword().equals(temp.get(1))) {
                             System.out.println("Successful Login");
-                            return (allUsers.getAllUsers().get(i));
+                            return (allAdmins.getAllAdmins().get(i));
                         }
-
                 }
-                //if user doesnt exist
+                //if Admin doesn't exist
                 System.out.println("Wrong username or password. Please try Again");
                 //curr = 0;
-                return authenticator(allUsers);
+                return authenticator(allAdmins);
 
             }
-
+            if (input.equals("back")) {
+                return null;
+            }
         } catch (IOException e) {
             System.out.println("Something went wrong");
         }
+        return null;
+    }
 }
