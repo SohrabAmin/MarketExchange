@@ -35,13 +35,21 @@ public class TradeSystem {
         while (currentUser == null) {
             LogInSystem system1 = new LogInSystem(allUsers, allAdmins);
             Object loggedIn = system1.LogIn(inputgetter, admininputgetter);
+            if (loggedIn.equals("exit")){
+                break;
+            }
             currentUser = loggedIn;
             while (loggedIn != null) {
                 if (loggedIn instanceof User) {
                     loggedIn = inputgetter.mainMenu((User) loggedIn, AllItems, inputgetter, allTradeRequests, allUsers, allAdmins);
                 } else if (loggedIn instanceof Admin) {
                     admininputgetter.mainMenu((Admin) loggedIn);
+                } else if (loggedIn.equals("exit")){
+                    break;
                 }
+            }
+            if (loggedIn.equals("exit")) {
+                break;
             }
             currentUser = null;
         }

@@ -18,14 +18,14 @@ public class LogInSystem {
         adminmanager = allAdmins;
     }
 
-    public Account LogIn(InputGetter inputgetter, AdminInputGetter admininputgetter){
+    public Object LogIn(InputGetter inputgetter, AdminInputGetter admininputgetter){
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Welcome. If you are an admin, please enter 'admin'. If otherwise, please enter 'user'. " +
                 "Enter 'exit' to exit the system.");
         try {
             String input = br.readLine();{
                 if (input.equals("exit")){
-                    System.exit(0);
+                    return new String("exit");
                 }
                 else if (input.equals("user")) {
                     return inputgetter.authenticator(usermanager);
