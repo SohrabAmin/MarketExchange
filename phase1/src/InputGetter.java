@@ -8,7 +8,7 @@ import java.util.List;
 public class InputGetter {
 
 
-    public User authenticator(UserManager allUsers) {
+    public Object authenticator(UserManager allUsers) {
 
 
         //we fill out allUsers with whatever is in csv file
@@ -16,12 +16,15 @@ public class InputGetter {
         UserIterator prompts = new UserIterator();
         int curr = 0;
 
-
         ArrayList<String> temp = new ArrayList<>();
 
         System.out.println("Type 'signup' to create an account or 'login' to access your account or 'exit' to exit at anytime.");
         try {
             String input = br.readLine();
+            //user wants to signup for an account
+            if (input.equals("exit")){
+                return input;
+            }
             if (input.equals("signup")) {
                 while (!input.equals("exit") && !prompts.usergot/*&& curr < 2*/) {
                     if (prompts.hasNext()) {
@@ -35,15 +38,16 @@ public class InputGetter {
                             prompts.usergot = true;
                     }
                 }
-                for (int i =0; i < allUsers.getAllUsers().size(); i++){
-                    if (temp.get(0).equals(allUsers.getAllUsers().get(i).getName())){
+                for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
+                    if (temp.get(0).equals(allUsers.getAllUsers().get(i).getName())) {
                         System.out.print("Username Already exists. Please choose a new username\n");
                         return authenticator(allUsers);
-                    }
-                    else{
+                    } else {
                         allUsers.createUser(temp.get(0), temp.get(1));
-                        return (allUsers.getAllUsers().get(allUsers.getAllUsers().size() - 1));}
+                        return (allUsers.getAllUsers().get(allUsers.getAllUsers().size() - 1));
+                    }
                 }
+                //user wants to login to their account
             } else if (input.equals("login")) {
                 while (!input.equals("exit") && curr < 2) {
                     if (prompts.hasNext()) {
@@ -55,28 +59,25 @@ public class InputGetter {
                         curr++;
                     }
                 }
-                User TempUser = new User(temp.get(0), temp.get(1));
-                boolean iExist = false;
-                //check if temp exists in allusers
+                if (input.equals("exit")) {
+                    return input;
+                }
+                //check if temp exists in allUsers
                 for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
                     if (allUsers.getAllUsers().get(i).getName().equals(temp.get(0)))
                         if (allUsers.getAllUsers().get(i).getPassword().equals(temp.get(1))) {
-                            iExist = true;
                             System.out.println("Successful Login");
                             return (allUsers.getAllUsers().get(i));
                         }
                 }
-                //if user doesnt exist
+                //if user doesn't exist
                 System.out.println("Wrong username or password. Please try Again");
-                //curr = 0;
                 return authenticator(allUsers);
             }
-            return authenticator(allUsers);
         } catch (IOException e) {
             System.out.println("Something went wrong");
         }
-//it will only get here if the person pressed exit
-        return null;
+        return authenticator(allUsers);
     }
 
     public User wishlist(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers, AdminManager allAdmins) {
