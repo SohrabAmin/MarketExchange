@@ -70,9 +70,7 @@ public class UserManager extends AccountManager {
     }
 
     public void addToPendingRequests(User user, TradeRequest request){
-       List <TradeRequest> temp =  user.getPendingRequests();
-       temp.add(request);
-
+       user.updatePendingRequests(request);
     }
 
     public void removeFromPendingRequests(User user, TradeRequest request){
