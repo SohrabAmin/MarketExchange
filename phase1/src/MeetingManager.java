@@ -20,6 +20,9 @@ public class MeetingManager {
      */
     private Calendar createDate(String date) {
         Calendar cal = Calendar.getInstance();
+        cal.set(Integer.parseInt((date.split("-")[2])),
+                Integer.parseInt((date.split("-")[1]))-1,
+                Integer.parseInt((date.split("-")[0])));
         return cal;
     }
 
