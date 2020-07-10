@@ -10,7 +10,7 @@ public class MeetingManager {
      * @return Meeting object with date, time and place.
      */
     public Meeting createMeeting(String date, String time, String place) {
-        return new Meeting(date, time, place);
+        return new Meeting(createDate(date), place);
     }
 
     /**
@@ -34,8 +34,7 @@ public class MeetingManager {
      * @param place New place for meeting
      */
     public void editMeeting(Meeting meeting, String date, String time, String place) {
-        meeting.setDate(date);
-        meeting.setTime(time);
+        meeting.setDate(createDate(date));
         meeting.setPlace(place);
         meeting.setEdits(meeting.getEdits()+1);
     }

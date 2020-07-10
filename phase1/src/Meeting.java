@@ -1,6 +1,8 @@
+import java.util.Calendar;
+
 public class Meeting {
 
-    private String date;
+    private Calendar date;
     private String place;
     private Boolean confirmed;
     private int edits;
@@ -8,10 +10,9 @@ public class Meeting {
     /**
      *
      * @param date date of Meeting
-     * @param time time of Meeting
      * @param place place of Meeting
      */
-    public Meeting(String date, String time, String place) {
+    public Meeting(Calendar date, String place) {
         this.date = date;
         this.place = place;
     }
@@ -20,7 +21,7 @@ public class Meeting {
      * gets date for Meeting
      * @return this Meetings date
      */
-    public String getDate() {
+    public Calendar getDate() {
         return date;
     }
 
@@ -52,10 +53,9 @@ public class Meeting {
      * sets date for Meeting
      * @param date date to be set for Meeting
      */
-    public void setDate(String date) {
+    public void setDate(Calendar date) {
         this.date = date;
     }
-
 
     /**
      * sets place for Meeting
