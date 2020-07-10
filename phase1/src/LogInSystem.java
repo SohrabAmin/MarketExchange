@@ -1,3 +1,5 @@
+import jdk.internal.util.xml.impl.Input;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,7 +18,7 @@ public class LogInSystem {
         adminmanager = allAdmins;
     }
 
-    public Account LogIn(){
+    public Account LogIn(InputGetter inputgetter, AdminInputGetter admininputgetter){
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Welcome. If you are an admin, please enter 'admin'. If otherwise, please enter 'user'. " +
                 "Enter 'exit' to exit the system.");
@@ -32,12 +34,12 @@ public class LogInSystem {
                     AdminInputGetter newAdmin = new AdminInputGetter();
                     Admin temp = newAdmin.authenticator(adminmanager);
                     if (temp == null){
-                        LogIn();
+                        LogIn(inputgetter, admininputgetter);
                     }
                     return temp;
                 }
                 else {
-                    LogIn();
+                    LogIn(inputgetter, admininputgetter);
                 }
             }
 

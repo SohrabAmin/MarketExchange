@@ -4,7 +4,7 @@ import java.io.IOException;
 // NOTE: This class is based off of DemoManager from logging in Week 6 Modules on Quercus.
 
 
-public class writing {
+public class userWriting {
 
     public static void demoUserRead(String fileName, UserManager u) throws IOException, ClassNotFoundException {
         
