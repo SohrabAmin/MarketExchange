@@ -157,6 +157,8 @@ public class InputGetter {
 
 
 
+
+
         }
         else if (tType == 2){
             System.out.println("You have selected 2 way trade for item: " + tradeItem.getName() + "\nyour message was:\n" + message);

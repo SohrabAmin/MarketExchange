@@ -102,4 +102,17 @@ public class UserManager extends AccountManager {
 
         }
     }
+
+
+    public User getUser (User person) {
+        for (int i = 0; i < allUsers.size(); i++) {
+            if (person.getName().equals(allUsers.get(i).getName())) {
+                return allUsers.get(i);
+            }
+
+
+        }
+        return null;
+
+    }
 }

@@ -14,15 +14,35 @@ public class TradeRequestManager {
     }
 
     public void receiveTradeRequest(UserManager userManager, TradeRequest request){
+
         if (request.getStatus() == 0) {
             this.pending.add(request);
-            User temp = request.getReceiver();
-            userManager.addToPendingRequests(temp , request);
+            User temp = userManager.getUser(request.getReceiver());
+            temp.updatePendingRequests(request);
+//            for (int i = 0; i < userManager.getAllUsers().size(); i++){
+//                if (request.getReceiver().getName().equals(userManager.getAllUsers().get(i).getName())){
+//                    userManager.getAllUsers().get(i).updatePendingRequests(request);
+//                }
+
+            //    }
+            /// request.getReceiver().updatePendingRequests(request);
+            // userManager.addToPendingRequests(request.getReceiver() , request);
         } else if (request.getStatus() == 1) {
             this.confirmed.add(request);
         } else {
             this.denied.add(request);
         }
+
+
+//        if (request.getStatus() == 0) {
+//            this.pending.add(request);
+//            User temp = request.getReceiver();
+//            userManager.addToPendingRequests(temp , request);
+//        } else if (request.getStatus() == 1) {
+//            this.confirmed.add(request);
+//        } else {
+//            this.denied.add(request);
+//        }
     }
 
 
