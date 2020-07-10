@@ -41,28 +41,28 @@ public class User extends Account {
         return draftInventory;
     }
 
-    public List<Transaction> getTradeHistory(){
+    public List<Transaction> getTradeHistory() {
         return this.tradeHistory;
     }
 
-    public void addTradeHistory(Transaction x){
-        this.tradeHistory.add(x);
+    public void addTradeHistory(Transaction transaction) {
+        this.tradeHistory.add(transaction);
     }
 
-    public List<TradeRequest> getPendingRequests(){
+    public List<TradeRequest> getPendingRequests() {
         return this.pendingRequests;
 
     }
 
-    public void updatePendingRequests(TradeRequest request){
+    public void updatePendingRequests(TradeRequest request) {
         this.pendingRequests.add(request);
     }
 
-    public void setTopTradingPartners(User x, User y, User z){
+    public void setTopTradingPartners(User partner1, User partner2, User partner3) {
         this.topTradingPartners.clear();
-        this.topTradingPartners.add(x);
-        this.topTradingPartners.add(y);
-        this.topTradingPartners.add(z);
+        this.topTradingPartners.add(partner1);
+        this.topTradingPartners.add(partner2);
+        this.topTradingPartners.add(partner3);
     }
 
     public boolean getIsFrozen() {

@@ -6,7 +6,7 @@ public class TradeSystem {
     public AdminInputGetter admininputgetter = new AdminInputGetter();
     public UserManager allUsers = new UserManager();
     public TransactionManager allTransactions = new TransactionManager();
-;   public AdminManager allAdmins;
+    public AdminManager allAdmins;
     public ItemManager AllItems = new ItemManager();
     public MeetingManager allMeetings = new MeetingManager();
     public TradeRequestManager allTradeRequests = new TradeRequestManager();
@@ -32,11 +32,10 @@ public class TradeSystem {
 
         //prompts log in and prompts the correct menu depending on the type of account
         LogInSystem system1 = new LogInSystem(allUsers, allAdmins);
-        Object loggedIn = system1.LogIn(inputgetter,admininputgetter);
-        if (loggedIn instanceof User){
-            inputgetter.mainMenu((User) loggedIn, AllItems, inputgetter, allTradeRequests, allUsers);
-        }
-        else if (loggedIn instanceof Admin){
+        Object loggedIn = system1.LogIn(inputgetter, admininputgetter);
+        if (loggedIn instanceof User) {
+            inputgetter.mainMenu((User) loggedIn, AllItems, inputgetter, allTradeRequests, allUsers, allAdmins);
+        } else if (loggedIn instanceof Admin) {
             admininputgetter.mainMenu((Admin) loggedIn);
         }
 
@@ -46,8 +45,8 @@ public class TradeSystem {
 
         User hello = new User("Tina", "123");
         User hi = new User("Mo", "123");
-        Item myitem = new Item("sock" , hi, "its cute");
-        Item myitem2 = new Item("sock3" , hello, "its 2cute");
+        Item myitem = new Item("sock", hi, "its cute");
+        Item myitem2 = new Item("sock3", hello, "its 2cute");
 
         AllItems.addItem(myitem);
 

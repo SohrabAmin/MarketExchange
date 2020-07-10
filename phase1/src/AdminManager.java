@@ -29,6 +29,11 @@ public class AdminManager extends AccountManager {
         allAdmins.add(newAdmin);
     }
 
+    /**
+     * Getter for the list of all Admins
+     *
+     * @return list of all Admins
+     */
     public List<Admin> getAllAdmins() {
         return allAdmins;
     }
