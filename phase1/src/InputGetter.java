@@ -38,15 +38,16 @@ public class InputGetter {
                             prompts.usergot = true;
                     }
                 }
+                //loops through the list of allUsers in the system
                 for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
+                    //checks if the entered username already exists
                     if (temp.get(0).equals(allUsers.getAllUsers().get(i).getName())) {
                         System.out.print("Username Already exists. Please choose a new username\n");
                         return authenticator(allUsers);
-                    } else {
-                        allUsers.createUser(temp.get(0), temp.get(1));
-                        return (allUsers.getAllUsers().get(allUsers.getAllUsers().size() - 1));
-                    }
-                }
+                    }}
+                allUsers.createUser(temp.get(0), temp.get(1));
+                return (allUsers.getAllUsers().get(allUsers.getAllUsers().size() - 1));
+
                 //user wants to login to their account
             } else if (input.equals("login")) {
                 while (!input.equals("exit") && curr < 2) {
