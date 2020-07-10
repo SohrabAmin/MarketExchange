@@ -1,7 +1,6 @@
 public class Meeting {
 
     private String date;
-    private String time;
     private String place;
     private Boolean confirmed;
     private int edits;
@@ -14,7 +13,6 @@ public class Meeting {
      */
     public Meeting(String date, String time, String place) {
         this.date = date;
-        this.time = time;
         this.place = place;
     }
 
@@ -24,14 +22,6 @@ public class Meeting {
      */
     public String getDate() {
         return date;
-    }
-
-    /**
-     * gets time for Meeting
-     * @return this Meetings time
-     */
-    public String getTime() {
-        return time;
     }
 
     /**
@@ -66,13 +56,6 @@ public class Meeting {
         this.date = date;
     }
 
-    /**
-     * sets time for Meeting
-     * @param time time to be set for Meeting
-     */
-    public void setTime(String time) {
-        this.time = time;
-    }
 
     /**
      * sets place for Meeting
