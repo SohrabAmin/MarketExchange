@@ -31,10 +31,12 @@ public class TradeSystem {
                 "The current number of users in the file is:" + allUsers.getAllUsers().size());
         System.out.println("the user manager contains the following users:" + allUsers.getAllUsers());
 
-        //prompts log in and prompts the correct menu depending on the type of
+        //If there is no current User, prompts log in and prompts the correct menu depending on the type of Account
         while (currentUser == null) {
             LogInSystem system1 = new LogInSystem(allUsers, allAdmins);
             Object loggedIn = system1.LogIn(inputgetter, admininputgetter);
+            //if they decide to exit at any point, loggedIn will equal "exit" and it will break the loop
+            //and proceed to save the current information and exit the system
             if (loggedIn.equals("exit")) {
                 break;
             }
@@ -45,12 +47,17 @@ public class TradeSystem {
                 } else if (loggedIn instanceof Admin) {
                     admininputgetter.mainMenu((Admin) loggedIn);
                 } else if (loggedIn.equals("exit")) {
+                    //loop will break if user decides to exit at any point while they are logged in
                     break;
                 }
             }
+            //loop will break if user decides to exit at any point while they are logged in
+            //will then proceed to save current system information and exit the system
             if (loggedIn != null && loggedIn.equals("exit")) {
                 break;
             }
+            //if the user logs out, it will reset currentUser to null and the while loop will continue to run
+            //and it will redirect back to the log in page
             currentUser = null;
 
         }
