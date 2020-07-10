@@ -79,4 +79,9 @@ public class Meeting {
     public void setEdits(int edits) {
         this.edits = edits;
     }
+
+    @Override
+    public String toString() {
+        return "Date: " + getDate() + ", Place: " + place;
+    }
 }
