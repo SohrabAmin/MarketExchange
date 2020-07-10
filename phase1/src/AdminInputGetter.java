@@ -53,4 +53,13 @@ public class AdminInputGetter {
         }
         return null;
     }
+
+    /**
+     *  Displays the main menu of an AdminUser and prompts the user for input.
+     *
+     * @param admin Account of the Admin.
+     */
+    public void mainMenu(Admin admin) {
+
+    }
 }

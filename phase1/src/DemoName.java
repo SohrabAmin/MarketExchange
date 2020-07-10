@@ -13,25 +13,28 @@ public class DemoName {
         TradeRequestManager allTradeRequests = new TradeRequestManager();
         //searchmanager maybe?
 
-        allUsers.createUser("Tina", "123");
+        System.out.println("UserManager is initiated. There should be no Users. There are: "
+                + allUsers.getAllUsers().size() + " users");
+
         writing x = new writing();
-        allUsers.createUser("Mo", "123");
+        x.demoUserRead("UserList4.ser", allUsers);
+        System.out.println("UserManager is now populated." +
+                "The current number of users in the file is:" + allUsers.getAllUsers().size());
+        System.out.println("the user manager contains the following users:" + allUsers.getAllUsers());
 
         LogInSystem system1 = new LogInSystem(allUsers, allAdmins);
         system1.LogIn();
         //system1.authenticator(allUsers);
 
         //  hello.wishlist.add(myitem);
-        System.out.println("UserManager is initiated. There should be no Users. There are: "
-                + allUsers.getAllUsers().size() + " users");
+
         File findFile = new File("UserList4.ser");
         String filePath = findFile.getAbsolutePath();
         System.out.println("The file location is:" + filePath);
-        x.demoUserRead("UserList4.ser", allUsers);
-        System.out.println("UserManager is now populated." +
-                "The current number of users in the file is:" + allUsers.getAllUsers().size());
-        System.out.println("the user manager contains the following users:" + allUsers.getAllUsers());
 
+
+        allUsers.createUser("Tina", "123");
+        allUsers.createUser("Mo", "123");
 
        // User hello = system1.authenticator(allUsers);
         User hello = new User("Tina", "123");
