@@ -186,7 +186,7 @@ public class InputGetter {
         Scanner sc = new Scanner(System.in);    //System.in is a standard input stream
         System.out.print("----------------------------------------------------------------------------------------------\nWelcome " + user.getName() + "\n");
         System.out.print("Please select from the following: \n 'View Wishlist' \n 'View Inventory' " +
-                "\n 'Browse' \n 'Trade' \n 'Messages'\n 'Log out' \n Enter 'exit' to exit the system at any time.");
+                "\n 'Browse' \n 'Trade' \n 'Messages'\n 'Log out' \n Enter 'exit' to exit the system at any time. \n");
         String a = sc.nextLine();
         if (!a.equals("exit")) {
             if (a.equals("View Wishlist")) {
