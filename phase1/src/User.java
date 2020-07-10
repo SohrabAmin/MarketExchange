@@ -54,6 +54,11 @@ public class User extends Account {
 
     }
 
+    public void updatePendingRequests(List<TradeRequest> list){
+        this.pendingRequests.clear();
+        this.pendingRequests.addAll(list);
+    }
+
     public void setTopTradingPartners(User x, User y, User z){
         this.topTradingPartners.clear();
         this.topTradingPartners.add(x);
