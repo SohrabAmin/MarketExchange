@@ -22,7 +22,6 @@ public class AdminInputGetter{
                 "'exit' to exit at anytime.");
         try {
             String input = br.readLine();
-
             if (input.equals("login")) {
                 while (!input.equals("exit") && curr < 2) {
                     if (prompts.hasNext()) {
@@ -34,7 +33,6 @@ public class AdminInputGetter{
                         curr++;
                     }
                 }
-
                 Admin tempAdmin = new Admin(temp.get(0), temp.get(1));
                 for (int i = 0; i < allAdmins.getAllAdmins().size(); i++) {
                     if (allAdmins.getAllAdmins().get(i).getName().equals(temp.get(0)))
@@ -47,7 +45,6 @@ public class AdminInputGetter{
                 System.out.println("Wrong username or password. Please try Again");
                 //curr = 0;
                 return authenticator(allAdmins);
-
             }
             if (input.equals("back")) {
                 return null;

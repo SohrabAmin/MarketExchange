@@ -22,13 +22,10 @@ public class InputGetter {
         System.out.println("Type 'signup' to create an account or 'login' to access your account or 'exit' to exit at anytime.");
         try {
             String input = br.readLine();
-
             if (input.equals("signup")) {
-
                 while (!input.equals("exit") && !prompts.usergot/*&& curr < 2*/) {
                     if (prompts.hasNext()) {
                         System.out.println(prompts.next());
-
                     }
                     input = br.readLine();
                     if (!input.equals("exit")) {
@@ -36,9 +33,7 @@ public class InputGetter {
                         curr++;
                         if (curr == 2)
                             prompts.usergot = true;
-
                     }
-
                 }
                 for (int i =0; i < allUsers.getAllUsers().size(); i++){
                     if (temp.get(0).equals(allUsers.getAllUsers().get(i).getName())){
@@ -48,12 +43,7 @@ public class InputGetter {
                     else{
                         allUsers.createUser(temp.get(0), temp.get(1));
                         return (allUsers.getAllUsers().get(allUsers.getAllUsers().size() - 1));}
-
                 }
-
-
-
-
             } else if (input.equals("login")) {
                 while (!input.equals("exit") && curr < 2) {
                     if (prompts.hasNext()) {
@@ -65,7 +55,6 @@ public class InputGetter {
                         curr++;
                     }
                 }
-
                 User TempUser = new User(temp.get(0), temp.get(1));
                 boolean iExist = false;
                 //check if temp exists in allusers
@@ -76,20 +65,16 @@ public class InputGetter {
                             System.out.println("Successful Login");
                             return (allUsers.getAllUsers().get(i));
                         }
-
                 }
                 //if user doesnt exist
                 System.out.println("Wrong username or password. Please try Again");
                 //curr = 0;
                 return authenticator(allUsers);
-
             }
-
+            return authenticator(allUsers);
         } catch (IOException e) {
             System.out.println("Something went wrong");
         }
-
-
 //it will only get here if the person pressed exit
         return null;
     }
@@ -105,7 +90,6 @@ public class InputGetter {
             }
         }
         system1.mainMenu(user, allItems, system1, allTradeRequests, allUsers, allAdmins);
-
     }
 
 
@@ -201,42 +185,40 @@ public class InputGetter {
         }
     }
 
-    public void mainMenu(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers, AdminManager allAdmins) {
+    public User mainMenu(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers, AdminManager allAdmins) {
         Scanner sc = new Scanner(System.in);    //System.in is a standard input stream
         System.out.print("----------------------------------------------------------------------------------------------\nWelcome " + user.getName() + "\n");
-        System.out.print("Please select from the following: \n 'View Wishlist' \n 'View Inventory' \n 'Log out' \n 'Browse' \n 'Trade' \n 'Messages'\n");
+        System.out.print("Please select from the following: \n 'View Wishlist' \n 'View Inventory' \n 'Browse' \n 'Trade' \n 'Messages'\n 'Log out' \n");
         String a = sc.nextLine();
         while (!a.equals("Exit")) {
             if (a.equals("View Wishlist")) {
-                system1.wishlist(user, allItems, system1, allTradeRequests, allUsers,  allAdmins);
-            } else if (a.equals("View Inventory")) {
-                system1.inventory(user, allItems, system1, allTradeRequests, allUsers,  allAdmins);
+                system1.wishlist(user, allItems, system1, allTradeRequests, allUsers, allAdmins);
+            }
+            else if (a.equals("View Inventory")) {
+                system1.inventory(user, allItems, system1, allTradeRequests, allUsers, allAdmins);
             } else if (a.equals("Browse")) {
-                system1.Browse(user, allItems, system1, allTradeRequests, allUsers,  allAdmins);
-            } else if (a.equals("Exit")) {
-                a = "";
-                return;
+                system1.Browse(user, allItems, system1, allTradeRequests, allUsers, allAdmins);
             } else if (a.equals("Log out")) {
                 //implement logout
-                authenticator(allUsers);
-
-
+                break;
             } else if (a.equals("Trade")) {
                 //choose the id?
-                system1.Trade(user, allItems, system1, allTradeRequests, allUsers,  allAdmins);
-                mainMenu(user, allItems, system1, allTradeRequests, allUsers, allAdmins);
-
+                system1.Trade(user, allItems, system1, allTradeRequests, allUsers, allAdmins);
+                //mainMenu(user, allItems, system1, allTradeRequests, allUsers, allAdmins);
+                return user;
             } else if (a.equals("Messages")) {
-                system1.Messages(user, allItems, system1, allTradeRequests, allUsers,  allAdmins);
-
+                system1.Messages(user, allItems, system1, allTradeRequests, allUsers, allAdmins);
             }
-            System.out.print("your command was " + a);
-            a = "";
-            System.exit(0);
-
-
+            //mainMenu(user, allItems, system1, allTradeRequests, allUsers, allAdmins);
+            return user;
         }
+        System.out.print("your command was " + a + "\n");
+        a = "";
+        return null;
 
 
     }
-}
+
+
+    }
+

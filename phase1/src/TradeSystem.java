@@ -10,6 +10,7 @@ public class TradeSystem {
     public ItemManager AllItems = new ItemManager();
     public MeetingManager allMeetings = new MeetingManager();
     public TradeRequestManager allTradeRequests = new TradeRequestManager();
+    public Object currentUser;
 
     public TradeSystem() {
         Admin initialAdmin = new Admin("Tina", "123456");
@@ -30,15 +31,20 @@ public class TradeSystem {
                 "The current number of users in the file is:" + allUsers.getAllUsers().size());
         System.out.println("the user manager contains the following users:" + allUsers.getAllUsers());
 
-        //prompts log in and prompts the correct menu depending on the type of account
-        LogInSystem system1 = new LogInSystem(allUsers, allAdmins);
-        Object loggedIn = system1.LogIn(inputgetter, admininputgetter);
-        if (loggedIn instanceof User) {
-            inputgetter.mainMenu((User) loggedIn, AllItems, inputgetter, allTradeRequests, allUsers, allAdmins);
-        } else if (loggedIn instanceof Admin) {
-            admininputgetter.mainMenu((Admin) loggedIn);
+        //prompts log in and prompts the correct menu depending on the type of
+        while (currentUser == null) {
+            LogInSystem system1 = new LogInSystem(allUsers, allAdmins);
+            Object loggedIn = system1.LogIn(inputgetter, admininputgetter);
+            currentUser = loggedIn;
+            while (loggedIn != null) {
+                if (loggedIn instanceof User) {
+                    loggedIn = inputgetter.mainMenu((User) loggedIn, AllItems, inputgetter, allTradeRequests, allUsers, allAdmins);
+                } else if (loggedIn instanceof Admin) {
+                    admininputgetter.mainMenu((Admin) loggedIn);
+                }
+            }
+            currentUser = null;
         }
-
         //creating users to test
         allUsers.createUser("Tina", "123");
         allUsers.createUser("Mo", "123");
