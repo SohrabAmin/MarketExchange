@@ -83,7 +83,7 @@ public class InputGetter {
         return null;
     }
 
-    public void wishlist (User user, ItemManager allItems, InputGetter system1){
+    public void wishlist (User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers){
         List<Item> wishlist = user.getWishlist();
         if (wishlist.size() == 0)
             System.out.print("List is empty!\n\n");
@@ -92,12 +92,12 @@ public class InputGetter {
             for (int i = 0; i < wishlist.size(); i++) {
                 System.out.println(wishlist.get(i).getName());
             }}
-        system1.mainMenu(user, allItems, system1);
+        system1.mainMenu(user, allItems, system1, allTradeRequests, allUsers);
 
     }
 
 
-    public void inventory (User user, ItemManager allItems, InputGetter system1){
+    public void inventory (User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers){
         List<Item> in = user.getInventory();
         if (in.size() == 0)
             System.out.print("List is empty!\n\n");
@@ -106,30 +106,56 @@ public class InputGetter {
             for (int i = 0; i < in.size(); i++) {
                 System.out.println(in.get(i).getName());
             }}
-        system1.mainMenu(user, allItems, system1);
+        system1.mainMenu(user, allItems, system1, allTradeRequests, allUsers);
     }
 
-    public void Browse (User user, ItemManager allItems, InputGetter system1){
+    public void Browse (User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers){
             // "1. Sock : white clear "
             List<Item> allItems2 = allItems.getSystemInventory();
             for (int i = 0; i < allItems2.size(); i++) {
                 System.out.println(i + 1 + ". " + allItems2.get(i).getName() + " : " + allItems2.get(i).getDescription() + "\n");
             }
-            system1.mainMenu(user, allItems, system1);
+            system1.mainMenu(user, allItems, system1, allTradeRequests, allUsers);
     }
 
-    public void Trade (User user, ItemManager allItems, InputGetter system1){
+    public void Trade (User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers){
         Scanner sc= new Scanner(System.in);    //System.in is a standard input stream
         System.out.print("Please type in the ID of the item you would like to trade\n");
         int inum = Integer.parseInt(sc.next());
         Item tradeItem = allItems.getSystemInventory().get(inum-1);
-        System.out.print("Please type '1' for one way trade and '2' for two way trade. \n");
+        List <Item> mylist = new ArrayList<>();
+        mylist.add(tradeItem);
 
+        System.out.print("\nPlease type '1' for one way trade and '2' for two way trade. \n");
         int tType = Integer.parseInt(sc.next());
+
+        System.out.print("\nPlease type '1' for temporary trade and '2' for permanent trade' \n");
+        int type = Integer.parseInt(sc.next());
+        boolean trade = false;
+
+        if (type == 1){
+            trade = true;
+        }
+        else if (type == 2){
+            trade = false;
+        }
+        else{
+            System.out.println("Invalid Request");
+
+        }
+
+
         System.out.print("if you would like, Please put a message for the owner of the item\n");
         String message = sc.next();
+
+
         if (tType == 1){
             System.out.println("You have selected 1 way trade for item: " + tradeItem.getName() + "\nyour message was:\n" + message);
+            TradeRequest trades = new TradeRequest (1, user, tradeItem.getOwner(), mylist, message, trade);
+            allTradeRequests.receiveTradeRequest(allUsers, trades);
+            //trade request is made and it is pending in user's pendingRequests
+
+
 
         }
         else if (tType == 2){
@@ -148,17 +174,17 @@ public class InputGetter {
 
     }
 
-    public void mainMenu(User user, ItemManager allItems, InputGetter system1) {
+    public void mainMenu(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers) {
         Scanner sc= new Scanner(System.in);    //System.in is a standard input stream
         System.out.print("Please select from the following: \n 'View Wishlist' \n 'View Inventory' \n 'Log out' \n 'Browse' \n");
         String a= sc.nextLine();
         while (!a.equals("Exit")) {
             if (a.equals("View Wishlist")) {
-                system1.wishlist(user, allItems, system1);
+                system1.wishlist(user, allItems, system1, allTradeRequests, allUsers);
             } else if (a.equals("View Inventory")) {
-            system1.inventory(user, allItems, system1);
+            system1.inventory(user, allItems, system1, allTradeRequests,allUsers);
             } else if (a.equals("Browse")) {
-             system1.Browse(user, allItems, system1);
+             system1.Browse(user, allItems, system1, allTradeRequests, allUsers);
             } else if (a.equals("Exit")) {
                 a="";
                 return;
@@ -170,8 +196,8 @@ public class InputGetter {
 
             else if (a.equals("Trade")){
                 //choose the id?
-                system1.Trade(user, allItems, system1);
-                mainMenu(user, allItems, system1);
+                system1.Trade(user, allItems, system1, allTradeRequests, allUsers);
+                mainMenu(user, allItems, system1, allTradeRequests, allUsers);
 
 
 
@@ -179,7 +205,7 @@ public class InputGetter {
             }
             else {
                 System.out.print("Invalid command.  \n\n");
-                mainMenu(user, allItems, system1);
+                mainMenu(user, allItems, system1, allTradeRequests, allUsers);
             }
         }
         System.out.print("your command was " + a);

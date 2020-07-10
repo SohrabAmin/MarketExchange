@@ -16,7 +16,8 @@ public class TradeRequestManager {
     public void receiveTradeRequest(UserManager userManager, TradeRequest request){
         if (request.getStatus() == 0) {
             this.pending.add(request);
-            userManager.addToPendingRequests(request.getReceiver(), request);
+            User temp = request.getReceiver();
+            userManager.addToPendingRequests(temp , request);
         } else if (request.getStatus() == 1) {
             this.confirmed.add(request);
         } else {
