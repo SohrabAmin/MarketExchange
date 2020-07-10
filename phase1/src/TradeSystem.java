@@ -25,11 +25,19 @@ public class TradeSystem {
 
         User hello = new User("Tina", "123");
         User hi = new User("Mo", "123");
-        Item myitem = new Item("sock", hi, "its cute");
-        Item myitem2 = new Item("sock3", hello, "its 2cute");
+        Item myitem = new Item("sock for Mo", hi, "its cute");
+        Item myitem2 = new Item("sock for Tina", hello, "its 2cute");
+        Item myitem3 = new Item("sock2 for Tina", hello, "its 2cute");
 
         AllItems.addItem(myitem);
+        allUsers.addToInventory(allUsers.getUser(hi), myitem);
 
+
+        AllItems.addItem(myitem2);
+        allUsers.addToInventory(allUsers.getUser(hello), myitem2);
+
+        AllItems.addItem(myitem3);
+        allUsers.addToInventory(allUsers.getUser(hello), myitem3);
 
 
         System.out.println("UserManager is initiated. There should be no Users. There are: "

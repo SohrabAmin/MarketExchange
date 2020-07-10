@@ -97,7 +97,8 @@ public class InputGetter {
 
 
     public User inventory(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers, AdminManager allAdmins) {
-        List<Item> in = user.getInventory();
+        User me = allUsers.getUser(user);
+        List<Item> in = me.getInventory();
         if (in.size() == 0)
             System.out.print("List is empty!\n\n");
         else {
@@ -144,13 +145,38 @@ public class InputGetter {
         }
         System.out.print("Please put a message for the owner of the item\n");
         String message = sc.next();
-        if (tType == 1) {
+        if (tType == 1) { //1 way trade, do the following
             System.out.println("You have selected 1 way trade for item: " + tradeItem.getName() + "\nyour message was:\n" + message);
             TradeRequest trades = new TradeRequest(1, user, tradeItem.getOwner(), mylist, message, trade);
             allTradeRequests.receiveTradeRequest(allUsers, trades);
             //trade request is made and it is pending in user's pendingRequests
-        } else if (tType == 2) {
-            System.out.println("You have selected 2 way trade for item: " + tradeItem.getName() + "\nyour message was:\n" + message);
+
+
+
+        } else if (tType == 2) { //if its a two way trade, do the following:
+            System.out.println("You have selected 2 way trade for item: " + tradeItem.getName() + "\nyour message was:\n" + message + "\n");
+            System.out.println("Which item would you like to trade?\n Type in the number \n");
+
+            User me = allUsers.getUser(user);
+            List<Item> in = me.getInventory();
+            if (in.size() == 0)
+                System.out.print("List is empty!\n\n");
+            else {
+                System.out.print("Your inventory: \n\n");
+                for (int i = 0; i < in.size(); i++) {
+                    System.out.println(i+1 + ". " + in.get(i).getName());
+                }
+            }
+           //should be able to select what item
+            int inum2 = Integer.parseInt(sc.next());
+            Item salam = in.get(inum2-1);
+            System.out.println("the item you want to trade is: " + in.get(inum2-1).getName() + "\n");
+            mylist.add(salam);
+            mylist.add(tradeItem);
+            TradeRequest request = new TradeRequest(2, user, tradeItem.getOwner(), mylist, message, trade);
+            allTradeRequests.receiveTradeRequest(allUsers, request);
+
+
 
         } else {
             System.out.println("Invalid Request");
@@ -172,10 +198,13 @@ public class InputGetter {
             }
             else {
             for (int i = 0; i < Person.getPendingRequests().size(); i++) {
+                String ext = "";
+                if (Person.getPendingRequests().get(i).getRequesterItem() != null){
+                    ext = " With your item " + Person.getPendingRequests().get(i).getRequesterItem().getName();
+                }
 
-                //QUESTION : WHICH ONE SHOULD I USE GET RECIEVER OR GET REQUESTER
                 System.out.print("Person: " + Person.getPendingRequests().get(i).getRequester().getName() + " Is requesting for item: "
-                        + Person.getPendingRequests().get(i).getReceiverItem().getName() + " With Message: " + Person.getPendingRequests().get(i).getMessage());
+                        + Person.getPendingRequests().get(i).getReceiverItem().getName() + " With Message: " + Person.getPendingRequests().get(i).getMessage() + ext+ "\n");
             }
         } } else {
             System.out.print("Invalid command.  \n\n");
@@ -184,8 +213,40 @@ public class InputGetter {
         return user;
     }
 
+
+    public User Approve(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers, AdminManager allAdmins){
+        User Person = allUsers.getUser(user);
+        List <TradeRequest> Trades = Person.getPendingRequests();
+        System.out.print("Here are your pending requests. Please select the request you would like to approve.\n");
+        for (int i = 0; i < Trades.size(); i++){
+            String ext = "";
+            if (Person.getPendingRequests().get(i).getRequesterItem() != null){
+                ext = " With your item " + Person.getPendingRequests().get(i).getRequesterItem().getName();
+            }
+
+            System.out.print("\n" +Integer.toString(i+1) + ". " + Trades.get(i).getRequester().getName() + " For your item: "+ Trades.get(i).getReceiverItem().getName() + ext);
+
+
+        }
+        //printed all pending requets
+        //select request
+        //select if you want to approve or reject
+        //method that handles approve or reject
+
+
+        return user;
+
+    }
+
+
+
     public Object mainMenu(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers, AdminManager allAdmins) {
         Scanner sc = new Scanner(System.in);    //System.in is a standard input stream
+        System.out.print("----------------------------------------------------------------------------------------------\nWelcome " + user.getName() + "\n");
+        if (allUsers.getUser(user).getPendingRequests().size() > 0){
+            System.out.print("You have " + allUsers.getUser(user).getPendingRequests().size() + " Pending Trade Requests!\n");
+
+        }
         System.out.print("----------------------------------------------------------------------------------------------\nWelcome " + user.getName() + "\n");
         System.out.print("Please select from the following: \n 'View Wishlist' \n 'View Inventory' " +
                 "\n 'Browse' \n 'Trade' \n 'Messages'\n 'Log out' \n Enter 'exit' to exit the system at any time. \n");
@@ -207,6 +268,10 @@ public class InputGetter {
                 return user;
             } else if (a.equals("Messages")) {
                 return system1.Messages(user, allItems, system1, allTradeRequests, allUsers, allAdmins);
+            }
+            else if (a.equals("TApproval")){
+                return system1.Approve(user, allItems, system1, allTradeRequests, allUsers, allAdmins);
+
             }
             return user;
         }
