@@ -1,9 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.List;
 
 /**
  *  This is the initial screen. It will ask the user to input whether or not the user is an AdminUser or User. It
@@ -11,24 +8,38 @@ import java.util.List;
  *
  */
 public class LogInSystem {
+    public UserManager usermanager;
+    public AdminManager adminmanager;
 
-    public Account LogInSystem(UserManager usermanager, AdminManager adminmanager){
+    public LogInSystem(UserManager allUsers, AdminManager allAdmins) {
+        usermanager = allUsers;
+        adminmanager = allAdmins;
+    }
+
+    public Account LogIn(){
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Welcome. If you are an admin, please enter 'admin'. If otherwise, please enter 'user'." +
+        System.out.println("Welcome. If you are an admin, please enter 'admin'. If otherwise, please enter 'user'. " +
                 "Enter 'exit' to exit the system.");
         try {
-            String input = br.readLine();
-            while (input != "exit") {
-                if (input.equals("user")) {
+            String input = br.readLine();{
+                if (input.equals("exit")){
+                    System.exit(0);
+                }
+                else if (input.equals("user")) {
                     InputGetter newUser = new InputGetter();
                     return newUser.authenticator(usermanager);
                 } else if (input.equals("admin")) {
                     AdminInputGetter newAdmin = new AdminInputGetter();
-                    return newAdmin.authenticator(adminmanager);
+                    Admin temp = newAdmin.authenticator(adminmanager);
+                    if (temp == null){
+                        LogIn();
+                    }
+                    return temp;
+                }
+                else {
+                    LogIn();
                 }
             }
-            //input is 'exit'
-            System.exit(0);
 
         } catch (IOException e) {
             System.out.println("Something went wrong");
