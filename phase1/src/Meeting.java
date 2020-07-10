@@ -80,6 +80,10 @@ public class Meeting {
         this.edits = edits;
     }
 
+    /**
+     * Returns a string representation of this Meeting.
+     * @return String of this Meetings date and place.
+     */
     @Override
     public String toString() {
         return "Date: " + getDate().getTime().toString() + ", Place: " + place;

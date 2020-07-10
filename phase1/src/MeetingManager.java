@@ -4,8 +4,8 @@ public class MeetingManager {
 
     /**
      * Creates a meeting object
-     * @param date date of the Meeting to be created
-     * @param time time of the Meeting to be created
+     * @param date date of the Meeting to be created with format dd-mm-yyyy
+     * @param time 24 hour time of the Meeting to be created with format hh:mm
      * @param place place of the Meeting to be created
      * @return Meeting object with date, time and place.
      */
@@ -13,7 +13,12 @@ public class MeetingManager {
         return new Meeting(createDate(date, time), place);
     }
 
-
+    /**
+     * Creates a return meeting given the first meeting
+     * @param meeting initial meeting
+     * @param months number of months from initial meeting
+     * @return
+     */
     public Meeting createReturnMeeting(Meeting meeting, int months){
         Calendar returnDate = meeting.getDate();
         returnDate.add(Calendar.MONTH, months);
@@ -23,6 +28,7 @@ public class MeetingManager {
     /**
      * Creates a Calendar object from date string
      * @param date String version of date
+     * @param time 24 Hour time of date
      * @return Calendar version of date
      */
     private Calendar createDate(String date, String time) {
