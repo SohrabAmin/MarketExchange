@@ -10,7 +10,7 @@ public class MeetingManager {
      * @return Meeting object with date, time and place.
      */
     public Meeting createMeeting(String date, String time, String place) {
-        return new Meeting(createDate(date), place);
+        return new Meeting(createDate(date, time), place);
     }
 
     /**
@@ -18,11 +18,13 @@ public class MeetingManager {
      * @param date String version of date
      * @return Calendar version of date
      */
-    private Calendar createDate(String date) {
+    private Calendar createDate(String date, String time) {
         Calendar cal = Calendar.getInstance();
         cal.set(Integer.parseInt((date.split("-")[2])),
                 Integer.parseInt((date.split("-")[1]))-1,
-                Integer.parseInt((date.split("-")[0])));
+                Integer.parseInt((date.split("-")[0])),
+                Integer.parseInt(time.split(":")[0]),
+                Integer.parseInt(time.split(":")[1]));
         return cal;
     }
 
@@ -34,7 +36,7 @@ public class MeetingManager {
      * @param place New place for meeting
      */
     public void editMeeting(Meeting meeting, String date, String time, String place) {
-        meeting.setDate(createDate(date));
+        meeting.setDate(createDate(date, time));
         meeting.setPlace(place);
         meeting.setEdits(meeting.getEdits()+1);
     }

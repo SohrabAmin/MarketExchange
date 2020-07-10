@@ -21,8 +21,8 @@ public class Meeting {
      * gets date for Meeting
      * @return this Meetings date
      */
-    public Calendar getDate() {
-        return date;
+    public String getDate() {
+        return date.getTime().toString();
     }
 
     /**
