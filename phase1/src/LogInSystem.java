@@ -20,7 +20,7 @@ public class LogInSystem {
 
     public Object LogIn(InputGetter inputgetter, AdminInputGetter admininputgetter){
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Welcome. If you are an admin, please enter 'admin'. If otherwise, please enter 'user'. " +
+        System.out.println("\uD83D\uDECD Welcome To Trade Market! \uD83D\uDECD\nIf you are an admin, please enter 'admin'. If otherwise, please enter 'user'. " +
                 "Enter 'exit' to exit the system.");
         try {
             String input = br.readLine();{

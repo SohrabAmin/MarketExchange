@@ -85,7 +85,7 @@ public class TradeSystem {
         }
 
 
-
+        System.out.print("Goodbye!\uD83D\uDEAA");
         //saves all the users in UserManager
         userWriting.demoUserSave("UserList4.ser", allUsers);
         System.out.println(allUsers.getAllUsers());

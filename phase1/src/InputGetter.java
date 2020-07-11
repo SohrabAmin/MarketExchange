@@ -61,6 +61,7 @@ public class InputGetter {
                     }
                 }
                 if (input.equals("exit")) {
+                    System.out.print("Goodbye!\uD83D\uDEAA");
                     return input;
                 }
                 //check if temp exists in allUsers
@@ -104,7 +105,7 @@ public class InputGetter {
         else {
             System.out.print("Your inventory: \n\n");
             for (int i = 0; i < in.size(); i++) {
-                System.out.println(in.get(i).getName());
+                System.out.println("\uD83D\uDCE6" + in.get(i).getName());
             }
         }
         //system1.mainMenu(user, allItems, system1, allTradeRequests, allUsers, allAdmins);
@@ -115,7 +116,7 @@ public class InputGetter {
         // "1. Sock : white clear "
         List<Item> allItems2 = allItems.getSystemInventory();
         for (int i = 0; i < allItems2.size(); i++) {
-            System.out.println(i + 1 + ". " + allItems2.get(i).getName() + " : " + allItems2.get(i).getDescription() + "\n");
+            System.out.println("\uD83D\uDCE6" + Integer.toString(i+1) + ". " + allItems2.get(i).getName() + " : " + allItems2.get(i).getDescription() + "\n");
         }
         return user;
     }
@@ -203,7 +204,7 @@ public class InputGetter {
                     ext = " With your item " + Person.getPendingRequests().get(i).getRequesterItem().getName();
                 }
 
-                System.out.print("Person: " + Person.getPendingRequests().get(i).getRequester().getName() + " Is requesting for item: "
+                System.out.print("\uD83E\uDD1D" + Person.getPendingRequests().get(i).getRequester().getName() + " is requesting a trade for item: "
                         + Person.getPendingRequests().get(i).getReceiverItem().getName() + " With Message: " + Person.getPendingRequests().get(i).getMessage() + ext+ "\n");
             }
         } } else {
@@ -214,7 +215,19 @@ public class InputGetter {
     }
 
 
-    public User Approve(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers, AdminManager allAdmins){
+    public void RejectTrade (){
+        System.out.print("\u274E Rejected!\n");
+        return;
+    }
+
+    public void ApproveTrade (){
+        System.out.print("\u2705 Approved!\n");
+        return;
+    }
+
+
+
+    public User ApproveTrade(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers, AdminManager allAdmins){
         User Person = allUsers.getUser(user);
         List <TradeRequest> Trades = Person.getPendingRequests();
         System.out.print("Here are your pending requests. Please select the request you would like to approve.\n");
@@ -224,16 +237,51 @@ public class InputGetter {
                 ext = " With your item " + Person.getPendingRequests().get(i).getRequesterItem().getName();
             }
 
-            System.out.print("\n" +Integer.toString(i+1) + ". " + Trades.get(i).getRequester().getName() + " For your item: "+ Trades.get(i).getReceiverItem().getName() + ext);
+            System.out.print("\uD83E\uDD1D" +Integer.toString(i+1) + ". " + Trades.get(i).getRequester().getName() + " For your item: "+ Trades.get(i).getReceiverItem().getName() + ext+ "\n");
 
 
         }
         //printed all pending requets
         //select request
+        System.out.print("\n");
+        System.out.print("\u2754 Please type the ID of the trade you would like to view\n");
+        Scanner sc = new Scanner(System.in);
+        Integer pendingTrade = Integer.parseInt(sc.next());
+        int pendingRequestIndex = pendingTrade-1;
+
+        System.out.print("You have selected the following pending trade:\n");
+        String ext2 = "";
+        String temp = "Permenant";
+        if (Person.getPendingRequests().get(pendingRequestIndex).getRequesterItem() != null){
+            ext2 = " With your item " + Person.getPendingRequests().get(pendingRequestIndex).getRequesterItem().getName();
+        }
+
+        if (Person.getPendingRequests().get(pendingRequestIndex).getTemp()) //if temporary
+        temp = "Temporary";
+
+        System.out.print("\uD83D\uDFE9 Requester: "+  Trades.get(pendingRequestIndex).getRequester().getName() + "\n" +
+                "For item: " + Trades.get(pendingRequestIndex).getReceiverItem().getName()  + ext2 + "\n\uD83D\uDCACMessage:" + Trades.get(pendingRequestIndex).getMessage() +
+                "\nThis trade will be " + temp);
+
+        System.out.print("\nPlease select 1 for Approve and 2 for Reject\n"); //hey tina! you should prob implement a back option!
+
+
+        int decision = 0;
+
+        while (decision!= 1 && decision!= 2) {
+            decision = Integer.parseInt(sc.next());
+            if (decision == 1) { //if trade is approved
+                ApproveTrade();
+            } else if (decision == 2) { //if trade is rejected
+                RejectTrade();
+            } else {
+                System.out.print("\uD83E\uDDD0 What was that? Please try again!\n" + "Enter 1 for Approve and 2 for Reject\n");
+            }
+        }
         //select if you want to approve or reject
         //method that handles approve or reject
 
-
+        System.out.print("\n");
         return user;
 
     }
@@ -248,7 +296,7 @@ public class InputGetter {
 
         }
         System.out.print("Please select number from the following:\n1.View Wishlist     2.View Inventory     " +
-                "3.Browse Items     \n4.Initiate Trade     5.View Messages     6.Approval Pending Trades     7.Logout" + "\nor Enter 'exit' to exit the system at any time.\n");
+                "3.Browse Items     \n4.Initiate Trade     5.View Messages     6.Approve Pending Trades     7.Logout" + "\nor Enter 'exit' to exit the system at any time.\n");
         String a = sc.nextLine();
         if (!a.equals("exit")) {
             if (a.equals("1")) {
@@ -269,13 +317,14 @@ public class InputGetter {
                 return system1.Messages(user, allItems, system1, allTradeRequests, allUsers, allAdmins);
             }
             else if (a.equals("6")){
-                return system1.Approve(user, allItems, system1, allTradeRequests, allUsers, allAdmins);
+                return system1.ApproveTrade(user, allItems, system1, allTradeRequests, allUsers, allAdmins);
 
             }
             return user;
         }
         //input is "exit"
         else {
+            System.out.print("Goodbye!\uD83D\uDEAA\n");
             return a;
         }
 
