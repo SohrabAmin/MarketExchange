@@ -70,8 +70,10 @@ public class TransactionManager {
     }
 
     /**
-     * come back to this
-     * @param transaction
+     * Adds a given Transaction to one of three list attributes held in TransactionManager: pending, cancelled or completed.
+     * Pending implies the Transaction is in progress, cancelled implies one of the following: User(s) did not show up to the Meeting or User(s) altered
+     * Meeting to many times, and completed means the Transaction was successful, and the Item(s) have been officially swapped.
+     * @param transaction The specified Transaction that has been created.
      */
     public void receiveTransaction(Transaction transaction){
         if (transaction.getTradeStatus() == 0) {
@@ -84,7 +86,7 @@ public class TransactionManager {
     }
 
     /**
-     * come back to this
+     * Executes the back-end results of a Transaction being completed.
      * @param itemManager
      * @param userManager
      * @param transaction
