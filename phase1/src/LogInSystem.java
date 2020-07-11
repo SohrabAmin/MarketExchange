@@ -24,20 +24,26 @@ public class LogInSystem {
                 "Enter 'exit' to exit the system.");
         try {
             String input = br.readLine();{
+                //if the user wants to exit the program, it will return "exit"
+                //so TradeSystem knows to exit the system
                 if (input.equals("exit")){
                     return new String("exit");
                 }
+                //if they are a user, it will call the authenticator() method in InputGetter
                 else if (input.equals("user")) {
                     return inputgetter.authenticator(usermanager);
-                } else if (input.equals("admin")) {
+                }
+                //if they are admin, it will prompt admin authenticator() method in AdminInputGetter
+                else if (input.equals("admin")) {
                     Admin temp = admininputgetter.authenticator(adminmanager);
+                    //authenticator() returns null when user wants to go back to main welcome screen
                     if (temp == null){
-                        LogIn(inputgetter, admininputgetter);
+                        return LogIn(inputgetter, admininputgetter);
                     }
                     return temp;
                 }
                 else {
-                    LogIn(inputgetter, admininputgetter);
+                    return LogIn(inputgetter, admininputgetter);
                 }
             }
 

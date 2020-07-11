@@ -43,7 +43,6 @@ public class AdminInputGetter {
                 }
                 //if Admin doesn't exist
                 System.out.println("Wrong username or password. Please try Again");
-                //curr = 0;
                 return authenticator(allAdmins);
             }
             if (input.equals("back")) {

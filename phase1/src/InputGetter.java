@@ -24,8 +24,8 @@ public class InputGetter {
             //user wants to signup for an account
             if (input.equals("exit")){
                 return input;
-            }
-            if (input.equals("signup")) {
+            } if (input.equals("signup")) {
+                //as long as they don't say 'exit', it will prompt them to enter user name
                 while (!input.equals("exit") && !prompts.usergot/*&& curr < 2*/) {
                     if (prompts.hasNext()) {
                         System.out.println(prompts.next());
@@ -38,18 +38,23 @@ public class InputGetter {
                             prompts.usergot = true;
                     }
                 }
+                if (input.equals("exit")){
+                    return new String("exit");
+                }
                 //loops through the list of allUsers in the system
                 for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
                     //checks if the entered username already exists
                     if (temp.get(0).equals(allUsers.getAllUsers().get(i).getName())) {
                         System.out.print("Username Already exists. Please choose a new username\n");
                         return authenticator(allUsers);
-                    }}
+                    }
+                }
+                //if username doesn't already exist, it will create a user and returns it
                 allUsers.createUser(temp.get(0), temp.get(1));
-                return (allUsers.getAllUsers().get(allUsers.getAllUsers().size() - 1));
-
+                return allUsers.getAllUsers().get(allUsers.getAllUsers().size() - 1);
+                }
                 //user wants to login to their account
-            } else if (input.equals("login")) {
+            else if (input.equals("login")) {
                 while (!input.equals("exit") && curr < 2) {
                     if (prompts.hasNext()) {
                         System.out.println(prompts.next());

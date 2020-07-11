@@ -59,7 +59,7 @@ public class TradeSystem {
             Object loggedIn = system1.LogIn(inputgetter, admininputgetter);
             //if they decide to exit at any point, loggedIn will equal "exit" and it will break the loop
             //and proceed to save the current information and exit the system
-            if (loggedIn.equals("exit")) {
+            if (loggedIn != null && loggedIn.equals("exit")) {
                 break;
             }
             currentUser = loggedIn;
@@ -85,7 +85,8 @@ public class TradeSystem {
         }
 
 
-        System.out.print("Goodbye!\uD83D\uDEAA");
+        System.out.print("Goodbye!\uD83D\uDEAA \n");
+
         //saves all the users in UserManager
         userWriting.demoUserSave("UserList4.ser", allUsers);
         System.out.println(allUsers.getAllUsers());
