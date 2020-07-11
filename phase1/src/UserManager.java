@@ -202,8 +202,8 @@ public class UserManager extends AccountManager {
         Object[] setOfMapEntries = partnerToFrequencyMap.entrySet().toArray();
         Arrays.sort(setOfMapEntries,
                 (mapEntry1, mapEntry2) ->
-                        ((Map.Entry<User, Integer>) mapEntry2).getValue()
-                                .compareTo(((Map.Entry<User, Integer>) mapEntry1).getValue()));
+                        ((Map.Entry<User, Integer>) mapEntry2).getValue().
+                                compareTo(((Map.Entry<User, Integer>) mapEntry1).getValue()));
         // Reference for the above five lines:
         // https://stackoverflow.com/questions/21054415/how-to-sort-a-hashmap-by-the-integer-value
 
@@ -249,10 +249,17 @@ public class UserManager extends AccountManager {
         return recentlyTradedItems;
     }
 
-    public User getUser(User person) {
-        for (User allUser : allUsers) {
-            if (person.getName().equals(allUser.getName())) {
-                return allUser;
+    /**
+     * Used to associate a User that is an attribute of another object with the corresponding User in the system's list
+     * of all Users
+     *
+     * @param userAsAnAttribute User that is an attribute of another object
+     * @return User in the system's list of all Users
+     */
+    public User getUser(User userAsAnAttribute) {
+        for (User originalUser : allUsers) {
+            if (userAsAnAttribute.getName().equals(originalUser.getName())) {
+                return originalUser;
             }
         }
         return null;
