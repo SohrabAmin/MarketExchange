@@ -59,7 +59,7 @@ public class TradeSystem {
                 if (loggedIn instanceof User) {
                     loggedIn = inputgetter.mainMenu((User) loggedIn, AllItems, inputgetter, allTradeRequests, allUsers, allAdmins);
                 } else if (loggedIn instanceof Admin) {
-                    admininputgetter.mainMenu((Admin) loggedIn);
+                    loggedIn = admininputgetter.mainMenu((Admin) loggedIn, allAdmins, allUsers, AllItems);
                 } else if (loggedIn.equals("exit")) {
                     //loop will break if user decides to exit at any point while they are logged in
                     break;
