@@ -87,5 +87,5 @@ public class User extends Account {
         this.eligibility -= 1;
     }
 
-
+    //TODO: consider overriding the equals method inherited from Object
 }

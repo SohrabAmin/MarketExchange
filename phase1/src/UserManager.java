@@ -160,40 +160,40 @@ public class UserManager extends AccountManager {
      * Updates a User's list of top three trading partners.
      * <p>
      * Please note: the websites https://www.geeksforgeeks.org/count-occurrences-elements-list-java/ and
-     * https://stackoverflow.com/questions/21054415/how-to-sort-a-hashmap-by-the-integer-value were referenced to
-     * implement this method.
+     * https://stackoverflow.com/questions/21054415/how-to-sort-a-hashmap-by-the-integer-value were referenced in order
+     * to implement this method.
      *
      * @param user User whose list of top three trading partners is to be updated
      */
     public void updateTopTradingPartners(User user) {
         List<Transaction> tradeHistoryCopy = user.getTradeHistory();
 
-        // the following hashmap maps user's trading partners to the number of times user and partner have traded
+        // the following hashmap maps each trading partner of user to the number of times user and partner have traded
         Map<User, Integer> partnerToFrequencyMap = new HashMap<>();
 
         // populate the hashmap
         for (Transaction transaction : tradeHistoryCopy) {
             if (transaction instanceof OneWay) {
-                if (user.equals(((OneWay) transaction).getBorrower())) {
-                    Integer currentFrequency = partnerToFrequencyMap.get(((OneWay) transaction).getLender());
-                    partnerToFrequencyMap.put(((OneWay) transaction).getLender(),
-                            (currentFrequency == null) ? 1 : currentFrequency + 1);
-                    // Reference for the above three lines:
+                User borrower = this.getUser(((OneWay) transaction).getBorrower());
+                User lender = this.getUser(((OneWay) transaction).getLender());
+                if (user.equals(borrower)) {
+                    Integer currentFrequency = partnerToFrequencyMap.get(lender);
+                    partnerToFrequencyMap.put(lender, (currentFrequency == null) ? 1 : currentFrequency + 1);
+                    // Reference for the above two lines:
                     // https://www.geeksforgeeks.org/count-occurrences-elements-list-java/
-                } else if (user.equals(((OneWay) transaction).getLender())) {
-                    Integer currentFrequency = partnerToFrequencyMap.get(((OneWay) transaction).getBorrower());
-                    partnerToFrequencyMap.put(((OneWay) transaction).getBorrower(),
-                            (currentFrequency == null) ? 1 : currentFrequency + 1);
+                } else if (user.equals(lender)) {
+                    Integer currentFrequency = partnerToFrequencyMap.get(borrower);
+                    partnerToFrequencyMap.put(borrower, (currentFrequency == null) ? 1 : currentFrequency + 1);
                 }
             } else if (transaction instanceof TwoWay) {
-                if (user.equals(((TwoWay) transaction).getFirstTrader())) {
-                    Integer currentFrequency = partnerToFrequencyMap.get(((TwoWay) transaction).getSecondTrader());
-                    partnerToFrequencyMap.put(((TwoWay) transaction).getSecondTrader(),
-                            (currentFrequency == null) ? 1 : currentFrequency + 1);
-                } else if (user.equals(((TwoWay) transaction).getSecondTrader())) {
-                    Integer currentFrequency = partnerToFrequencyMap.get(((TwoWay) transaction).getFirstTrader());
-                    partnerToFrequencyMap.put(((TwoWay) transaction).getFirstTrader(),
-                            (currentFrequency == null) ? 1 : currentFrequency + 1);
+                User firstTrader = this.getUser(((TwoWay) transaction).getFirstTrader());
+                User secondTrader = this.getUser(((TwoWay) transaction).getSecondTrader());
+                if (user.equals(firstTrader)) {
+                    Integer currentFrequency = partnerToFrequencyMap.get(secondTrader);
+                    partnerToFrequencyMap.put(secondTrader, (currentFrequency == null) ? 1 : currentFrequency + 1);
+                } else if (user.equals(secondTrader)) {
+                    Integer currentFrequency = partnerToFrequencyMap.get(firstTrader);
+                    partnerToFrequencyMap.put(firstTrader, (currentFrequency == null) ? 1 : currentFrequency + 1);
                 }
             }
         }
@@ -202,14 +202,51 @@ public class UserManager extends AccountManager {
         Object[] setOfMapEntries = partnerToFrequencyMap.entrySet().toArray();
         Arrays.sort(setOfMapEntries,
                 (mapEntry1, mapEntry2) ->
-                        ((Map.Entry<User, Integer>) mapEntry2).getValue().
-                                compareTo(((Map.Entry<User, Integer>) mapEntry1).getValue()));
+                        ((Map.Entry<User, Integer>) mapEntry2).getValue()
+                                .compareTo(((Map.Entry<User, Integer>) mapEntry1).getValue()));
         // Reference for the above five lines:
         // https://stackoverflow.com/questions/21054415/how-to-sort-a-hashmap-by-the-integer-value
 
+        // TODO: prevent ArrayIndexOutOfBounds exception
         user.setTopTradingPartners(((Map.Entry<User, Integer>) setOfMapEntries[0]).getKey(),
                 ((Map.Entry<User, Integer>) setOfMapEntries[1]).getKey(),
                 ((Map.Entry<User, Integer>) setOfMapEntries[2]).getKey());
+    }
+
+    /**
+     * Getter for the most recent three items that a User traded away
+     *
+     * @param user the User in question
+     * @return list of most recent three items that this User traded away
+     */
+    public List<Item> getRecentlyTradedItems(User user) {
+        List<Item> recentlyTradedItems = new ArrayList<>();
+        int itemsAddedToArrayList = 0;
+        List<Transaction> tradeHistoryCopy = user.getTradeHistory();
+
+        for (int i = tradeHistoryCopy.size() - 1; i >= 0; i--) {
+            if (itemsAddedToArrayList < 3) {
+                if (tradeHistoryCopy.get(i) instanceof OneWay) {
+                    User lender = this.getUser(((OneWay) tradeHistoryCopy.get(i)).getLender());
+                    if (user.equals(lender)) {
+                        recentlyTradedItems.add(((OneWay) tradeHistoryCopy.get(i)).getLenderItem());
+                        itemsAddedToArrayList++;
+                    }
+                } else if (tradeHistoryCopy.get(i) instanceof TwoWay) {
+                    User firstTrader = this.getUser(((TwoWay) tradeHistoryCopy.get(i)).getFirstTrader());
+                    User secondTrader = this.getUser(((TwoWay) tradeHistoryCopy.get(i)).getSecondTrader());
+                    if (user.equals(firstTrader)) {
+                        recentlyTradedItems.add(((TwoWay) tradeHistoryCopy.get(i)).getFirstItem());
+                        itemsAddedToArrayList++;
+                    } else if (user.equals(secondTrader)) {
+                        recentlyTradedItems.add(((TwoWay) tradeHistoryCopy.get(i)).getSecondItem());
+                        itemsAddedToArrayList++;
+                    }
+                }
+            }
+        }
+
+        return recentlyTradedItems;
     }
 
     public User getUser(User person) {
@@ -220,6 +257,4 @@ public class UserManager extends AccountManager {
         }
         return null;
     }
-
-
 }
