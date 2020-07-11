@@ -20,7 +20,7 @@ public class InputGetter {
 
         System.out.println("Type 'signup' to create an account or 'login' to access your account or 'exit' to exit at anytime.");
         try {
-            String input = br.readLine();
+            String input = br.readLine().toLowerCase();
             //user wants to signup for an account
             if (input.equals("exit")){
                 return input;
