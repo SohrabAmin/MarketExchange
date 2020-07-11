@@ -66,7 +66,7 @@ public class InputGetter {
                     }
                 }
                 if (input.equals("exit")) {
-                    System.out.print("Goodbye!\uD83D\uDEAA");
+
                     return input;
                 }
                 //check if temp exists in allUsers
@@ -291,9 +291,26 @@ public class InputGetter {
 
     }
 
+    public User AddItem(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers, AdminManager allAdmins){
+
+        System.out.print("Please enter the name of item you would like to add\n");
+        Scanner sc = new Scanner(System.in);
+        String itemName = sc.nextLine();
+        System.out.print("\nPlease enter the description of item you would like to add\n");
+        String description = sc.nextLine();
+        Item newItem = new Item(itemName, user, description);
+        allUsers.addToDraftInventory(user, newItem);
+
+        System.out.print("\u2705 Your request is sent to admin for approval!\n");
+        return user;
 
 
-    public Object mainMenu(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers, AdminManager allAdmins) {
+    }
+
+
+
+
+        public Object mainMenu(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers, AdminManager allAdmins) {
         Scanner sc = new Scanner(System.in);    //System.in is a standard input stream
         System.out.print("----------------------------------------------------------------------------------------------\n\uD83D\uDC4B Welcome " + user.getName() + "\n");
         if (allUsers.getUser(user).getPendingRequests().size() > 0){
@@ -301,7 +318,8 @@ public class InputGetter {
 
         }
         System.out.print("Please select number from the following:\n1.View Wishlist     2.View Inventory     " +
-                "3.Browse Items     \n4.Initiate Trade     5.View Messages     6.Approve Pending Trades     7.Logout" + "\nor Enter 'exit' to exit the system at any time.\n");
+                "3.Browse Items     \n4.Initiate Trade     5.View Messages     6.Approve Pending Trades\n" +
+                "7. Add Item to inventory     8.Logout" + "\nor Enter 'exit' to exit the system at any time.\n");
         String a = sc.nextLine();
         if (!a.equals("exit")) {
             if (a.equals("1")) {
@@ -311,9 +329,10 @@ public class InputGetter {
                 return system1.inventory(user, allItems, system1, allTradeRequests, allUsers, allAdmins);
             } else if (a.equals("3")) {
                 return system1.Browse(user, allItems, system1, allTradeRequests, allUsers, allAdmins);
-            } else if (a.equals("7")) {
+            } else if (a.equals("8")) {
                 //implement logout
                 return null;
+
             } else if (a.equals("4")) {
                 //choose the id?
                 system1.Trade(user, allItems, system1, allTradeRequests, allUsers, allAdmins);
@@ -325,6 +344,10 @@ public class InputGetter {
                 return system1.ApproveTrade(user, allItems, system1, allTradeRequests, allUsers, allAdmins);
 
             }
+            else if (a.equals("7")){
+                return system1.AddItem (user, allItems, system1, allTradeRequests, allUsers, allAdmins);
+            }
+
             return user;
         }
         //input is "exit"
