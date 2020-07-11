@@ -6,7 +6,7 @@ public class User extends Account {
     public ArrayList<Item> wishlist;
     private ArrayList<Item> inventory;
     private ArrayList<Item> draftInventory;
-    private boolean isFrozen;
+    public boolean isFrozen;
     private int eligibility;
     private List<Transaction> tradeHistory;
     private List<User> topTradingPartners;

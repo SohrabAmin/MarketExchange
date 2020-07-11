@@ -22,8 +22,13 @@ public class TradeSystem {
         //creating users to test
         allUsers.createUser("Tina", "123");
         allUsers.createUser("Mo", "123");
+        allUsers.createUser("Tina2", "123");
+
 
         User hello = new User("Tina", "123");
+
+       // allUsers.freeze(allUsers.getAllUsers().get(0));
+        allUsers.getAllUsers().get(0).isFrozen = true;
         User hi = new User("Mo", "123");
         Item myitem = new Item("sock for Mo", hi, "its cute");
         Item myitem2 = new Item("sock for Tina", hello, "its 2cute");
