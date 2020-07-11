@@ -242,34 +242,33 @@ public class InputGetter {
 
     public Object mainMenu(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers, AdminManager allAdmins) {
         Scanner sc = new Scanner(System.in);    //System.in is a standard input stream
-        System.out.print("----------------------------------------------------------------------------------------------\nWelcome " + user.getName() + "\n");
+        System.out.print("----------------------------------------------------------------------------------------------\n\uD83D\uDC4B Welcome " + user.getName() + "\n");
         if (allUsers.getUser(user).getPendingRequests().size() > 0){
-            System.out.print("You have " + allUsers.getUser(user).getPendingRequests().size() + " Pending Trade Requests!\n");
+            System.out.print("\uD83D\uDCE9 You have " + allUsers.getUser(user).getPendingRequests().size() + " Pending Trade Requests!\n");
 
         }
-        System.out.print("----------------------------------------------------------------------------------------------\nWelcome " + user.getName() + "\n");
-        System.out.print("Please select from the following: \n 'View Wishlist' \n 'View Inventory' " +
-                "\n 'Browse' \n 'Trade' \n 'Messages'\n 'Log out' \n Enter 'exit' to exit the system at any time. \n");
+        System.out.print("Please select number from the following:\n1.View Wishlist     2.View Inventory     " +
+                "3.Browse Items     \n4.Initiate Trade     5.View Messages     6.Approval Pending Trades     7.Logout" + "\nor Enter 'exit' to exit the system at any time.\n");
         String a = sc.nextLine();
         if (!a.equals("exit")) {
-            if (a.equals("View Wishlist")) {
+            if (a.equals("1")) {
                 return system1.wishlist(user, allItems, system1, allTradeRequests, allUsers, allAdmins);
             }
-            else if (a.equals("View Inventory")) {
+            else if (a.equals("2")) {
                 return system1.inventory(user, allItems, system1, allTradeRequests, allUsers, allAdmins);
-            } else if (a.equals("Browse")) {
+            } else if (a.equals("3")) {
                 return system1.Browse(user, allItems, system1, allTradeRequests, allUsers, allAdmins);
-            } else if (a.equals("Log out")) {
+            } else if (a.equals("7")) {
                 //implement logout
                 return null;
-            } else if (a.equals("Trade")) {
+            } else if (a.equals("4")) {
                 //choose the id?
                 system1.Trade(user, allItems, system1, allTradeRequests, allUsers, allAdmins);
                 return user;
-            } else if (a.equals("Messages")) {
+            } else if (a.equals("5")) {
                 return system1.Messages(user, allItems, system1, allTradeRequests, allUsers, allAdmins);
             }
-            else if (a.equals("TApproval")){
+            else if (a.equals("6")){
                 return system1.Approve(user, allItems, system1, allTradeRequests, allUsers, allAdmins);
 
             }
