@@ -39,7 +39,7 @@ public class InputGetter {
                     }
                 }
                 if (input.equals("exit")){
-                    return new String("exit");
+                    return "exit";
                 }
                 //loops through the list of allUsers in the system
                 for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
@@ -87,7 +87,7 @@ public class InputGetter {
         return authenticator(allUsers);
     }
 
-    public User wishlist(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers, AdminManager allAdmins) {
+    public User wishlist(User user) {
         List<Item> wishlist = user.getWishlist();
         if (wishlist.size() == 0)
             System.out.print("List is empty!\n\n");
@@ -97,12 +97,11 @@ public class InputGetter {
                 System.out.println(wishlist.get(i).getName());
             }
         }
-        //system1.mainMenu(user, allItems, system1, allTradeRequests, allUsers, allAdmins);
         return user;
     }
 
 
-    public User inventory(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers, AdminManager allAdmins) {
+    public User inventory(User user,UserManager allUsers) {
         User me = allUsers.getUser(user);
         List<Item> in = me.getInventory();
         if (in.size() == 0)
@@ -113,20 +112,20 @@ public class InputGetter {
                 System.out.println("\uD83D\uDCE6" + in.get(i).getName());
             }
         }
-        //system1.mainMenu(user, allItems, system1, allTradeRequests, allUsers, allAdmins);
         return user;
     }
 
-    public User Browse(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers, AdminManager allAdmins) {
+    public User Browse(User user, ItemManager allItems) {
         // "1. Sock : white clear "
         List<Item> allItems2 = allItems.getSystemInventory();
         for (int i = 0; i < allItems2.size(); i++) {
-            System.out.println("\uD83D\uDCE6" + Integer.toString(i+1) + ". " + allItems2.get(i).getName() + " : " + allItems2.get(i).getDescription() + "\n");
+            System.out.println("\uD83D\uDCE6" + (i + 1) + ". " + allItems2.get(i).getName() + " : "
+                    + allItems2.get(i).getDescription() + "\n");
         }
         return user;
     }
 
-    public void Trade(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers, AdminManager allAdmins) {
+    public void Trade(User user, ItemManager allItems, TradeRequestManager allTradeRequests, UserManager allUsers) {
         Scanner sc = new Scanner(System.in);    //System.in is a standard input stream
         System.out.print("Please type in the ID of the item you would like to trade\n");
         int inum = Integer.parseInt(sc.next());
@@ -189,7 +188,7 @@ public class InputGetter {
         }
     }
 
-    public User Messages(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers, AdminManager allAdmins) {
+    public User Messages(User user,UserManager allUsers) {
         System.out.print("What would you like to see? Type 'Trade' for Trade Requests and type 'Meeting' for meeting requests\n");
         Scanner sc1 = new Scanner(System.in);
         String input = sc1.next();
@@ -209,8 +208,10 @@ public class InputGetter {
                     ext = " With your item " + Person.getPendingRequests().get(i).getRequesterItem().getName();
                 }
 
-                System.out.print("\uD83E\uDD1D" + Person.getPendingRequests().get(i).getRequester().getName() + " is requesting a trade for item: "
-                        + Person.getPendingRequests().get(i).getReceiverItem().getName() + " With Message: " + Person.getPendingRequests().get(i).getMessage() + ext+ "\n");
+                System.out.print("\uD83E\uDD1D" + Person.getPendingRequests().get(i).getRequester().getName() +
+                        " is requesting a trade for item: "
+                        + Person.getPendingRequests().get(i).getReceiverItem().getName() + " With Message: " +
+                        Person.getPendingRequests().get(i).getMessage() + ext+ "\n");
             }
         } } else {
             System.out.print("Invalid command.  \n\n");
@@ -219,17 +220,15 @@ public class InputGetter {
         return user;
     }
 
-    public void RejectTrade (){
+    public void RejectTrade(){
         System.out.print("\u274E Rejected!\n");
-        return;
     }
 
-    public void ApproveTrade (){
+    public void ApprovedTrade(){
         System.out.print("\u2705 Approved!\n");
-        return;
     }
 
-    public User ApproveTrade(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers, AdminManager allAdmins){
+    public User ApproveTrade(User user,UserManager allUsers){
         User Person = allUsers.getUser(user);
         List <TradeRequest> Trades = Person.getPendingRequests();
         System.out.print("Here are your pending requests. Please select the request you would like to approve.\n");
@@ -243,7 +242,7 @@ public class InputGetter {
 
 
         }
-        //printed all pending requets
+        //printed all pending requests
         //select request
         System.out.print("\n");
         System.out.print("\u2754 Please type the ID of the trade you would like to view\n");
@@ -262,18 +261,18 @@ public class InputGetter {
         temp = "Temporary";
 
         System.out.print("\uD83D\uDFE9 Requester: "+  Trades.get(pendingRequestIndex).getRequester().getName() + "\n" +
-                "For item: " + Trades.get(pendingRequestIndex).getReceiverItem().getName()  + ext2 + "\n\uD83D\uDCACMessage:" + Trades.get(pendingRequestIndex).getMessage() +
+                "For item: " + Trades.get(pendingRequestIndex).getReceiverItem().getName()  + ext2 +
+                "\n\uD83D\uDCACMessage:" + Trades.get(pendingRequestIndex).getMessage() +
                 "\nThis trade will be " + temp);
 
         System.out.print("\nPlease select 1 for Approve and 2 for Reject\n"); //hey tina! you should prob implement a back option!
-
 
         int decision = 0;
 
         while (decision!= 1 && decision!= 2) {
             decision = Integer.parseInt(sc.next());
             if (decision == 1) { //if trade is approved
-                ApproveTrade();
+                ApprovedTrade();
             } else if (decision == 2) { //if trade is rejected
                 RejectTrade();
             } else {
@@ -288,7 +287,7 @@ public class InputGetter {
 
     }
 
-    public User AddItem(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers, AdminManager allAdmins){
+    public User AddItem(User user, UserManager allUsers){
 
         System.out.print("Please enter the name of item you would like to add\n");
         Scanner sc = new Scanner(System.in);
@@ -303,48 +302,43 @@ public class InputGetter {
 
 
     }
-
-
-
-
-        public Object mainMenu(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers, AdminManager allAdmins) {
+    public Object mainMenu(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers, AdminManager allAdmins) {
         Scanner sc = new Scanner(System.in);    //System.in is a standard input stream
         System.out.print("----------------------------------------------------------------------------------------------\n\uD83D\uDC4B Welcome " + user.getName() + "\n");
         if (allUsers.getUser(user).getPendingRequests().size() > 0){
             System.out.print("\uD83D\uDCE9 You have " + allUsers.getUser(user).getPendingRequests().size() + " Pending Trade Requests!\n");
 
         }
-        System.out.print("Please select number from the following:\n1.View Wishlist     2.View Inventory     " +
-                "3.Browse Items     \n4.Initiate Trade     5.View Messages     6.Approve Pending Trades\n" +
-                "7. Add Item to inventory     8.Logout" + "\nor Enter 'exit' to exit the system at any time.\n");
+        System.out.print("Please select number from the following:\n1.View Wishlist\n2.View Inventory\n" +
+                "3.Browse Items\n4.Initiate Trade\n5.View Messages\n6.Approve Pending Trades\n" +
+                "7.Add Item to inventory\n8.Logout" + "\nEnter 'exit' to exit the system at any time.\n");
         String a = sc.nextLine();
         if (!a.equals("exit")) {
             if (a.equals("1")) {
-                return system1.wishlist(user, allItems, system1, allTradeRequests, allUsers, allAdmins);
+                return system1.wishlist(user);
             }
             else if (a.equals("2")) {
-                return system1.inventory(user, allItems, system1, allTradeRequests, allUsers, allAdmins);
+                return system1.inventory(user, allUsers);
             } else if (a.equals("3")) {
-                return system1.Browse(user, allItems, system1, allTradeRequests, allUsers, allAdmins);
+                return system1.Browse(user, allItems);
             } else if (a.equals("8")) {
                 //implement logout
                 return null;
 
             } else if (a.equals("4")) {
                 //choose the id?
-                system1.Trade(user, allItems, system1, allTradeRequests, allUsers, allAdmins);
+                system1.Trade(user, allItems, allTradeRequests, allUsers);
                 return user;
             } else if (a.equals("5")) {
-                return system1.Messages(user, allItems, system1, allTradeRequests, allUsers, allAdmins);
+                return system1.Messages(user,allUsers);
             }
             else if (a.equals("6")){
-                return system1.ApproveTrade(user, allItems, system1, allTradeRequests, allUsers, allAdmins);
+                return system1.ApproveTrade(user, allUsers);
 
             }
             else if (a.equals("7")){
-                return system1.AddItem (user, allItems, system1, allTradeRequests, allUsers, allAdmins);
+                return system1.AddItem(user, allUsers);
             }
-
             return user;
         }
         //input is "exit"
@@ -354,7 +348,5 @@ public class InputGetter {
         }
 
     }
-
-
-    }
+}
 
