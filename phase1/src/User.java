@@ -29,8 +29,8 @@ public class User extends Account {
         this.topTradingPartners = new ArrayList<>();
         this.pendingRequests = new ArrayList<>();
         this.ItemHistory =new HashMap<Item,String>();//Creating HashMap
-        this.outbandRequest = new ArrayList<>();
-        this.pendingTrade = new ArrayList<>();
+        outbandRequest = new ArrayList<>();
+        pendingTrade = new ArrayList<>();
 
     }
 
@@ -69,8 +69,8 @@ public class User extends Account {
     public List<TradeRequest> getOutbandRequest(){ return outbandRequest;}
     public List<Meeting> getPendingTrade(){ return pendingTrade;}
 
-    public void addOutbandRequest(TradeRequest outbandrequest){this.outbandRequest.add(outbandrequest);}
-    public void addPendingTrade(Meeting meeting){this.pendingTrade.add(meeting);}
+    public void addOutbandRequest(TradeRequest outbandrequest){outbandRequest.add(outbandrequest);}
+    public void addPendingTrade(Meeting meeting){pendingTrade.add(meeting);}
 
     public void setTopTradingPartners(List<User> topTradingPartners) {
         this.topTradingPartners.clear();
