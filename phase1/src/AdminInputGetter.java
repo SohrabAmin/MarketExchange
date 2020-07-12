@@ -119,7 +119,11 @@ public class AdminInputGetter {
                         return mainMenu(admin, allAdmins, allUsers, allItems);
                     }
                 } else if (input.equals("2")) {
-                    changeThreshold(allUsers, allAdmins);
+                    Object temp = changeThreshold(allUsers, allAdmins);
+                    while (temp == null){
+                        temp = changeThreshold(allUsers, allAdmins);
+                    }
+                    //else input was "back", returns to main menu
                     return admin;
                 } else if (input.equals("3")) {
                     Object temp = approvalPendingItems(allUsers, allItems);
@@ -285,14 +289,48 @@ public class AdminInputGetter {
      * @param allUsers  changes LentMinusBorrowedThreshold variable in the system's UserManager
      * @param allAdmins changes LentMinusBorrowedThreshold variable in the system's AdminManager
      */
-    public void changeThreshold(UserManager allUsers, AdminManager allAdmins) {
+    public Object changeThreshold(UserManager allUsers, AdminManager allAdmins) {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Please enter the integer you wish to change the system threshold to or 'back' to go back.");
+        //prints the current thresholds of the system
+        System.out.println("\nHere are the current thresholds:");
+        System.out.println("Lent - borrow threshold: " + allUsers.getLentMinusBorrowedThreshold());
+        System.out.println("Weekly transaction limit: " + allUsers.getWeeklyTransactionLimit());
+        System.out.println("Incomplete transaction limit: " + allUsers.getIncompleteTransactionLimit());
+
+        //prompts user to enter what threshold they wish to edit
+        System.out.println("\nWhich threshold would you like to edit? Please enter the number beside the option.");
+        System.out.println("1. Lent - borrow threshold\n2. Weekly Transaction Limit\n3. Incomplete Transaction Limit\n");
+        System.out.println("Enter 'back' to return to the main menu.");
+        Object thresholdOption = null;
+        //checks to see if they entered a valid input (one of the options)
+        try {
+            String option = br.readLine();
+            if (option.equals("back")) {
+                return "back";
+            } else {
+                try {
+                    thresholdOption = Integer.parseInt(option);
+                } catch (NumberFormatException e) {
+                    thresholdOption = "boo!";
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Invalid input. Please try again.");
+            return null;
+        }
+        //threshold option doesn't contain a number option
+        if (!(thresholdOption instanceof Integer)) {
+            System.out.println("Invalid input. Please try again.");
+            return null;
+        }
+        //input was valid, now prompts admin to input what they want the new threshold to be
+        System.out.println("Please enter the integer you wish to change the system threshold to or 'back' to the previous page.");
         Object newThreshold = null;
+        //checks to see if they entered a valid input (one of the options)
         try {
             String input = br.readLine();
             if (input.equals("back")) {
-                return;
+                return null;
             } else {
                 try {
                     newThreshold = Integer.parseInt(input);
@@ -301,17 +339,31 @@ public class AdminInputGetter {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Something went wrong");
+            System.out.println("Invalid input. Please try again.");
+            return null;
         }
         if (newThreshold instanceof Integer) {
-            allUsers.setLentMinusBorrowedThreshold((Integer) newThreshold);
-            allAdmins.setLentMinusBorrowedThreshold((Integer) newThreshold);
-            System.out.println("\nThe threshold has been changed successfully. The lend - borrow threshold is now: " +
-                    newThreshold + ". \n");
+            if ((Integer) thresholdOption == 1) {
+                allUsers.setLentMinusBorrowedThreshold((Integer) newThreshold);
+                allAdmins.setLentMinusBorrowedThreshold((Integer) newThreshold);
+                System.out.println("\nThe threshold has been changed successfully. The lend - borrow threshold is now: " +
+                        newThreshold + ". \n");
+            } else if ((Integer) thresholdOption == 2) {
+                allUsers.setWeeklyTransactionLimit((Integer) newThreshold);
+                allAdmins.setWeeklyTransactionLimit((Integer) newThreshold);
+                System.out.println("\nThe threshold has been changed successfully. The weekly transaction limit " +
+                        "threshold is now: " + newThreshold + ". \n");
+            } else{ //thresholdOption == 3
+                allUsers.setIncompleteTransactionLimit((Integer) newThreshold);
+                allAdmins.setIncompleteTransactionLimit((Integer) newThreshold);
+                System.out.println("\nThe threshold has been changed successfully. The incomplete transaction limit " +
+                        "threshold is now: " + newThreshold + ". \n");
+            }
         } else {
-            System.out.println("\nThe threshold has been changed unsuccessfully. The lend - borrow threshold is: " +
-                    allUsers.getLentMinusBorrowedThreshold() + ". \n");
+                System.out.println("\nThe threshold has been changed unsuccessfully. Please try again.");
+                return null;
         }
+        return null;
     }
 
     /**
