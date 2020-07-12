@@ -296,7 +296,6 @@ public class AdminInputGetter {
         System.out.println("Lent - borrow threshold: " + allUsers.getLentMinusBorrowedThreshold());
         System.out.println("Weekly transaction limit: " + allUsers.getWeeklyTransactionLimit());
         System.out.println("Incomplete transaction limit: " + allUsers.getIncompleteTransactionLimit());
-
         //prompts user to enter what threshold they wish to edit
         System.out.println("\nWhich threshold would you like to edit? Please enter the number beside the option.");
         System.out.println("1. Lent - borrow threshold\n2. Weekly Transaction Limit\n3. Incomplete Transaction Limit\n");
