@@ -5,6 +5,10 @@ public abstract class AccountManager {
     private int lentMinusBorrowedThreshold = 1;
     private int meetingEditThreshold = 3;
 
+    // TODO: decide on a default value for the following thresholds
+    private int weeklyTransactionLimit;
+    private int incompleteTransactionLimit;
+
     /**
      * Verifies inputted login credentials
      *
@@ -53,6 +57,45 @@ public abstract class AccountManager {
      */
     public void setMeetingEditThreshold(int meetingEditThreshold) {
         this.meetingEditThreshold = meetingEditThreshold;
+    }
+
+    /**
+     * Getter for the threshold that dictates the number of transactions any one User can conduct in one week
+     *
+     * @return current threshold
+     */
+    public int getWeeklyTransactionLimit() {
+        return weeklyTransactionLimit;
+    }
+
+    /**
+     * Setter for the threshold that dictates the number of transactions any one User can conduct in one week; only an
+     * Admin should change this threshold
+     *
+     * @param weeklyTransactionLimit new threshold
+     */
+    public void setWeeklyTransactionLimit(int weeklyTransactionLimit) {
+        this.weeklyTransactionLimit = weeklyTransactionLimit;
+    }
+
+    /**
+     * Getter for the threshold that dictates how many transactions a User can leave incomplete before their account is
+     * frozen
+     *
+     * @return current threshold
+     */
+    public int getIncompleteTransactionLimit() {
+        return incompleteTransactionLimit;
+    }
+
+    /**
+     * Setter for the threshold that dictates how many transactions a User can leave incomplete before their account is
+     * frozen
+     *
+     * @param incompleteTransactionLimit new threshold
+     */
+    public void setIncompleteTransactionLimit(int incompleteTransactionLimit) {
+        this.incompleteTransactionLimit = incompleteTransactionLimit;
     }
 
 }

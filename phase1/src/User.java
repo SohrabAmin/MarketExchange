@@ -13,7 +13,6 @@ public class User extends Account {
     private List<TradeRequest> pendingRequests;
 
     public User() {
-
     }
 
     public User(String name, String password) {
@@ -25,7 +24,6 @@ public class User extends Account {
         this.tradeHistory = new ArrayList<>();
         this.topTradingPartners = new ArrayList<>();
         this.pendingRequests = new ArrayList<>();
-
     }
 
 
@@ -51,18 +49,15 @@ public class User extends Account {
 
     public List<TradeRequest> getPendingRequests() {
         return this.pendingRequests;
-
     }
 
-    public void updatePendingRequests(TradeRequest request) {
-        this.pendingRequests.add(request);
+    public List<User> getTopTradingPartners() {
+        return topTradingPartners;
     }
 
-    public void setTopTradingPartners(User partner1, User partner2, User partner3) {
+    public void setTopTradingPartners(List<User> topTradingPartners) {
         this.topTradingPartners.clear();
-        this.topTradingPartners.add(partner1);
-        this.topTradingPartners.add(partner2);
-        this.topTradingPartners.add(partner3);
+        this.topTradingPartners.addAll(topTradingPartners);
     }
 
     public boolean getIsFrozen() {
@@ -76,7 +71,6 @@ public class User extends Account {
 
     public int getEligibility() {
         return eligibility;
-
     }
 
     public void increaseEligibility() {
