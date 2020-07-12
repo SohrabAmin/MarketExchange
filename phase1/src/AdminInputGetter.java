@@ -224,7 +224,7 @@ public class AdminInputGetter {
             } catch (NumberFormatException e) {
                 return null;
             }
-            allUsers.getUser(frozenUsers.get((Integer) line - 1)).setIsFrozen(false);
+            allUsers.unfreeze(frozenUsers.get((Integer) line - 1));
             System.out.print("\u2705 Successfully unfrozen user: " +
                     allUsers.getUser(frozenUsers.get((Integer) line - 1)).getName() + "\n");
             return "back";
