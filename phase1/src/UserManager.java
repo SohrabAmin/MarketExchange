@@ -167,6 +167,7 @@ public class UserManager extends AccountManager {
      */
     public void updateTopTradingPartners(User user) {
         List<Transaction> tradeHistoryCopy = user.getTradeHistory();
+        List<User> topTradingPartners = new ArrayList<>();
 
         // the following hashmap maps each trading partner of user to the number of times user and partner have traded
         Map<User, Integer> partnerToFrequencyMap = new HashMap<>();
@@ -207,10 +208,15 @@ public class UserManager extends AccountManager {
         // Reference for the above five lines:
         // https://stackoverflow.com/questions/21054415/how-to-sort-a-hashmap-by-the-integer-value
 
-        // TODO: prevent ArrayIndexOutOfBounds exception
-        user.setTopTradingPartners(((Map.Entry<User, Integer>) setOfMapEntries[0]).getKey(),
-                ((Map.Entry<User, Integer>) setOfMapEntries[1]).getKey(),
-                ((Map.Entry<User, Integer>) setOfMapEntries[2]).getKey());
+        int loopCount = 0;
+        for (Object mapEntry : setOfMapEntries) {
+            if (loopCount == 3) {
+                break;
+            }
+            topTradingPartners.add(((Map.Entry<User, Integer>) mapEntry).getKey());
+            loopCount++;
+        }
+        user.setTopTradingPartners(topTradingPartners);
     }
 
     /**

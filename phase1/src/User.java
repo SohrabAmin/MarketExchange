@@ -58,11 +58,9 @@ public class User extends Account {
         this.pendingRequests.add(request);
     }
 
-    public void setTopTradingPartners(User partner1, User partner2, User partner3) {
+    public void setTopTradingPartners(List<User> topTradingPartners) {
         this.topTradingPartners.clear();
-        this.topTradingPartners.add(partner1);
-        this.topTradingPartners.add(partner2);
-        this.topTradingPartners.add(partner3);
+        this.topTradingPartners.addAll(topTradingPartners);
     }
 
     public boolean getIsFrozen() {
