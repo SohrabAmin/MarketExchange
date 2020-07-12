@@ -11,6 +11,12 @@ import java.util.Scanner;
 
 public class AdminInputGetter {
 
+    /**
+     * Reads input from user and lets them 'log in' to their account by verifying their username and password.
+     *
+     * @param allAdmins AdminManager which stores all the admin in the system.
+     * @return returns an Admin which will be used to prompt the main menu in LogIn System
+     */
     public Admin authenticator(AdminManager allAdmins) {
 
         //we fill out allUsers with whatever is in ser file
@@ -82,13 +88,10 @@ public class AdminInputGetter {
                 allFrozenUsers.add(allUsers.getAllUsers().get(i));
             }
         }
-
         //if they have frozen users, show it here
         if (allFrozenUsers.size() > 0){
             System.out.print("\u2603 You have " + allFrozenUsers.size() + " Frozen users!\n");
-
         }
-
 
         //if they have pending items, show it here
         if (allPendingItems.size() > 0){
@@ -98,6 +101,7 @@ public class AdminInputGetter {
                 " \n 1. Add new admin \n 2. Change system threshold \n" +
                 " 3. View items that need to be approved \n 4. Freeze and unfreeze users \n 5. Log out \n" +
                 "Enter 'exit' to exit at any time.");
+
         try {
             String input = br.readLine();
             if (!input.equals("exit")) {

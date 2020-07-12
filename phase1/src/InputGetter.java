@@ -124,60 +124,132 @@ public class InputGetter {
         return user;
     }
 
-    public void Trade(User user, ItemManager allItems, TradeRequestManager allTradeRequests, UserManager allUsers) {
+    public Object Trade(User user, ItemManager allItems, TradeRequestManager allTradeRequests, UserManager allUsers) {
         Scanner sc = new Scanner(System.in);    //System.in is a standard input stream
-        System.out.print("Please type in the ID of the item you would like to trade:\n");
-        int inum = Integer.parseInt(sc.next());
-        Item tradeItem = allItems.getSystemInventory().get(inum - 1);
-        List<Item> mylist = new ArrayList<>();
-        mylist.add(tradeItem);
+        System.out.print("Please type in the ID of the item you would like to trade or 'back' to return to the main menu.\n");
+        Object inum = sc.nextLine();
+        if (inum.equals("back")){
+            return "back";
+        }
+        try {
+            inum = Integer.parseInt((String) inum);
+        } catch(NumberFormatException e) {
+            return null;
+        }
 
-        System.out.print("\nPlease type '1' for one way trade and '2' for two way trade. \n");
-        int tType = Integer.parseInt(sc.next());
+        Item tradeItem = allItems.getSystemInventory().get((Integer) inum - 1);
+        List<Item> myList = new ArrayList<>();
+        myList.add(tradeItem);
 
-        System.out.print("\nPlease type '1' for temporary trade and '2' for permanent trade. \n");
-        int type = Integer.parseInt(sc.next());
+        System.out.println("Please type '1' for one way trade and '2' for two way trade or 'back' to cancel the " +
+                "current trade and restart.");
+        Object tType = sc.nextLine();
+        if (tType.equals("back")){
+            return null;
+        }
+        try {
+            tType = Integer.parseInt((String) tType);
+        } catch(NumberFormatException e) {
+            //brings them back to the first prompt where it asks to type the ID of the item.
+            System.out.print("Invalid response. Please try again.\n");
+            return null;
+        }
+
+        System.out.println("Please type '1' for temporary trade and '2' for permanent trade or 'back' to cancel the " +
+                "current trade and restart.");
+        Object type = sc.nextLine();
+        if (type.equals("back")){
+            return null;
+        }
+        try {
+            type = Integer.parseInt((String) type);
+        } catch(NumberFormatException e) {
+            System.out.print("Invalid response. Please try again.\n");
+            return null;
+        }
         boolean trade = false;
 
-        if (type == 1) {
+        if ((int) type == 1) {
             trade = true;
-        } else if (type == 2) {
+        } else if ((int) type == 2) {
             trade = false;
         } else {
-            System.out.println("Invalid Request");
+            System.out.print("Invalid response. Please try again.\n");
+            return null;
         }
-        System.out.print("Please put a message for the owner of the item\n");
-        String message = sc.next();
-        if (tType == 1) { //1 way trade, do the following
-            System.out.println("You have selected 1 way trade for item: " + tradeItem.getName() + "\nyour message was:\n" + message);
-            TradeRequest trades = new TradeRequest(1, user, tradeItem.getOwner(), mylist, message, trade);
-            allTradeRequests.receiveTradeRequest(allUsers, trades);
+
+        System.out.print("Please put a message for the owner of the item:\n");
+        String message = sc.nextLine();
+        if ((int) tType == 1) { //1 way trade, do the following
+            System.out.print("\nYou have selected 1 way trade for item: " + tradeItem.getName() + "\nYour message was: " + message + "\n");
+            System.out.print("\nPlease enter '1' to confirm this trade or '2' to cancel the current trade and restart.\n");
+            String confirmation = sc.nextLine();
+            if (confirmation.equals("1")) {
+                TradeRequest trades = new TradeRequest(1, user, tradeItem.getOwner(), myList, message, trade);
+                allTradeRequests.receiveTradeRequest(allUsers, trades);
+                System.out.print("\nTrade request has been sent successfully.\n");
+                return "back";
+            } else if (confirmation.equals("2")){
+                System.out.print("\nTrade has been cancelled.\n");
+                return null;
+            } else{
+                System.out.print("Invalid response. Please try again.\n");
+                return null;
+            }
             //trade request is made and it is pending in user's pendingRequests
 
-        } else if (tType == 2) { //if its a two way trade, do the following:
-            System.out.println("You have selected 2 way trade for item: " + tradeItem.getName() + "\nyour message was:\n" + message + "\n");
-            System.out.println("Which item would you like to trade?\n Type in the number \n");
+        } else if ((int) tType == 2) { //if its a two way trade, do the following:
+            System.out.print("You have selected 2 way trade for item: " + tradeItem.getName() + "\nYour message was: " + message + "\n");
+            System.out.print("Which item would you like to trade?\n Please type in the number of the item you " +
+                    "would like to trade or 'back' to cancel the current trade and restart.");
 
             User me = allUsers.getUser(user);
             List<Item> in = me.getInventory();
-            if (in.size() == 0)
-                System.out.print("List is empty!\n\n");
-            else {
-                System.out.print("Your inventory: \n\n");
-                for (int i = 0; i < in.size(); i++) {
-                    System.out.println(i+1 + ". " + in.get(i).getName());
-                }
+            if (in.size() == 0) {
+                System.out.print("Your inventory is empty!\n");
+                System.out.print("Trade initiation has been cancelled.\n");
+                return null;
+            }
+
+            System.out.print("Your inventory: \n");
+            for (int i = 0; i < in.size(); i++) {
+                System.out.println(i+1 + ". " + in.get(i).getName());
+            }
+
+            Object inum2 = sc.nextLine();
+            //returns them to the first prompt where they enter the id of the item to trade
+            if (inum2.equals("back")){
+                return null;
             }
            //should be able to select what item
-            int inum2 = Integer.parseInt(sc.next());
-            Item salam = in.get(inum2-1);
-            System.out.println("the item you want to trade is: " + in.get(inum2-1).getName() + "\n");
-            mylist.add(salam);
-            mylist.add(tradeItem);
-            TradeRequest request = new TradeRequest(2, user, tradeItem.getOwner(), mylist, message, trade);
-            allTradeRequests.receiveTradeRequest(allUsers, request);
+            try {
+                inum2 = Integer.parseInt((String) inum2);
+            } catch (NumberFormatException e) {
+                System.out.print("Invalid response. Please try again.\n");
+                return null;
+            }
+            Item salam = in.get((int) inum2-1);
+            System.out.println("The item you want to trade is: " + in.get((int)inum2-1).getName() + "\n");
+            System.out.print("Please enter '1' to confirm this trade or '2' to cancel the current trade and restart.");
+            String confirmation = sc.nextLine();
+            if (confirmation.equals("1")) {
+                myList.add(salam);
+                myList.add(tradeItem);
+                TradeRequest request = new TradeRequest(2, user, tradeItem.getOwner(), myList, message, trade);
+                allTradeRequests.receiveTradeRequest(allUsers, request);
+                System.out.print("\nTrade request has been sent successfully.\n");
+                return "back";
+            } else if (confirmation.equals("2")){
+                System.out.print("\nTrade has been cancelled.\n");
+                return null;
+            } else {
+                System.out.print("Invalid response. Please try again.\n");
+                return null;
+            }
+
         } else {
-            System.out.println("Invalid Request");
+            System.out.println("Invalid response. Please try again.\n");
+            return null;
         }
     }
 
@@ -189,11 +261,9 @@ public class InputGetter {
 
         if (input.equals("back"))
             return user;
-
         if (input.equals("Meeting")) {
             System.out.print("\nHere are your pending meetings: \n");
             //implement loop that gets pending meetings !!!
-
         } else if (input.equals("Trade")) {
             System.out.print("\nHere are your pending Trades: \n");
             User Person = allUsers.getUser(user);
@@ -330,7 +400,7 @@ public class InputGetter {
     public Object mainMenu(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers) {
         Scanner sc = new Scanner(System.in);    //System.in is a standard input stream
         System.out.print("----------------------------------------------------------------------------------------------" +
-                "\n\uD83D\uDC4B Welcome back, " + user.getName() + "\n");
+                "\n\uD83D\uDC4B Welcome back, " + user.getName() + "!\n");
         if (allUsers.getUser(user).getPendingRequests().size() > 0){
             System.out.print("\uD83D\uDCE9 You have " + allUsers.getUser(user).getPendingRequests().size() +
                     " Pending Trade Requests!\n");
@@ -352,7 +422,11 @@ public class InputGetter {
                 return system1.Browse(user, allItems);
             } else if (a.equals("4")) {
                 //choose the id?
-                system1.Trade(user, allItems, allTradeRequests, allUsers);
+                Object temp = system1.Trade(user, allItems, allTradeRequests, allUsers);
+                while (temp == null){
+                    temp = system1.Trade(user, allItems, allTradeRequests, allUsers);
+                }
+                //else input was "back", returns to main menu
                 return user;
             } else if (a.equals("5")) {
                 //view messages
