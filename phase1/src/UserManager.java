@@ -121,7 +121,7 @@ public class UserManager extends AccountManager {
      * @param request TradeRequest to be received by this User
      */
     public void addToPendingRequests(User user, TradeRequest request) {
-        user.updatePendingRequests(request);
+        user.getPendingRequests().add(request);
     }
 
     /**
