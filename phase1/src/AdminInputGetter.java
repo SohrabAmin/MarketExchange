@@ -66,6 +66,9 @@ public class AdminInputGetter {
     public Object mainMenu(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems) {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
+        System.out.print("----------------------------------------------------------------------------------------------" +
+                "\n\uD83D\uDC4B Welcome back, " + admin.getName() + "\n");
+
         List<Item> allPendingItems = new ArrayList<>();
         for (int i = 0; i < allUsers.getAllUsers().size(); i++){
             allPendingItems.addAll(allUsers.getAllUsers().get(i).getDraftInventory());
