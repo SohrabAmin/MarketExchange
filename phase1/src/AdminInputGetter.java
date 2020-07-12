@@ -35,7 +35,6 @@ public class AdminInputGetter {
                         curr++;
                     }
                 }
-                Admin tempAdmin = new Admin(temp.get(0), temp.get(1));
                 for (int i = 0; i < allAdmins.getAllAdmins().size(); i++) {
                     if (allAdmins.getAllAdmins().get(i).getName().equals(temp.get(0)))
                         if (allAdmins.getAllAdmins().get(i).getPassword().equals(temp.get(1))) {
@@ -67,12 +66,9 @@ public class AdminInputGetter {
     public Object mainMenu(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems) {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        List<Item> allPendingItems = new ArrayList<Item>();
+        List<Item> allPendingItems = new ArrayList<>();
         for (int i = 0; i < allUsers.getAllUsers().size(); i++){
-            for (int j = 0; j < allUsers.getAllUsers().get(i).getDraftInventory().size(); j++) {
-                allPendingItems.add(allUsers.getAllUsers().get(i).getDraftInventory().get(j));
-
-            }
+            allPendingItems.addAll(allUsers.getAllUsers().get(i).getDraftInventory());
         }
         //if they have pending items, show it here
         if (allPendingItems.size() > 0){
@@ -137,7 +133,6 @@ public class AdminInputGetter {
     public void RejectItem (Item chosenItem, UserManager allUsers){
         allUsers.removeFromDraftInventory(allUsers.getUser(chosenItem.getOwner()), chosenItem);
         System.out.print("\u274E Rejected!\n");
-        return;
     }
 
     /**
@@ -151,7 +146,6 @@ public class AdminInputGetter {
         allUsers.removeFromDraftInventory(allUsers.getUser(chosenItem.getOwner()), chosenItem);
         allItems.addItem(chosenItem);
         System.out.print("\u2705 Approved!\n");
-        return;
     }
 
     /**
@@ -161,7 +155,7 @@ public class AdminInputGetter {
      * @param allUsers UserManager which stores all the Users in the system
      */
     public Object Unfreeze(UserManager allUsers){
-        List <User> frozenUsers = new ArrayList<User>();
+        List <User> frozenUsers = new ArrayList<>();
         for (int i = 0; i < allUsers.getAllUsers().size(); i++){
             if (allUsers.getAllUsers().get(i).getIsFrozen()) {
                 //if getIsFrozen returns true for frozen accounts
@@ -170,17 +164,17 @@ public class AdminInputGetter {
         }
         if (frozenUsers.size() == 0){
             System.out.print("There are no frozen users!\n");
-            return new String("back");
+            return "back";
         }
         System.out.print("Here are the frozen users:\n");
         for (int i = 0 ; i < frozenUsers.size(); i++){
-            System.out.print(Integer.toString(i+1) + ". "+  frozenUsers.get(i).getName() + "\n");
+            System.out.print((i + 1) + ". "+  frozenUsers.get(i).getName() + "\n");
         }
         System.out.print("Please enter the number of the user you would like to unfreeze or 'back' to go back.\n");
         Scanner sc = new Scanner(System.in);
         Object line = sc.nextLine();
         if (line.equals("back")) {
-            return new String("back");
+            return "back";
         }
         else {
             try {
@@ -191,7 +185,7 @@ public class AdminInputGetter {
             allUsers.getUser(frozenUsers.get((Integer) line - 1)).isFrozen = false;
             System.out.print("\u2705 Successfully unfrozen user: " +
                     allUsers.getUser(frozenUsers.get((Integer) line - 1)).getName() + "\n");
-            return new String("back");
+            return "back";
             }
         }
 
@@ -205,7 +199,7 @@ public class AdminInputGetter {
      */
     public Object approvalPendingItems(UserManager allUsers, ItemManager allItems) {
         //Creates a list of all pending items in the system
-        List<Item> allPendingItems = new ArrayList<Item>();
+        List<Item> allPendingItems = new ArrayList<>();
         for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
             allPendingItems.addAll(allUsers.getAllUsers().get(i).getDraftInventory());
         }
@@ -220,7 +214,7 @@ public class AdminInputGetter {
         Scanner sc = new Scanner(System.in);
         Object input = sc.nextLine();
         if (input.equals("back")) {
-            return new String("back");
+            return "back";
         }
         try {
             input = Integer.parseInt((String) input);
@@ -232,36 +226,32 @@ public class AdminInputGetter {
         Item chosenItem = allPendingItems.get(pendingItemIndex);
         System.out.print("Input '1' to approve or input '2' to reject or 'back' to return to the list of pending items.\n");
 
-        int decision = 0;
-
-        while (decision != 1 && decision != 2) {
-            Object nextInput = sc.nextLine();
-            if (nextInput.equals("back")){
+        Object nextInput = sc.nextLine();
+        if (nextInput.equals("back")){
+            return null;
+        }
+        try {
+            nextInput = Integer.parseInt((String) nextInput);
+        } catch (NumberFormatException e) {
+            System.out.print("\uD83E\uDDD0 What was that? Please try again!\n" +
+                    "Input '1' to approve or input '2' to reject or 'back' to return to the list of pending items.\n");
+        }
+        if ((Integer) nextInput == 1) { //if item is approved
+            ApproveItem(chosenItem, allUsers, allItems);
+            if (allPendingItems.size() != 0) {
                 return null;
             }
-            try {
-                decision = Integer.parseInt((String) nextInput);
-            } catch (NumberFormatException e) {
-                System.out.print("\uD83E\uDDD0 What was that? Please try again!\n" +
-                        "Input '1' to approve or input '2' to reject or 'back' to return to the list of pending items.\n");
+            return "back";
+        } else if ((Integer) nextInput == 2) { //if item is rejected
+            RejectItem(chosenItem, allUsers);
+            if (allPendingItems.size() != 0) {
+                return null;
             }
-            if (decision == 1) { //if item is approved
-                ApproveItem(chosenItem, allUsers, allItems);
-                while (allPendingItems.size() != 0) {
-                    return null;
-                }
-                return new String("back");
-            } else if (decision == 2) { //if item is rejected
-                RejectItem(chosenItem, allUsers);
-                while (allPendingItems.size() != 0) {
-                    return null;
-                }
-                return new String("back");
-            } else {
-                System.out.print("\uD83E\uDDD0 What was that? Please try again!\n" +
-                        "Input '1' to approve or input '2' to reject or 'back' to return to the list of pending items.\n");
+            return "back";
+        } else {
+            System.out.print("\uD83E\uDDD0 What was that? Please try again!\n" +
+                    "Input '1' to approve or input '2' to reject or 'back' to return to the list of pending items.\n");
             }
-        }
         return null;
     }
 
@@ -304,7 +294,7 @@ public class AdminInputGetter {
     /**
      * Adds a new admin to the list of all Admins in AdminManager.
      *
-     * @param allAdmins
+     * @param allAdmins AdminManager stores all the Admin information.
      */
     public Object addAdmin(AdminManager allAdmins) {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
