@@ -50,16 +50,14 @@ public class AdminInputGetter {
             if (input.equals("back")) {
                 return null;
             }
+            else {
+                return authenticator(allAdmins);
+            }
         } catch (IOException e) {
             System.out.println("Something went wrong");
         }
         return null;
     }
-
-
-
-
-
 
     /**
      * Displays the main menu of an AdminUser and prompts the user for input.
@@ -76,19 +74,15 @@ public class AdminInputGetter {
 
             }
         }
-
-        //if they have epending items, show it here
+        //if they have pending items, show it here
         if (allPendingItems.size() > 0){
             System.out.print("\uD83D\uDCE9 You have " + allPendingItems.size() + " Pending Item Requests!\n");
 
         }
-
-
         System.out.println("Please select from the following by entering the number beside the option:" +
                 " \n 1. Add new admin \n 2. Change system threshold \n" +
                 " 3. View items that need to be approved \n 4. Freeze and unfreeze users \n 5. Log out \n" +
                 "Enter 'exit' to exit at any time.");
-
         try {
             String input = br.readLine();
             if (!input.equals("exit")) {
@@ -109,10 +103,14 @@ public class AdminInputGetter {
                     changeThreshold(allUsers, allAdmins);
                     return admin;
                 } else if (input.equals("3")) {
-                    approvalPendingItems(allUsers, allAdmins, allItems);
+                    approvalPendingItems(allUsers, allItems);
                     return admin;
                 } else if (input.equals("4")) {
-                    Unfreeze (allUsers, allAdmins, allItems);
+                    Object temp = Unfreeze(allUsers);
+                    while (temp == null){
+                        temp = Unfreeze(allUsers);
+                    }
+                    //else input was "back", returns to main menu
                     return admin;
                 } else if (input.equals("5")) {
                     return null;
@@ -127,13 +125,24 @@ public class AdminInputGetter {
         return admin;
     }
 
-
-    public void RejectItem (Item chosenItem, UserManager allUsers, ItemManager allItems){
+    /**
+     * Removes the item from a User's DraftInventory
+     *
+     * @param chosenItem the item that is to be removed
+     * @param allUsers UserManager which stores all the Users in the system
+     */
+    public void RejectItem (Item chosenItem, UserManager allUsers){
         allUsers.removeFromDraftInventory(allUsers.getUser(chosenItem.getOwner()), chosenItem);
         System.out.print("\u274E Rejected!\n");
         return;
     }
 
+    /**
+     * Adds the item to a User's Inventory and removes it from their DraftInventory
+     * @param chosenItem the item that is to be added to the User's inventory and removed from DraftInventory
+     * @param allUsers UserManager which stores all the Users in the system
+     * @param allItems ItemManager which stores all the Items in the system
+     */
     public void ApproveItem (Item chosenItem, UserManager allUsers, ItemManager allItems){
         allUsers.addToInventory(allUsers.getUser(chosenItem.getOwner()), chosenItem);
         allUsers.removeFromDraftInventory(allUsers.getUser(chosenItem.getOwner()), chosenItem);
@@ -142,9 +151,13 @@ public class AdminInputGetter {
         return;
     }
 
-
-
-    public void Unfreeze(UserManager allUsers, AdminManager allAdmins, ItemManager allItems){
+    /**
+     * Displays a list of all frozen Users in UserManager and prompts Admin to input
+     * which User they wish to unfreeze and unfreezes those Users
+     *
+     * @param allUsers UserManager which stores all the Users in the system
+     */
+    public Object Unfreeze(UserManager allUsers){
         List <User> frozenUsers = new ArrayList<User>();
         for (int i = 0; i < allUsers.getAllUsers().size(); i++){
             if (allUsers.getAllUsers().get(i).getIsFrozen()) {
@@ -154,31 +167,40 @@ public class AdminInputGetter {
         }
         if (frozenUsers.size() == 0){
             System.out.print("There are no frozen users!\n");
-            return;
-
-
+            return new String("back");
         }
         System.out.print("Here are the frozen users:\n");
         for (int i = 0 ; i < frozenUsers.size(); i++){
             System.out.print(Integer.toString(i+1) + ". "+  frozenUsers.get(i).getName() + "\n");
-
         }
-
-        System.out.print("Please enter the number of the user you would like to unfreeze\n");
+        System.out.print("Please enter the number of the user you would like to unfreeze or 'back' to go back.\n");
         Scanner sc = new Scanner(System.in);
-        Integer chosenUser = Integer.parseInt(sc.next());
-        allUsers.getUser(frozenUsers.get(chosenUser-1)).isFrozen = false;
-        System.out.print("\u2705 Successfully unfrozen user: "  + allUsers.getUser(frozenUsers.get(chosenUser-1)).getName() + "\n");
-
-
+        Object line = sc.nextLine();
+        if (line.equals("back")) {
+            return new String("back");
+        }
+        else {
+            try {
+                line = Integer.parseInt((String) line);
+            } catch (NumberFormatException e) {
+                return null;
+            }
+            allUsers.getUser(frozenUsers.get((Integer) line - 1)).isFrozen = false;
+            System.out.print("\u2705 Successfully unfrozen user: " +
+                    allUsers.getUser(frozenUsers.get((Integer) line - 1)).getName() + "\n");
+            return new String("back");
+            }
         }
 
-
-
-
-
-
-    public void approvalPendingItems(UserManager allUsers, AdminManager allAdmins, ItemManager allItems) {
+    /**
+     * Checks for items pending approval from all Users in UserManager and displays them to admin
+     * who can then decide to approve the item which will move the item to the User's inventory
+     * or reject the item which will remove the item altogether.
+     *
+     * @param allUsers UserManager which holds all the Users in the system
+     * @param allItems ItemManager which stores all the items in the system
+     */
+    public void approvalPendingItems(UserManager allUsers, ItemManager allItems) {
         List<Item> allPendingItems = new ArrayList<Item>();
         for (int i = 0; i < allUsers.getAllUsers().size(); i++){
             for (int j = 0; j < allUsers.getAllUsers().get(i).getDraftInventory().size(); j++) {
@@ -186,13 +208,11 @@ public class AdminInputGetter {
 
             }
         }
-
         System.out.print("Here are the pending items:\n");
         for (int i = 0; i < allPendingItems.size(); i++){
             String j = Integer.toString(i+1);
             System.out.print("\n" + j+ ". " + allPendingItems.get(i).getName() + " : " + allPendingItems.get(i).getDescription() + "\n");
         }
-
         //admin needs to choose an item to approve or reject
         System.out.print("Please enter the number of the item you would like to approve:\n");
         Scanner sc = new Scanner(System.in);
@@ -208,15 +228,12 @@ public class AdminInputGetter {
             if (decision == 1) { //if item is approved
                 ApproveItem(chosenItem, allUsers, allItems);
             } else if (decision == 2) { //if item is rejected
-                RejectItem(chosenItem, allUsers, allItems);
+                RejectItem(chosenItem, allUsers);
             } else {
                 System.out.print("\uD83E\uDDD0 What was that? Please try again!\n" + "Enter 1 for Approve and 2 for Reject\n");
             }
         }
-
-
     }
-
 
     /**
      * Changes the lentMinusBorrowedThreshold which dictates how much more a user has to have lent than borrowed,
