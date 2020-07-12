@@ -136,6 +136,10 @@ public class InputGetter {
         // "1. Sock : white clear "
 
         List<Item> allItems2 = allItems.getSystemInventory();
+        if (allItems2.size() == 0){
+            System.out.println("There are no items to browse!");
+            return "back";
+        }
         for (int i = 0; i < allItems2.size(); i++) {
             System.out.println("\uD83D\uDCE6" + (i + 1) + ". " + allItems2.get(i).getName() + " : "
                     + allItems2.get(i).getDescription() + "\n");
@@ -346,9 +350,6 @@ public class InputGetter {
             on.setInitialMeeting(meeting);
             allTransactions.receiveTransaction(on);
         }
-
-
-
     }
 
     public Meeting MeetingInitiator (User user,UserManager allUsers, MeetingManager allMeetings){
@@ -368,6 +369,10 @@ public class InputGetter {
     public Object ApproveTrade(User user,UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions){
         User Person = allUsers.getUser(user);
         List <TradeRequest> Trades = Person.getPendingRequests();
+        if (Trades.size() == 0){
+            System.out.println("There are no pending trade requests!");
+            return "back";
+        }
         System.out.print("Here are your pending trade requests: \n");
         for (int i = 0; i < Trades.size(); i++){
             String ext = "";
@@ -375,7 +380,7 @@ public class InputGetter {
                 ext = " With your item " + Person.getPendingRequests().get(i).getRequesterItem().getName();
             }
 
-            System.out.print("\uD83E\uDD1D" +Integer.toString(i+1) + ". " + Trades.get(i).getRequester().getName() +
+            System.out.print("\uD83E\uDD1D" +(i+1) + ". " + Trades.get(i).getRequester().getName() +
                     " For your item: "+ Trades.get(i).getReceiverItem().getName() + ext+ "\n");
         }
 
@@ -389,15 +394,13 @@ public class InputGetter {
         if (input.equals(new String ("back"))){
             return "back";
         }
-
         int pendingRequestIndex;
-        Integer pendingTrade = Integer.parseInt((String) input);
-        pendingRequestIndex = pendingTrade - 1;
-//        try{
-//
-//        } catch (NumberFormatException e) {
-//            return null;
-//        }
+
+        try{ input = Integer.parseInt((String) input);
+            pendingRequestIndex = (Integer) input - 1;
+        } catch (NumberFormatException e) {
+            return null;
+        }
 
         System.out.print("You have selected the following pending trade: \n");
         String ext2 = "";
@@ -406,57 +409,34 @@ public class InputGetter {
             ext2 = " With your item " + Person.getPendingRequests().get(pendingRequestIndex).getRequesterItem().getName();
         }
 
-        if (Person.getPendingRequests().get(pendingRequestIndex).getTemp()) //if temporary
-        temp = "Temporary";
-
-        System.out.print("\uD83D\uDFE9 Requester: "+  Trades.get(pendingRequestIndex).getRequester().getName() + "\n" +
-                "For item: " + Trades.get(pendingRequestIndex).getReceiverItem().getName()  + ext2 +
+        if (Person.getPendingRequests().get(pendingRequestIndex).getTemp()) { //if temporary
+            temp = "Temporary";
+        }
+        System.out.println("\uD83D\uDFE9 Requester: " + Trades.get(pendingRequestIndex).getRequester().getName() + "\n" +
+                "For item: " + Trades.get(pendingRequestIndex).getReceiverItem().getName() + ext2 +
                 "\n\uD83D\uDCACMessage:" + Trades.get(pendingRequestIndex).getMessage() +
-                "\nThis trade will be " + temp);
-
-        System.out.print("\uD83E\uDDD0 What was that? Please try again!\n" +
-                "Input '1' to approve or input '2' to reject or 'back' to return to the list of pending trades.\n");
+                "\n\nThis trade will be " + temp + ".\n");
 
         TradeRequest request =  Person.getPendingRequests().get(pendingRequestIndex);
 
-        Object nextInput = sc.nextLine();
+        System.out.println("\nPlease enter '1' to approve the trade or '2' to reject the trade. Enter 'back' to return to " +
+                "your pending trade requests.");
+
+        Object nextInput = sc.next();
         if (nextInput.equals("back")){
             return null;
-        }
-//        try {
-//
-//        } catch (NumberFormatException e) {
-//            System.out.print("\uD83E\uDDD0 What was that? Please try again!\n" +
-//                    "Input '1' to approve or input '2' to reject or 'back' to return to the list of pending trades.\n");
-//            return null;
-//        }
-
-     //   nextInput = Integer.parseInt((String) nextInput);
-        nextInput = sc.nextLine();
-        if (nextInput.equals("1")) { //if trade is approved
+        } else if (nextInput.equals("1")) { //if trade is approved
             ApprovedTrade( user, allUsers, allMeetings, request,  allTransactions);
-            if (Trades.size() != 0){
-                return null;
-            }
-            return "back";
-            }
-        else if (nextInput.equals("2")) { //if item is rejected
+            return null;
+        } else if (nextInput.equals("2")) { //if item is rejected
             RejectTrade( user, allUsers);
-            if (Trades.size() != 0){
-                return null;
-            }
-            return "back";
+            return null;
+        } else {
+            System.out.print("\uD83E\uDDD0 What was that? Please try again!\n");
+            return null;
         }
-        else {
-            System.out.print("\uD83E\uDDD0 What was that? Please try again!\n" +
-                    "Input '1' to approve or input '2' to reject or 'back' to return to the list of pending trades.\n");
-        }
-
         //select if you want to approve or reject
         //method that handles approve or reject
-
-        System.out.print("\n");
-        return null;
     }
 
     public User AddItem(User user, UserManager allUsers){
@@ -472,9 +452,6 @@ public class InputGetter {
 
         return user;
     }
-
-
-
 
     public User Top3TradingPartners(User user, UserManager allUsers) {
         List<User> top3TP = new ArrayList<>();
