@@ -219,7 +219,6 @@ public class InputGetter {
         return user;
     }
 
-
     public void RejectTrade (){
         System.out.print("\u274E Rejected!\n");
         return;
@@ -229,8 +228,6 @@ public class InputGetter {
         System.out.print("\u2705 Approved!\n");
         return;
     }
-
-
 
     public User ApproveTrade(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers, AdminManager allAdmins){
         User Person = allUsers.getUser(user);
@@ -256,7 +253,7 @@ public class InputGetter {
 
         System.out.print("You have selected the following pending trade:\n");
         String ext2 = "";
-        String temp = "Permenant";
+        String temp = "Permanent";
         if (Person.getPendingRequests().get(pendingRequestIndex).getRequesterItem() != null){
             ext2 = " With your item " + Person.getPendingRequests().get(pendingRequestIndex).getRequesterItem().getName();
         }
@@ -296,12 +293,12 @@ public class InputGetter {
         System.out.print("Please enter the name of item you would like to add\n");
         Scanner sc = new Scanner(System.in);
         String itemName = sc.nextLine();
-        System.out.print("\nPlease enter the description of item you would like to add\n");
+        System.out.print("Please enter the description of item you would like to add\n");
         String description = sc.nextLine();
         Item newItem = new Item(itemName, user, description);
         allUsers.addToDraftInventory(user, newItem);
 
-        System.out.print("\u2705 Your request is sent to admin for approval!\n");
+        System.out.print("\n \u2705 Your request is sent to admin for approval!\n");
         return user;
 
 

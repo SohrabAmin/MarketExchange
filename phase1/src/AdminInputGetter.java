@@ -77,7 +77,6 @@ public class AdminInputGetter {
         //if they have pending items, show it here
         if (allPendingItems.size() > 0){
             System.out.print("\uD83D\uDCE9 You have " + allPendingItems.size() + " Pending Item Requests!\n");
-
         }
         System.out.println("Please select from the following by entering the number beside the option:" +
                 " \n 1. Add new admin \n 2. Change system threshold \n" +
@@ -89,7 +88,7 @@ public class AdminInputGetter {
                 if (input.equals("1")) {
                     Object temp = addAdmin(allAdmins);
                     //successful addition of a new admin
-                    if (temp != null && temp instanceof Admin) {
+                    if (temp instanceof Admin) {
                         System.out.println("\n New admin has been added successfully.\n");
                         return admin;
                         //user decided to exit
@@ -103,7 +102,11 @@ public class AdminInputGetter {
                     changeThreshold(allUsers, allAdmins);
                     return admin;
                 } else if (input.equals("3")) {
-                    approvalPendingItems(allUsers, allItems);
+                    Object temp = approvalPendingItems(allUsers, allItems);
+                    while (temp == null){
+                        temp = approvalPendingItems(allUsers, allItems);
+                    }
+                    //else input was "back", returns to main menu
                     return admin;
                 } else if (input.equals("4")) {
                     Object temp = Unfreeze(allUsers);
@@ -200,39 +203,66 @@ public class AdminInputGetter {
      * @param allUsers UserManager which holds all the Users in the system
      * @param allItems ItemManager which stores all the items in the system
      */
-    public void approvalPendingItems(UserManager allUsers, ItemManager allItems) {
+    public Object approvalPendingItems(UserManager allUsers, ItemManager allItems) {
+        //Creates a list of all pending items in the system
         List<Item> allPendingItems = new ArrayList<Item>();
-        for (int i = 0; i < allUsers.getAllUsers().size(); i++){
-            for (int j = 0; j < allUsers.getAllUsers().get(i).getDraftInventory().size(); j++) {
-                allPendingItems.add(allUsers.getAllUsers().get(i).getDraftInventory().get(j));
-
-            }
+        for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
+            allPendingItems.addAll(allUsers.getAllUsers().get(i).getDraftInventory());
         }
-        System.out.print("Here are the pending items:\n");
-        for (int i = 0; i < allPendingItems.size(); i++){
-            String j = Integer.toString(i+1);
-            System.out.print("\n" + j+ ". " + allPendingItems.get(i).getName() + " : " + allPendingItems.get(i).getDescription() + "\n");
+        //prints out all the pending items in the system
+        System.out.print("Here are the pending items:");
+        for (int i = 0; i < allPendingItems.size(); i++) {
+            String j = Integer.toString(i + 1);
+            System.out.print("\n" + j + ". " + allPendingItems.get(i).getName() + " : " + allPendingItems.get(i).getDescription());
         }
         //admin needs to choose an item to approve or reject
-        System.out.print("Please enter the number of the item you would like to approve:\n");
+        System.out.print("\nPlease enter the number of the item you would like to approve or 'back' to return to the main menu.\n");
         Scanner sc = new Scanner(System.in);
-        Integer pendingItem = Integer.parseInt(sc.next());
-        int pendingItemIndex = pendingItem-1;
+        Object input = sc.nextLine();
+        if (input.equals("back")) {
+            return new String("back");
+        }
+        try {
+            input = Integer.parseInt((String) input);
+        } catch (NumberFormatException e) {
+            return null;
+        }
+
+        int pendingItemIndex = (Integer) input - 1;
         Item chosenItem = allPendingItems.get(pendingItemIndex);
-        System.out.print("Input 1 for approve and input 2 for reject\n");
+        System.out.print("Input '1' to approve or input '2' to reject or 'back' to return to the list of pending items.\n");
 
         int decision = 0;
 
-        while (decision!= 1 && decision!= 2) {
-            decision = Integer.parseInt(sc.next());
+        while (decision != 1 && decision != 2) {
+            Object nextInput = sc.nextLine();
+            if (nextInput.equals("back")){
+                return null;
+            }
+            try {
+                decision = Integer.parseInt((String) nextInput);
+            } catch (NumberFormatException e) {
+                System.out.print("\uD83E\uDDD0 What was that? Please try again!\n" +
+                        "Input '1' to approve or input '2' to reject or 'back' to return to the list of pending items.\n");
+            }
             if (decision == 1) { //if item is approved
                 ApproveItem(chosenItem, allUsers, allItems);
+                while (allPendingItems.size() != 0) {
+                    return null;
+                }
+                return new String("back");
             } else if (decision == 2) { //if item is rejected
                 RejectItem(chosenItem, allUsers);
+                while (allPendingItems.size() != 0) {
+                    return null;
+                }
+                return new String("back");
             } else {
-                System.out.print("\uD83E\uDDD0 What was that? Please try again!\n" + "Enter 1 for Approve and 2 for Reject\n");
+                System.out.print("\uD83E\uDDD0 What was that? Please try again!\n" +
+                        "Input '1' to approve or input '2' to reject or 'back' to return to the list of pending items.\n");
             }
         }
+        return null;
     }
 
     /**
