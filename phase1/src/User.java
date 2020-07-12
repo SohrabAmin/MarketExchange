@@ -4,11 +4,11 @@ import java.util.List;
 
 public class User extends Account {
 
-    public ArrayList<Item> wishlist;
+    private ArrayList<Item> wishlist;
     private ArrayList<Item> inventory;
     private ArrayList<Item> draftInventory;
     private HashMap<Item,String> ItemHistory;
-    public boolean isFrozen;
+    private boolean isFrozen;
     private int eligibility;
     private List<Transaction> tradeHistory;
     private List<User> topTradingPartners;

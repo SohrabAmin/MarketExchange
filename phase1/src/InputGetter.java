@@ -491,14 +491,14 @@ public class InputGetter {
     }
 
     public User MostRecentTrades(User user, UserManager allUsers) {
-        List<Transaction> MostRecent = new ArrayList<>();
-        MostRecent = user.getTradeHistory();
-        System.out.print("Here are your most recent trades:\n");
+        List<Item> MostRecent = new ArrayList<>();
+        MostRecent = allUsers.getRecentlyTradedItems(user);
+        System.out.print("Here are your most recently traded-away items:\n");
         if (MostRecent.size() == 0) {
             System.out.print("\uD83D\uDE25 Sorry! You have no recent trades! You should do some trades!\n");
         }
         for (int i = 0; i < MostRecent.size(); i++) {
-            System.out.print("\uD83D\uDC51" + Integer.toString(i + 1) + ". " + MostRecent.get(i).getTradeStatus() + "\n");
+            System.out.print("\uD83D\uDC51" + Integer.toString(i + 1) + ". " + MostRecent.get(i).getName() + " : " + MostRecent.get(i).getDescription() + "\n");
 
         }
         return user;
@@ -537,10 +537,35 @@ public class InputGetter {
         Scanner sc = new Scanner(System.in);    //System.in is a standard input stream
         System.out.print("----------------------------------------------------------------------------------------------" +
                 "\n\uD83D\uDC4B Welcome back, " + user.getName() + "!\n");
+
+
+        //A frozen account is one where you can log in and look for items, but you cannot arrange any transactions.
+        // A user who has been frozen can request that the administrative user unfreezes their account.
+        boolean frozenAccount = user.getIsFrozen();
+        if (frozenAccount){ //first off, tell them that they are frozen
+            System.out.print("");
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+
         if (allUsers.getUser(user).getPendingRequests().size() > 0){
             System.out.print("\uD83D\uDCE9 You have " + allUsers.getUser(user).getPendingRequests().size() +
                     " Pending Trade Requests!\n");
         }
+
+
+
+
 
 
 

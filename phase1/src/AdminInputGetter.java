@@ -88,6 +88,18 @@ public class AdminInputGetter {
                 allFrozenUsers.add(allUsers.getAllUsers().get(i));
             }
         }
+
+        List<User> possibleFrozenPeople = new ArrayList<>();
+//        for (int i = 0; i < allUsers.getAllUsers().size(); i++){
+//            if (allUsers.getAllUsers().get(i).getIsFrozen()) {
+//                //if getIsFrozen returns true for frozen accounts
+//                allFrozenUsers.add(allUsers.getAllUsers().get(i));
+//            }
+//        }
+
+
+
+
         //if they have frozen users, show it here
         if (allFrozenUsers.size() > 0){
             System.out.print("\u2603 You have " + allFrozenUsers.size() + " Frozen users!\n");
@@ -212,7 +224,7 @@ public class AdminInputGetter {
             } catch (NumberFormatException e) {
                 return null;
             }
-            allUsers.getUser(frozenUsers.get((Integer) line - 1)).isFrozen = false;
+            allUsers.getUser(frozenUsers.get((Integer) line - 1)).setIsFrozen(false);
             System.out.print("\u2705 Successfully unfrozen user: " +
                     allUsers.getUser(frozenUsers.get((Integer) line - 1)).getName() + "\n");
             return "back";

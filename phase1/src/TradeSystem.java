@@ -30,7 +30,7 @@ public class TradeSystem {
         User hello = new User("Tina", "123");
 
        // allUsers.freeze(allUsers.getAllUsers().get(0));
-        allUsers.getAllUsers().get(0).isFrozen = true;
+        allUsers.getAllUsers().get(0).setIsFrozen(true);
         User hi = new User("Mo", "123");
         User oops = new User ("heloooooooo" , "123");
         List<User> top3TP = new ArrayList<>();
