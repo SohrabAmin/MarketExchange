@@ -325,27 +325,47 @@ public class InputGetter {
         return user;
     }
 
-    public void RejectTrade(User user,UserManager allUsers){
+    public void RejectTrade(User user,UserManager allUsers /*, MeetingManager allMeetings*/){
         System.out.print("\u274E Rejected!\n");
     }
 
-    public void ApprovedTrade(User user,UserManager allUsers){
+    public void ApprovedTrade(User user,UserManager allUsers, MeetingManager allMeetings, TradeRequest request, TransactionManager allTransactions){
         System.out.print("\u2705 Approved!\n");
         //if the trade request is approved, we should now start a trade and make a meeting
-        
-
+        Meeting meeting = MeetingInitiator (user, allUsers, allMeetings);
+        User temp1 = request.getRequester();
+        User temp2 = request.getReceiver();
+        allUsers.removeFromPendingRequests(allUsers.getUser(user), request);
+        if (request.getRequestType() == 1){ //1 way'
+            OneWay on = new OneWay(temp1, request.getReceiverItem(), request.getTemp());
+            on.setInitialMeeting(meeting);
+            allTransactions.receiveTransaction(on);
+        }
+        else if (request.getRequestType() == 2) { //2way
+            TwoWay on = new TwoWay(request.getRequesterItem(), request.getReceiverItem(), request.getTemp());
+            on.setInitialMeeting(meeting);
+            allTransactions.receiveTransaction(on);
+        }
 
 
 
     }
 
-    public void MeetingInitiator (User user,UserManager allUsers){
-        System.out.print("\uD83D\uDCC5 Please enter your proposed date for this trade\n");
+    public Meeting MeetingInitiator (User user,UserManager allUsers, MeetingManager allMeetings){
+        System.out.print("\uD83D\uDCC5 Please enter your proposed date for this trade in format dd-mm-yyyy\n");
         Scanner sc = new Scanner(System.in);
         String date = sc.nextLine();
+        System.out.print("\uD83D\uDCC5 Please enter your proposed time for this trade in format hh:mm\n");
+        String time = sc.nextLine();
+        System.out.print("\uD83D\uDCC5 Please enter your proposed location for this trade\n");
+        String location = sc.nextLine();
+        Meeting meeting = allMeetings.createMeeting(date,  time,  location);
+
+        return meeting;
+
     }
 
-    public Object ApproveTrade(User user,UserManager allUsers){
+    public Object ApproveTrade(User user,UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions){
         User Person = allUsers.getUser(user);
         List <TradeRequest> Trades = Person.getPendingRequests();
         System.out.print("Here are your pending trade requests: \n");
@@ -371,13 +391,13 @@ public class InputGetter {
         }
 
         int pendingRequestIndex;
-
-        try{
         Integer pendingTrade = Integer.parseInt((String) input);
         pendingRequestIndex = pendingTrade - 1;
-        } catch (NumberFormatException e) {
-            return "back";
-        }
+//        try{
+//
+//        } catch (NumberFormatException e) {
+//            return null;
+//        }
 
         System.out.print("You have selected the following pending trade: \n");
         String ext2 = "";
@@ -397,24 +417,30 @@ public class InputGetter {
         System.out.print("\uD83E\uDDD0 What was that? Please try again!\n" +
                 "Input '1' to approve or input '2' to reject or 'back' to return to the list of pending trades.\n");
 
+        TradeRequest request =  Person.getPendingRequests().get(pendingRequestIndex);
+
         Object nextInput = sc.nextLine();
         if (nextInput.equals("back")){
             return null;
         }
-        try {
-            nextInput = Integer.parseInt((String) nextInput);
-        } catch (NumberFormatException e) {
-            System.out.print("\uD83E\uDDD0 What was that? Please try again!\n" +
-                    "Input '1' to approve or input '2' to reject or 'back' to return to the list of pending trades.\n");
-        }
-        if ((Integer) nextInput == 1) { //if trade is approved
-            ApprovedTrade( user, allUsers);
+//        try {
+//
+//        } catch (NumberFormatException e) {
+//            System.out.print("\uD83E\uDDD0 What was that? Please try again!\n" +
+//                    "Input '1' to approve or input '2' to reject or 'back' to return to the list of pending trades.\n");
+//            return null;
+//        }
+
+     //   nextInput = Integer.parseInt((String) nextInput);
+        nextInput = sc.nextLine();
+        if (nextInput.equals("1")) { //if trade is approved
+            ApprovedTrade( user, allUsers, allMeetings, request,  allTransactions);
             if (Trades.size() != 0){
                 return null;
             }
             return "back";
             }
-        else if ((Integer) nextInput == 2) { //if item is rejected
+        else if (nextInput.equals("2")) { //if item is rejected
             RejectTrade( user, allUsers);
             if (Trades.size() != 0){
                 return null;
@@ -506,7 +532,8 @@ public class InputGetter {
     return user;
     }
 
-    public Object mainMenu(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers) {
+
+    public Object mainMenu(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions ) {
         Scanner sc = new Scanner(System.in);    //System.in is a standard input stream
         System.out.print("----------------------------------------------------------------------------------------------" +
                 "\n\uD83D\uDC4B Welcome back, " + user.getName() + "!\n");
@@ -519,7 +546,8 @@ public class InputGetter {
 
         System.out.print("Please select number from the following:\n1.View Wishlist\n2.View Inventory\n" +
                 "3.Browse Items\n4.Initiate Trade\n5.View Messages\n6.Approve Pending Trades\n" +
-                "7.Add Item to inventory\n8.View most recent trades\n9.View most frequent trading partners\n10. View status of my items\n11. Add Item to wishlist\n12. Logout" + "\nEnter 'exit' to exit the system at any time.\n");
+                "7.Add Item to inventory\n8.View most recent trades\n9.View most frequent trading partners\n10. View status of my items\n11. Add Item to wishlist" +
+                "12.View Approved Trades\n13. Logout" + "\nEnter 'exit' to exit the system at any time.\n");
 
         String a = sc.nextLine();
         if (!a.equals("exit")) {
@@ -558,9 +586,9 @@ public class InputGetter {
             }
 
             else if (a.equals("6")){
-                Object temp = system1.ApproveTrade(user, allUsers);
+                Object temp = system1.ApproveTrade( user, allUsers,  allMeetings,  allTransactions);
                 while (temp == null){
-                    temp = system1.ApproveTrade(user, allUsers);
+                    temp = system1.ApproveTrade( user, allUsers,  allMeetings,  allTransactions);
                 }
                 //else input was "back", returns to main menu
                 return user;
@@ -578,7 +606,7 @@ public class InputGetter {
 
 
             }
-            else if (a.equals("12")) {
+            else if (a.equals("13")) {
                 //logout
                 return null;
             }

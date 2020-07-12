@@ -29,7 +29,10 @@ public class TradeRequestManager {
 
         if (request.getStatus() == 0) {
             this.pending.add(request);
-            userManager.addToPendingRequests(userManager.getUser(request.getReceiver()), request);
+
+            User temp = userManager.getUser(request.getReceiver());
+            userManager.addToPendingRequests(temp, request);
+
 //            for (int i = 0; i < userManager.getAllUsers().size(); i++){
 //                if (request.getReceiver().getName().equals(userManager.getAllUsers().get(i).getName())){
 //                    userManager.getAllUsers().get(i).updatePendingRequests(request);

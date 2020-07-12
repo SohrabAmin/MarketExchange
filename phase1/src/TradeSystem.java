@@ -31,7 +31,7 @@ public class TradeSystem {
 
        // allUsers.freeze(allUsers.getAllUsers().get(0));
         allUsers.getAllUsers().get(0).isFrozen = true;
-        User hi = new User("Mo3", "123");
+        User hi = new User("Mo", "123");
         User oops = new User ("heloooooooo" , "123");
         List<User> top3TP = new ArrayList<>();
         top3TP.add(hi);
@@ -80,7 +80,7 @@ public class TradeSystem {
             currentUser = loggedIn;
             while (loggedIn != null) {
                 if (loggedIn instanceof User) {
-                    loggedIn = inputgetter.mainMenu((User) loggedIn, AllItems, inputgetter, allTradeRequests, allUsers);
+                    loggedIn = inputgetter.mainMenu((User) loggedIn, AllItems, inputgetter, allTradeRequests, allUsers,   allMeetings,  allTransactions);
                 } else if (loggedIn instanceof Admin) {
                     loggedIn = admininputgetter.mainMenu((Admin) loggedIn, allAdmins, allUsers, AllItems);
                 } else if (loggedIn.equals("exit")) {
