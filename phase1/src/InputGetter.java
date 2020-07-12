@@ -126,7 +126,7 @@ public class InputGetter {
 
     public void Trade(User user, ItemManager allItems, TradeRequestManager allTradeRequests, UserManager allUsers) {
         Scanner sc = new Scanner(System.in);    //System.in is a standard input stream
-        System.out.print("Please type in the ID of the item you would like to trade\n");
+        System.out.print("Please type in the ID of the item you would like to trade:\n");
         int inum = Integer.parseInt(sc.next());
         Item tradeItem = allItems.getSystemInventory().get(inum - 1);
         List<Item> mylist = new ArrayList<>();
@@ -135,7 +135,7 @@ public class InputGetter {
         System.out.print("\nPlease type '1' for one way trade and '2' for two way trade. \n");
         int tType = Integer.parseInt(sc.next());
 
-        System.out.print("\nPlease type '1' for temporary trade and '2' for permanent trade' \n");
+        System.out.print("\nPlease type '1' for temporary trade and '2' for permanent trade. \n");
         int type = Integer.parseInt(sc.next());
         boolean trade = false;
 
