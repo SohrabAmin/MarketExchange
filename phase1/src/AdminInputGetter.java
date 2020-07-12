@@ -227,6 +227,11 @@ public class AdminInputGetter {
         for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
             allPendingItems.addAll(allUsers.getAllUsers().get(i).getDraftInventory());
         }
+        //no pending items
+        if (allPendingItems.size() == 0){
+            System.out.print("There are no pending item requests to approve!");
+            return "back";
+        }
         //prints out all the pending items in the system
         System.out.print("Here are the pending items:");
         for (int i = 0; i < allPendingItems.size(); i++) {
@@ -243,6 +248,7 @@ public class AdminInputGetter {
         try {
             input = Integer.parseInt((String) input);
         } catch (NumberFormatException e) {
+            System.out.print("\n \uD83E\uDDD0 What was that? Please try again!\n");
             return null;
         }
 
@@ -257,26 +263,19 @@ public class AdminInputGetter {
         try {
             nextInput = Integer.parseInt((String) nextInput);
         } catch (NumberFormatException e) {
-            System.out.print("\uD83E\uDDD0 What was that? Please try again!\n" +
-                    "Input '1' to approve or input '2' to reject or 'back' to return to the list of pending items.\n");
+            System.out.print("\n \uD83E\uDDD0 What was that? Please try again!\n");
+            return null;
         }
         if ((Integer) nextInput == 1) { //if item is approved
             ApproveItem(chosenItem, allUsers, allItems);
-            if (allPendingItems.size() != 0) {
-                return null;
-            }
-            return "back";
+            return null;
         } else if ((Integer) nextInput == 2) { //if item is rejected
             RejectItem(chosenItem, allUsers);
-            if (allPendingItems.size() != 0) {
-                return null;
-            }
-            return "back";
+            return null;
         } else {
-            System.out.print("\uD83E\uDDD0 What was that? Please try again!\n" +
-                    "Input '1' to approve or input '2' to reject or 'back' to return to the list of pending items.\n");
+            System.out.print("\n \uD83E\uDDD0 What was that? Please try again!\n");
+            return null;
             }
-        return null;
     }
 
     /**
