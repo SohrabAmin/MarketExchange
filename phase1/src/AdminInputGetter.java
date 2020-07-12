@@ -66,6 +66,7 @@ public class AdminInputGetter {
     public Object mainMenu(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems) {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
+
         System.out.print("----------------------------------------------------------------------------------------------" +
                 "\n\uD83D\uDC4B Welcome back, " + admin.getName() + "\n");
 
@@ -73,6 +74,22 @@ public class AdminInputGetter {
         for (int i = 0; i < allUsers.getAllUsers().size(); i++){
             allPendingItems.addAll(allUsers.getAllUsers().get(i).getDraftInventory());
         }
+
+        List<User> allFrozenUsers = new ArrayList<>();
+        for (int i = 0; i < allUsers.getAllUsers().size(); i++){
+            if (allUsers.getAllUsers().get(i).getIsFrozen()) {
+                //if getIsFrozen returns true for frozen accounts
+                allFrozenUsers.add(allUsers.getAllUsers().get(i));
+            }
+        }
+
+        //if they have frozen users, show it here
+        if (allFrozenUsers.size() > 0){
+            System.out.print("\u2603 You have " + allFrozenUsers.size() + " Frozen users!\n");
+
+        }
+
+
         //if they have pending items, show it here
         if (allPendingItems.size() > 0){
             System.out.print("\uD83D\uDCE9 You have " + allPendingItems.size() + " Pending Item Requests!\n");
