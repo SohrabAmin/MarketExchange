@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class User extends Account {
@@ -6,6 +7,7 @@ public class User extends Account {
     public ArrayList<Item> wishlist;
     private ArrayList<Item> inventory;
     private ArrayList<Item> draftInventory;
+    private HashMap<Item,String> ItemHistory;
     public boolean isFrozen;
     private int eligibility;
     private List<Transaction> tradeHistory;
@@ -24,8 +26,13 @@ public class User extends Account {
         this.tradeHistory = new ArrayList<>();
         this.topTradingPartners = new ArrayList<>();
         this.pendingRequests = new ArrayList<>();
+        this.ItemHistory =new HashMap<Item,String>();//Creating HashMap
+
     }
 
+    public HashMap<Item,String> getItemHistory(){
+        return ItemHistory;
+    }
 
     public ArrayList<Item> getWishlist() {
         return wishlist;
