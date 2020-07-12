@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TradeSystem {
     public InputGetter inputgetter = new InputGetter();
@@ -29,13 +31,21 @@ public class TradeSystem {
 
        // allUsers.freeze(allUsers.getAllUsers().get(0));
         allUsers.getAllUsers().get(0).isFrozen = true;
-        User hi = new User("Mo", "123");
+        User hi = new User("Mo3", "123");
+        User oops = new User ("heloooooooo" , "123");
+        List<User> top3TP = new ArrayList<>();
+        top3TP.add(hi);
+        top3TP.add(oops);
+        allUsers.getAllUsers().get(0).setTopTradingPartners(top3TP);
+
+
+
         Item myitem = new Item("sock for Mo", hi, "its cute");
         Item myitem2 = new Item("sock for Tina", hello, "its 2cute");
         Item myitem3 = new Item("sock2 for Tina", hello, "its 2cute");
 
         AllItems.addItem(myitem);
-        allUsers.addToInventory(allUsers.getUser(hi), myitem);
+     //   allUsers.addToInventory(allUsers.getUser(hi), myitem);
 
 
         AllItems.addItem(myitem2);

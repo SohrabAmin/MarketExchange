@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.List;
@@ -397,6 +398,34 @@ public class InputGetter {
         return user;
     }
 
+    public User Top3TradingPartners(User user, UserManager allUsers) {
+        List<User> top3TP = new ArrayList<>();
+        top3TP = user.getTopTradingPartners();
+        System.out.print("Here are your top 3 most frequent trading partners:\n");
+        if (top3TP.size() == 0) {
+            System.out.print("\uD83D\uDE25 Sorry! You have no trading partners! You should do some trades!\n");
+        }
+        for (int i = 0; i < top3TP.size(); i++) {
+            System.out.print("\uD83D\uDC51" + Integer.toString(i + 1) + ". " + top3TP.get(i).getName() + "\n");
+
+        }
+    return user;
+    }
+
+    public User MostRecentTrades(User user, UserManager allUsers) {
+        List<Transaction> MostRecent = new ArrayList<>();
+        MostRecent = user.getTradeHistory();
+        System.out.print("Here are your most recent trades:\n");
+        if (MostRecent.size() == 0) {
+            System.out.print("\uD83D\uDE25 Sorry! You have no recent trades! You should do some trades!\n");
+        }
+        for (int i = 0; i < MostRecent.size(); i++) {
+            System.out.print("\uD83D\uDC51" + Integer.toString(i + 1) + ". " + MostRecent.get(i).getTradeStatus() + "\n");
+
+        }
+        return user;
+    }
+
     public Object mainMenu(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers) {
         Scanner sc = new Scanner(System.in);    //System.in is a standard input stream
         System.out.print("----------------------------------------------------------------------------------------------" +
@@ -407,7 +436,7 @@ public class InputGetter {
         }
         System.out.print("Please select number from the following:\n1.View Wishlist\n2.View Inventory\n" +
                 "3.Browse Items\n4.Initiate Trade\n5.View Messages\n6.Approve Pending Trades\n" +
-                "7.Add Item to inventory\n8.Logout" + "\nEnter 'exit' to exit the system at any time.\n");
+                "7.Add Item to inventory\n8.View most recent trades\n9.View most frequent trading partners\n10.Logout" + "\nEnter 'exit' to exit the system at any time.\n");
 
         String a = sc.nextLine();
         if (!a.equals("exit")) {
@@ -431,7 +460,20 @@ public class InputGetter {
             } else if (a.equals("5")) {
                 //view messages
                 return system1.Messages(user,allUsers);
-            } else if (a.equals("6")){
+            }
+            else if (a.equals("8")){ //View most recent trades
+                MostRecentTrades(user, allUsers);
+            }
+            else if (a.equals("9")){ //View most frequent trading partners
+                return Top3TradingPartners(user, allUsers);
+
+
+
+            }
+
+
+
+            else if (a.equals("6")){
                 Object temp = system1.ApproveTrade(user, allUsers);
                 while (temp == null){
                     temp = system1.ApproveTrade(user, allUsers);
@@ -441,7 +483,7 @@ public class InputGetter {
             } else if (a.equals("7")){
                 //request to add new item
                 return system1.AddItem(user, allUsers);
-            } else if (a.equals("8")) {
+            } else if (a.equals("10")) {
                 //logout
                 return null;
             }
