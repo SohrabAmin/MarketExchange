@@ -5,7 +5,7 @@ import java.io.IOException;
 
 /**
  * Class deals with the reading, writing and populating of Users in the systems UserManager class based on
- * external an inputted external file.
+ * information from an external file.
  */
 public class userWriting {
 

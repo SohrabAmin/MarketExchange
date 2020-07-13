@@ -8,7 +8,15 @@ import java.util.List;
  * external an inputted external file.
  */
 public class adminWriting {
-
+    /**
+     * Deals with reading from the external file fileName and if it is not empty, it will return the AdminManager
+     * object stored in fileName; if it is empty, it will create an initial Admin and return a new AdminManager
+     *
+     * @param fileName the name of the file the method is reading from
+     * @return returns an AdminManager object
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public static AdminManager demoAdminRead(String fileName) throws IOException, ClassNotFoundException {
         // creates AdminReadWrite which manages the saving and loading users.
         AdminReadWrite adminRW = new AdminReadWrite(fileName);
@@ -21,7 +29,6 @@ public class adminWriting {
         }
         return aM;
     }
-
 
     /**
      *  Saves the admins from adminManager into the AdminList file.

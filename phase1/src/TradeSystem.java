@@ -7,18 +7,16 @@ public class TradeSystem {
     public InputGetter inputgetter = new InputGetter();
     public AdminInputGetter admininputgetter = new AdminInputGetter();
     public UserManager allUsers = new UserManager();
-    public TransactionManager allTransactions = new TransactionManager();
+    public TransactionManager allTransactions;
     public AdminManager allAdmins;
     public ItemManager AllItems = new ItemManager();
     public MeetingManager allMeetings = new MeetingManager();
     public TradeRequestManager allTradeRequests = new TradeRequestManager();
     public Object currentUser;
 
-    public TradeSystem(){ ;
-    }
-
     public void run() throws IOException, ClassNotFoundException {
         allAdmins = adminWriting.demoAdminRead("AdminList.ser");
+        allTransactions = transactionWriting.demoTransactionRead("TransactionList.ser");
 
         //creating users to test
         allUsers.createUser("Tina", "123");
@@ -101,6 +99,9 @@ public class TradeSystem {
         userWriting.demoUserSave("UserList4.ser", allUsers);
         //saves current AdminManager object allAdmins to external file
         adminWriting.demoAdminSave("AdminList.ser", allAdmins);
+        //saves current TransactionManager object allTransactions to an external file
+        transactionWriting.demoTransactionSave("TransactionList.ser", allTransactions);
+
         System.out.println(allUsers.getAllUsers());
         System.out.println("The current number of users in the file is:" + allUsers.getAllUsers().size());
         System.out.println("the user manager contains the following:" + allUsers.getAllUsers());

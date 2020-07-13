@@ -19,15 +19,15 @@ import java.util.List;
 /**
  * Manages the saving and loading of Admins to the external file.
  */
-public class AdminReadWrite implements Serializable {
+public class transactionReadWrite implements Serializable {
 
     /**
-     * Creates a new empty AdminReadWrite.
+     * Creates a new empty UserReadWrite.
      *
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    public AdminReadWrite(String fileName) throws ClassNotFoundException, IOException {
+    public transactionReadWrite(String fileName) throws ClassNotFoundException, IOException {
         // Reads serializable objects from file.
         // Populates the record list using stored data, if it exists.
         File file = new File(fileName);
@@ -47,7 +47,7 @@ public class AdminReadWrite implements Serializable {
      * @throws FileNotFoundException if filePath is not a valid path
      */
 
-    public AdminManager readFromFile(String fileName) throws ClassNotFoundException {
+    public TransactionManager readFromFile(String fileName) throws ClassNotFoundException {
         File findFile = new File(fileName);
         String filepath = findFile.getAbsolutePath();
         try {
@@ -56,7 +56,7 @@ public class AdminReadWrite implements Serializable {
             ObjectInput input = new ObjectInputStream(buffer);
 
             // deserialize the list in the file by reading
-            AdminManager temp = (AdminManager) input.readObject();
+            TransactionManager temp = (TransactionManager) input.readObject();
             //closes the file
             input.close();
             // as long as the file is not empty, it will populate admins with the list stored in the file
@@ -76,15 +76,15 @@ public class AdminReadWrite implements Serializable {
      * @param fileName the file to write the records to
      * @throws IOException
      */
-    public void saveToFile(String fileName, AdminManager adminManager) throws IOException {
+    public void saveToFile(String fileName, TransactionManager tm) throws IOException {
         File findFile = new File(fileName);
         String filePath = findFile.getAbsolutePath();
         OutputStream file = new FileOutputStream(filePath);
         OutputStream buffer = new BufferedOutputStream(file);
         ObjectOutput output = new ObjectOutputStream(buffer);
 
-        // serialize AdminManager adminManager
-        output.writeObject(adminManager);
+        // serialize TransactionManager tm
+        output.writeObject(tm);
         output.close();
     }
 }
