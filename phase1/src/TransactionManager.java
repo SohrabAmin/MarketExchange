@@ -10,6 +10,7 @@ public class TransactionManager {
     private List<Transaction> pendingSecondExchange;
     private List<Transaction> completedTransaction;
     private List<Transaction> cancelledTransaction;
+    private List<Transaction> finalizedMeeting;
 
     /**
      * Constructs TransactionManager. Creates three ArrayList which store all instances of Transaction: inProgressTransaction, completedTransaction, cancelledTransaction.
@@ -20,6 +21,9 @@ public class TransactionManager {
         completedTransaction = new ArrayList<>();
         cancelledTransaction = new ArrayList<>();
         pendingSecondExchange = new ArrayList<>();
+        finalizedMeeting = new ArrayList<>();
+
+
 
     }
 
@@ -27,7 +31,6 @@ public class TransactionManager {
      * Updates the tradeStatus of a given Transaction. 0: In progress, 1: Pending Second Exchange (Temp only), 2: Completed 3: Cancelled. Notice by updating the tradeStatus,
      * the instance of Transaction is being moved to a new attribute list within TransactionManager. Cancelled implies one of the following: User(s) did not show up to the Meeting or User(s) altered
      * meeting too many times, and completed means the Transaction was successful, and the Item(s) have been officially swapped.
-     *
      *
      * @param itemManager Class that manages Items
      * @param userManager Class that manages Users
@@ -55,7 +58,7 @@ public class TransactionManager {
                 handleCompletedTrade(itemManager, userManager, transaction);
                 completedTransaction.add(transaction);
             }else{
-                handleCancelledTrade(userManager, transaction); //probably will need a better way to handle this. Specs are not clear about this circumstance.
+                //handleCancelledTrade(userManager, transaction); //probably will need a better way to handle this. Specs are not clear about this circumstance.
                 cancelledTransaction.add(transaction);
             }
         }
@@ -72,6 +75,7 @@ public class TransactionManager {
      */
     public void setInitialMeeting(Transaction transaction, Meeting meeting) {
         transaction.setInitialMeeting(meeting);
+
     }
 
     /**
@@ -89,8 +93,24 @@ public class TransactionManager {
      * Pending implies the Transaction is in progress.
      * @param transaction The specified Transaction that has been created.
      */
-    public void addToPendingTransactions(Transaction transaction) {
+    public void addToPendingTransactions(Transaction transaction, UserManager userManager) {
+        User user1;
+        User user2;
+        if (transaction instanceof OneWay){
+            user1 = userManager.getUser(((OneWay) transaction).getBorrower());
+            user2 = userManager.getUser(((OneWay) transaction).getBorrower());
+
+        }else{
+            user1 = userManager.getUser(((TwoWay) transaction).getFirstTrader());
+            user2 = userManager.getUser(((TwoWay) transaction).getSecondTrader());
+        }
+        userManager.addToPendingTrades(user1, transaction);
+        userManager.addToPendingTrades(user2, transaction);
+
+
         inProgressTransaction.add(transaction);
+
+
     }
 
     /**
