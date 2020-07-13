@@ -217,6 +217,16 @@ public class UserManager extends AccountManager {
         user.getItemHistory().put(item, "Pending");
     }
 
+    // TODO: update javadoc
+    /**
+     * setter for the pending trade.
+     *
+     * @param transaction to add meeting information to the trade that is not completed.
+     */
+    public void addToPendingTrades(User user, Transaction transaction) {
+        user.getPendingTrades().add(transaction);
+    }
+
     /**
      * Changes an Item's status (either "Pending", "Approved", or "Rejected") in a User's itemHistory (list of items
      * that have been submitted to the system). Only an Admin should change an Item's status

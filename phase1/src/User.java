@@ -139,14 +139,6 @@ public class User extends Account {
     }
 
     /**
-     * setter for the pending trade.
-     * @param transaction to add meeting information to the trade that is not completed.
-     */
-    public void addPendingTrade(Transaction transaction) {
-        pendingTrades.add(transaction);
-    }
-
-    /**
      * getter for cancelled transactions
      * @return the cancelled transactions as a List
      */
