@@ -341,22 +341,22 @@ public class InputGetter {
     }
 
     public void ApprovedTrade(User user,UserManager allUsers, MeetingManager allMeetings, TradeRequest request, TransactionManager allTransactions){
-//        System.out.print("\u2705 Approved!\n");
-//        //if the trade request is approved, we should now start a trade and make a meeting
-//        Meeting meeting = MeetingInitiator (user, allUsers, allMeetings);
-//        User temp1 = request.getRequester();
-//        User temp2 = request.getReceiver();
-//        allUsers.removeFromPendingRequests(allUsers.getUser(user), request);
-//        if (request.getRequestType() == 1){ //1 way'
-//            OneWay on = new OneWay(temp1, request.getReceiverItem(), request.getTemp());
-//            on.setInitialMeeting(meeting);
-//            allTransactions.receiveTransaction(on);
-//        }
-//        else if (request.getRequestType() == 2) { //2way
-//            TwoWay on = new TwoWay(request.getRequesterItem(), request.getReceiverItem(), request.getTemp());
-//            on.setInitialMeeting(meeting);
-//            allTransactions.receiveTransaction(on);
-//        }
+        System.out.print("\u2705 Approved!\n");
+        //if the trade request is approved, we should now start a trade and make a meeting
+        Meeting meeting = MeetingInitiator (user, allUsers, allMeetings);
+        User temp1 = request.getRequester();
+        User temp2 = request.getReceiver();
+        allUsers.removeFromPendingRequests(allUsers.getUser(user), request);
+        if (request.getRequestType() == 1){ //1 way'
+            OneWay on = new OneWay(temp1, request.getReceiverItem(), request.getTemp());
+            on.setInitialMeeting(meeting);
+            allTransactions. addToPendingTransactions(on);
+        }
+        else if (request.getRequestType() == 2) { //2way
+            TwoWay on = new TwoWay(request.getRequesterItem(), request.getReceiverItem(), request.getTemp());
+            on.setInitialMeeting(meeting);
+            allTransactions. addToPendingTransactions(on);
+        }
     }
 
     public Meeting MeetingInitiator (User user,UserManager allUsers, MeetingManager allMeetings){
@@ -539,9 +539,9 @@ public class InputGetter {
                     " You are not able to do any trades until you are unfrozen by admin.\n" +
                     "\uD83C\uDFC1 Please ask Admin to unfreeze your account!\n\n");
 
-            System.out.print("Please select number from the following:\n1.View Wishlist\n2.View Inventory\n" +
-                    "3.Browse Items\n" +
-                    "4.Add Item to inventory\n5.View most recent trades\n6.View most frequent trading partners\n" +
+            System.out.print("Please select number from the following:\n1. View Wishlist\n2. View Inventory\n" +
+                    "3. Browse Items\n" +
+                    "4. Add Item to inventory\n5.View most recent trades\n6. View most frequent trading partners\n" +
                     "7. View status of my items\n8. Add Item to wishlist" +
                     "\n9. Request unfreeze!\n10. Logout" + "\nEnter 'exit' to exit the system at any time.\n");
             String a = sc.nextLine();
