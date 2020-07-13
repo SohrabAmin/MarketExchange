@@ -100,8 +100,7 @@ public class InputGetter {
             }
         }
         if (wishlist.size() == 0)
-            return user;
-
+            return "back";
         Scanner sc = new Scanner(System.in);
         System.out.print("If you would like to remove an item, please enter the ID of the item you would like to remove or type 'back'\n");
 
@@ -114,18 +113,10 @@ public class InputGetter {
         } catch(NumberFormatException e) {
             return null;
         }
-
-
-
-
-
         //remove from wishlist
-        allUsers.removeFromWishlist(allUsers.getUser(user), wishlist.get((Integer) input));
-
-
-
-
-        return user;
+        allUsers.removeFromWishlist(allUsers.getUser(user), wishlist.get((Integer) input - 1));
+        System.out.println("Item has been removed successfully!");
+        return "back";
     }
 
     public User inventory(User user,UserManager allUsers) {
@@ -532,17 +523,23 @@ public class InputGetter {
 
         if (frozenAccount) { //first off, tell them that they are frozen
             System.out.print("\uD83E\uDD76 Your account is frozen!" +
-                    " You are not able to do any trades until you are unfrozen by admin.\n \uD83C\uDFC1 Please ask Admin to unfreeze your account!\n\n");
+                    " You are not able to do any trades until you are unfrozen by admin.\n" +
+                    "\uD83C\uDFC1 Please ask Admin to unfreeze your account!\n\n");
 
             System.out.print("Please select number from the following:\n1.View Wishlist\n2.View Inventory\n" +
                     "3.Browse Items\n" +
-                    "4.Add Item to inventory\n5.View most recent trades\n6.View most frequent trading partners\n7. View status of my items\n8. Add Item to wishlist" +
+                    "4.Add Item to inventory\n5.View most recent trades\n6.View most frequent trading partners\n" +
+                    "7. View status of my items\n8. Add Item to wishlist" +
                     "\n9. Request unfreeze!\n10. Logout" + "\nEnter 'exit' to exit the system at any time.\n");
             String a = sc.nextLine();
             if (!a.equals("exit")) {
                 if (a.equals("1")) {
                     //view wishlist
-                    return system1.wishlist(user,  allUsers);
+                    Object temp = system1.wishlist(user,  allUsers);
+                    while (temp == null) {
+                        temp = system1.wishlist(user,  allUsers);
+                    }
+                    return user;
                 } else if (a.equals("2")) {
                     //view inventory
                     return system1.inventory(user, allUsers);
@@ -559,10 +556,7 @@ public class InputGetter {
                     MostRecentTrades(user, allUsers);
                 } else if (a.equals("6")) { //View most frequent trading partners
                     return Top3TradingPartners(user, allUsers);
-
-
                     //else input was "back", returns to main menu
-
                 } else if (a.equals("4")) {
                     //request to add new item
                     return system1.AddItem(user, allUsers);
@@ -570,32 +564,20 @@ public class InputGetter {
                     return system1.ViewItemHistory(user, allUsers);
                 } else if (a.equals("8")) {
                     return system1.addToWishlist(user, allUsers);
-
-
                 }
             else if (a.equals("9")){
-
-
 
             }
             else if (a.equals("10")) {
                     //logout
                     return null;
                 }
-            return user;
         }
-
-
-
          else {
-
-
             if (allUsers.getUser(user).getPendingRequests().size() > 0) {
                 System.out.print("\uD83D\uDCE9 You have " + allUsers.getUser(user).getPendingRequests().size() +
                         " Pending Trade Requests!\n");
             }
-
-
             System.out.print("Please select number from the following:\n1.View Wishlist\n2.View Inventory\n" +
                     "3.Browse Items\n4.Initiate Trade\n5.View Messages\n6.Approve Pending Trades\n" +
                     "7.Add Item to inventory\n8.View most recent trades\n9.View most frequent trading partners\n10. View status of my items\n11. Add Item to wishlist" +
@@ -659,8 +641,8 @@ public class InputGetter {
                 System.out.print("Goodbye!\uD83D\uDEAA \n");
                 return a;
             }
-            return user;
         }
+        return user;
     }
         }
 
