@@ -20,7 +20,6 @@ import java.util.List;
  * Manages the saving and loading of Admins to the external file.
  */
 public class AdminReadWrite implements Serializable {
-    private AdminManager adminManager;
 
     /**
      * Creates a new empty UserReadWrite.
@@ -62,17 +61,17 @@ public class AdminReadWrite implements Serializable {
             input.close();
             // as long as the file is not empty, it will populate admins with the list stored in the file
             if (temp != null) {
-                adminManager = temp;
+                return temp;
             }
-            return adminManager;
+            return null;
         } catch (
                 IOException ex) {
         }
-        return adminManager;
+        return null;
     }
 
     /**
-     * Writes the admins from AdminManager u to file at filePath.
+     * Writes adminManager object to external file at filePath.
      *
      * @param fileName the file to write the records to
      * @throws IOException
@@ -84,7 +83,7 @@ public class AdminReadWrite implements Serializable {
         OutputStream buffer = new BufferedOutputStream(file);
         ObjectOutput output = new ObjectOutputStream(buffer);
 
-        // serialize the list of all Admins in AdminManager adminManager
+        // serialize AdminManager adminManager
         output.writeObject(adminManager);
         output.close();
     }

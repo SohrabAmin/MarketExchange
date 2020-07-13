@@ -14,19 +14,19 @@ public class adminWriting {
         AdminReadWrite adminRW = new AdminReadWrite(fileName);
 
         // Deserializes contents of the SER file
-        Object aM = adminRW.readFromFile(fileName);
+        AdminManager aM = adminRW.readFromFile(fileName);
         if (aM == null) {
             Admin initialAdmin = new Admin("Tina", "123456");
             return new AdminManager(initialAdmin);
         }
-        return (AdminManager) aM;
+        return aM;
     }
 
 
     /**
      *  Saves the admins from adminManager into the AdminList file.
      *
-     * @param adminManager
+     * @param adminManager AdminManager object which stores all Admin information
      * @throws IOException
      * @throws ClassNotFoundException
      */

@@ -37,15 +37,12 @@ public class TradeSystem {
         top3TP.add(oops);
         allUsers.getAllUsers().get(0).setTopTradingPartners(top3TP);
 
-
-
         Item myitem = new Item("sock for Mo", hi, "its cute");
         Item myitem2 = new Item("sock for Tina", hello, "its 2cute");
         Item myitem3 = new Item("sock2 for Tina", hello, "its 2cute");
 
         AllItems.addItem(myitem);
      //   allUsers.addToInventory(allUsers.getUser(hi), myitem);
-
 
         AllItems.addItem(myitem2);
         allUsers.addToInventory(allUsers.getUser(hello), myitem2);
@@ -98,11 +95,12 @@ public class TradeSystem {
 
         }
 
-
         System.out.print("Goodbye!\uD83D\uDEAA \n");
 
         //saves all the users in UserManager
         userWriting.demoUserSave("UserList4.ser", allUsers);
+        //saves current AdminManager object allAdmins to external file
+        adminWriting.demoAdminSave("AdminList.ser", allAdmins);
         System.out.println(allUsers.getAllUsers());
         System.out.println("The current number of users in the file is:" + allUsers.getAllUsers().size());
         System.out.println("the user manager contains the following:" + allUsers.getAllUsers());
