@@ -7,6 +7,7 @@ import java.util.*;
 public class TransactionManager {
 
     private List<Transaction> inProgressTransaction;
+    private List<Transaction> pendingSecondExchange;
     private List<Transaction> completedTransaction;
     private List<Transaction> cancelledTransaction;
 
@@ -15,14 +16,18 @@ public class TransactionManager {
      * Does not require argument for instantiation.
      */
     public TransactionManager() {
-        this.inProgressTransaction = new ArrayList<>();
-        this.completedTransaction = new ArrayList<>();
-        this.cancelledTransaction = new ArrayList<>();
+        inProgressTransaction = new ArrayList<>();
+        completedTransaction = new ArrayList<>();
+        cancelledTransaction = new ArrayList<>();
+        pendingSecondExchange = new ArrayList<>();
 
     }
 
     /**
-     * Updates the tradeStatus of a given Transaction. 0: In progress, 1: Completed, 2: Cancelled
+     * Updates the tradeStatus of a given Transaction. 0: In progress, 1: Pending Second Exchange (Temp only), 2: Completed 3: Cancelled. Notice by updating the tradeStatus,
+     * the instance of Transaction is being moved to a new attribute list within TransactionManager. Cancelled implies one of the following: User(s) did not show up to the Meeting or User(s) altered
+     * meeting too many times, and completed means the Transaction was successful, and the Item(s) have been officially swapped.
+     *
      *
      * @param itemManager Class that manages Items
      * @param userManager Class that manages Users
@@ -30,16 +35,17 @@ public class TransactionManager {
      * @param tradeStatus The current status of a given Transaction
      */
     public void updateTransactionStatus(ItemManager itemManager, UserManager userManager, Transaction transaction, int tradeStatus) {
-        this.inProgressTransaction.remove(transaction);
+        if (transaction.getTradeStatus() == 0) {
+            inProgressTransaction.remove(transaction);
 
-        if (tradeStatus == 0) {
-            this.inProgressTransaction.add(transaction);
-        } else if (tradeStatus == 1) {
-            this.completedTransaction.add(transaction);
-            this.handleCompletedTrade(itemManager, userManager, transaction);
-
+        }else{
+            pendingSecondExchange.remove(transaction);
+        }
+        if (tradeStatus == 2) {
+            completedTransaction.add(transaction);
+            handleCompletedTrade(itemManager, userManager, transaction);
         } else {
-            this.cancelledTransaction.add(transaction);
+            cancelledTransaction.add(transaction);
             handleCancelledTrade(userManager, transaction);
         }
         transaction.setTradeStatus(tradeStatus);
@@ -66,17 +72,12 @@ public class TransactionManager {
     }
 
     /**
-     * Adds a given Transaction to one of three list attributes held in TransactionManager: pending, cancelled or completed.
-     * Pending implies the Transaction is in progress, cancelled implies one of the following: User(s) did not show up to the Meeting or User(s) altered
-     * Meeting to many times, and completed means the Transaction was successful, and the Item(s) have been officially swapped.
-     *
+     * Adds a given Transaction to the attribute list pendingTransaction held in TransactionManager.
+     * Pending implies the Transaction is in progress.
      * @param transaction The specified Transaction that has been created.
      */
-    public void receiveNewTransaction(Transaction transaction) {
-        if (transaction.getTradeStatus() == 0) {
-            this.inProgressTransaction.add(transaction);
-
-        }
+    public void addToPendingTransactions(Transaction transaction) {
+        inProgressTransaction.add(transaction);
     }
 
     /**
@@ -138,30 +139,24 @@ public class TransactionManager {
      * @param transaction The given instance of Transaction
      */
     public void handleCancelledTrade(UserManager userManager, Transaction transaction) {
+        User temp1;
+        User temp2;
         if (transaction instanceof OneWay) {
-            User temp1 = userManager.getUser(((OneWay) transaction).getBorrower());
-            User temp2 = userManager.getUser(((OneWay) transaction).getLender());
-            userManager.addToCancelledTransactions(temp1, transaction);
-            userManager.addToCancelledTransactions(temp2, transaction);
-            if (temp1.getCancelledTransactions().size() == userManager.getIncompleteTransactionLimit()) {
-                userManager.pseudoFreeze(temp1);
-            }
+            temp1 = userManager.getUser(((OneWay) transaction).getBorrower());
+            temp2 = userManager.getUser(((OneWay) transaction).getLender());
 
-            if (temp2.getCancelledTransactions().size() == userManager.getIncompleteTransactionLimit()) {
-                userManager.pseudoFreeze(temp2);
-            }
         } else {
-            User temp1 = userManager.getUser(((TwoWay) transaction).getFirstTrader());
-            User temp2 = userManager.getUser(((TwoWay) transaction).getSecondTrader());
-            userManager.addToCancelledTransactions(temp1, transaction);
-            userManager.addToCancelledTransactions(temp2, transaction);
-            if (temp1.getCancelledTransactions().size() == userManager.getIncompleteTransactionLimit()) {
-                userManager.pseudoFreeze(temp1);
-            }
+            temp1 = userManager.getUser(((TwoWay) transaction).getFirstTrader());
+            temp2 = userManager.getUser(((TwoWay) transaction).getSecondTrader());
 
-            if (temp2.getCancelledTransactions().size() == userManager.getIncompleteTransactionLimit()) {
-                userManager.pseudoFreeze(temp2);
-            }
+        }
+        userManager.addToCancelledTransactions(temp1, transaction);
+        userManager.addToCancelledTransactions(temp2, transaction);
+        if (temp1.getCancelledTransactions().size() == userManager.getIncompleteTransactionLimit()) {
+            userManager.pseudoFreeze(temp1);
+        }
+        if (temp2.getCancelledTransactions().size() == userManager.getIncompleteTransactionLimit()) {
+            userManager.pseudoFreeze(temp2);
         }
 
 
