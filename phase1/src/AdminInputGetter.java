@@ -10,6 +10,21 @@ import java.util.Scanner;
  */
 
 public class AdminInputGetter {
+    private List <User> frozenRequests;
+
+
+    AdminInputGetter(){
+        frozenRequests = new ArrayList<User>();
+    }
+
+
+    public void addfrozenRequest (User user){
+        frozenRequests.add(user);
+    }
+
+    public void removeFromfrozenRequest (User user){
+        frozenRequests.remove(user);
+    }
 
     /**
      * Reads input from user and lets them 'log in' to their account by verifying their username and password.
@@ -97,6 +112,9 @@ public class AdminInputGetter {
 //            }
 //        }
 
+        if (allFrozenUsers.size() > 0)
+            System.out.print("\uD83D\uDCF3 You have " + allFrozenUsers.size() + " Frozen user requests!\n");
+
 
 
 
@@ -111,7 +129,7 @@ public class AdminInputGetter {
         }
         System.out.println("Please select from the following by entering the number beside the option:" +
                 " \n 1. Add new admin \n 2. Change system threshold \n" +
-                " 3. View items that need to be approved \n 4. Freeze and unfreeze users \n 5. Log out \n" +
+                " 3. View items that need to be approved \n 4. Freeze users \n 5. View Freeze Requests \n 6. Log out \n" +
                 "Enter 'exit' to exit at any time.");
 
         try {
@@ -151,7 +169,39 @@ public class AdminInputGetter {
                     }
                     //else input was "back", returns to main menu
                     return admin;
-                } else if (input.equals("5")) {
+                }
+                else if (input.equals("5")){
+                   System.out.print("Here are freeze requests:\n");
+                    for (int i = 0 ; i < frozenRequests.size() ; i++){
+                        System.out.print(Integer.toString(i+1) + " . " + frozenRequests.get(i).getName() + "\n");
+                    }
+
+                    System.out.print("Please enter the number of the user you would like to unfreeze or 'back' to go back.\n");
+                    Scanner sc = new Scanner(System.in);
+                    Object line = sc.nextLine();
+                    if (line.equals("back")) {
+                        return "back";
+                    }
+                    else {
+                        try {
+                            line = Integer.parseInt((String) line);
+                        } catch (NumberFormatException e) {
+                            return null;
+                        }
+                        allUsers.unfreeze(frozenRequests.get((Integer) line - 1));
+                        System.out.print("\u2705 Successfully unfrozen user: " +
+                                allUsers.getUser(frozenRequests.get((Integer) line - 1)).getName() + "\n");
+
+                        frozenRequests.remove(frozenRequests.get((Integer) line - 1));
+
+                        return admin;
+                    }
+
+
+
+                }
+
+                else if (input.equals("6")) {
                     return null;
                 } else {
                     return admin;

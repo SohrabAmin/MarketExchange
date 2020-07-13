@@ -517,7 +517,14 @@ public class InputGetter {
     }
 
 
-    public Object mainMenu(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions ) {
+
+    public Object NotifyAdmin (User user, AdminInputGetter adminInputGetter){
+        adminInputGetter.addfrozenRequest(user);
+        System.out.print("Your request is successfully submitted!\n");
+        return user;
+    }
+
+    public Object mainMenu(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions, AdminInputGetter admininputgetter ) {
         Scanner sc = new Scanner(System.in);    //System.in is a standard input stream
         System.out.print("----------------------------------------------------------------------------------------------" +
                 "\n\uD83D\uDC4B Welcome back, " + user.getName() + "!\n");
@@ -546,7 +553,14 @@ public class InputGetter {
                         temp = system1.wishlist(user,  allUsers);
                     }
                     return user;
-                } else if (a.equals("2")) {
+                }
+                else if (a.equals("9")){
+                    NotifyAdmin ( user,  admininputgetter);
+                return user;
+
+                }
+
+                else if (a.equals("2")) {
                     //view inventory
                     return system1.inventory(user, allUsers);
                 } else if (a.equals("3")) {
