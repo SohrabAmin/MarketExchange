@@ -344,22 +344,22 @@ public class InputGetter {
     }
 
     public void ApprovedTrade(User user,UserManager allUsers, MeetingManager allMeetings, TradeRequest request, TransactionManager allTransactions){
-        System.out.print("\u2705 Approved!\n");
-        //if the trade request is approved, we should now start a trade and make a meeting
-        Meeting meeting = MeetingInitiator (user, allUsers, allMeetings);
-        User temp1 = request.getRequester();
-        User temp2 = request.getReceiver();
-        allUsers.removeFromPendingRequests(allUsers.getUser(user), request);
-        if (request.getRequestType() == 1){ //1 way'
-            OneWay on = new OneWay(temp1, request.getReceiverItem(), request.getTemp());
-            on.setInitialMeeting(meeting);
-            allTransactions.receiveTransaction(on);
-        }
-        else if (request.getRequestType() == 2) { //2way
-            TwoWay on = new TwoWay(request.getRequesterItem(), request.getReceiverItem(), request.getTemp());
-            on.setInitialMeeting(meeting);
-            allTransactions.receiveTransaction(on);
-        }
+//        System.out.print("\u2705 Approved!\n");
+//        //if the trade request is approved, we should now start a trade and make a meeting
+//        Meeting meeting = MeetingInitiator (user, allUsers, allMeetings);
+//        User temp1 = request.getRequester();
+//        User temp2 = request.getReceiver();
+//        allUsers.removeFromPendingRequests(allUsers.getUser(user), request);
+//        if (request.getRequestType() == 1){ //1 way'
+//            OneWay on = new OneWay(temp1, request.getReceiverItem(), request.getTemp());
+//            on.setInitialMeeting(meeting);
+//            allTransactions.receiveTransaction(on);
+//        }
+//        else if (request.getRequestType() == 2) { //2way
+//            TwoWay on = new TwoWay(request.getRequesterItem(), request.getReceiverItem(), request.getTemp());
+//            on.setInitialMeeting(meeting);
+//            allTransactions.receiveTransaction(on);
+//        }
     }
 
     public Meeting MeetingInitiator (User user,UserManager allUsers, MeetingManager allMeetings){
