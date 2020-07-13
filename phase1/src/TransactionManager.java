@@ -79,60 +79,61 @@ public class TransactionManager {
         }
     }
 
-        /**
-         * Executes the back-end results of a Transaction being completed.
-         *
-         * @param itemManager The instance of class ItemManager
-         * @param userManager The instance of class UserManager
-         * @param transaction The given instance of Transaction
-         */
-        public void handleCompletedTrade (ItemManager itemManager, UserManager userManager, Transaction transaction){
+    /**
+     * Executes the back-end results of a Transaction being completed.
+     *
+     * @param itemManager The instance of class ItemManager
+     * @param userManager The instance of class UserManager
+     * @param transaction The given instance of Transaction
+     */
+    public void handleCompletedTrade(ItemManager itemManager, UserManager userManager, Transaction transaction) {
 
-            if (transaction instanceof OneWay) {
+        if (transaction instanceof OneWay) {
 
-                ((OneWay) transaction).getBorrower().decreaseEligibility();
-                ((OneWay) transaction).getLender().increaseEligibility();
-                userManager.removeFromInventory(((OneWay) transaction).getLender(), ((OneWay) transaction).getLenderItem());
-                userManager.addToInventory(((OneWay) transaction).getBorrower(), ((OneWay) transaction).getLenderItem());
+            ((OneWay) transaction).getBorrower().decreaseEligibility();
+            ((OneWay) transaction).getLender().increaseEligibility();
+            userManager.removeFromInventory(((OneWay) transaction).getLender(), ((OneWay) transaction).getLenderItem());
+            userManager.addToInventory(((OneWay) transaction).getBorrower(), ((OneWay) transaction).getLenderItem());
 
-                userManager.updateTradeHistory(((OneWay) transaction).getLender(), transaction);
-                userManager.updateTradeHistory(((OneWay) transaction).getBorrower(), transaction);
+            userManager.updateTradeHistory(((OneWay) transaction).getLender(), transaction);
+            userManager.updateTradeHistory(((OneWay) transaction).getBorrower(), transaction);
 
-                if (transaction.getTemp()) {
-                    itemManager.setCurrentHolder(((OneWay) transaction).getLenderItem(), ((OneWay) transaction).getBorrower());
-                } else {
-                    itemManager.setCurrentHolder(((OneWay) transaction).getLenderItem(), ((OneWay) transaction).getBorrower());
-                    itemManager.setOwner(((OneWay) transaction).getLenderItem(), ((OneWay) transaction).getBorrower());
-                }
-
+            if (transaction.getTemp()) {
+                itemManager.setCurrentHolder(((OneWay) transaction).getLenderItem(), ((OneWay) transaction).getBorrower());
             } else {
-                userManager.removeFromInventory(((TwoWay) transaction).getFirstTrader(), ((TwoWay) transaction).getFirstItem());
-                userManager.removeFromInventory(((TwoWay) transaction).getSecondTrader(), ((TwoWay) transaction).getSecondItem());
-                userManager.addToInventory(((TwoWay) transaction).getFirstTrader(), ((TwoWay) transaction).getSecondItem());
-                userManager.addToInventory(((TwoWay) transaction).getSecondTrader(), ((TwoWay) transaction).getFirstItem());
+                itemManager.setCurrentHolder(((OneWay) transaction).getLenderItem(), ((OneWay) transaction).getBorrower());
+                itemManager.setOwner(((OneWay) transaction).getLenderItem(), ((OneWay) transaction).getBorrower());
+            }
 
-                userManager.updateTradeHistory(((TwoWay) transaction).getFirstTrader(), transaction);
-                userManager.updateTradeHistory(((TwoWay) transaction).getSecondTrader(), transaction);
+        } else {
+            userManager.removeFromInventory(((TwoWay) transaction).getFirstTrader(), ((TwoWay) transaction).getFirstItem());
+            userManager.removeFromInventory(((TwoWay) transaction).getSecondTrader(), ((TwoWay) transaction).getSecondItem());
+            userManager.addToInventory(((TwoWay) transaction).getFirstTrader(), ((TwoWay) transaction).getSecondItem());
+            userManager.addToInventory(((TwoWay) transaction).getSecondTrader(), ((TwoWay) transaction).getFirstItem());
 
-                if (transaction.getTemp()) {
-                    itemManager.setCurrentHolder(((TwoWay) transaction).getFirstItem(), ((TwoWay) transaction).getSecondTrader());
-                    itemManager.setCurrentHolder(((TwoWay) transaction).getSecondItem(), ((TwoWay) transaction).getFirstTrader());
-                } else {
-                    itemManager.setCurrentHolder(((TwoWay) transaction).getFirstItem(), ((TwoWay) transaction).getSecondTrader());
-                    itemManager.setCurrentHolder(((TwoWay) transaction).getSecondItem(), ((TwoWay) transaction).getFirstTrader());
-                    itemManager.setOwner(((TwoWay) transaction).getFirstItem(), ((TwoWay) transaction).getSecondTrader());
-                    itemManager.setOwner(((TwoWay) transaction).getSecondItem(), ((TwoWay) transaction).getFirstTrader());
-                }
+            userManager.updateTradeHistory(((TwoWay) transaction).getFirstTrader(), transaction);
+            userManager.updateTradeHistory(((TwoWay) transaction).getSecondTrader(), transaction);
 
-
+            if (transaction.getTemp()) {
+                itemManager.setCurrentHolder(((TwoWay) transaction).getFirstItem(), ((TwoWay) transaction).getSecondTrader());
+                itemManager.setCurrentHolder(((TwoWay) transaction).getSecondItem(), ((TwoWay) transaction).getFirstTrader());
+            } else {
+                itemManager.setCurrentHolder(((TwoWay) transaction).getFirstItem(), ((TwoWay) transaction).getSecondTrader());
+                itemManager.setCurrentHolder(((TwoWay) transaction).getSecondItem(), ((TwoWay) transaction).getFirstTrader());
+                itemManager.setOwner(((TwoWay) transaction).getFirstItem(), ((TwoWay) transaction).getSecondTrader());
+                itemManager.setOwner(((TwoWay) transaction).getSecondItem(), ((TwoWay) transaction).getFirstTrader());
             }
 
 
         }
 
 
+    }
+
+
     /**
      * Executes the back-end results of a Transaction being cancelled. A Transaction being cancelled can result in being frozen (unable to participate in trading).
+     *
      * @param userManager The instance of UserManager
      * @param transaction The given instance of Transaction
      */
@@ -140,28 +141,29 @@ public class TransactionManager {
         if (transaction instanceof OneWay) {
             User temp1 = userManager.getUser(((OneWay) transaction).getBorrower());
             User temp2 = userManager.getUser(((OneWay) transaction).getLender());
-            //userManager.addCancelledTransaction(temp1, transaction);
-            //userManager.addCancelledTransaction(temp2, transaction);
-            //if (temp1.getCancelledTransaction.size() == userManager.getIncompleteTransactionLimit()) {
-            //    userManager.freeze(temp1);
-            //}
+            userManager.addToCancelledTransactions(temp1, transaction);
+            userManager.addToCancelledTransactions(temp2, transaction);
+            if (temp1.getCancelledTransactions().size() == userManager.getIncompleteTransactionLimit()) {
+                userManager.pseudoFreeze(temp1);
+            }
 
-            //if (temp2.getCancelledTransaction.size() == userManager.getIncompleteTransactionLimit()) {
-            //    userManager.freeze(temp2);
-            //}
+            if (temp2.getCancelledTransactions().size() == userManager.getIncompleteTransactionLimit()) {
+                userManager.pseudoFreeze(temp2);
+            }
         } else {
             User temp1 = userManager.getUser(((TwoWay) transaction).getFirstTrader());
             User temp2 = userManager.getUser(((TwoWay) transaction).getSecondTrader());
-            //userManager.addCancelledTransaction(temp1, transaction);
-            //userManager.addCancelledTransaction(temp2, transaction);
-            //if (temp1.getCancelledTransaction().length() == userManager.getIncompleteTransactionLimit()) {
-            //    userManager.freeze(temp1);
+            userManager.addToCancelledTransactions(temp1, transaction);
+            userManager.addToCancelledTransactions(temp2, transaction);
+            if (temp1.getCancelledTransactions().size() == userManager.getIncompleteTransactionLimit()) {
+                userManager.pseudoFreeze(temp1);
             }
 
-            //if (temp2.getCancelledTransaction().length() == userManager.getIncompleteTransactionLimit()) {
-            //    userManager.freeze(temp2);
-            //}
+            if (temp2.getCancelledTransactions().size() == userManager.getIncompleteTransactionLimit()) {
+                userManager.pseudoFreeze(temp2);
+            }
         }
 
 
     }
+}
