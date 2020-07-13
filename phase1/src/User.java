@@ -16,6 +16,7 @@ public class User extends Account {
     private List<TradeRequest> outbandRequest;
     private List<Meeting> pendingTrade;
 
+
     public User() {
     }
 

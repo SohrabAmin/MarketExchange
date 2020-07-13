@@ -89,7 +89,7 @@ public class InputGetter {
         return authenticator(allUsers);
     }
 
-    public Object wishlist(User user) {
+    public Object wishlist(User user, UserManager allUsers) {
         List<Item> wishlist = user.getWishlist();
         if (wishlist.size() == 0)
             System.out.print("Your wishlist is empty!\n");
@@ -99,8 +99,12 @@ public class InputGetter {
                 System.out.println(Integer.toString(i+1) + ". " + wishlist.get(i).getName() + " : " + wishlist.get(i).getDescription());
             }
         }
+        if (wishlist.size() == 0)
+            return user;
+
         Scanner sc = new Scanner(System.in);
         System.out.print("If you would like to remove an item, please enter the ID of the item you would like to remove or type 'back'\n");
+
         Object input = sc.nextLine();
         if (input.equals("back")){
             return "back";
@@ -111,11 +115,17 @@ public class InputGetter {
             return null;
         }
 
+
+
+
+
         //remove from wishlist
+        allUsers.removeFromWishlist(allUsers.getUser(user), wishlist.get((Integer) input));
 
 
 
-        return "back";
+
+        return user;
     }
 
     public User inventory(User user,UserManager allUsers) {
@@ -519,106 +529,139 @@ public class InputGetter {
         //A frozen account is one where you can log in and look for items, but you cannot arrange any transactions.
         // A user who has been frozen can request that the administrative user unfreezes their account.
         boolean frozenAccount = user.getIsFrozen();
-        if (frozenAccount){ //first off, tell them that they are frozen
-            System.out.print("");
 
+        if (frozenAccount) { //first off, tell them that they are frozen
+            System.out.print("\uD83E\uDD76 Your account is frozen!" +
+                    " You are not able to do any trades until you are unfrozen by admin.\n \uD83C\uDFC1 Please ask Admin to unfreeze your account!\n\n");
 
-
-
-
-        }
-
-
-
-
-
-
-
-
-        if (allUsers.getUser(user).getPendingRequests().size() > 0){
-            System.out.print("\uD83D\uDCE9 You have " + allUsers.getUser(user).getPendingRequests().size() +
-                    " Pending Trade Requests!\n");
-        }
-
-
-
-
-
-
-
-        System.out.print("Please select number from the following:\n1.View Wishlist\n2.View Inventory\n" +
-                "3.Browse Items\n4.Initiate Trade\n5.View Messages\n6.Approve Pending Trades\n" +
-                "7.Add Item to inventory\n8.View most recent trades\n9.View most frequent trading partners\n10. View status of my items\n11. Add Item to wishlist" +
-                "12.View Approved Trades\n13. Logout" + "\nEnter 'exit' to exit the system at any time.\n");
-
-        String a = sc.nextLine();
-        if (!a.equals("exit")) {
-            if (a.equals("1")) {
-                //view wishlist
-                return system1.wishlist(user);
-            } else if (a.equals("2")) {
-                //view inventory
-                return system1.inventory(user, allUsers);
-            } else if (a.equals("3")) {
-                //browse items
-                //return system1.Browse(user, allItems, allUsers);
-                Object temp = system1.Browse(user, allItems, allUsers);
-                while (temp == null){
-                    temp = system1.Browse(user, allItems, allUsers);
+            System.out.print("Please select number from the following:\n1.View Wishlist\n2.View Inventory\n" +
+                    "3.Browse Items\n" +
+                    "4.Add Item to inventory\n5.View most recent trades\n6.View most frequent trading partners\n7. View status of my items\n8. Add Item to wishlist" +
+                    "\n9. Request unfreeze!\n10. Logout" + "\nEnter 'exit' to exit the system at any time.\n");
+            String a = sc.nextLine();
+            if (!a.equals("exit")) {
+                if (a.equals("1")) {
+                    //view wishlist
+                    return system1.wishlist(user,  allUsers);
+                } else if (a.equals("2")) {
+                    //view inventory
+                    return system1.inventory(user, allUsers);
+                } else if (a.equals("3")) {
+                    //browse items
+                    //return system1.Browse(user, allItems, allUsers);
+                    Object temp = system1.Browse(user, allItems, allUsers);
+                    while (temp == null) {
+                        temp = system1.Browse(user, allItems, allUsers);
+                    }
+                    return user;
                 }
-                return user;
-            } else if (a.equals("4")) {
-                //choose the id?
-                Object temp = system1.Trade(user, allItems, allTradeRequests, allUsers);
-                while (temp == null){
-                    temp = system1.Trade(user, allItems, allTradeRequests, allUsers);
+                } else if (a.equals("5")) { //View most recent trades
+                    MostRecentTrades(user, allUsers);
+                } else if (a.equals("6")) { //View most frequent trading partners
+                    return Top3TradingPartners(user, allUsers);
+
+
+                    //else input was "back", returns to main menu
+
+                } else if (a.equals("4")) {
+                    //request to add new item
+                    return system1.AddItem(user, allUsers);
+                } else if (a.equals("7")) {
+                    return system1.ViewItemHistory(user, allUsers);
+                } else if (a.equals("8")) {
+                    return system1.addToWishlist(user, allUsers);
+
+
                 }
-                //else input was "back", returns to main menu
-                return user;
-            } else if (a.equals("5")) {
-                //view messages
-                return system1.Messages(user,allUsers);
-            }
-            else if (a.equals("8")){ //View most recent trades
-                MostRecentTrades(user, allUsers);
-            }
-            else if (a.equals("9")){ //View most frequent trading partners
-                return Top3TradingPartners(user, allUsers);
+            else if (a.equals("9")){
+
+
 
             }
-
-            else if (a.equals("6")){
-                Object temp = system1.ApproveTrade( user, allUsers,  allMeetings,  allTransactions);
-                while (temp == null){
-                    temp = system1.ApproveTrade( user, allUsers,  allMeetings,  allTransactions);
+            else if (a.equals("10")) {
+                    //logout
+                    return null;
                 }
-                //else input was "back", returns to main menu
-                return user;
-            } else if (a.equals("7")){
-                //request to add new item
-                return system1.AddItem(user, allUsers);
-            }
-            else if (a.equals("10")){
-                return system1.ViewItemHistory (user, allUsers);
-            }
-            else if (a.equals("11"))
-            {
-                return system1.addToWishlist (user, allUsers);
-
-
-
-            }
-            else if (a.equals("13")) {
-                //logout
-                return null;
-            }
+            return user;
         }
-        //input is "exit"
-        else {
-            System.out.print("Goodbye!\uD83D\uDEAA \n");
-            return a;
+
+
+
+         else {
+
+
+            if (allUsers.getUser(user).getPendingRequests().size() > 0) {
+                System.out.print("\uD83D\uDCE9 You have " + allUsers.getUser(user).getPendingRequests().size() +
+                        " Pending Trade Requests!\n");
+            }
+
+
+            System.out.print("Please select number from the following:\n1.View Wishlist\n2.View Inventory\n" +
+                    "3.Browse Items\n4.Initiate Trade\n5.View Messages\n6.Approve Pending Trades\n" +
+                    "7.Add Item to inventory\n8.View most recent trades\n9.View most frequent trading partners\n10. View status of my items\n11. Add Item to wishlist" +
+                    "12.View Approved Trades\n13. Logout" + "\nEnter 'exit' to exit the system at any time.\n");
+
+            String a = sc.nextLine();
+            if (!a.equals("exit")) {
+                if (a.equals("1")) {
+                    //view wishlist
+                    return system1.wishlist(user, allUsers);
+                } else if (a.equals("2")) {
+                    //view inventory
+                    return system1.inventory(user, allUsers);
+                } else if (a.equals("3")) {
+                    //browse items
+                    //return system1.Browse(user, allItems, allUsers);
+                    Object temp = system1.Browse(user, allItems, allUsers);
+                    while (temp == null) {
+                        temp = system1.Browse(user, allItems, allUsers);
+                    }
+                    return user;
+                } else if (a.equals("4")) {
+                    //choose the id?
+                    Object temp = system1.Trade(user, allItems, allTradeRequests, allUsers);
+                    while (temp == null) {
+                        temp = system1.Trade(user, allItems, allTradeRequests, allUsers);
+                    }
+                    //else input was "back", returns to main menu
+                    return user;
+                } else if (a.equals("5")) {
+                    //view messages
+                    return system1.Messages(user, allUsers);
+                } else if (a.equals("8")) { //View most recent trades
+                    MostRecentTrades(user, allUsers);
+                } else if (a.equals("9")) { //View most frequent trading partners
+                    return Top3TradingPartners(user, allUsers);
+
+                } else if (a.equals("6")) {
+                    Object temp = system1.ApproveTrade(user, allUsers, allMeetings, allTransactions);
+                    while (temp == null) {
+                        temp = system1.ApproveTrade(user, allUsers, allMeetings, allTransactions);
+                    }
+                    //else input was "back", returns to main menu
+                    return user;
+                } else if (a.equals("7")) {
+                    //request to add new item
+                    return system1.AddItem(user, allUsers);
+                } else if (a.equals("10")) {
+                    return system1.ViewItemHistory(user, allUsers);
+                } else if (a.equals("11")) {
+                    return system1.addToWishlist(user, allUsers);
+
+
+                } else if (a.equals("13")) {
+                    //logout
+                    return null;
+                }
+            }
+            //input is "exit"
+            else {
+                System.out.print("Goodbye!\uD83D\uDEAA \n");
+                return a;
+            }
+            return user;
         }
-        return user;
     }
-}
+        }
+
 
