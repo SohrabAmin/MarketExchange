@@ -91,8 +91,10 @@ public class InputGetter {
 
     public Object wishlist(User user, UserManager allUsers) {
         List<Item> wishlist = user.getWishlist();
-        if (wishlist.size() == 0)
+        if (wishlist.size() == 0) {
             System.out.print("Your wishlist is empty!\n");
+            return "back";
+        }
         else {
             System.out.print("\uD83C\uDF20Your wishlist: \n");
             for (int i = 0; i < wishlist.size(); i++) {
@@ -116,7 +118,7 @@ public class InputGetter {
         //remove from wishlist
         allUsers.removeFromWishlist(allUsers.getUser(user), wishlist.get((Integer) input - 1));
         System.out.println("Item has been removed successfully!");
-        return "back";
+        return null;
     }
 
     public User inventory(User user,UserManager allUsers) {
@@ -587,7 +589,11 @@ public class InputGetter {
             if (!a.equals("exit")) {
                 if (a.equals("1")) {
                     //view wishlist
-                    return system1.wishlist(user, allUsers);
+                    Object temp = system1.wishlist(user,  allUsers);
+                    while (temp == null) {
+                        temp = system1.wishlist(user,  allUsers);
+                    }
+                    return user;
                 } else if (a.equals("2")) {
                     //view inventory
                     return system1.inventory(user, allUsers);
