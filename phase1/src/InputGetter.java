@@ -160,10 +160,14 @@ public class InputGetter {
             return null;
         }
 
-        Item item = allItems2.get((Integer) input -1);
-        allUsers.addToWishlist (user, item);
-        System.out.print ("Item has been added to your wishlist \uD83C\uDF20\n");
-
+        if ((Integer) input < allItems2.size()) {
+            Item item = allItems2.get((Integer) input - 1);
+            allUsers.addToWishlist(user, item);
+            System.out.print("Item has been added to your wishlist \uD83C\uDF20\n");
+        }
+        else {
+            System.out.print("This ID is invalid. Please try again!\n");
+        }
         return "back";
     }
 
@@ -554,7 +558,7 @@ public class InputGetter {
                     }
                     return user;
                 }
-                } else if (a.equals("5")) { //View most recent trades
+                 else if (a.equals("5")) { //View most recent trades
                     MostRecentTrades(user, allUsers);
                 } else if (a.equals("6")) { //View most frequent trading partners
                     return Top3TradingPartners(user, allUsers);
@@ -574,7 +578,7 @@ public class InputGetter {
                     //logout
                     return null;
                 }
-        }
+        }}
          else {
             if (allUsers.getUser(user).getPendingRequests().size() > 0) {
                 System.out.print("\uD83D\uDCE9 You have " + allUsers.getUser(user).getPendingRequests().size() +
@@ -582,7 +586,7 @@ public class InputGetter {
             }
             System.out.print("Please select number from the following:\n1.View Wishlist\n2.View Inventory\n" +
                     "3.Browse Items\n4.Initiate Trade\n5.View Messages\n6.Approve Pending Trades\n" +
-                    "7.Add Item to inventory\n8.View most recent trades\n9.View most frequent trading partners\n10. View status of my items\n11. Add Item to wishlist" +
+                    "7.Add Item to inventory\n8.View most recent trades\n9.View most frequent trading partners\n10. View status of my items\n11. Add Item to wishlist\n" +
                     "12.View Approved Trades\n13. Logout" + "\nEnter 'exit' to exit the system at any time.\n");
 
             String a = sc.nextLine();
