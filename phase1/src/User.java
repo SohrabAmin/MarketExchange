@@ -1,16 +1,20 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class User extends Account {
 
-    public ArrayList<Item> wishlist;
+    private ArrayList<Item> wishlist;
     private ArrayList<Item> inventory;
     private ArrayList<Item> draftInventory;
-    public boolean isFrozen;
+    private HashMap<Item,String> ItemHistory;
+    private boolean isFrozen;
     private int eligibility;
     private List<Transaction> tradeHistory;
     private List<User> topTradingPartners;
     private List<TradeRequest> pendingRequests;
+    private List<TradeRequest> outbandRequest;
+    private List<Meeting> pendingTrade;
 
     public User() {
     }
@@ -24,8 +28,15 @@ public class User extends Account {
         this.tradeHistory = new ArrayList<>();
         this.topTradingPartners = new ArrayList<>();
         this.pendingRequests = new ArrayList<>();
+        this.ItemHistory =new HashMap<Item,String>();//Creating HashMap
+        outbandRequest = new ArrayList<>();
+        pendingTrade = new ArrayList<>();
+
     }
 
+    public HashMap<Item,String> getItemHistory(){
+        return ItemHistory;
+    }
 
     public ArrayList<Item> getWishlist() {
         return wishlist;
@@ -54,6 +65,12 @@ public class User extends Account {
     public List<User> getTopTradingPartners() {
         return topTradingPartners;
     }
+
+    public List<TradeRequest> getOutbandRequest(){ return outbandRequest;}
+    public List<Meeting> getPendingTrade(){ return pendingTrade;}
+
+    public void addOutbandRequest(TradeRequest outbandrequest){outbandRequest.add(outbandrequest);}
+    public void addPendingTrade(Meeting meeting){pendingTrade.add(meeting);}
 
     public void setTopTradingPartners(List<User> topTradingPartners) {
         this.topTradingPartners.clear();

@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.security.PublicKey;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.List;
 
@@ -88,17 +89,33 @@ public class InputGetter {
         return authenticator(allUsers);
     }
 
-    public User wishlist(User user) {
+    public Object wishlist(User user) {
         List<Item> wishlist = user.getWishlist();
         if (wishlist.size() == 0)
-            System.out.print("Your wishlist is empty!\n\n");
+            System.out.print("Your wishlist is empty!\n");
         else {
-            System.out.print("Your wishlist: \n\n");
+            System.out.print("\uD83C\uDF20Your wishlist: \n");
             for (int i = 0; i < wishlist.size(); i++) {
-                System.out.println(wishlist.get(i).getName());
+                System.out.println(Integer.toString(i+1) + ". " + wishlist.get(i).getName() + " : " + wishlist.get(i).getDescription());
             }
         }
-        return user;
+        Scanner sc = new Scanner(System.in);
+        System.out.print("If you would like to remove an item, please enter the ID of the item you would like to remove or type 'back'\n");
+        Object input = sc.nextLine();
+        if (input.equals("back")){
+            return "back";
+        }
+        try {
+            input = Integer.parseInt((String) input);
+        } catch(NumberFormatException e) {
+            return null;
+        }
+
+        //remove from wishlist
+
+
+
+        return "back";
     }
 
     public User inventory(User user,UserManager allUsers) {
@@ -115,14 +132,36 @@ public class InputGetter {
         return user;
     }
 
-    public User Browse(User user, ItemManager allItems) {
+    public Object Browse(User user, ItemManager allItems, UserManager allUsers) {
         // "1. Sock : white clear "
+
         List<Item> allItems2 = allItems.getSystemInventory();
+        if (allItems2.size() == 0){
+            System.out.println("There are no items to browse!");
+            return "back";
+        }
         for (int i = 0; i < allItems2.size(); i++) {
             System.out.println("\uD83D\uDCE6" + (i + 1) + ". " + allItems2.get(i).getName() + " : "
                     + allItems2.get(i).getDescription() + "\n");
         }
-        return user;
+        System.out.print("Enter ID of the item you would like to add to your wishlist or type 'back' to get to main menu.\n");
+
+        Scanner sc = new Scanner(System.in);
+        Object input = sc.nextLine();
+        if (input.equals("back")){
+            return "back";
+        }
+        try {
+            input = Integer.parseInt((String) input);
+        } catch(NumberFormatException e) {
+            return null;
+        }
+
+        Item item = allItems2.get((Integer) input -1);
+        allUsers.addToWishlist (user, item);
+        System.out.print ("Item has been added to your wishlist \uD83C\uDF20\n");
+
+        return "back";
     }
 
     public Object Trade(User user, ItemManager allItems, TradeRequestManager allTradeRequests, UserManager allUsers) {
@@ -290,17 +329,50 @@ public class InputGetter {
         return user;
     }
 
-    public void RejectTrade(){
+    public void RejectTrade(User user,UserManager allUsers /*, MeetingManager allMeetings*/){
         System.out.print("\u274E Rejected!\n");
     }
 
-    public void ApprovedTrade(){
+    public void ApprovedTrade(User user,UserManager allUsers, MeetingManager allMeetings, TradeRequest request, TransactionManager allTransactions){
         System.out.print("\u2705 Approved!\n");
+        //if the trade request is approved, we should now start a trade and make a meeting
+        Meeting meeting = MeetingInitiator (user, allUsers, allMeetings);
+        User temp1 = request.getRequester();
+        User temp2 = request.getReceiver();
+        allUsers.removeFromPendingRequests(allUsers.getUser(user), request);
+        if (request.getRequestType() == 1){ //1 way'
+            OneWay on = new OneWay(temp1, request.getReceiverItem(), request.getTemp());
+            on.setInitialMeeting(meeting);
+            allTransactions.receiveTransaction(on);
+        }
+        else if (request.getRequestType() == 2) { //2way
+            TwoWay on = new TwoWay(request.getRequesterItem(), request.getReceiverItem(), request.getTemp());
+            on.setInitialMeeting(meeting);
+            allTransactions.receiveTransaction(on);
+        }
     }
 
-    public Object ApproveTrade(User user,UserManager allUsers){
+    public Meeting MeetingInitiator (User user,UserManager allUsers, MeetingManager allMeetings){
+        System.out.print("\uD83D\uDCC5 Please enter your proposed date for this trade in format dd-mm-yyyy\n");
+        Scanner sc = new Scanner(System.in);
+        String date = sc.nextLine();
+        System.out.print("\uD83D\uDCC5 Please enter your proposed time for this trade in format hh:mm\n");
+        String time = sc.nextLine();
+        System.out.print("\uD83D\uDCC5 Please enter your proposed location for this trade\n");
+        String location = sc.nextLine();
+        Meeting meeting = allMeetings.createMeeting(date,  time,  location);
+
+        return meeting;
+
+    }
+
+    public Object ApproveTrade(User user,UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions){
         User Person = allUsers.getUser(user);
         List <TradeRequest> Trades = Person.getPendingRequests();
+        if (Trades.size() == 0){
+            System.out.println("There are no pending trade requests!");
+            return "back";
+        }
         System.out.print("Here are your pending trade requests: \n");
         for (int i = 0; i < Trades.size(); i++){
             String ext = "";
@@ -308,7 +380,7 @@ public class InputGetter {
                 ext = " With your item " + Person.getPendingRequests().get(i).getRequesterItem().getName();
             }
 
-            System.out.print("\uD83E\uDD1D" +Integer.toString(i+1) + ". " + Trades.get(i).getRequester().getName() +
+            System.out.print("\uD83E\uDD1D" +(i+1) + ". " + Trades.get(i).getRequester().getName() +
                     " For your item: "+ Trades.get(i).getReceiverItem().getName() + ext+ "\n");
         }
 
@@ -322,14 +394,12 @@ public class InputGetter {
         if (input.equals(new String ("back"))){
             return "back";
         }
-
         int pendingRequestIndex;
 
-        try{
-        Integer pendingTrade = Integer.parseInt((String) input);
-        pendingRequestIndex = pendingTrade - 1;
+        try{ input = Integer.parseInt((String) input);
+            pendingRequestIndex = (Integer) input - 1;
         } catch (NumberFormatException e) {
-            return "back";
+            return null;
         }
 
         System.out.print("You have selected the following pending trade: \n");
@@ -339,51 +409,34 @@ public class InputGetter {
             ext2 = " With your item " + Person.getPendingRequests().get(pendingRequestIndex).getRequesterItem().getName();
         }
 
-        if (Person.getPendingRequests().get(pendingRequestIndex).getTemp()) //if temporary
-        temp = "Temporary";
-
-        System.out.print("\uD83D\uDFE9 Requester: "+  Trades.get(pendingRequestIndex).getRequester().getName() + "\n" +
-                "For item: " + Trades.get(pendingRequestIndex).getReceiverItem().getName()  + ext2 +
+        if (Person.getPendingRequests().get(pendingRequestIndex).getTemp()) { //if temporary
+            temp = "Temporary";
+        }
+        System.out.println("\uD83D\uDFE9 Requester: " + Trades.get(pendingRequestIndex).getRequester().getName() + "\n" +
+                "For item: " + Trades.get(pendingRequestIndex).getReceiverItem().getName() + ext2 +
                 "\n\uD83D\uDCACMessage:" + Trades.get(pendingRequestIndex).getMessage() +
-                "\nThis trade will be " + temp);
+                "\n\nThis trade will be " + temp + ".\n");
 
-        System.out.print("\uD83E\uDDD0 What was that? Please try again!\n" +
-                "Input '1' to approve or input '2' to reject or 'back' to return to the list of pending trades.\n");
+        TradeRequest request =  Person.getPendingRequests().get(pendingRequestIndex);
 
-        Object nextInput = sc.nextLine();
+        System.out.println("\nPlease enter '1' to approve the trade or '2' to reject the trade. Enter 'back' to return to " +
+                "your pending trade requests.");
+
+        Object nextInput = sc.next();
         if (nextInput.equals("back")){
             return null;
+        } else if (nextInput.equals("1")) { //if trade is approved
+            ApprovedTrade( user, allUsers, allMeetings, request,  allTransactions);
+            return null;
+        } else if (nextInput.equals("2")) { //if item is rejected
+            RejectTrade( user, allUsers);
+            return null;
+        } else {
+            System.out.print("\uD83E\uDDD0 What was that? Please try again!\n");
+            return null;
         }
-        try {
-            nextInput = Integer.parseInt((String) nextInput);
-        } catch (NumberFormatException e) {
-            System.out.print("\uD83E\uDDD0 What was that? Please try again!\n" +
-                    "Input '1' to approve or input '2' to reject or 'back' to return to the list of pending trades.\n");
-        }
-        if ((Integer) nextInput == 1) { //if trade is approved
-            ApprovedTrade();
-            if (Trades.size() != 0){
-                return null;
-            }
-            return "back";
-            }
-        else if ((Integer) nextInput == 2) { //if item is rejected
-            RejectTrade();
-            if (Trades.size() != 0){
-                return null;
-            }
-            return "back";
-        }
-        else {
-            System.out.print("\uD83E\uDDD0 What was that? Please try again!\n" +
-                    "Input '1' to approve or input '2' to reject or 'back' to return to the list of pending trades.\n");
-        }
-
         //select if you want to approve or reject
         //method that handles approve or reject
-
-        System.out.print("\n");
-        return null;
     }
 
     public User AddItem(User user, UserManager allUsers){
@@ -395,6 +448,8 @@ public class InputGetter {
         Item newItem = new Item(itemName, user, description);
         allUsers.addToDraftInventory(user, newItem);
         System.out.print("\n \u2705 Your request is sent to admin for approval!\n");
+        allUsers.addToItemHistory(user, newItem);
+
         return user;
     }
 
@@ -413,30 +468,88 @@ public class InputGetter {
     }
 
     public User MostRecentTrades(User user, UserManager allUsers) {
-        List<Transaction> MostRecent = new ArrayList<>();
-        MostRecent = user.getTradeHistory();
-        System.out.print("Here are your most recent trades:\n");
+        List<Item> MostRecent = new ArrayList<>();
+        MostRecent = allUsers.getRecentlyTradedItems(user);
+        System.out.print("Here are your most recently traded-away items:\n");
         if (MostRecent.size() == 0) {
             System.out.print("\uD83D\uDE25 Sorry! You have no recent trades! You should do some trades!\n");
         }
         for (int i = 0; i < MostRecent.size(); i++) {
-            System.out.print("\uD83D\uDC51" + Integer.toString(i + 1) + ". " + MostRecent.get(i).getTradeStatus() + "\n");
+            System.out.print("\uD83D\uDC51" + Integer.toString(i + 1) + ". " + MostRecent.get(i).getName() + " : " + MostRecent.get(i).getDescription() + "\n");
 
         }
         return user;
     }
 
-    public Object mainMenu(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers) {
+
+    public User ViewItemHistory (User user, UserManager allUsers){
+        if (allUsers.getUser(user).getItemHistory().size() == 0) {
+            System.out.println ("\uD83D\uDE25 No items here! Please add an item to your inventory!");
+            return user;
+
+        }
+        for(Map.Entry m:allUsers.getUser(user).getItemHistory().entrySet()){
+            Item object = (Item) m.getKey();
+            System.out.println(object.getName()+": "+m.getValue());
+        }
+        return user;
+
+    }
+
+    public User addToWishlist ( User user, UserManager allUsers){
+        Scanner sc = new Scanner(System.in);    //System.in is a standard input stream
+        System.out.print ("Please enter the name of the item you would like to add to your wishlist:\n");
+        String name = sc.nextLine();
+        System.out.print ("Please enter the description of the item:\n");
+        String Description = sc.nextLine();
+        Item wishlistItem = new Item(name , null , Description);
+        allUsers.addToWishlist(user, wishlistItem);
+        System.out.print ("Item has been added to your wishlist \uD83C\uDF20\n");
+
+    return user;
+    }
+
+
+    public Object mainMenu(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions ) {
         Scanner sc = new Scanner(System.in);    //System.in is a standard input stream
         System.out.print("----------------------------------------------------------------------------------------------" +
                 "\n\uD83D\uDC4B Welcome back, " + user.getName() + "!\n");
+
+
+        //A frozen account is one where you can log in and look for items, but you cannot arrange any transactions.
+        // A user who has been frozen can request that the administrative user unfreezes their account.
+        boolean frozenAccount = user.getIsFrozen();
+        if (frozenAccount){ //first off, tell them that they are frozen
+            System.out.print("");
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+
         if (allUsers.getUser(user).getPendingRequests().size() > 0){
             System.out.print("\uD83D\uDCE9 You have " + allUsers.getUser(user).getPendingRequests().size() +
                     " Pending Trade Requests!\n");
         }
+
+
+
+
+
+
+
         System.out.print("Please select number from the following:\n1.View Wishlist\n2.View Inventory\n" +
                 "3.Browse Items\n4.Initiate Trade\n5.View Messages\n6.Approve Pending Trades\n" +
-                "7.Add Item to inventory\n8.View most recent trades\n9.View most frequent trading partners\n10.Logout" + "\nEnter 'exit' to exit the system at any time.\n");
+                "7.Add Item to inventory\n8.View most recent trades\n9.View most frequent trading partners\n10. View status of my items\n11. Add Item to wishlist" +
+                "12.View Approved Trades\n13. Logout" + "\nEnter 'exit' to exit the system at any time.\n");
 
         String a = sc.nextLine();
         if (!a.equals("exit")) {
@@ -448,7 +561,12 @@ public class InputGetter {
                 return system1.inventory(user, allUsers);
             } else if (a.equals("3")) {
                 //browse items
-                return system1.Browse(user, allItems);
+                //return system1.Browse(user, allItems, allUsers);
+                Object temp = system1.Browse(user, allItems, allUsers);
+                while (temp == null){
+                    temp = system1.Browse(user, allItems, allUsers);
+                }
+                return user;
             } else if (a.equals("4")) {
                 //choose the id?
                 Object temp = system1.Trade(user, allItems, allTradeRequests, allUsers);
@@ -467,23 +585,30 @@ public class InputGetter {
             else if (a.equals("9")){ //View most frequent trading partners
                 return Top3TradingPartners(user, allUsers);
 
-
-
             }
 
-
-
             else if (a.equals("6")){
-                Object temp = system1.ApproveTrade(user, allUsers);
+                Object temp = system1.ApproveTrade( user, allUsers,  allMeetings,  allTransactions);
                 while (temp == null){
-                    temp = system1.ApproveTrade(user, allUsers);
+                    temp = system1.ApproveTrade( user, allUsers,  allMeetings,  allTransactions);
                 }
                 //else input was "back", returns to main menu
                 return user;
             } else if (a.equals("7")){
                 //request to add new item
                 return system1.AddItem(user, allUsers);
-            } else if (a.equals("10")) {
+            }
+            else if (a.equals("10")){
+                return system1.ViewItemHistory (user, allUsers);
+            }
+            else if (a.equals("11"))
+            {
+                return system1.addToWishlist (user, allUsers);
+
+
+
+            }
+            else if (a.equals("13")) {
                 //logout
                 return null;
             }

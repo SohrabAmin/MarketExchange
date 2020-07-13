@@ -88,6 +88,18 @@ public class AdminInputGetter {
                 allFrozenUsers.add(allUsers.getAllUsers().get(i));
             }
         }
+
+        List<User> possibleFrozenPeople = new ArrayList<>();
+//        for (int i = 0; i < allUsers.getAllUsers().size(); i++){
+//            if (allUsers.getAllUsers().get(i).getIsFrozen()) {
+//                //if getIsFrozen returns true for frozen accounts
+//                allFrozenUsers.add(allUsers.getAllUsers().get(i));
+//            }
+//        }
+
+
+
+
         //if they have frozen users, show it here
         if (allFrozenUsers.size() > 0){
             System.out.print("\u2603 You have " + allFrozenUsers.size() + " Frozen users!\n");
@@ -160,6 +172,7 @@ public class AdminInputGetter {
      */
     public void RejectItem (Item chosenItem, UserManager allUsers){
         allUsers.removeFromDraftInventory(allUsers.getUser(chosenItem.getOwner()), chosenItem);
+        allUsers.changeStatus (allUsers.getUser(chosenItem.getOwner()), chosenItem, "Rejected");
         System.out.print("\u274E Rejected!\n");
     }
 
@@ -173,6 +186,7 @@ public class AdminInputGetter {
         allUsers.addToInventory(allUsers.getUser(chosenItem.getOwner()), chosenItem);
         allUsers.removeFromDraftInventory(allUsers.getUser(chosenItem.getOwner()), chosenItem);
         allItems.addItem(chosenItem);
+        allUsers.changeStatus (allUsers.getUser(chosenItem.getOwner()), chosenItem, "Approved");
         System.out.print("\u2705 Approved!\n");
     }
 
@@ -210,7 +224,7 @@ public class AdminInputGetter {
             } catch (NumberFormatException e) {
                 return null;
             }
-            allUsers.getUser(frozenUsers.get((Integer) line - 1)).isFrozen = false;
+            allUsers.unfreeze(frozenUsers.get((Integer) line - 1));
             System.out.print("\u2705 Successfully unfrozen user: " +
                     allUsers.getUser(frozenUsers.get((Integer) line - 1)).getName() + "\n");
             return "back";
@@ -272,6 +286,7 @@ public class AdminInputGetter {
         }
         if ((Integer) nextInput == 1) { //if item is approved
             ApproveItem(chosenItem, allUsers, allItems);
+
             return null;
         } else if ((Integer) nextInput == 2) { //if item is rejected
             RejectItem(chosenItem, allUsers);

@@ -4,7 +4,7 @@ public class Meeting {
 
     private Calendar date;
     private String place;
-    private Boolean confirmed;
+    private Boolean confirmed = false;
     private int edits;
 
     /**

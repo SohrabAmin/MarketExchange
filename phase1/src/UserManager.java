@@ -6,6 +6,19 @@ import java.util.*;
 public class UserManager extends AccountManager {
     public List<User> allUsers;
 
+
+
+    public void addToItemHistory (User user, Item item){
+        user.getItemHistory().put(item, "Pending");
+    }
+
+    public void changeStatus (User user, Item item, String status){
+        user.getItemHistory().replace(item, status);
+
+    }
+
+
+
     /**
      * Constructs the instance of UserManager with an empty list of Users
      * <p>
@@ -270,4 +283,6 @@ public class UserManager extends AccountManager {
         }
         return null;
     }
+
+
 }
