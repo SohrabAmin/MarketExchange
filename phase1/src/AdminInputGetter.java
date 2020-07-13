@@ -297,7 +297,7 @@ public class AdminInputGetter {
         }
         //no pending items
         if (allPendingItems.size() == 0){
-            System.out.print("There are no pending item requests to approve!");
+            System.out.print("There are no pending item requests to approve!\n");
             return "back";
         }
         //prints out all the pending items in the system

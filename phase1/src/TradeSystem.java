@@ -14,12 +14,11 @@ public class TradeSystem {
     public TradeRequestManager allTradeRequests = new TradeRequestManager();
     public Object currentUser;
 
-    public TradeSystem() {
-        Admin initialAdmin = new Admin("Tina", "123456");
-        allAdmins = new AdminManager(initialAdmin);
+    public TradeSystem(){ ;
     }
 
     public void run() throws IOException, ClassNotFoundException {
+        allAdmins = adminWriting.demoAdminRead("AdminList.ser");
 
         //creating users to test
         allUsers.createUser("Tina", "123");

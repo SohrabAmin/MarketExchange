@@ -14,17 +14,13 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.List;
 
-
 // NOTE: This class is based off of StudentManager from logging in Week 6 Modules on Quercus.
 
 /**
- * Manages the saving and loading of User to the external file.
+ * Manages the saving and loading of Admins to the external file.
  */
-public class UserReadWrite implements Serializable {
-    /**
-     * A List containing all users.
-     */
-    private List<User> users;
+public class AdminReadWrite implements Serializable {
+    private AdminManager adminManager;
 
     /**
      * Creates a new empty UserReadWrite.
@@ -32,7 +28,7 @@ public class UserReadWrite implements Serializable {
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    public UserReadWrite(String fileName) throws ClassNotFoundException, IOException {
+    public AdminReadWrite(String fileName) throws ClassNotFoundException, IOException {
         // Reads serializable objects from file.
         // Populates the record list using stored data, if it exists.
         File file = new File(fileName);
@@ -46,13 +42,13 @@ public class UserReadWrite implements Serializable {
     }
 
     /**
-     * Stores the users from the file at path filePath.
+     * Stores the admins from the file at path filePath.
      *
      * @param fileName the path of the data file
      * @throws FileNotFoundException if filePath is not a valid path
      */
 
-    public void readFromFile(String fileName) throws ClassNotFoundException {
+    public AdminManager readFromFile(String fileName) throws ClassNotFoundException {
         File findFile = new File(fileName);
         String filepath = findFile.getAbsolutePath();
         try {
@@ -61,50 +57,36 @@ public class UserReadWrite implements Serializable {
             ObjectInput input = new ObjectInputStream(buffer);
 
             // deserialize the list in the file by reading
-            List temp = (List<User>) input.readObject();
+            AdminManager temp = (AdminManager) input.readObject();
             //closes the file
             input.close();
-            // as long as the file is not empty, it will populate users with the list stored in the file
-            if (temp != null){
-                users = temp;
+            // as long as the file is not empty, it will populate admins with the list stored in the file
+            if (temp != null) {
+                adminManager = temp;
             }
-            else{
-                return;
-            }
+            return adminManager;
         } catch (
                 IOException ex) {
         }
+        return adminManager;
     }
 
     /**
-     * Writes the users from UserManager u to file at filePath.
+     * Writes the admins from AdminManager u to file at filePath.
      *
      * @param fileName the file to write the records to
      * @throws IOException
      */
-    public void saveToFile(String fileName, UserManager userManager) throws IOException {
+    public void saveToFile(String fileName, AdminManager adminManager) throws IOException {
         File findFile = new File(fileName);
         String filePath = findFile.getAbsolutePath();
         OutputStream file = new FileOutputStream(filePath);
         OutputStream buffer = new BufferedOutputStream(file);
         ObjectOutput output = new ObjectOutputStream(buffer);
 
-        // serialize the list of all Users in UserManager userManager
-        output.writeObject(userManager.getAllUsers());
+        // serialize the list of all Admins in AdminManager adminManager
+        output.writeObject(adminManager);
         output.close();
-    }
-
-    /**
-     * Populates the UserManager of the system.
-     *
-     * @param um the UserManager that is to be populated.
-     */
-    public void populateUserManager(UserManager um) {
-        // As long as users is not null and contains a list of Users from the file
-        // (i.e. file is not empty), then populate the UserManager of the system.
-        if(users != null){
-            um.setAllUsers(users);
-        }
     }
 }
 
