@@ -37,17 +37,30 @@ public class TransactionManager {
     public void updateTransactionStatus(ItemManager itemManager, UserManager userManager, Transaction transaction, int tradeStatus) {
         if (transaction.getTradeStatus() == 0) {
             inProgressTransaction.remove(transaction);
+            if (tradeStatus == 1) {
+                pendingSecondExchange.add(transaction);
+                handleFirstExchange(userManager, transaction, itemManager);
 
-        }else{
+            } else if (tradeStatus == 2) {
+                completedTransaction.add(transaction);
+                handleCompletedTrade(itemManager,  userManager, transaction);
+
+            }else {
+                cancelledTransaction.add(transaction);
+                handleCancelledTrade(userManager, transaction);
+            }
+        }else {
             pendingSecondExchange.remove(transaction);
+            if (tradeStatus == 2){
+                handleCompletedTrade(itemManager, userManager, transaction);
+                completedTransaction.add(transaction);
+            }else{
+                handleCancelledTrade(userManager, transaction); //probably will need a better way to handle this. Specs are not clear about this circumstance.
+                cancelledTransaction.add(transaction);
+            }
         }
-        if (tradeStatus == 2) {
-            completedTransaction.add(transaction);
-            handleCompletedTrade(itemManager, userManager, transaction);
-        } else {
-            cancelledTransaction.add(transaction);
-            handleCancelledTrade(userManager, transaction);
-        }
+
+
         transaction.setTradeStatus(tradeStatus);
     }
 
@@ -194,6 +207,34 @@ public class TransactionManager {
 
         }userManager.updateTradeHistory(temp1, transaction);
          userManager.updateTradeHistory(temp2, transaction);
+
+    }
+
+    public void handleFirstExchange(UserManager userManager, Transaction transaction, ItemManager itemManager){
+        User temp1;
+        User temp2;
+        Item item1;
+        if (transaction instanceof OneWay) {
+            item1 = ((OneWay) transaction).getLenderItem();
+            temp1 = userManager.getUser(((OneWay) transaction).getBorrower());
+            temp2 = userManager.getUser(((OneWay) transaction).getLender());
+            userManager.removeFromInventory(temp2, item1);
+            userManager.addToInventory(temp1, item1);
+            itemManager.setCurrentHolder(item1,temp1);
+
+        } else {
+            temp1 = userManager.getUser(((TwoWay) transaction).getFirstTrader());
+            temp2 = userManager.getUser(((TwoWay) transaction).getSecondTrader());
+            item1 = ((TwoWay) transaction).getFirstItem();
+            Item item2 = ((TwoWay) transaction).getSecondItem();
+            userManager.removeFromInventory(temp1,item1);
+            userManager.removeFromInventory(temp2, item2);
+            userManager.addToInventory(temp2, item1);
+            userManager.addToInventory(temp1, item2);
+            itemManager.setCurrentHolder(item1, temp2);
+            itemManager.setCurrentHolder(item2, temp1);
+
+        }
 
     }
 }
