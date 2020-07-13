@@ -15,6 +15,8 @@ public class User extends Account {
     private List<TradeRequest> pendingRequests;
     private List<TradeRequest> outbandRequest;
     private List<Meeting> pendingTrade;
+    private boolean isPseudoFrozen;
+    private List<Transaction> cancelledTransaction;
 
     public User() {
     }
@@ -31,6 +33,7 @@ public class User extends Account {
         this.ItemHistory =new HashMap<Item,String>();//Creating HashMap
         outbandRequest = new ArrayList<>();
         pendingTrade = new ArrayList<>();
+        cancelledTransaction = new ArrayList<>();
 
     }
 
@@ -72,6 +75,9 @@ public class User extends Account {
     public void addOutbandRequest(TradeRequest outbandrequest){outbandRequest.add(outbandrequest);}
     public void addPendingTrade(Meeting meeting){pendingTrade.add(meeting);}
 
+    public List<Transaction> getCancelledTransaction(){ return cancelledTransaction;}
+    public void addCancelledTransaction(Transaction transaction){cancelledTransaction.add(transaction);}
+
     public void setTopTradingPartners(List<User> topTradingPartners) {
         this.topTradingPartners.clear();
         this.topTradingPartners.addAll(topTradingPartners);
@@ -85,6 +91,8 @@ public class User extends Account {
         this.isFrozen = isFrozen;
 
     }
+    public boolean getIsPseudoFrozen(){return isPseudoFrozen;}
+    public void SetIsPseudoFrozen(boolean pseudoFrozen){ this.isPseudoFrozen = pseudoFrozen;}
 
     public int getEligibility() {
         return eligibility;
