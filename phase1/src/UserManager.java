@@ -4,20 +4,7 @@ import java.util.*;
  * Creates, keeps track of, and changes values of Users.
  */
 public class UserManager extends AccountManager {
-    public List<User> allUsers;
-
-
-
-    public void addToItemHistory (User user, Item item){
-        user.getItemHistory().put(item, "Pending");
-    }
-
-    public void changeStatus (User user, Item item, String status){
-        user.getItemHistory().replace(item, status);
-
-    }
-
-
+    private List<User> userList;
 
     /**
      * Constructs the instance of UserManager with an empty list of Users
@@ -25,7 +12,7 @@ public class UserManager extends AccountManager {
      * TODO: Consider implementing a constructor with an ArrayList<User> parameter
      */
     public UserManager() {
-        allUsers = new ArrayList<>();
+        userList = new ArrayList<>();
     }
 
     /**
@@ -34,7 +21,16 @@ public class UserManager extends AccountManager {
      * @return list of all Users
      */
     public List<User> getAllUsers() {
-        return allUsers;
+        return userList;
+    }
+
+    /**
+     * Setter for the list of all Users in the system. Only UserReadWrite should access this method.
+     *
+     * @param userList new list of all Users
+     */
+    void setAllUsers(List<User> userList) {
+        this.userList = userList;
     }
 
     /**
@@ -45,7 +41,7 @@ public class UserManager extends AccountManager {
      */
     public void createUser(String newUserUsername, String newUserPassword) {
         User newUser = new User(newUserUsername, newUserPassword);
-        allUsers.add(newUser);
+        userList.add(newUser);
 
     }
 
@@ -170,6 +166,28 @@ public class UserManager extends AccountManager {
     }
 
     /**
+     * Adds an Item to a User's itemHistory (list of items that have been submitted to the system)
+     *
+     * @param user User whose itemHistory will be added to
+     * @param item Item to add to this User's itemHistory
+     */
+    public void addToItemHistory(User user, Item item) {
+        user.getItemHistory().put(item, "Pending");
+    }
+
+    /**
+     * Changes an Item's status (either "Pending", "Approved", or "Rejected") in a User's itemHistory (list of items
+     * that have been submitted to the system). Only an Admin should change an Item's status
+     *
+     * @param user   User whose Item will have its status changed
+     * @param item   Item whose status is to be changed
+     * @param status this Item's new status
+     */
+    public void changeStatus(User user, Item item, String status) {
+        user.getItemHistory().replace(item, status);
+    }
+
+    /**
      * Updates a User's list of top three trading partners.
      * <p>
      * Please note: the websites https://www.geeksforgeeks.org/count-occurrences-elements-list-java/ and
@@ -276,7 +294,7 @@ public class UserManager extends AccountManager {
      * @return User in the system's list of all Users
      */
     public User getUser(User userAsAnAttribute) {
-        for (User originalUser : allUsers) {
+        for (User originalUser : userList) {
             if (userAsAnAttribute.getName().equals(originalUser.getName())) {
                 return originalUser;
             }
