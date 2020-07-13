@@ -161,4 +161,39 @@ public class TransactionManager {
 
 
     }
+
+    /**
+     * Handles the completion of a temporary Transaction. Notice the second exchange is returning objects back to original owner.
+     * @param userManager The instance of UserManager
+     * @param transaction The given temporary Transaction
+     * @param itemManager The instance of ItemManager.
+     */
+    public void handleSecondExchange(UserManager userManager, Transaction transaction, ItemManager itemManager){
+        User temp1;
+        User temp2;
+        Item item1;
+        if (transaction instanceof OneWay) {
+            item1 = ((OneWay) transaction).getLenderItem();
+            temp1 = userManager.getUser(((OneWay) transaction).getBorrower());
+            temp2 = userManager.getUser(((OneWay) transaction).getLender());
+            userManager.removeFromInventory(temp1, item1);
+            userManager.addToInventory(temp2, item1);
+            itemManager.setCurrentHolder(item1,temp2);
+
+        } else {
+            temp1 = userManager.getUser(((TwoWay) transaction).getFirstTrader());
+            temp2 = userManager.getUser(((TwoWay) transaction).getSecondTrader());
+            item1 = ((TwoWay) transaction).getSecondItem();
+            Item item2 = ((TwoWay) transaction).getFirstItem();
+            userManager.removeFromInventory(temp2,item1);
+            userManager.removeFromInventory(temp1, item2);
+            userManager.addToInventory(temp1, item1);
+            userManager.addToInventory(temp2, item2);
+            itemManager.setCurrentHolder(item1, temp1);
+            itemManager.setCurrentHolder(item2, temp2);
+
+        }userManager.updateTradeHistory(temp1, transaction);
+         userManager.updateTradeHistory(temp2, transaction);
+
+    }
 }
