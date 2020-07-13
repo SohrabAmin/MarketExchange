@@ -119,7 +119,7 @@ public class UserReadWrite implements Serializable {
         ObjectOutput output = new ObjectOutputStream(buffer);
 
         // serialize the list of all Users in UserManager userManager
-        output.writeObject(userManager.allUsers);
+        output.writeObject(userManager.getAllUsers());
         output.close();
     }
 
@@ -132,7 +132,7 @@ public class UserReadWrite implements Serializable {
         // As long as users is not null and contains a list of Users from the file
         // (i.e. file is not empty), then populate the UserManager of the system.
         if(users != null){
-            um.allUsers = users;
+            um.setAllUsers(users);
         }
     }
 }
