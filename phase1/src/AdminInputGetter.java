@@ -222,8 +222,8 @@ public class AdminInputGetter {
      */
     public void RejectItem (Item chosenItem, UserManager allUsers){
         allUsers.removeFromDraftInventory(allUsers.getUser(chosenItem.getOwner()), chosenItem);
-        allUsers.changeStatus (allUsers.getUser(chosenItem.getOwner()), chosenItem, "Rejected");
-        System.out.print("\u274E Rejected!\n");
+        allUsers.changeItemStatus (allUsers.getUser(chosenItem.getOwner()), chosenItem, "Rejected");
+        // System.out.print("\u274E Rejected!\n"); // Note from Daniel: I moved this line to approvalPendingItems
     }
 
     /**
@@ -236,8 +236,8 @@ public class AdminInputGetter {
         allUsers.addToInventory(allUsers.getUser(chosenItem.getOwner()), chosenItem);
         allUsers.removeFromDraftInventory(allUsers.getUser(chosenItem.getOwner()), chosenItem);
         allItems.addItem(chosenItem);
-        allUsers.changeStatus (allUsers.getUser(chosenItem.getOwner()), chosenItem, "Approved");
-        System.out.print("\u2705 Approved!\n");
+        allUsers.changeItemStatus (allUsers.getUser(chosenItem.getOwner()), chosenItem, "Approved");
+        // System.out.print("\u2705 Approved!\n"); // Note from Daniel: I moved this line to approvalPendingItems
     }
 
     /**
@@ -335,11 +335,15 @@ public class AdminInputGetter {
             return null;
         }
         if ((Integer) nextInput == 1) { //if item is approved
-            ApproveItem(chosenItem, allUsers, allItems);
+            // ApproveItem(chosenItem, allUsers, allItems);
+            allUsers.approveDraftInventoryItem(allUsers.getUser(chosenItem.getOwner()), chosenItem, allItems);
+            System.out.print("\u2705 Approved!\n");
 
             return null;
         } else if ((Integer) nextInput == 2) { //if item is rejected
-            RejectItem(chosenItem, allUsers);
+            // RejectItem(chosenItem, allUsers);
+            allUsers.rejectDraftInventoryItem(allUsers.getUser(chosenItem.getOwner()), chosenItem);
+            System.out.print("\u274E Rejected!\n");
             return null;
         } else {
             System.out.print("\n \uD83E\uDDD0 What was that? Please try again!\n");

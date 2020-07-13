@@ -42,7 +42,6 @@ public class UserManager extends AccountManager {
     public void createUser(String newUserUsername, String newUserPassword) {
         User newUser = new User(newUserUsername, newUserPassword);
         userList.add(newUser);
-
     }
 
     /**
@@ -61,6 +60,26 @@ public class UserManager extends AccountManager {
      */
     public void unfreeze(User user) {
         user.setIsFrozen(false);
+    }
+
+    /**
+     * Pseudo-freezes a User account. A pseudo-frozen User is prevented from conducting transactions until an Admin
+     * decides to either freeze the User or let the User slide
+     *
+     * @param user User account to be pseudo-frozen
+     */
+    public void pseudoFreeze(User user) {
+        user.setIsPseudoFrozen(true);
+    }
+
+    /**
+     * Un-pseudo-freezes a User account. A pseudo-frozen User is prevented from conducting transactions until an Admin
+     * decides to either freeze the User or let the User slide
+     *
+     * @param user User account to be un-pseudo-frozen
+     */
+    public void unPseudoFreeze(User user) {
+        user.setIsPseudoFrozen(false);
     }
 
     /**
@@ -144,14 +163,37 @@ public class UserManager extends AccountManager {
     }
 
     /**
+     * Adds a cancelled transaction to a User's list of cancelled transactions
+     *
+     * @param user                 User whose list of cancelled transactions will be added to
+     * @param cancelledTransaction cancelled transaction to be added to this User's list of cancelled transactions
+     */
+    public void addToCancelledTransactions(User user, Transaction cancelledTransaction) {
+        user.getCancelledTransactions().add(cancelledTransaction);
+    }
+
+    /**
      * Moves an Item from a User's draft inventory to their inventory (after an Admin approves this Item)
      *
      * @param user User who will have a draft inventory Item approved
      * @param item Item approved by an Admin
      */
-    public void approveDraftInventoryItem(User user, Item item) {
+    public void approveDraftInventoryItem(User user, Item item, ItemManager allItems) {
         user.getDraftInventory().remove(item);
         user.getInventory().add(item);
+        allItems.addItem(item);
+        this.changeItemStatus(user, item, "Approved");
+    }
+
+    /**
+     * Removes an Item from a User's draft inventory (after an Admin rejects this Item)
+     *
+     * @param user User who will have a draft inventory Item rejected
+     * @param item Item rejected by an Admin
+     */
+    public void rejectDraftInventoryItem(User user, Item item) {
+        user.getDraftInventory().remove(item);
+        this.changeItemStatus(user, item, "Rejected");
     }
 
     /**
@@ -183,7 +225,7 @@ public class UserManager extends AccountManager {
      * @param item   Item whose status is to be changed
      * @param status this Item's new status
      */
-    public void changeStatus(User user, Item item, String status) {
+    public void changeItemStatus(User user, Item item, String status) {
         user.getItemHistory().replace(item, status);
     }
 
@@ -301,6 +343,5 @@ public class UserManager extends AccountManager {
         }
         return null;
     }
-
 
 }

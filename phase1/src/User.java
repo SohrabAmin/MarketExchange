@@ -7,16 +7,16 @@ public class User extends Account {
     private ArrayList<Item> wishlist;
     private ArrayList<Item> inventory;
     private ArrayList<Item> draftInventory;
-    private HashMap<Item,String> ItemHistory;
+    private HashMap<Item, String> ItemHistory;
     private boolean isFrozen;
     private int eligibility;
     private List<Transaction> tradeHistory;
     private List<User> topTradingPartners;
     private List<TradeRequest> pendingRequests;
-    private List<TradeRequest> outbandRequest;
-    private List<Meeting> pendingTrade;
+    private List<TradeRequest> outboundRequests;
+    private List<Meeting> pendingTrades;
     private boolean isPseudoFrozen;
-    private List<Transaction> cancelledTransaction;
+    private List<Transaction> cancelledTransactions;
 
 
     public User() {
@@ -31,14 +31,14 @@ public class User extends Account {
         this.tradeHistory = new ArrayList<>();
         this.topTradingPartners = new ArrayList<>();
         this.pendingRequests = new ArrayList<>();
-        this.ItemHistory =new HashMap<Item,String>();//Creating HashMap
-        outbandRequest = new ArrayList<>();
-        pendingTrade = new ArrayList<>();
-        cancelledTransaction = new ArrayList<>();
+        this.ItemHistory = new HashMap<>();//Creating HashMap
+        outboundRequests = new ArrayList<>();
+        pendingTrades = new ArrayList<>();
+        cancelledTransactions = new ArrayList<>();
 
     }
 
-    public HashMap<Item,String> getItemHistory(){
+    public HashMap<Item, String> getItemHistory() {
         return ItemHistory;
     }
 
@@ -70,13 +70,25 @@ public class User extends Account {
         return topTradingPartners;
     }
 
-    public List<TradeRequest> getOutbandRequest(){ return outbandRequest;}
-    public List<Meeting> getPendingTrade(){ return pendingTrade;}
+    public List<TradeRequest> getOutboundRequests() {
+        return outboundRequests;
+    }
 
-    public void addOutbandRequest(TradeRequest outbandrequest){outbandRequest.add(outbandrequest);}
-    public void addPendingTrade(Meeting meeting){pendingTrade.add(meeting);}
+    public List<Meeting> getPendingTrades() {
+        return pendingTrades;
+    }
 
-    public List<Transaction> getCancelledTransaction(){ return cancelledTransaction;}
+    public void addOutboundRequest(TradeRequest outboundRequest) {
+        outboundRequests.add(outboundRequest);
+    }
+
+    public void addPendingTrade(Meeting meeting) {
+        pendingTrades.add(meeting);
+    }
+
+    public List<Transaction> getCancelledTransactions() {
+        return cancelledTransactions;
+    }
 
     public void setTopTradingPartners(List<User> topTradingPartners) {
         this.topTradingPartners.clear();
@@ -91,8 +103,14 @@ public class User extends Account {
         this.isFrozen = isFrozen;
 
     }
-    public boolean getIsPseudoFrozen(){return isPseudoFrozen;}
-    public void SetIsPseudoFrozen(boolean pseudoFrozen){ this.isPseudoFrozen = pseudoFrozen;}
+
+    public boolean getIsPseudoFrozen() {
+        return isPseudoFrozen;
+    }
+
+    public void setIsPseudoFrozen(boolean isPseudoFrozen) {
+        this.isPseudoFrozen = isPseudoFrozen;
+    }
 
     public int getEligibility() {
         return eligibility;
