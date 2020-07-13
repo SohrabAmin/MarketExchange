@@ -76,7 +76,6 @@ public class User extends Account {
     public void addPendingTrade(Meeting meeting){pendingTrade.add(meeting);}
 
     public List<Transaction> getCancelledTransaction(){ return cancelledTransaction;}
-    public void addCancelledTransaction(Transaction transaction){cancelledTransaction.add(transaction);}
 
     public void setTopTradingPartners(List<User> topTradingPartners) {
         this.topTradingPartners.clear();
