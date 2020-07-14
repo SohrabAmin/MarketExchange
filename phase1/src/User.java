@@ -21,6 +21,7 @@ public class User extends Account {
     private List<Transaction> pendingTrades;
     private boolean isPseudoFrozen;
     private List<Transaction> cancelledTransactions;
+    private List<Transaction> agreedUponMeeting;
 
 
     public User() {
@@ -47,6 +48,7 @@ public class User extends Account {
         outboundRequests = new ArrayList<>();
         pendingTrades = new ArrayList<>();
         cancelledTransactions = new ArrayList<>();
+        agreedUponMeeting = new ArrayList<>();
 
     }
 
@@ -150,6 +152,12 @@ public class User extends Account {
         this.topTradingPartners.clear();
         this.topTradingPartners.addAll(topTradingPartners);
     }
+
+    /**
+     * getter for
+     * @return
+     */
+    public List<Transaction> getAgreedUponMeeting(){ return agreedUponMeeting;}
 
     /**
      * getter for if user is frozen,
