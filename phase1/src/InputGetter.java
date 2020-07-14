@@ -239,6 +239,8 @@ public class InputGetter {
                 return "back";
             } else if (confirmation.equals("2")){
                 System.out.print("\nTrade has been cancelled.\n");
+
+
                 return null;
             } else{
                 System.out.print("Invalid response. Please try again.\n");
@@ -337,7 +339,8 @@ public class InputGetter {
         return user;
     }
 
-    public void RejectTrade(User user,UserManager allUsers /*, MeetingManager allMeetings*/){
+    public void RejectTrade(User user,UserManager allUsers, MeetingManager allMeetings, TradeRequest request, TransactionManager allTransactions){
+        allUsers.removeFromPendingRequests(user,  request);
         System.out.print("\u274E Rejected!\n");
     }
 
@@ -447,7 +450,7 @@ public class InputGetter {
             ApprovedTrade( user, allUsers, allMeetings, request,  allTransactions);
             return null;
         } else if (nextInput.equals("2")) { //if item is rejected
-            RejectTrade( user, allUsers);
+            RejectTrade( user, allUsers, allMeetings, request,  allTransactions);
             return null;
         } else {
             System.out.print("\uD83E\uDDD0 What was that? Please try again!\n");
@@ -534,6 +537,113 @@ public class InputGetter {
         System.out.print("Your request is successfully submitted!\n");
         return user;
     }
+
+    public Object PendingTransactionProcess (User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions){
+
+        List <Transaction> pendingTransactions = user.getPendingTrades();
+
+        if (pendingTransactions.size() == 0 )
+        {
+            System.out.print("You have no pending Transactions!\n");
+            return user;
+
+        }
+        System.out.print("Here are your pending transactions:\n");
+
+
+
+        for (int i = 0 ; i < pendingTransactions.size(); i++) {
+            String hey = "";
+            if (pendingTransactions.get(i) instanceof OneWay) {
+                OneWay t = (OneWay) pendingTransactions.get(i);
+                User b = t.getLender();
+                if (user.getName().equals(b.getName())){
+                    b = t.getBorrower();}
+                System.out.print(Integer.toString(i + 1) + " . Item " +  t.getLenderItem().getName() + " with " + b.getName() + "\n");
+            }
+
+        }
+
+        System.out.print("Select the transaction you would like to edit/approve\n");
+
+        Scanner sc1 = new Scanner(System.in);
+        Integer transactionID = Integer.parseInt(sc1.nextLine());
+        if (transactionID > pendingTransactions.size()){
+            System.out.print("Ooops! This is out of bound! Please try again \n");
+            return user;
+        }
+        Transaction selectedT = pendingTransactions.get(transactionID-1);
+
+        if (selectedT instanceof OneWay) {
+
+            OneWay tt = (OneWay) selectedT;
+            User b = tt.getLender();
+            if (user.getName().equals(b.getName())){
+                b = tt.getBorrower();}
+            if (tt.getInitialMeeting().geteditHistory(user.getName()) > tt.getInitialMeeting().geteditHistory(b.getName()) || tt.getInitialMeeting().viewLastEdit().equals(user.getName())){
+                //if they have already made an edit and we are waiting on the other person to approve/suggest a new meeting
+                System.out.print("This pending transaction is currently waiting on the other party! Please try again later\n");
+            }
+            else {
+
+
+                //the person can now approve or propose a new time
+                System.out.print("You have selected: ");
+
+                System.out.print(tt.getLenderItem().getName() + " with " + b.getName() + "\n");
+                System.out.print("Here is the proposed meeting: " + tt.getInitialMeeting() + "\n");
+                System.out.print("Press 1 to approve. Press 2 to propose a new meeting. Press 3 to cancel\n");
+                String input = sc1.nextLine();
+                if (input.equals("1")) { //if they approve
+                    allTransactions.updateTransactionStatus(allItems, allUsers, selectedT, 3);
+                    //need another method for usermanager so that transactions in progress but meeting is set
+
+
+                } else if (input.equals(("2"))) { //they want to propose a new time
+                    //provide warning if the is at their 3rd strike
+                    if (tt.getInitialMeeting().geteditHistory(user.getName())+1  == 3 )
+                        System.out.print("\u2622 This is the last time you can propose a meeting.\nIf rejected, this transaction will be cancelled\n");
+
+                    //here is where the transaction gets cancelled because they couldnt make up their mind
+                    if (tt.getInitialMeeting().geteditHistory(user.getName())  == 3 ){
+                        //one person reached 3 edits, its time to delete this transaction
+                        allTransactions.handleCancelledTrade(allUsers, selectedT);
+                        allTransactions.updateTransactionStatus(allItems, allUsers, selectedT, 4) ;
+                        System.out.print("\uD83D\uDE22 Sorry! You couldn't agree on a time so we deleted the transaction!\n" +
+                                "Please try again!\n");
+                        return user;
+
+
+                    }
+                    else {
+
+
+                        System.out.print("\uD83D\uDCC5 Please enter your proposed date for this trade in format dd-mm-yyyy\n");
+                        Scanner sc2 = new Scanner(System.in);
+                        String date = sc2.nextLine();
+                        System.out.print("\uD83D\uDD5B Please enter your proposed time for this trade in format hh:mm\n");
+                        String time = sc2.nextLine();
+                        System.out.print("\uD83D\uDCCD Please enter your proposed location for this trade\n");
+                        String location = sc2.nextLine();
+                        allMeetings.editMeeting(tt.getInitialMeeting(), date, time, location);
+                        //get the last time they edited the meeting
+                        Integer numOfEdits = tt.getInitialMeeting().geteditHistory(user.getName());
+                        tt.getInitialMeeting().changeHistory(user, numOfEdits + 1);
+                        tt.getInitialMeeting().changeLastEdit(user.getName());
+
+                    }
+                }
+
+            }
+
+
+
+        }
+    return user; }
+
+
+
+
 
     public Object mainMenu(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions, AdminInputGetter admininputgetter ) {
         Scanner sc = new Scanner(System.in);    //System.in is a standard input stream
@@ -670,104 +780,8 @@ public class InputGetter {
                 } else if (a.equals("11")) {
                     return system1.addToWishlist(user, allUsers);
                 }else if (a.equals("13"))   {
+                    return system1.PendingTransactionProcess ( user,  allItems,  system1,  allTradeRequests,  allUsers,  allMeetings,  allTransactions);
 
-
-                    List <Transaction> pendingTransactions = user.getPendingTrades();
-
-                    if (pendingTransactions.size() == 0 )
-                    {
-                        System.out.print("You have no pending Transactions!\n");
-                        return user;
-
-                    }
-                    System.out.print("Here are your pending transactions:\n");
-
-
-
-                    for (int i = 0 ; i < pendingTransactions.size(); i++) {
-                        String hey = "";
-                        if (pendingTransactions.get(i) instanceof OneWay) {
-                            OneWay t = (OneWay) pendingTransactions.get(i);
-                            User b = t.getLender();
-                            if (user.getName().equals(b.getName())){
-                            b = t.getBorrower();}
-                            System.out.print(Integer.toString(i + 1) + " . Item " +  t.getLenderItem().getName() + " with " + b.getName() + "\n");
-                        }
-
-                    }
-
-                    System.out.print("Select the transaction you would like to edit/approve\n");
-
-                    Scanner sc1 = new Scanner(System.in);
-                    Integer transactionID = Integer.parseInt(sc1.nextLine());
-                    if (transactionID > pendingTransactions.size()){
-                        System.out.print("Ooops! This is out of bound! Please try again \n");
-                        return user;
-                    }
-                    Transaction selectedT = pendingTransactions.get(transactionID-1);
-
-                    if (selectedT instanceof OneWay) {
-
-                        OneWay tt = (OneWay) selectedT;
-                        User b = tt.getLender();
-                        if (user.getName().equals(b.getName())){
-                            b = tt.getBorrower();}
-                        if (tt.getInitialMeeting().geteditHistory(user.getName()) > tt.getInitialMeeting().geteditHistory(b.getName()) || tt.getInitialMeeting().viewLastEdit().equals(user.getName())){
-                            //if they have already made an edit and we are waiting on the other person to approve/suggest a new meeting
-                            System.out.print("This pending transaction is currently waiting on the other party! Please try again later\n");
-                        }
-                        else {
-
-
-                            //the person can now approve or propose a new time
-                            System.out.print("You have selected: ");
-
-                            System.out.print(tt.getLenderItem().getName() + " with " + b.getName() + "\n");
-                            System.out.print("Here is the proposed meeting: " + tt.getInitialMeeting() + "\n");
-                            System.out.print("Press 1 to approve. Press 2 to propose a new meeting. Press 3 to cancel\n");
-                            String input = sc1.nextLine();
-                            if (input.equals("1")) { //if they approve
-                                allTransactions.updateTransactionStatus(allItems, allUsers, selectedT, 3);
-                                //need another method for usermanager so that transactions in progress but meeting is set
-
-
-                            } else if (input.equals(("2"))) { //they want to propose a new time
-                                //provide warning if the is at their 3rd strike
-                                if (tt.getInitialMeeting().geteditHistory(user.getName())+1  == 3 )
-                                    System.out.print("\u2622 This is the last time you can propose a meeting.\nIf rejected, this transaction will be cancelled\n");
-
-                                if (tt.getInitialMeeting().geteditHistory(user.getName())  == 3 ){
-                                    //one person reached 3 edits, its time to delete this transaction
-                                    System.out.print("\uD83D\uDE22 Sorry! You couldn't agree on a time so we deleted the transaction!\n" +
-                                            "Please try again!\n");
-                                    return user;
-
-
-                                }
-                            else {
-
-
-                                    System.out.print("\uD83D\uDCC5 Please enter your proposed date for this trade in format dd-mm-yyyy\n");
-                                    Scanner sc2 = new Scanner(System.in);
-                                    String date = sc2.nextLine();
-                                    System.out.print("\uD83D\uDD5B Please enter your proposed time for this trade in format hh:mm\n");
-                                    String time = sc2.nextLine();
-                                    System.out.print("\uD83D\uDCCD Please enter your proposed location for this trade\n");
-                                    String location = sc2.nextLine();
-                                    allMeetings.editMeeting(tt.getInitialMeeting(), date, time, location);
-                                    //get the last time they edited the meeting
-                                    Integer numOfEdits = tt.getInitialMeeting().geteditHistory(user.getName());
-                                    tt.getInitialMeeting().changeHistory(user, numOfEdits + 1);
-                                    tt.getInitialMeeting().changeLastEdit(user.getName());
-
-                                }
-                            }
-
-                        }
-
-
-
-                    }
                 }
 
                  else if (a.equals("14")) {
