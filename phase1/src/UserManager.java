@@ -227,6 +227,26 @@ public class UserManager extends AccountManager {
         user.getPendingTrades().add(transaction);
     }
 
+    // TODO: write javadoc
+    public void removeFromPendingTrades(User user, Transaction transaction) {
+        user.getPendingTrades().remove(transaction);
+    }
+
+    // TODO: finish javadoc
+    /**
+     * Adds a Transaction to a User's list of Transactions in
+     *
+     * @param user
+     * @param transaction Transaction containing the Meeting in question
+     */
+    public void addToAgreedUponMeetings (User user, Transaction transaction) {
+        user.getAgreedUponMeeting().add(transaction);
+    }
+
+    public void removeFromAgreedUponMeetings(User user, Transaction transaction) {
+        user.getAgreedUponMeeting().remove(transaction);
+    }
+
     /**
      * Changes an Item's status (either "Pending", "Approved", or "Rejected") in a User's itemHistory (list of items
      * that have been submitted to the system). Only an Admin should change an Item's status
