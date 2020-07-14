@@ -18,7 +18,7 @@ import java.util.List;
 // NOTE: This class is based off of StudentManager from logging in Week 6 Modules on Quercus.
 
 /**
- * Manages the saving and loading of User to the external file.
+ * Gateway class that manages the actual saving and loading of Users to the external file.
  */
 public class UserReadWrite implements Serializable {
     /**
@@ -27,7 +27,8 @@ public class UserReadWrite implements Serializable {
     private List<User> users;
 
     /**
-     * Creates a new empty UserReadWrite.
+     * Creates a new empty UserReadWrite. Checks to see if file already exists; if it doesn't, it will
+     * create a new file with the name fileName. If it does exist, it will read from the file.
      *
      * @throws IOException
      * @throws ClassNotFoundException
@@ -68,11 +69,7 @@ public class UserReadWrite implements Serializable {
             if (temp != null){
                 users = temp;
             }
-            else{
-                return;
-            }
-        } catch (
-                IOException ex) {
+        } catch (IOException ex) {
         }
     }
 

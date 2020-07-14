@@ -17,6 +17,7 @@ public class TradeSystem {
     public void run() throws IOException, ClassNotFoundException {
         allAdmins = adminWriting.demoAdminRead("AdminList.ser");
         allTransactions = transactionWriting.demoTransactionRead("TransactionList.ser");
+        itemWriting.demoItemRead("ItemList.ser", AllItems);
 
         //creating users to test
         allUsers.createUser("Tina", "123");
@@ -95,12 +96,14 @@ public class TradeSystem {
 
         System.out.print("Goodbye!\uD83D\uDEAA \n");
 
-        //saves all the users in UserManager
+        //saves all the users in UserManager to an external file
         userWriting.demoUserSave("UserList4.ser", allUsers);
         //saves current AdminManager object allAdmins to external file
         adminWriting.demoAdminSave("AdminList.ser", allAdmins);
         //saves current TransactionManager object allTransactions to an external file
         transactionWriting.demoTransactionSave("TransactionList.ser", allTransactions);
+        //saves the systemInventory in AllItems to an external file
+        itemWriting.demoItemSave("ItemList.ser", AllItems);
 
         System.out.println(allUsers.getAllUsers());
         System.out.println("The current number of users in the file is:" + allUsers.getAllUsers().size());

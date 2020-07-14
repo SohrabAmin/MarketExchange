@@ -350,12 +350,12 @@ public class InputGetter {
         if (request.getRequestType() == 1){ //1 way'
             OneWay on = new OneWay(temp1, request.getReceiverItem(), request.getTemp());
             on.setInitialMeeting(meeting);
-            allTransactions. addToPendingTransactions(on);
+            //allTransactions. addToPendingTransactions(on);
         }
         else if (request.getRequestType() == 2) { //2way
             TwoWay on = new TwoWay(request.getRequesterItem(), request.getReceiverItem(), request.getTemp());
             on.setInitialMeeting(meeting);
-            allTransactions. addToPendingTransactions(on);
+            //allTransactions. addToPendingTransactions(on);
         }
     }
 

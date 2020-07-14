@@ -28,4 +28,8 @@ public class ItemManager {
         item.setCurrentHolder(user);
     }
 
+    public void setSystemInventory(List<Item> inventory){
+        this.systemInventory = inventory;
+    }
+
 }

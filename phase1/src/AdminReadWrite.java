@@ -17,19 +17,18 @@ import java.util.List;
 // NOTE: This class is based off of StudentManager from logging in Week 6 Modules on Quercus.
 
 /**
- * Manages the saving and loading of Admins to the external file.
+ * Gateway class that manages the actual saving and loading of Admins to the external file.
  */
 public class AdminReadWrite implements Serializable {
 
     /**
-     * Creates a new empty AdminReadWrite.
+     * Creates a new empty AdminReadWrite. Checks to see if file already exists; if it doesn't, it will
+     * create a new file with the name fileName. If it does exist, it will read from the file.
      *
      * @throws IOException
      * @throws ClassNotFoundException
      */
     public AdminReadWrite(String fileName) throws ClassNotFoundException, IOException {
-        // Reads serializable objects from file.
-        // Populates the record list using stored data, if it exists.
         File file = new File(fileName);
         String filePath = file.getAbsolutePath();
         File theFile = new File(filePath);
@@ -63,7 +62,6 @@ public class AdminReadWrite implements Serializable {
             if (temp != null) {
                 return temp;
             }
-            return null;
         } catch (
                 IOException ex) {
         }

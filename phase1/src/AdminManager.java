@@ -1,10 +1,11 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Keeps track of and adds Admins
  */
-public class AdminManager extends AccountManager {
+public class AdminManager extends AccountManager implements Serializable {
     private List<Admin> allAdmins;
 
     /**

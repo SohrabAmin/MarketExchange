@@ -4,8 +4,9 @@ import java.util.List;
 // NOTE: This class is based off of DemoManager from logging in Week 6 Modules on Quercus.
 
 /**
- * Class deals with the reading, writing and populating of Users in the systems UserManager class based on
- * external an inputted external file.
+ * Class deals with the reading and writing the systems AdminManager class. Retrieves data
+ * by calling gateway AdminReadWrite which handles the actual reading and writing of information from the external
+ * file and send it back to the TradeSystem class which stores AdminManager.
  */
 public class adminWriting {
     /**
