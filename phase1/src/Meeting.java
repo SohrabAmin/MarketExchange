@@ -1,4 +1,5 @@
 import java.util.Calendar;
+import java.util.HashMap;
 
 public class Meeting {
 
@@ -6,6 +7,8 @@ public class Meeting {
     private String place;
     private Boolean confirmed = false;
     private int edits;
+    private HashMap<String, Integer> editHistory;
+    private String lastEdit;
 
     /**
      *
@@ -15,6 +18,32 @@ public class Meeting {
     public Meeting(Calendar date, String place) {
         this.date = date;
         this.place = place;
+        editHistory = new HashMap<>();
+
+    }
+
+    public void initialHistory (String name, int num ){
+        editHistory.put(name, num);
+
+
+    }
+
+
+    public void changeLastEdit (String name){
+        lastEdit = name;
+    }
+
+    public String viewLastEdit (){
+        return lastEdit;
+    }
+
+    public void changeHistory (User user, int i){
+        editHistory.replace(user.name, i);
+    }
+
+    public int geteditHistory (String user){
+        return editHistory.get(user);
+
     }
 
     /**

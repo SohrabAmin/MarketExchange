@@ -29,7 +29,7 @@ public class TradeSystem {
         User hello = new User("Tina", "123");
 
        // allUsers.freeze(allUsers.getAllUsers().get(0));
-        allUsers.getAllUsers().get(0).setIsFrozen(true);
+        //allUsers.getAllUsers().get(0).setIsFrozen(true);
         User hi = new User("Mo", "123");
         User oops = new User ("heloooooooo" , "123");
         List<User> top3TP = new ArrayList<>();
@@ -38,7 +38,7 @@ public class TradeSystem {
         allUsers.getAllUsers().get(0).setTopTradingPartners(top3TP);
 
         Item myitem = new Item("sock for Mo", hi, "its cute");
-        Item myitem2 = new Item("sock for Tina", hello, "its 2cute");
+        Item myitem2 = new Item("sock for Tina", hi, "its 2cute");
         Item myitem3 = new Item("sock2 for Tina", hello, "its 2cute");
 
         AllItems.addItem(myitem);

@@ -98,22 +98,22 @@ public class AdminInputGetter {
 
         List<User> allFrozenUsers = new ArrayList<>();
         for (int i = 0; i < allUsers.getAllUsers().size(); i++){
-            if (allUsers.getAllUsers().get(i).getIsFrozen()) {
+            if (allUsers.getAllUsers().get(i).getIsFrozen() ) {
                 //if getIsFrozen returns true for frozen accounts
                 allFrozenUsers.add(allUsers.getAllUsers().get(i));
             }
         }
 
         List<User> possibleFrozenPeople = new ArrayList<>();
-//        for (int i = 0; i < allUsers.getAllUsers().size(); i++){
-//            if (allUsers.getAllUsers().get(i).getIsFrozen()) {
-//                //if getIsFrozen returns true for frozen accounts
-//                allFrozenUsers.add(allUsers.getAllUsers().get(i));
-//            }
-//        }
+        for (int i = 0; i < allUsers.getAllUsers().size(); i++){
+            if (allUsers.getAllUsers().get(i).getIsPseudoFrozen()) {
+                //if getIsFrozen returns true for frozen accounts
+                possibleFrozenPeople.add(allUsers.getAllUsers().get(i));
+            }
+        }
 
-        if (allFrozenUsers.size() > 0)
-            System.out.print("\uD83D\uDCF3 You have " + allFrozenUsers.size() + " Frozen user requests!\n");
+        if (frozenRequests.size() > 0)
+            System.out.print("\uD83D\uDCF3 You have " + frozenRequests.size() + " Frozen user requests!\n");
 
 
 
@@ -129,7 +129,7 @@ public class AdminInputGetter {
         }
         System.out.println("Please select from the following by entering the number beside the option:" +
                 " \n 1. Add new admin \n 2. Change system threshold \n" +
-                " 3. View items that need to be approved \n 4. Freeze users \n 5. View Freeze Requests \n 6. Log out \n" +
+                " 3. View items that need to be approved \n 4. UnFreeze users \n 5. View Freeze Requests \n 6. Log out \n" +
                 "Enter 'exit' to exit at any time.");
 
         try {
@@ -275,6 +275,7 @@ public class AdminInputGetter {
                 return null;
             }
             allUsers.unfreeze(frozenUsers.get((Integer) line - 1));
+            removeFromfrozenRequest (frozenUsers.get((Integer) line - 1));
             System.out.print("\u2705 Successfully unfrozen user: " +
                     allUsers.getUser(frozenUsers.get((Integer) line - 1)).getName() + "\n");
             return "back";

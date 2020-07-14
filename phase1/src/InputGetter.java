@@ -1,3 +1,4 @@
+import javax.jws.Oneway;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -145,7 +146,7 @@ public class InputGetter {
         }
         for (int i = 0; i < allItems2.size(); i++) {
             System.out.println("\uD83D\uDCE6" + (i + 1) + ". " + allItems2.get(i).getName() + " : "
-                    + allItems2.get(i).getDescription() + "\n");
+                    + allItems2.get(i).getDescription() +  " owner is: " + allItems2.get(i).getOwner().getName() + "\n");
         }
         System.out.print("Enter ID of the item you would like to add to your wishlist or type 'back' to get to main menu.\n");
 
@@ -344,30 +345,40 @@ public class InputGetter {
         System.out.print("\u2705 Approved!\n");
         //if the trade request is approved, we should now start a trade and make a meeting
         Meeting meeting = MeetingInitiator (user, allUsers, allMeetings);
+
         User temp1 = request.getRequester();
         User temp2 = request.getReceiver();
+        meeting.initialHistory (temp1.getName(), 0);
+        meeting.initialHistory (temp2.getName(), 1);
+
         allUsers.removeFromPendingRequests(allUsers.getUser(user), request);
         if (request.getRequestType() == 1){ //1 way'
             OneWay on = new OneWay(temp1, request.getReceiverItem(), request.getTemp());
             on.setInitialMeeting(meeting);
-            //allTransactions. addToPendingTransactions(on);
+            on.getInitialMeeting().changeLastEdit(user.getName());
+            allTransactions.addToPendingTransactions(on, allUsers);
         }
         else if (request.getRequestType() == 2) { //2way
             TwoWay on = new TwoWay(request.getRequesterItem(), request.getReceiverItem(), request.getTemp());
             on.setInitialMeeting(meeting);
-            //allTransactions. addToPendingTransactions(on);
+            allTransactions.addToPendingTransactions(on, allUsers);
         }
+
+
+
     }
 
     public Meeting MeetingInitiator (User user,UserManager allUsers, MeetingManager allMeetings){
         System.out.print("\uD83D\uDCC5 Please enter your proposed date for this trade in format dd-mm-yyyy\n");
         Scanner sc = new Scanner(System.in);
         String date = sc.nextLine();
-        System.out.print("\uD83D\uDCC5 Please enter your proposed time for this trade in format hh:mm\n");
+        System.out.print("\uD83D\uDD5B Please enter your proposed time for this trade in format hh:mm\n");
         String time = sc.nextLine();
-        System.out.print("\uD83D\uDCC5 Please enter your proposed location for this trade\n");
+        System.out.print("\uD83D\uDCCD Please enter your proposed location for this trade\n");
         String location = sc.nextLine();
         Meeting meeting = allMeetings.createMeeting(date,  time,  location);
+
+
 
         return meeting;
 
@@ -557,9 +568,7 @@ public class InputGetter {
                 else if (a.equals("9")){
                     NotifyAdmin ( user,  admininputgetter);
                 return user;
-
                 }
-
                 else if (a.equals("2")) {
                     //view inventory
                     return system1.inventory(user, allUsers);
@@ -598,10 +607,17 @@ public class InputGetter {
                 System.out.print("\uD83D\uDCE9 You have " + allUsers.getUser(user).getPendingRequests().size() +
                         " Pending Trade Requests!\n");
             }
+
+            if (allUsers.getUser(user).getPendingTrades().size() > 0){
+                System.out.print("\u23F3 You have " + allUsers.getUser(user).getPendingTrades().size() +
+                        " Pending Trade Requests!\n");
+            }
+
+
             System.out.print("Please select number from the following:\n1.View Wishlist\n2.View Inventory\n" +
                     "3.Browse Items\n4.Initiate Trade\n5.View Messages\n6.Approve Pending Trades\n" +
                     "7.Add Item to inventory\n8.View most recent trades\n9.View most frequent trading partners\n10. View status of my items\n11. Add Item to wishlist\n" +
-                    "12.View Approved Trades\n13. Logout" + "\nEnter 'exit' to exit the system at any time.\n");
+                    "12.View Approved Trades\n13. Approve Meeting\n14. Logout" + "\nEnter 'exit' to exit the system at any time.\n");
 
             String a = sc.nextLine();
             if (!a.equals("exit")) {
@@ -653,9 +669,108 @@ public class InputGetter {
                     return system1.ViewItemHistory(user, allUsers);
                 } else if (a.equals("11")) {
                     return system1.addToWishlist(user, allUsers);
+                }else if (a.equals("13"))   {
 
 
-                } else if (a.equals("13")) {
+                    List <Transaction> pendingTransactions = user.getPendingTrades();
+
+                    if (pendingTransactions.size() == 0 )
+                    {
+                        System.out.print("You have no pending Transactions!\n");
+                        return user;
+
+                    }
+                    System.out.print("Here are your pending transactions:\n");
+
+
+
+                    for (int i = 0 ; i < pendingTransactions.size(); i++) {
+                        String hey = "";
+                        if (pendingTransactions.get(i) instanceof OneWay) {
+                            OneWay t = (OneWay) pendingTransactions.get(i);
+                            User b = t.getLender();
+                            if (user.getName().equals(b.getName())){
+                            b = t.getBorrower();}
+                            System.out.print(Integer.toString(i + 1) + " . Item " +  t.getLenderItem().getName() + " with " + b.getName() + "\n");
+                        }
+
+                    }
+
+                    System.out.print("Select the transaction you would like to edit/approve\n");
+
+                    Scanner sc1 = new Scanner(System.in);
+                    Integer transactionID = Integer.parseInt(sc1.nextLine());
+                    if (transactionID > pendingTransactions.size()){
+                        System.out.print("Ooops! This is out of bound! Please try again \n");
+                        return user;
+                    }
+                    Transaction selectedT = pendingTransactions.get(transactionID-1);
+
+                    if (selectedT instanceof OneWay) {
+
+                        OneWay tt = (OneWay) selectedT;
+                        User b = tt.getLender();
+                        if (user.getName().equals(b.getName())){
+                            b = tt.getBorrower();}
+                        if (tt.getInitialMeeting().geteditHistory(user.getName()) > tt.getInitialMeeting().geteditHistory(b.getName()) || tt.getInitialMeeting().viewLastEdit().equals(user.getName())){
+                            //if they have already made an edit and we are waiting on the other person to approve/suggest a new meeting
+                            System.out.print("This pending transaction is currently waiting on the other party! Please try again later\n");
+                        }
+                        else {
+
+
+                            //the person can now approve or propose a new time
+                            System.out.print("You have selected: ");
+
+                            System.out.print(tt.getLenderItem().getName() + " with " + b.getName() + "\n");
+                            System.out.print("Here is the proposed meeting: " + tt.getInitialMeeting() + "\n");
+                            System.out.print("Press 1 to approve. Press 2 to propose a new meeting. Press 3 to cancel\n");
+                            String input = sc1.nextLine();
+                            if (input.equals("1")) { //if they approve
+                                allTransactions.updateTransactionStatus(allItems, allUsers, selectedT, 3);
+                                //need another method for usermanager so that transactions in progress but meeting is set
+
+
+                            } else if (input.equals(("2"))) { //they want to propose a new time
+                                //provide warning if the is at their 3rd strike
+                                if (tt.getInitialMeeting().geteditHistory(user.getName())+1  == 3 )
+                                    System.out.print("\u2622 This is the last time you can propose a meeting.\nIf rejected, this transaction will be cancelled\n");
+
+                                if (tt.getInitialMeeting().geteditHistory(user.getName())  == 3 ){
+                                    //one person reached 3 edits, its time to delete this transaction
+                                    System.out.print("\uD83D\uDE22 Sorry! You couldn't agree on a time so we deleted the transaction!\n" +
+                                            "Please try again!\n");
+                                    return user;
+
+
+                                }
+                            else {
+
+
+                                    System.out.print("\uD83D\uDCC5 Please enter your proposed date for this trade in format dd-mm-yyyy\n");
+                                    Scanner sc2 = new Scanner(System.in);
+                                    String date = sc2.nextLine();
+                                    System.out.print("\uD83D\uDD5B Please enter your proposed time for this trade in format hh:mm\n");
+                                    String time = sc2.nextLine();
+                                    System.out.print("\uD83D\uDCCD Please enter your proposed location for this trade\n");
+                                    String location = sc2.nextLine();
+                                    allMeetings.editMeeting(tt.getInitialMeeting(), date, time, location);
+                                    //get the last time they edited the meeting
+                                    Integer numOfEdits = tt.getInitialMeeting().geteditHistory(user.getName());
+                                    tt.getInitialMeeting().changeHistory(user, numOfEdits + 1);
+                                    tt.getInitialMeeting().changeLastEdit(user.getName());
+
+                                }
+                            }
+
+                        }
+
+
+
+                    }
+                }
+
+                 else if (a.equals("14")) {
                     //logout
                     return null;
                 }
