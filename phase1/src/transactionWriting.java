@@ -9,7 +9,7 @@ import java.io.IOException;
 public class transactionWriting {
 
     public static TransactionManager demoTransactionRead(String fileName) throws IOException, ClassNotFoundException {
-        // creates transactionReadWrite which manages the saving and loading users.
+        // creates transactionReadWrite which manages the saving and loading of TransactionManager.
         transactionReadWrite tmRW = new transactionReadWrite(fileName);
 
         // Deserializes contents of the SER file
@@ -23,7 +23,7 @@ public class transactionWriting {
     /**
      *  Saves the TransactionManager tm into the external file.
      *
-     * @param tm TransactionManager
+     * @param tm current TransactionManager object that needs to be saved to the external file
      * @throws IOException
      * @throws ClassNotFoundException
      */

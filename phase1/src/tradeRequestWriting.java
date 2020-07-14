@@ -9,27 +9,27 @@ import java.io.IOException;
  */
 public class tradeRequestWriting {
 
-    public static TransactionManager demoTransactionRead(String fileName) throws IOException, ClassNotFoundException {
+    public static TradeRequestManager demoTradeRequestRead(String fileName) throws IOException, ClassNotFoundException {
         // creates transactionReadWrite which manages the saving and loading users.
-        transactionReadWrite tmRW = new transactionReadWrite(fileName);
+        tradeRequestReadWrite trRW = new tradeRequestReadWrite(fileName);
 
         // Deserializes contents of the SER file
-        TransactionManager temp = tmRW.readFromFile(fileName);
+        TradeRequestManager temp = trRW.readFromFile(fileName);
         if (temp == null){
-            return new TransactionManager();
+            return new TradeRequestManager();
         }
         return temp;
     }
 
     /**
-     *  Saves the TransactionManager tm into the external file.
+     *  Saves the TradeRequestManager trM into the external file.
      *
-     * @param tm TransactionManager
+     * @param trM current TradeRequestManager object that needs to be saved to the external file
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    public static void demoTransactionSave(String fileName, TransactionManager tm) throws IOException, ClassNotFoundException {
-        transactionReadWrite tmRW = new transactionReadWrite(fileName);
-        tmRW.saveToFile(fileName, tm);
+    public static void demoTradeRequestSave(String fileName, TradeRequestManager trM) throws IOException, ClassNotFoundException {
+        tradeRequestReadWrite trRW = new tradeRequestReadWrite(fileName);
+        trRW.saveToFile(fileName, trM);
     }
 }

@@ -1,10 +1,11 @@
+import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 
 /**
  * Manages all TradeRequests. Changes values in TradeRequest by accessing getters/setters. Should only be instantiated once.
  */
-public class TradeRequestManager {
+public class TradeRequestManager implements Serializable {
 
     private List<TradeRequest> pending;
     private List<TradeRequest> denied;

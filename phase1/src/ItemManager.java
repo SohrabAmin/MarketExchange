@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemManager {
+public class ItemManager implements Serializable {
 
     private List<Item> systemInventory;
 

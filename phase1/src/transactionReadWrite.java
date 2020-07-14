@@ -42,7 +42,8 @@ public class transactionReadWrite implements Serializable {
     }
 
     /**
-     * Stores the admins from the file at path filePath.
+     * Reads the file at fileName and either returns the TransactionManager stored in the file
+     * or returns null.
      *
      * @param fileName the path of the data file
      * @throws FileNotFoundException if filePath is not a valid path
@@ -71,8 +72,9 @@ public class transactionReadWrite implements Serializable {
     }
 
     /**
-     * Writes adminManager object to external file at filePath.
+     * Writes TransactionManager object tm to external file at filePath.
      *
+     * @param tm the TransactionManager that is instantiated in the current System that needs to be saved.
      * @param fileName the file to write the records to
      * @throws IOException
      */

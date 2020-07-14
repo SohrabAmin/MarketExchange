@@ -11,12 +11,13 @@ public class TradeSystem {
     public AdminManager allAdmins;
     public ItemManager AllItems = new ItemManager();
     public MeetingManager allMeetings = new MeetingManager();
-    public TradeRequestManager allTradeRequests = new TradeRequestManager();
+    public TradeRequestManager allTradeRequests;
     public Object currentUser;
 
     public void run() throws IOException, ClassNotFoundException {
         allAdmins = adminWriting.demoAdminRead("AdminList.ser");
         allTransactions = transactionWriting.demoTransactionRead("TransactionList.ser");
+        allTradeRequests = tradeRequestWriting.demoTradeRequestRead("TradeRequestList.ser");
         itemWriting.demoItemRead("ItemList.ser", AllItems);
 
         //creating users to test
@@ -104,6 +105,8 @@ public class TradeSystem {
         transactionWriting.demoTransactionSave("TransactionList.ser", allTransactions);
         //saves the systemInventory in AllItems to an external file
         itemWriting.demoItemSave("ItemList.ser", AllItems);
+        //saves current TradeRequest object allTradeRequests to an external file
+        tradeRequestWriting.demoTradeRequestSave("TradeRequestList.ser", allTradeRequests);
 
         System.out.println(allUsers.getAllUsers());
         System.out.println("The current number of users in the file is:" + allUsers.getAllUsers().size());
