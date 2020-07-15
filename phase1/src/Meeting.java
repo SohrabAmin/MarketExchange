@@ -1,3 +1,5 @@
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -150,6 +152,8 @@ return "error";
      */
     @Override
     public String toString() {
-        return "Date: " + getDate().getTime().toString() + ", Place: " + place;
+
+        DateFormat dateFormat = new SimpleDateFormat("EEE, MMM d, yyyy hh:mma");
+        return dateFormat.format(getDate().getTime()) + " at " + getPlace();
     }
 }
