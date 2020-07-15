@@ -893,7 +893,8 @@ public class InputGetter {
                     allTransactions.updateTransactionStatus(allItems, allUsers, selectedT, 1);
 
 
-                } else if (input.equals(("2"))) { //they want to propose a new time
+                } else if (input.equals(("2"))) {
+                    //they want to propose a new time
                     //provide warning if the is at their 3rd strike
                     if (tt.getInitialMeeting().geteditHistory(user.getName())+1  == 3 )
                         System.out.print("\u2622 This is the last time you can propose a meeting.\nIf rejected, this transaction will be cancelled\n");
@@ -922,6 +923,18 @@ public class InputGetter {
                         tt.getInitialMeeting().changeLastEdit(user.getName());
                     }
                 }
+                else if (input.equals("3")){
+
+                    //need another method for usermanager so that transactions in progress but meeting is set
+                    System.out.print("Your meeting has been cancelled!\n");
+                    allTransactions.updateTransactionStatus(allItems, allUsers, selectedT, 4);
+
+                } else {
+
+
+                }
+
+
             }
     } if (selectedT instanceof TwoWay){
 
@@ -1194,7 +1207,9 @@ public class InputGetter {
                             return user;
                         }
                         System.out.print(selectedTransaction.getInitialMeeting() + " With: " + selectedTransaction.getInitialMeeting().getOtherSide(user.getName()) + "\n");
-                        System.out.print("Press 1 to confirm that the meeting is done!\n");
+                        System.out.print("Press 1 to confirm that the meeting is done! Press 2 to cancel the meeting and press 3 if you got stood up\n");
+
+
                         String action = sc11.nextLine();
                         if (action.equals("1")) {
                             //confirm meeting by the user
@@ -1233,6 +1248,15 @@ public class InputGetter {
                                 }
                             }
                         }
+                        else if (selection.equals("2") || selection.equals("3")){ //cancelling
+                            System.out.print("\u2639 We are sorry to hear that! Better luck next time!\n");
+                            allTransactions.updateTransactionStatus(allItems, allUsers, selectedTransaction, 4);
+
+                        }
+
+
+
+
                     }
                     else if (selection.equals("2")){
                         System.out.print("Here are your meetings to return items:\n");
