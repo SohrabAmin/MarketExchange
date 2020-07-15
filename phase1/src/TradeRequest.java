@@ -1,7 +1,8 @@
 import java.util.List;
 
 /**
- * iz kewl klaz
+ * Constructs a trade request, that a User can send to another User if the want to initiated a Transaction. Notice this difference from a Transaction, as
+ * the system does not create an instance of Transaction unless the corresponding TradeRequest has been approved by the User receiving the TradeRequest.
  */
 public class TradeRequest {
     private User requester;
@@ -16,13 +17,13 @@ public class TradeRequest {
     /**
      * Constructs a TradeRequest instance. This class is instantiated by the User that attempts to initiate the Transaction, and should be stored within the receiving User's
      * pendingRequest. If the receiving User accepts the conditions of the Transaction, they may accept the TradeRequest, and an instance of Transaction is created.
-     * @param requestType An integer that determines whether the trade is temporary or not: 1- permanent Transaction, 2- temp Transaction //should be boolean?
-     * @param requester The User who initiates the Transaction
-     * @param receiver The User who recieves the TradeRequest
+     * @param requestType An integer that determines whether the trade is temporary or not: 1- Permanent Transaction, 2- Temporary Transaction.
+     * @param requester The User who initiates the Transaction.
+     * @param receiver The User who receives the TradeRequest.
      * @param itemList An ArrayList of Items containing the Items being exchanged. If this is a TwoWay, the requester User's item should be in the first index,
      *                 and the receiver User's item to give in the second index. If this is a OneWay, simply place the Item in the first index.
      * @param message A string representation of any message the requester User may want to send to the receiver User.
-     * @param temp A boolean regarding if the requester User wants a temporary Transaction or not.
+     * @param temp A boolean regarding if the User requesting a TradeRequest wants a temporary Transaction or not.
      */
     public TradeRequest(int requestType, User requester, User receiver, List<Item> itemList, String message, boolean temp){
         this.requestType = requestType;
@@ -40,7 +41,10 @@ public class TradeRequest {
         }
     }
 
-
+    /**
+     * Gets the message the User initiating the TradeRequest sent to the User receiving the TradeRequest.
+     * @return String representation of the message.
+     */
     public String getMessage(){
         return message;
     }

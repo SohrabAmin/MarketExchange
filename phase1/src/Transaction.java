@@ -4,9 +4,9 @@
 public class Transaction {
 
 
-    private int tradeStatus = 0; // 0- in progress 1- completed 2- cancelled
+    private int tradeStatus = 0; // 0: In progress. 1: Finalized Meeting (the initialMeeting has been set) 2: Pending Second Exchange (only for temporary Transaction). 3: Completed 4: Cancelled.
 
-    private boolean temp; //Set true is this transaction in temporary (must revert in a month) should be able to change easily for phase 2
+    private boolean temp; //Set true is this Transaction in temporary (must revert in a month).
 
     private Meeting initialMeeting;
 
@@ -23,7 +23,7 @@ public class Transaction {
         }
 
     /**
-     * Getter for a given Transaction's tradeStatus. 0: In progress, 1: Cancelled, 2: Completed
+     * Getter for a given Transaction's tradeStatus. 0: In progress. 1: Finalized Meeting (the initialMeeting has been set) 2: Pending Second Exchange (only for temporary Transaction). 3: Completed 4: Cancelled.
      * @return The trade status of a Transaction
      */
     public int getTradeStatus(){
@@ -31,7 +31,7 @@ public class Transaction {
         }
 
     /**
-     * Changes a Transaction's trade status: 0: In progress, 1: Cancelled, 2: Completed
+     * Changes a Transaction's trade status: 0: In progress. 1: Finalized Meeting (the initialMeeting has been set) 2: Pending Second Exchange (only for temporary Transaction). 3: Completed 4: Cancelled.
      * @param tradeStatus The trade status of a Transaction
      */
     public void setTradeStatus(int tradeStatus){

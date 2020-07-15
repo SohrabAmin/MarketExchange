@@ -28,18 +28,22 @@ public class TransactionManager implements Serializable {
 
     /**
      * Updates the tradeStatus of a given Transaction.
-     * 0: In progress,
-     * 1: Pending Second Exchange (Temp only),
-     * 2: Completed
-     * 3: Cancelled.
+     * 0: In progress.
+     * 1: Finalized Meeting (the initialMeeting has been set!).
+     * 2: Pending Second Exchange (only for temporary Transaction).
+     * 3: Completed
+     * 4: Cancelled.
      * Notice by updating the tradeStatus the instance of Transaction is being moved to a new attribute list within TransactionManager.
+     * finalizedMeeting implies the initialMeeting has been set.
+     * pendingSecondExchange means the first exchange was successful, but the User(s) must return their Item a month after the initialMeeting.
      * Cancelled implies one of the following: User(s) did not show up to the Meeting or User(s) altered
      * meeting too many times, and completed means the Transaction was successful, and the Item(s) have been officially swapped.
+     * Completed means either the finalizedMeeting had occurred (for permanent Transaction), or the secondExchange has occurred.
      *
-     * @param itemManager Class that manages Items
-     * @param userManager Class that manages Users
-     * @param transaction The given Transaction
-     * @param tradeStatus The current status of a given Transaction
+     * @param itemManager Class that manages Items.
+     * @param userManager Class that manages Users.
+     * @param transaction The given Transaction.
+     * @param tradeStatus The current status of a given Transaction.
      */
     public void updateTransactionStatus(ItemManager itemManager, UserManager userManager, Transaction transaction, int tradeStatus) {
         User user1;
@@ -92,10 +96,10 @@ public class TransactionManager implements Serializable {
     }
 
     /**
-     * Initiates and stores the InitialMeeting of a given Transaction. Required for all types of Transactions.
+     * Initiates and stores the initialMeeting of a given Transaction. Required for all types of Transactions.
      *
-     * @param transaction The given Transaction
-     * @param meeting     The given Meeting
+     * @param transaction The given Transaction.
+     * @param meeting     The given Meeting.
      */
     public void setInitialMeeting(Transaction transaction, Meeting meeting) {
         transaction.setInitialMeeting(meeting);
@@ -113,9 +117,10 @@ public class TransactionManager implements Serializable {
     }
 
     /**
-     * Adds a given Transaction to the attribute list pendingTransaction held in TransactionManager.
+     * Adds a given new Transaction to the attribute list pendingTransaction held in TransactionManager.
      * Pending implies the Transaction is in progress.
      * @param transaction The specified Transaction that has been created.
+     * @param userManager The instance of UserManager.
      */
     public void addToPendingTransactions(Transaction transaction, UserManager userManager) {
         User user1;
@@ -137,20 +142,13 @@ public class TransactionManager implements Serializable {
 
     }
 
-    /**
-     * Executes the back-end results of a Transaction being completed.
-     *
-     * @param itemManager The instance of class ItemManager
-     * @param userManager The instance of class UserManager
-     * @param transaction The given instance of Transaction
-     */
 
 
     /**
      * Executes the back-end results of a Transaction being cancelled. A Transaction being cancelled can result in being frozen (unable to participate in trading).
      *
-     * @param userManager The instance of UserManager
-     * @param transaction The given instance of Transaction
+     * @param userManager The instance of UserManager.
+     * @param transaction The given instance of Transaction.
      */
     public void handleCancelledTrade(UserManager userManager, Transaction transaction) {
         User temp1;
@@ -158,6 +156,8 @@ public class TransactionManager implements Serializable {
         if (transaction instanceof OneWay) {
             temp1 = userManager.getUser(((OneWay) transaction).getBorrower());
             temp2 = userManager.getUser(((OneWay) transaction).getLender());
+
+
 
         } else {
             temp1 = userManager.getUser(((TwoWay) transaction).getFirstTrader());
@@ -184,9 +184,9 @@ public class TransactionManager implements Serializable {
     }
 
     /**
-     * Handles the completion of a temporary Transaction. Notice the second exchange is returning objects back to original owner.
-     * @param userManager The instance of UserManager
-     * @param transaction The given temporary Transaction
+     * Handles the back-end completion of a temporary Transaction. Notice the second exchange is returning objects back to original owner. Only called in updateTransactionStatus.
+     * @param userManager The instance of UserManager.
+     * @param transaction The given temporary Transaction.
      * @param itemManager The instance of ItemManager.
      */
     public void handleSecondExchange(UserManager userManager, ItemManager itemManager, Transaction transaction){
@@ -206,13 +206,6 @@ public class TransactionManager implements Serializable {
             temp2 = userManager.getUser(((TwoWay) transaction).getSecondTrader());
             item1 = ((TwoWay) transaction).getSecondItem();
             Item item2 = ((TwoWay) transaction).getFirstItem();
-            //editted by Tina
-//            userManager.removeFromInventory(temp2,item1);
-//            userManager.removeFromInventory(temp1, item2);
-//            userManager.addToInventory(temp1, item1);
-//            userManager.addToInventory(temp2, item2);
-//            itemManager.setCurrentHolder(item1, temp1);
-//            itemManager.setCurrentHolder(item2, temp2);
             userManager.removeFromInventory(temp2,item2);
             userManager.removeFromInventory(temp1, item1);
             userManager.addToInventory(temp1, item2);
@@ -225,7 +218,12 @@ public class TransactionManager implements Serializable {
          userManager.removeFromSecondAgreedUponMeeting(temp1, transaction);
          userManager.removeFromSecondAgreedUponMeeting(temp2, transaction);
     }
-
+    /**
+     * Handles the back-end completion of a temporary Transaction. Notice the first exchange is giving Item(s) to the User(s). Only called in updateTransactionStatus.
+     * @param userManager The instance of UserManager.
+     * @param transaction The given temporary Transaction.
+     * @param itemManager The instance of ItemManager.
+     */
     public void handleFirstExchange(UserManager userManager, Transaction transaction, ItemManager itemManager){
         User temp1;
         User temp2;
@@ -237,6 +235,8 @@ public class TransactionManager implements Serializable {
             userManager.removeFromInventory(temp2, item1);
             userManager.addToInventory(temp1, item1);
             itemManager.setCurrentHolder(item1,temp1);
+            temp1.increaseEligibility();
+            temp2.decreaseEligibility();
         } else {
             temp1 = userManager.getUser(((TwoWay) transaction).getFirstTrader());
             temp2 = userManager.getUser(((TwoWay) transaction).getSecondTrader());
@@ -255,6 +255,13 @@ public class TransactionManager implements Serializable {
         userManager.addToSecondAgreedUponMeeting(temp1, transaction);
         userManager.addToSecondAgreedUponMeeting(temp2, transaction);
     }
+
+    /**
+     * Handles the back-end results of a permanent Transaction occurring. This is only called by updateTransactionStatus.
+     * @param userManager The instance of UserManager.
+     * @param itemManager The instance of ItemManager.
+     * @param transaction The given temporary Transaction.
+     */
     public void handleCompletedPerm(UserManager userManager, ItemManager itemManager, Transaction transaction) {
         User temp1;
         User temp2;
