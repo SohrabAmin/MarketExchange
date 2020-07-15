@@ -49,7 +49,11 @@ public void meetingConfirmed (String name){
         confirm.replace(name, 1);
 
 }
+public Integer userconfirmed (String name){
+        return confirm.get(name);
 
+
+}
 public String getOtherSide (String name){
 
     for ( String key : confirm.keySet() ) {
