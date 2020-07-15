@@ -29,6 +29,8 @@ public class TransactionManager implements Serializable {
 
     }
 
+
+
     /**
      * Updates the tradeStatus of a given Transaction. 0: In progress, 1: Pending Second Exchange (Temp only), 2: Completed 3: Cancelled. Notice by updating the tradeStatus,
      * the instance of Transaction is being moved to a new attribute list within TransactionManager. Cancelled implies one of the following: User(s) did not show up to the Meeting or User(s) altered
@@ -85,6 +87,8 @@ public class TransactionManager implements Serializable {
         }
 
         transaction.setTradeStatus(tradeStatus);
+        transaction.getInitialMeeting().setConfirmedTrue();
+
     }
 
     /**

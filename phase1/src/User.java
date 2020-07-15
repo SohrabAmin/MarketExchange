@@ -24,6 +24,7 @@ public class User extends Account {
     private List<Transaction> agreedUponMeeting;
 
 
+
     public User() {
     }
     /**

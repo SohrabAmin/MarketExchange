@@ -9,6 +9,7 @@ public class Meeting {
     private int edits;
     private HashMap<String, Integer> editHistory;
     private String lastEdit;
+    private HashMap<String, Integer> confirm; //0 for not confirmed - 1 for confirmed that meeting took place
 
     /**
      *
@@ -19,12 +20,46 @@ public class Meeting {
         this.date = date;
         this.place = place;
         editHistory = new HashMap<>();
+        confirm = new HashMap<>();
 
     }
+    public boolean confirmedByBothSides (){
+        //Used https://stackoverflow.com/questions/27254302/counting-duplicate-values-in-hashmap as reference
+        int counter = 0;
+        Integer countingFor = 1;
+        for(String key : confirm.keySet()) {            // iterate through all the keys in this HashMap
+            if(confirm.get(key).equals(countingFor)) {  // if a key maps to the string you need, increment the counter
+                counter++;
+            }
+        }
+    if (counter == 2)
+        return true;
+    else
+        return false;
+    }
+
+public void initialconfirm (String side1, String side2){
+        confirm.put(side1, 0);
+        confirm.put(side2, 0);
+}
+
+public void meetingConfirmed (String name){
+        confirm.replace(name, 1);
+
+}
+
+public String getOtherSide (String name){
+
+    for ( String key : confirm.keySet() ) {
+        if (!key.equals(name))
+            return key;
+    }
+return "error";
+}
+
 
     public void initialHistory (String name, int num ){
         editHistory.put(name, num);
-
 
     }
 
