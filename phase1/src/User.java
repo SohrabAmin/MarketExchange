@@ -3,8 +3,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * represent a User with name and password. Show user's wishlist, inventory, draft inventory( items added but not
- * approved or declined by admin),
+ * represent a User with name and password. store and getter for all values of a user.
  */
 public class User extends Account {
 
@@ -29,9 +28,14 @@ public class User extends Account {
     }
     /**
      * constructs an instance of User with name and password and a list of wishlist, inventory
-     * draft inventory( items waiting for admin's approval), trade history, pending request (received but not approve
-     * declined),
-     *
+     * draftInventory means items being added to inventory but waiting for admin's approval,
+     * tradeHistory: past 3 trades
+     * pendingRequest: trade requests that are received but not replied yet.
+     * ItemHistory: all the items being added to the inventory( even though it is traded).
+     * outboundRequests: trade requests that are sent out by the user
+     * pendingTrades: user and his trading partner have agreed to trade but trade is not finished.
+     * cancelledTransactions: transactions that are cancelled by the users
+     * agreedUponMeeting: user and his partner have agreed on the final meeting but the meeting has not happened yet
      * @param name of this user as a string
      * @param password of this user as a string
      */
@@ -54,8 +58,8 @@ public class User extends Account {
     }
 
     /**
-     * getter for
-     * @return
+     * getter for itemHistory
+     * @return all the items that has been added to inventory no matter that item is traded or not.
      */
 
     public HashMap<Item, String> getItemHistory() {
@@ -94,7 +98,7 @@ public class User extends Account {
     }
 
     /**
-     * setter for user's sucessful trade history
+     * setter for user's successful trade history
      * @param transaction to add a transaction to this user's trade history
      */
     public void addTradeHistory(Transaction transaction) {
@@ -110,8 +114,8 @@ public class User extends Account {
     }
 
     /**
-     * getter
-     * @return
+     * getter for the top 3 most frequent trading partners
+     * @return the 3 most frequent trading partners as a List of User
      */
     public List<User> getTopTradingPartners() {
         return topTradingPartners;
@@ -126,7 +130,7 @@ public class User extends Account {
     }
 
     /**
-     * getter for the trades that is not completed but the meeting has been set up
+     * getter for the trades that is not completed but the trade is not finished yet.
      * @return List of transactions for this user's trade that is not yet completed
      */
     public List<Transaction> getPendingTrades() {
@@ -149,14 +153,18 @@ public class User extends Account {
         return cancelledTransactions;
     }
 
+    /**
+     * setter for topTradingPartners
+     * @param topTradingPartners to add or change the 3 most frequent trading partners to the list
+     */
     public void setTopTradingPartners(List<User> topTradingPartners) {
         this.topTradingPartners.clear();
         this.topTradingPartners.addAll(topTradingPartners);
     }
 
     /**
-     * getter for
-     * @return
+     * getter for agreedUponMeeting
+     * @return a list of  transactions of which the meeting is finalized but not happened
      */
     public List<Transaction> getAgreedUponMeeting(){ return agreedUponMeeting;}
 
@@ -178,26 +186,36 @@ public class User extends Account {
     }
 
     /**
-     * gettter for if user is PseudoFrzoen, PseuodoFrzoen means that the user's trade  is over the limit of weekly trades
-     * or incom
-     * @return
+     * gettter for if user is PseudoFrzoen, A pseudo-frozen User is prevented from conducting transactions until
+     * an Admin decides to either freeze the User or let the User slide
+     * @return the status if this user is PseudoFrozen as a boolean
      */
     public boolean getIsPseudoFrozen() {
         return isPseudoFrozen;
     }
-
+    /**
+     * setter for isPseodoFrozen
+     * @param isPseudoFrozen to this user as if he is pseudofrozen
+     */
     public void setIsPseudoFrozen(boolean isPseudoFrozen) {
         this.isPseudoFrozen = isPseudoFrozen;
     }
-
+    /**
+     * getter for eligibility. eligibility is the number of items this user can trade
+     * @return the number of items this user can trade as int
+     */
     public int getEligibility() {
         return eligibility;
     }
-
+    /**
+     * set the eligibility increase one unit per item this user lent
+     */
     public void increaseEligibility() {
         this.eligibility += 1;
     }
-
+    /**
+     * set the eligibility decreases one unit per item this user borrowed
+     */
     public void decreaseEligibility() {
         this.eligibility -= 1;
     }

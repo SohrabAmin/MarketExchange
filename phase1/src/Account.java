@@ -1,6 +1,6 @@
 import java.io.Serializable;
 /**
- * Represent an account with name and corresponding password
+ * Represent an account with name and corresponding password, Superclass for User and Admin
  */
 public abstract class Account implements Serializable {
      protected String name;
