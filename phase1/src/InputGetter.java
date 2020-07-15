@@ -1016,11 +1016,11 @@ public class InputGetter {
         boolean pseudoFrozenAccount = user.getIsPseudoFrozen();
 
         if (frozenAccount || pseudoFrozenAccount) { //first off, tell them that they are frozen
-           String actionTaker = "by Admin. ";
+           String actionTaker = "by Admin.";
            if (pseudoFrozenAccount)
-               actionTaker = "by System. ";
+               actionTaker = "by System.";
 
-            System.out.print("\uD83E\uDD76 Your account is frozen!" + actionTaker +
+            System.out.print("\uD83E\uDD76 Your account is frozen " + actionTaker +
                     " You are not able to do any trades until you are unfrozen by admin.\n" +
                     "\uD83C\uDFC1 Please ask Admin to unfreeze your account!\n\n");
 
@@ -1028,7 +1028,7 @@ public class InputGetter {
                     "3.Browse Items\n" +
                     "4.Add Item to inventory\n5.View most recent trades\n6.View most frequent trading partners\n" +
                     "7.View status of my items\n8.Add Item to wishlist" +
-                    "\n9.Request unfreeze!\n10. Logout" + "\nEnter 'exit' to exit the system at any time.\n");
+                    "\n9.Request unfreeze!\n10.Logout" + "\nEnter 'exit' to exit the system at any time.\n");
             String a = sc.nextLine();
             if (!a.equals("exit")) {
                 if (a.equals("1")) {//view wishlist
@@ -1039,7 +1039,11 @@ public class InputGetter {
                     return user;
                 }
                 else if (a.equals("9")){
-                    NotifyAdmin ( user,  admininputgetter);
+                    if (admininputgetter.getFrozenRequests().contains(user)){
+                        System.out.println("You have already requested to be unfrozen! Please be patient.");
+                        return user;
+                    }
+                    NotifyAdmin (user, admininputgetter);
                 return user;
                 }
                 else if (a.equals("2")) { //view inventory
@@ -1080,7 +1084,6 @@ public class InputGetter {
                 System.out.print("\uD83D\uDCE9 You have " + allUsers.getUser(user).getPendingRequests().size() +
                         " Pending Trade Requests!\n");
             }
-
             if (allUsers.getUser(user).getPendingTrades().size() > 0){
                 System.out.print("\u23F3 You have " + allUsers.getUser(user).getPendingTrades().size() +
                         " Pending Trade Requests!\n");
