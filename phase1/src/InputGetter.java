@@ -445,6 +445,9 @@ public class InputGetter {
         } else {
             for (int i = 0; i < Person.getPendingRequests().size(); i++) {
                 String ext = "";
+                //RequesterItem : Item of the requester
+                //RecieverItem: Item of the reciever
+
                 if (Person.getPendingRequests().get(i).getRequesterItem() != null){
                     ext = " With your item " + Person.getPendingRequests().get(i).getRequesterItem().getName();
                 }
@@ -886,6 +889,7 @@ public class InputGetter {
                 String input = sc1.nextLine();
                 if (input.equals("1")) { //if they approve
                     //need another method for usermanager so that transactions in progress but meeting is set
+                    System.out.print("Your meeting has been set!\n");
                     allTransactions.updateTransactionStatus(allItems, allUsers, selectedT, 1);
 
 
@@ -1086,14 +1090,14 @@ public class InputGetter {
             }
             if (allUsers.getUser(user).getPendingTrades().size() > 0){
                 System.out.print("\u23F3 You have " + allUsers.getUser(user).getPendingTrades().size() +
-                        " Pending Trade Requests!\n");
+                        " Pending Transactions!\n");
             }
 
             System.out.print("Please select number from the following:\n1.View Wishlist\n2.View Inventory\n" +
-                    "3.Browse Items\n4.Initiate Trade\n5.View Pending Trades\n6.Approve Pending Trades\n" +
+                    "3.Browse Items\n4.Initiate Trade\n5.View Pending Trade Requests\n6.Approve Pending Trade Requests\n" +
                     "7.Add Item to inventory\n8.View most recent trades\n9.View most frequent trading partners\n" +
                     "10. View status of my items\n11. Add Item to wishlist\n" +
-                    "12.View Approved Trades\n13. Approve Meeting\n14. Confirm Meeting\n15. Logout" +
+                    "12.View Approved Trades\n13. Approve Meeting\n14. Confirm Meetings for Approved Trades\n15. Logout" +
                     "\nEnter 'exit' to exit the system at any time.\n");
 
             String a = sc.nextLine();
