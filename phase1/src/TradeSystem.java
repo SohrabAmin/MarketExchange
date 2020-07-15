@@ -55,11 +55,11 @@ public class TradeSystem {
                 + allUsers.getAllUsers().size() + " users");
 
         //prints where the file is located
-        File findFile = new File("UserList4.ser");
+        File findFile = new File("UserList.ser");
         String filePath = findFile.getAbsolutePath();
         System.out.println("The file location is:" + filePath);
         //reads the file and prints the current users.
-        userWriting.demoUserRead("UserList4.ser", allUsers);
+        userWriting.demoUserRead("UserList.ser", allUsers);
         System.out.println("UserManager is now populated." +
                 "The current number of users in the file is:" + allUsers.getAllUsers().size());
         System.out.println("the user manager contains the following users:" + allUsers.getAllUsers());
@@ -98,7 +98,7 @@ public class TradeSystem {
         System.out.print("Goodbye!\uD83D\uDEAA \n");
 
         //saves all the users in UserManager to an external file
-        userWriting.demoUserSave("UserList4.ser", allUsers);
+        userWriting.demoUserSave("UserList.ser", allUsers);
         //saves current AdminManager object allAdmins to external file
         adminWriting.demoAdminSave("AdminList.ser", allAdmins);
         //saves current TransactionManager object allTransactions to an external file
