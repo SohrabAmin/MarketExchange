@@ -192,24 +192,23 @@ public class AdminInputGetter {
             Object temp = ViewUnfreezeRequests(allUsers);
             while (temp == null){
                 temp = ViewUnfreezeRequests(allUsers);
-            } //else input was "back", returns to main menu
-            return "back";
+            } //else input was "back", displays Freeze or Unfreeze screen
+            return null;
         } else if (input.equals("2")){
             Object temp = Unfreeze(allUsers);
             while (temp == null){
                 temp = Unfreeze(allUsers);
-            } //else input was "back", returns to main menu
-            return "back";
+            } //else input was "back", displays Freeze or Unfreeze screen
+            return null;
         } else if (input.equals("3")){
             Object temp = Freeze(allUsers);
             while (temp == null){
                 temp = Freeze(allUsers);
-            } //else input was "back", returns to main menu
-            return "back";
-        } else{
-            System.out.println("Invalid input. Please try again!");
+            } //else input was "back", displays Freeze or Unfreeze screen
             return null;
         }
+        System.out.println("Invalid input. Please try again!");
+        return null;
     }
 
     public Object ViewUnfreezeRequests(UserManager allUsers){

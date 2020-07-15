@@ -27,6 +27,8 @@ public class TradeSystem {
 
 
         User hello = new User("Tina", "123");
+        //sets Tina pword 123 to pseudo frozen for testing
+        allUsers.getAllUsers().get(0).setIsPseudoFrozen(true);
 
        // allUsers.freeze(allUsers.getAllUsers().get(0));
         //allUsers.getAllUsers().get(0).setIsFrozen(true);
