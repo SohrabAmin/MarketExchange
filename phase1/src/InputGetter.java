@@ -881,6 +881,8 @@ public class InputGetter {
 
                         System.out.print(Integer.toString(i + 1) + " . " + userTransactions.get(i).getInitialMeeting() + " With: " + userTransactions.get(i).getInitialMeeting().getOtherSide (user.getName()) + "\n");
                     }
+
+
                     System.out.print("Please enter the ID of the meeting you would like to confirm.\n");
                     Scanner sc11 = new Scanner(System.in);
                     int meetingIndex = (Integer.parseInt(sc11.nextLine()))-1;
