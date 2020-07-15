@@ -40,31 +40,31 @@ public class Meeting {
         return false;
     }
 
-public void initialconfirm (String side1, String side2){
+    public void initialconfirm (String side1, String side2){
         confirm.put(side1, 0);
         confirm.put(side2, 0);
-}
+    }
 
-public void meetingConfirmed (String name){
+    public void meetingConfirmed (String name){
         confirm.replace(name, 1);
+    }
 
-}
+    public Integer userconfirmed (String name){
+        return confirm.get(name);
+    }
 
-public String getOtherSide (String name){
+    public String getOtherSide (String name){
 
     for ( String key : confirm.keySet() ) {
         if (!key.equals(name))
             return key;
     }
-return "error";
-}
-
+    return "error";
+    }
 
     public void initialHistory (String name, int num ){
         editHistory.put(name, num);
-
     }
-
 
     public void changeLastEdit (String name){
         lastEdit = name;
@@ -80,7 +80,6 @@ return "error";
 
     public int geteditHistory (String user){
         return editHistory.get(user);
-
     }
 
     /**

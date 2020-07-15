@@ -24,16 +24,16 @@ public class TransactionManager implements Serializable {
         cancelledTransaction = new ArrayList<>();
         pendingSecondExchange = new ArrayList<>();
         finalizedMeeting = new ArrayList<>();
-
-
-
     }
 
-
-
     /**
-     * Updates the tradeStatus of a given Transaction. 0: In progress, 1: Pending Second Exchange (Temp only), 2: Completed 3: Cancelled. Notice by updating the tradeStatus,
-     * the instance of Transaction is being moved to a new attribute list within TransactionManager. Cancelled implies one of the following: User(s) did not show up to the Meeting or User(s) altered
+     * Updates the tradeStatus of a given Transaction.
+     * 0: In progress,
+     * 1: Pending Second Exchange (Temp only),
+     * 2: Completed
+     * 3: Cancelled.
+     * Notice by updating the tradeStatus the instance of Transaction is being moved to a new attribute list within TransactionManager.
+     * Cancelled implies one of the following: User(s) did not show up to the Meeting or User(s) altered
      * meeting too many times, and completed means the Transaction was successful, and the Item(s) have been officially swapped.
      *
      * @param itemManager Class that manages Items
@@ -146,7 +146,6 @@ public class TransactionManager implements Serializable {
      */
 
 
-
     /**
      * Executes the back-end results of a Transaction being cancelled. A Transaction being cancelled can result in being frozen (unable to participate in trading).
      *
@@ -207,12 +206,19 @@ public class TransactionManager implements Serializable {
             temp2 = userManager.getUser(((TwoWay) transaction).getSecondTrader());
             item1 = ((TwoWay) transaction).getSecondItem();
             Item item2 = ((TwoWay) transaction).getFirstItem();
-            userManager.removeFromInventory(temp2,item1);
-            userManager.removeFromInventory(temp1, item2);
-            userManager.addToInventory(temp1, item1);
-            userManager.addToInventory(temp2, item2);
-            itemManager.setCurrentHolder(item1, temp1);
-            itemManager.setCurrentHolder(item2, temp2);
+            //editted by Tina
+//            userManager.removeFromInventory(temp2,item1);
+//            userManager.removeFromInventory(temp1, item2);
+//            userManager.addToInventory(temp1, item1);
+//            userManager.addToInventory(temp2, item2);
+//            itemManager.setCurrentHolder(item1, temp1);
+//            itemManager.setCurrentHolder(item2, temp2);
+            userManager.removeFromInventory(temp2,item2);
+            userManager.removeFromInventory(temp1, item1);
+            userManager.addToInventory(temp1, item2);
+            userManager.addToInventory(temp2, item1);
+            itemManager.setCurrentHolder(item1, temp2);
+            itemManager.setCurrentHolder(item2, temp1);
 
         }userManager.updateTradeHistory(temp1, transaction);
          userManager.updateTradeHistory(temp2, transaction);
