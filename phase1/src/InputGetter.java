@@ -9,7 +9,10 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.List;
+import java.util.*;
 
+
+//Note: how to put emojis in the code was found here: http://dplatz.de/blog/2019/emojis-for-java-commandline.html
 public class InputGetter {
 
     /**
@@ -37,7 +40,7 @@ public class InputGetter {
         System.out.println("Type 'signup' to create an account or 'login' to access your account or 'exit' to " +
                 "exit at anytime.");
         try {
-            String input = br.readLine().toLowerCase();
+            String input = br.readLine().toLowerCase(); //make sure that Login and login are both used
             //user wants to signup for an account
             if (input.equals("exit")){
                 return input;
@@ -98,6 +101,11 @@ public class InputGetter {
                 //if user doesn't exist, prompts them to try to login again
                 System.out.println("Wrong username or password. Please try Again");
                 return authenticator(allUsers);
+            }
+            else {
+                System.out.print("Invalid Command! Try again!\n");
+                return authenticator(allUsers);
+
             }
         } catch (IOException e) {
             System.out.println("Something went wrong");
@@ -172,6 +180,28 @@ public class InputGetter {
         return user;
     }
 
+    public void DisplayBrowse (User user, ItemManager allItems, UserManager allUsers){
+
+        List<Item> allItems2 = allItems.getSystemInventory();
+        if (allItems2.size() == 0){
+            System.out.println("There are no items to browse!");
+            return;
+        }
+
+        //Display every item we have. Make sure if the item is owned by the user, show that it is owned by user
+        for (int i = 0; i < allItems2.size(); i++) {
+            String selfowned = "";
+            String emoji = "\uD83D\uDCE6 ";
+            if (allItems2.get(i).getOwner().getName().equals(user.getName())){ //change the emoji and add OWNED BY YOU if the user is the owner of the item
+                selfowned = "  [OWNED BY YOU] ";
+                emoji = "\u2714 ";
+
+            }
+            System.out.println( emoji + (i + 1) + ". " + allItems2.get(i).getName() + " : "
+                    + allItems2.get(i).getDescription()  + selfowned + "\n");
+        }
+    }
+
     /**
      * Allows User user to browse the System's inventory and add any of the items in the System's inventory to
      * their wishlist.
@@ -225,14 +255,14 @@ public class InputGetter {
             return null;
         }
         else {
-            System.out.print("This ID is invalid. Please try again!\n");
+            System.out.print("\uD83E\uDDD0 This ID is invalid. Please try again!\n");
         }
         return "back";
     }
 
     /**
      * Initiates a one-way or two-way trade between two Users. Prompts user for details of the trade.
-     * @param user the User that is initiating the trade
+     * @param user the User currently logged in and the user that is initiating the trade
      * @param allItems ItemManager which stores a system inventory containing all the items in the system
      * @param allTradeRequests TradeRequestManager which deals with sending Trade requests to users
      * @param allUsers UserManager which stores all the Users in the system
@@ -243,6 +273,10 @@ public class InputGetter {
      */
     public Object Trade(User user, ItemManager allItems, TradeRequestManager allTradeRequests, UserManager allUsers) {
         Scanner sc = new Scanner(System.in);    //System.in is a standard input stream
+
+        System.out.println("Here are the available items!:");
+        DisplayBrowse ( user,  allItems,  allUsers);
+
         System.out.print("Please type in the ID of the item you would like to trade or 'back' to return to the main menu.\n");
         Object inum = sc.nextLine();
         if (inum.equals("back")){
@@ -254,44 +288,67 @@ public class InputGetter {
             return null;
         }
 
+        if (allItems.getSystemInventory().size() < (Integer)inum){
+            System.out.print("\uD83E\uDDD0 Item does not exist! Please try again!\n");
+            return null;
+        }
+
+        //the item they have selected
         Item tradeItem = allItems.getSystemInventory().get((Integer) inum - 1);
+
+        //block owner from making trades with themselves
+        if (tradeItem.getOwner().getName().equals(user.getName()))
+        {
+            System.out.print("\uD83E\uDDD0 You are the owner so you cannot trade with yourself!\n");
+            return null;
+        }
+        //myList is the list of items used to feed into the 1way or 2 way trades
         List<Item> myList = new ArrayList<>();
         myList.add(tradeItem);
 
         System.out.println("Please type '1' for one way trade and '2' for two way trade or 'back' to cancel the " +
                 "current trade and restart.");
+
+        //trade type
         Object tType = sc.nextLine();
+
         if (tType.equals("back")){
             return null;
         }
         try {
             tType = Integer.parseInt((String) tType);
+            //input error handling
+            if (!tType.equals("1")  && !tType.equals("2")){
+                System.out.print("\uD83E\uDDD0 Invalid response. Please try again.\n");
+                return null;
+            }
         } catch(NumberFormatException e) {
             //brings them back to the first prompt where it asks to type the ID of the item.
-            System.out.print("Invalid response. Please try again.\n");
+            System.out.print("\uD83E\uDDD0 Invalid response. Please try again.\n");
             return null;
         }
 
         System.out.println("Please type '1' for temporary trade and '2' for permanent trade or 'back' to cancel the " +
                 "current trade and restart.");
         Object type = sc.nextLine();
+        //type is type of the trade temporary or permenant
         if (type.equals("back")){
             return null;
         }
         try {
             type = Integer.parseInt((String) type);
         } catch(NumberFormatException e) {
-            System.out.print("Invalid response. Please try again.\n");
+            System.out.print("\uD83E\uDDD0 Invalid response. Please try again.\n");
             return null;
         }
         boolean trade = false;
 
-        if ((int) type == 1) {
+        if ((int) type == 1) { //we determine if it is a 1 way or 2 way trade
             trade = true;
         } else if ((int) type == 2) {
             trade = false;
         } else {
-            System.out.print("Invalid response. Please try again.\n");
+            System.out.print("\uD83E\uDDD0 Invalid response. Please try again.\n");
             return null;
         }
 
@@ -307,10 +364,10 @@ public class InputGetter {
                 System.out.print("\nTrade request has been sent successfully.\n");
                 return "back";
             } else if (confirmation.equals("2")){
-                System.out.print("\nTrade has been cancelled.\n");
+                System.out.print("\n\u274E Trade has been cancelled.\n");
                 return null;
             } else{
-                System.out.print("Invalid response. Please try again.\n");
+                System.out.print("\uD83E\uDDD0 Invalid response. Please try again.\n");
                 return null;
             }
             //trade request is made and it is pending in user's pendingRequests
@@ -324,7 +381,7 @@ public class InputGetter {
             List<Item> in = me.getInventory();
             if (in.size() == 0) {
                 System.out.print("Your inventory is empty!\n");
-                System.out.print("Trade initiation has been cancelled.\n");
+                System.out.print("\u274E Trade initiation has been cancelled.\n");
                 return null;
             }
             System.out.print("Your inventory: \n");
@@ -339,8 +396,12 @@ public class InputGetter {
            //should be able to select what item
             try {
                 inum2 = Integer.parseInt((String) inum2);
+                if ((int) inum2 > in.size() ||(int) inum2 < 1 ) { //if out of range
+                    System.out.print("\uD83E\uDDD0 Invalid response. Please try again.\n");
+                    return null;
+                }
             } catch (NumberFormatException e) {
-                System.out.print("Invalid response. Please try again.\n");
+                System.out.print("\uD83E\uDDD0 Invalid response. Please try again.\n");
                 return null;
             }
             Item salam = in.get((int) inum2-1);
@@ -358,11 +419,11 @@ public class InputGetter {
                 System.out.print("\nTrade has been cancelled.\n");
                 return null;
             } else {
-                System.out.print("Invalid response. Please try again.\n");
+                System.out.print("\uD83E\uDDD0 Invalid response. Please try again.Request cancelled.\n");
                 return null;
             }
         } else {
-            System.out.println("Invalid response. Please try again.\n");
+            System.out.println("Invalid response. Please try again.Request cancelled.\n");
             return null;
         }
     }
@@ -373,24 +434,15 @@ public class InputGetter {
      * @param allUsers UserManager which stores User user
      * @return returns the User user so that they can go back to the main menu after viewing their messages.
      */
-    public User Messages(User user,UserManager allUsers) {
-        System.out.print("What would you like to see? Type 'Trade' for Trade Requests or " +
-                "type 'Meeting' for meeting requests. Type 'back' to go back to the main menu.\n");
-        Scanner sc1 = new Scanner(System.in);
-        String input = sc1.next();
 
-        if (input.equals("back"))
+    public User PendingTrades(User user,UserManager allUsers) {
+//no error checking needed!
+        System.out.print("\nHere are your pending Trades: \n");
+        User Person = allUsers.getUser(user);
+        if (Person.getPendingRequests().size() == 0) {
+            System.out.print("\nYou have no pending requests.\n");
             return user;
-        if (input.equals("Meeting")) {
-            System.out.print("\nHere are your pending meetings: \n");
-            //implement loop that gets pending meetings !!!
-        } else if (input.equals("Trade")) {
-            System.out.print("\nHere are your pending Trades: \n");
-            User Person = allUsers.getUser(user);
-            if (Person.getPendingRequests().size() == 0) {
-                System.out.print("\nYou have no pending requests.\n");
-                return user;
-            } else {
+        } else {
             for (int i = 0; i < Person.getPendingRequests().size(); i++) {
                 String ext = "";
                 if (Person.getPendingRequests().get(i).getRequesterItem() != null){
@@ -401,10 +453,6 @@ public class InputGetter {
                         + Person.getPendingRequests().get(i).getReceiverItem().getName() + " With Message: " +
                         Person.getPendingRequests().get(i).getMessage() + ext+ "\n");
             }
-        }
-        } else {
-            System.out.print("Invalid command.\n\n");
-            return user;
         }
         return user;
     }
@@ -432,7 +480,7 @@ public class InputGetter {
     public void ApprovedTrade(User user,UserManager allUsers, MeetingManager allMeetings, TradeRequest request, TransactionManager allTransactions){
         System.out.print("\u2705 Approved!\n");
         //if the trade request is approved, we should now start a trade and make a meeting
-        Meeting meeting = MeetingInitiator (allMeetings);
+        Meeting meeting = MeetingInitiator(allMeetings);
 
         User temp1 = request.getRequester();
         User temp2 = request.getReceiver();
@@ -442,7 +490,7 @@ public class InputGetter {
         meeting.initialHistory (temp2.getName(), 1);
 
         allUsers.removeFromPendingRequests(allUsers.getUser(user), request);
-        if (request.getRequestType() == 1){ //1 way'
+        if (request.getRequestType() == 1){ //1 way
             OneWay on = new OneWay(temp1, request.getReceiverItem(), request.getTemp());
             on.setInitialMeeting(meeting);
             on.getInitialMeeting().changeLastEdit(user.getName());
@@ -452,6 +500,8 @@ public class InputGetter {
             TwoWay on = new TwoWay(request.getRequesterItem(), request.getReceiverItem(), request.getTemp());
             on.setInitialMeeting(meeting);
             allTransactions.addToPendingTransactions(on, allUsers);
+            on.getInitialMeeting().changeLastEdit(user.getName());
+
         }
     }
 
@@ -538,7 +588,7 @@ public class InputGetter {
             }
 
             System.out.print("\uD83E\uDD1D" +(i+1) + ". " + Trades.get(i).getRequester().getName() +
-                    " For your item: "+ Trades.get(i).getReceiverItem().getName() + ext+ "\n");
+                    " Offers "+ Trades.get(i).getReceiverItem().getName() + ext+ "\n");
         }
 
         //printed all pending requests
@@ -674,7 +724,8 @@ public class InputGetter {
             System.out.print("\uD83D\uDE25 Sorry! You have no recent trades! You should do some trades!\n");
         }
         for (int i = 0; i < MostRecent.size(); i++) {
-            System.out.print("\uD83D\uDC51" + (i + 1) + ". " + MostRecent.get(i).getName() + " : " + MostRecent.get(i).getDescription() + "\n");
+            System.out.print("\uD83D\uDC51" + (i + 1) + ". " + MostRecent.get(i).getName() + " : " +
+                    MostRecent.get(i).getDescription() + "\n");
 
         }
         return user;
@@ -772,7 +823,8 @@ public class InputGetter {
      *         returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
      *                 main menu option
      */
-    public Object PendingTransactionProcess(User user, ItemManager allItems, UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions){
+    public Object PendingTransactionProcess(User user, ItemManager allItems, UserManager allUsers, MeetingManager
+            allMeetings, TransactionManager allTransactions){
 
         List <Transaction> pendingTransactions = user.getPendingTrades();
 
@@ -783,6 +835,7 @@ public class InputGetter {
         }
         System.out.print("Here are your pending transactions:\n");
 
+//Show one way transactions
         for (int i = 0 ; i < pendingTransactions.size(); i++) {
             String hey = "";
             if (pendingTransactions.get(i) instanceof OneWay) {
@@ -791,7 +844,17 @@ public class InputGetter {
                 if (user.getName().equals(b.getName())){
                     b = t.getBorrower();}
                 System.out.print((i + 1) + " . Item " +  t.getLenderItem().getName() + " with " + b.getName() + "\n");
+                System.out.print("[One Way] " + Integer.toString(i + 1) + " . Item " +  t.getLenderItem().getName() +
+                        " with " + b.getName() + "\n");
             }
+           if (pendingTransactions.get(i) instanceof TwoWay){
+               TwoWay t = (TwoWay) pendingTransactions.get(i);
+               User b = t.getFirstTrader(); //user b is the other party of this trade
+               if (user.getName().equals(b.getName())){
+                   b = t.getSecondTrader();}
+               System.out.print("[Two Way] " + Integer.toString(i + 1) + " . Item " +  t.getFirstItem().getName() +
+                       " with " + b.getName() + "\n");
+           }
         }
 
         System.out.print("Select the transaction you would like to edit/approve\n");
@@ -857,8 +920,61 @@ public class InputGetter {
                     }
                 }
             }
+    } if (selectedT instanceof TwoWay){
+
+        TwoWay tt2 = (TwoWay) selectedT;
+        User b2 = tt2.getFirstTrader(); //user b is the other party of this trade
+        if (user.getName().equals(b2.getName())){
+            b2 = tt2.getSecondTrader();}
+        if (tt2.getInitialMeeting().geteditHistory(user.getName()) > tt2.getInitialMeeting().geteditHistory(b2.getName()) || tt2.getInitialMeeting().viewLastEdit().equals(user.getName())){
+            //if they have already made an edit and we are waiting on the other person to approve/suggest a new meeting
+            System.out.print("This pending transaction is currently waiting on the other party! Please try again later\n");
         }
-    return user;
+        else {
+            //the person can now approve or propose a new time
+            System.out.print("You have selected: ");
+
+            System.out.print(tt2.getFirstItem().getName() + " with " + b2.getName() + "\n");
+            System.out.print("Here is the proposed meeting: " + tt2.getInitialMeeting() + "\n");
+            System.out.print("Press 1 to approve. Press 2 to propose a new meeting. Press 3 to cancel\n");
+            String input = sc1.nextLine();
+            if (input.equals("1")) { //if they approve
+                //need another method for usermanager so that transactions in progress but meeting is set
+                allTransactions.updateTransactionStatus(allItems, allUsers, selectedT, 1);
+
+
+            } else if (input.equals(("2"))) { //they want to propose a new time
+                //provide warning if the is at their 3rd strike
+                if (tt2.getInitialMeeting().geteditHistory(user.getName())+1  == 3 )
+                    System.out.print("\u2622 This is the last time you can propose a meeting.\nIf rejected, this transaction will be cancelled\n");
+
+                //here is where the transaction gets cancelled because they couldnt make up their mind
+                if (tt2.getInitialMeeting().geteditHistory(user.getName())  == 3 ){
+                    //one person reached 3 edits, its time to delete this transaction
+                    allTransactions.handleCancelledTrade(allUsers, selectedT);
+                    allTransactions.updateTransactionStatus(allItems, allUsers, selectedT, 4) ;
+                    System.out.print("\uD83D\uDE22 Sorry! You couldn't agree on a time so we deleted the transaction!\n" +
+                            "Please try again!\n");
+                    return user;
+                }
+                else {
+                    System.out.print("\uD83D\uDCC5 Please enter your proposed date for this trade in format dd-mm-yyyy\n");
+                    Scanner sc2 = new Scanner(System.in);
+                    String date = sc2.nextLine();
+                    System.out.print("\uD83D\uDD5B Please enter your proposed time for this trade in format hh:mm\n");
+                    String time = sc2.nextLine();
+                    System.out.print("\uD83D\uDCCD Please enter your proposed location for this trade\n");
+                    String location = sc2.nextLine();
+                    allMeetings.editMeeting(tt2.getInitialMeeting(), date, time, location);
+                    //get the last time they edited the meeting
+                    Integer numOfEdits = tt2.getInitialMeeting().geteditHistory(user.getName());
+                    tt2.getInitialMeeting().changeHistory(user, numOfEdits + 1);
+                    tt2.getInitialMeeting().changeLastEdit(user.getName());
+                }
+            }
+        }
+    }
+        return user;
     }
 
     /**
@@ -893,6 +1009,7 @@ public class InputGetter {
         Scanner sc = new Scanner(System.in);    //System.in is a standard input stream
         System.out.print("----------------------------------------------------------------------------------------------" +
                 "\n\uD83D\uDC4B Welcome back, " + user.getName() + "!\n");
+
 
         //A frozen account is one where you can log in and look for items, but you cannot arrange any transactions.
         // A user who has been frozen can request that the administrative user unfreezes their account.
@@ -953,7 +1070,8 @@ public class InputGetter {
             } else if (a.equals("10")) { //logout
                     return null;
                 }
-        }} else {
+        }
+        } else {
             if (allUsers.getUser(user).getPendingRequests().size() > 0) {
                 System.out.print("\uD83D\uDCE9 You have " + allUsers.getUser(user).getPendingRequests().size() +
                         " Pending Trade Requests!\n");
@@ -965,10 +1083,10 @@ public class InputGetter {
             }
 
             System.out.print("Please select number from the following:\n1.View Wishlist\n2.View Inventory\n" +
-                    "3.Browse Items\n4.Initiate Trade\n5.View Messages\n6.Approve Pending Trades\n" +
+                    "3.Browse Items\n4.Initiate Trade\n5.View Pending Trades\n6.Approve Pending Trades\n" +
                     "7.Add Item to inventory\n8.View most recent trades\n9.View most frequent trading partners\n" +
-                    "10.View status of my items\n11.Add Item to wishlist\n" +
-                    "12.View Approved Trades\n13.Approve Meeting\n14.Confirm Meeting\n15. Logout" +
+                    "10. View status of my items\n11. Add Item to wishlist\n" +
+                    "12.View Approved Trades\n13. Approve Meeting\n14. Confirm Meeting\n15. Logout" +
                     "\nEnter 'exit' to exit the system at any time.\n");
 
             String a = sc.nextLine();
@@ -994,8 +1112,13 @@ public class InputGetter {
                     }
                     //else input was "back", returns to main menu
                     return user;
-                } else if (a.equals("5")) { //view messages
-                    return system1.Messages(user, allUsers);
+                } else if (a.equals("5")) {
+                    //view messages
+                    return system1.PendingTrades(user, allUsers);
+                } else if (a.equals("8")) { //View most recent trades
+                    MostRecentTrades(user, allUsers);
+                } else if (a.equals("9")) { //View most frequent trading partners
+                    return Top3TradingPartners(user);
                 } else if (a.equals("6")) {
                     Object temp = system1.ApproveTrade(user, allUsers, allMeetings, allTransactions);
                     while (temp == null) {
@@ -1026,53 +1149,142 @@ public class InputGetter {
                 } else if (a.equals("14")){ //confirm that the meeting went through
                         //first print all the meeting that are pending for this user
 
-                    List <Transaction> userTransactions = new ArrayList<>();
-                    userTransactions = user.getAgreedUponMeeting();
-                    System.out.print("Here are your pending meetings ready to be confirmed!\n");
+                    System.out.print("Please select 1 for all your initial pending meetings and 2 for all return meetings\n");
+                    Scanner sc4 = new Scanner(System.in);    //System.in is a standard input stream
+                    String selection =  sc4.nextLine();
 
-                    for (int i=0; i < userTransactions.size(); i++) {
-                        String otherSide = "";
-                        System.out.print(Integer.toString(i + 1) + " . " + userTransactions.get(i).getInitialMeeting() + " With: " + userTransactions.get(i).getInitialMeeting().getOtherSide (user.getName()) + "\n");
-                    }
-                    System.out.print("Please enter the ID of the meeting you would like to confirm.\n");
-                    Scanner sc11 = new Scanner(System.in);
-                    int meetingIndex = (Integer.parseInt(sc11.nextLine()))-1;
-                    Transaction selectedTransaction = userTransactions.get(meetingIndex);
-                    System.out.print("You have selected:\n");
-                    System.out.print(selectedTransaction.getInitialMeeting() + " With: " + selectedTransaction.getInitialMeeting().getOtherSide (user.getName()) + "\n");
-                    System.out.print("Press 1 to confirm that the meeting is done!\n");
-                    String action = sc11.nextLine();
-                    if (action.equals("1")){
-                        //confirm meeting by the user
-                        selectedTransaction.getInitialMeeting().meetingConfirmed(user.getName());
+                    if (selection.equals("1")) {
+                        List<Transaction> userTransactions = new ArrayList<>();
+                        userTransactions = user.getAgreedUponMeeting();
+                        if (userTransactions.size() == 0)
+                        {
+                            System.out.print("No initial pending trade for you to confirm!\n");
+                            return user;
+                        }
+                        System.out.print("Here are your pending meetings ready to be confirmed!\n");
+                        //prints the pending meetings
+                        for (int i = 0; i < userTransactions.size(); i++) {
+                            String otherSide = "";
+                            Integer confirmed = userTransactions.get(i).getInitialMeeting().userconfirmed(user.getName());
+                            String status = "";
+                            if (confirmed == 1)
+                                status = " [CONFIRMED BY YOU] ";
+                            System.out.print(Integer.toString(i + 1) + " . " + userTransactions.get(i).getInitialMeeting() + " With: " + userTransactions.get(i).getInitialMeeting().getOtherSide(user.getName()) + status + "\n");
+                        }
+                        System.out.print("Please enter the ID of the meeting you would like to confirm.\n");
+                        Scanner sc11 = new Scanner(System.in);
+                        int meetingIndex = (Integer.parseInt(sc11.nextLine())) - 1;
+                        Transaction selectedTransaction = userTransactions.get(meetingIndex);
+                        System.out.print("You have selected:\n");
+                        Integer confirmed = selectedTransaction.getInitialMeeting().userconfirmed(user.getName());
+                        if (confirmed == 1)
+                        {
+                            System.out.print("You have already confirmed this meeting!\n");
+                            return user;
+                        }
+                        System.out.print(selectedTransaction.getInitialMeeting() + " With: " + selectedTransaction.getInitialMeeting().getOtherSide(user.getName()) + "\n");
+                        System.out.print("Press 1 to confirm that the meeting is done!\n");
+                        String action = sc11.nextLine();
+                        if (action.equals("1")) {
+                            //confirm meeting by the user
+                            selectedTransaction.getInitialMeeting().meetingConfirmed(user.getName());
 
-                        System.out.print("Confirmed that the meeting occurred on " + selectedTransaction.getInitialMeeting());
+                            System.out.print("Confirmed that the meeting occurred on " + selectedTransaction.getInitialMeeting()+"\n");
 
-                        //lets check if both people have confirmed meeting
-                    if (selectedTransaction.getInitialMeeting().confirmedByBothSides()){
-                        //looks like the meeting was confirmed by both parties!
-                        System.out.print("\uD83E\uDD29 Looks like the meeting was confirmed by both sides! ");
-                        //if it was temporary
-                        if (selectedTransaction.getTemp()) {
-                            allTransactions.updateTransactionStatus(allItems, allUsers, selectedTransaction, 2);
-                        } else if (!selectedTransaction.getTemp()){ //if it was a permanent transaction
-                            allTransactions.updateTransactionStatus(allItems, allUsers, selectedTransaction, 3);
+                            //lets check if both people have confirmed meeting
+                            if (selectedTransaction.getInitialMeeting().confirmedByBothSides()) {
+                                //looks like the meeting was confirmed by both parties!
+                                System.out.print("\uD83E\uDD29 Looks like the meeting was confirmed by both sides!\n ");
+                                if (!selectedTransaction.getTemp()) { //if it was a permenant transaction
+                                    allTransactions.updateTransactionStatus(allItems, allUsers, selectedTransaction, 3);
+
+                                } else if (selectedTransaction.getTemp()){
+                                    //if it was a temporary meeting, then I need to set up a second meeting
+                                    allTransactions.updateTransactionStatus(allItems, allUsers, selectedTransaction, 2);
+                                    //by now, the second agreed upon meeting is set for both users
+                                    Calendar date = selectedTransaction.getInitialMeeting().getDate();
+                                    date.add(Calendar.MONTH, 1);
+                                    Meeting returnMeeting = new Meeting(date, selectedTransaction.getInitialMeeting().getPlace());
+                                    returnMeeting.initialconfirm (user.getName(), selectedTransaction.getInitialMeeting().getOtherSide(user.getName()));
+                                    System.out.print("REMINDER: You need to return the borrowed item(s) back by " + returnMeeting.toString() + "\n");
+                                    //need to add return meeting to transactions
+                                    allTransactions.setFinalMeeting(selectedTransaction, returnMeeting);
+                                    //-----
+//                                    //adding the return meeting to both people
+//                                    allUsers.addToSecondAgreedUponMeeting(user, selectedTransaction);
+//                                    //need to find the user that is on the other side
+//                                    String otherPartyName = selectedTransaction.getInitialMeeting().getOtherSide(user.name);
+//                                    for (int i = 0; i < allUsers.getAllUsers().size(); i++){
+//                                        if (allUsers.getAllUsers().get(i).getName().equals(otherPartyName)) {
+//                                            allUsers.addToSecondAgreedUponMeeting(allUsers.getAllUsers().get(i), selectedTransaction);
+//                                        }
+//                                    }
+                                }
+                            }
                         }
                     }
-                    } else if (a.equals("15")) {
+                    else if (selection.equals("2")){
+                        System.out.print("Here are your meetings to return items:\n");
+                        List<Transaction> userTransactions = new ArrayList<>();
+                        userTransactions = user.getSecondAgreedUponMeeting();
+
+                        if (userTransactions.size() == 0)
+                        {
+                            System.out.print("No pending trade for you to confirm!\n");
+                            return user;
+                        }
+                        System.out.print("Here are your return pending meetings ready to be confirmed!\n");
+                        //prints the pending meetings
+                        for (int i = 0; i < userTransactions.size(); i++) {
+                            String otherSide = "";
+                            Integer confirmed = userTransactions.get(i).getReturnMeeting().userconfirmed(user.getName());
+                            String status = "";
+                            if (confirmed == 1)
+                                status = " [CONFIRMED BY YOU] ";
+                            System.out.print(Integer.toString(i + 1) + " . " + userTransactions.get(i).getInitialMeeting() + " With: " + userTransactions.get(i).getInitialMeeting().getOtherSide(user.getName()) + status + "\n");
+                        }
+                        System.out.print("Please enter the ID of the meeting you would like to confirm.\n");
+                        Scanner sc11 = new Scanner(System.in);
+                        int meetingIndex = (Integer.parseInt(sc11.nextLine())) - 1;
+                        Transaction selectedTransaction = userTransactions.get(meetingIndex);
+                        System.out.print("You have selected:\n");
+                        Integer confirmed = selectedTransaction.getInitialMeeting().userconfirmed(user.getName());
+//                        if (confirmed == 1)
+//                        {
+//                            System.out.print("You have already confirmed this meeting!\n");
+//                            return user;
+//                        }
+                        System.out.print(selectedTransaction.getInitialMeeting() + " With: " + selectedTransaction.getInitialMeeting().getOtherSide(user.getName()) + "\n");
+                        System.out.print("Press 1 to confirm that the meeting is done!\n");
+                        String action = sc11.nextLine();
+                        if (action.equals("1")) {
+                            //confirm meeting by the user
+                            selectedTransaction.getReturnMeeting().meetingConfirmed(user.getName());
+
+                            System.out.print("Confirmed that the meeting occurred on " + selectedTransaction.getReturnMeeting()+"\n");
+
+                            //lets check if both people have confirmed meeting
+                            if (selectedTransaction.getReturnMeeting().confirmedByBothSides()) {
+                                //looks like the meeting was confirmed by both parties!
+                                System.out.print("\uD83E\uDD29 Looks like the meeting was confirmed by both sides!\n ");
+
+                                    allTransactions.updateTransactionStatus(allItems, allUsers, selectedTransaction, 3);
+                                }
+                            }
+                        }
+                } else if (a.equals("15")) {
                     //logout
                     return null;
                 }
-                    //input is "exit"
-            } else {
+            } else {//input is "exit"
                 System.out.print("Goodbye!\uD83D\uDEAA \n");
                 return a;
             }
         }
         return user;
     }
-        return user;
 }
-}
+
+
 
 

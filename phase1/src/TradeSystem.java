@@ -50,6 +50,9 @@ public class TradeSystem {
         AllItems.addItem(myitem3);
         allUsers.addToInventory(allUsers.getUser(hello), myitem3);
 
+        AllItems.addItem(myitem);
+        allUsers.addToInventory(allUsers.getUser(hi), myitem);
+
 
         System.out.println("UserManager is initiated. There should be no Users. There are: "
                 + allUsers.getAllUsers().size() + " users");
@@ -76,7 +79,8 @@ public class TradeSystem {
             currentUser = loggedIn;
             while (loggedIn != null) {
                 if (loggedIn instanceof User) {
-                    loggedIn = inputgetter.mainMenu((User) loggedIn, AllItems, inputgetter, allTradeRequests, allUsers,   allMeetings,  allTransactions, admininputgetter);
+                    loggedIn = inputgetter.mainMenu((User) loggedIn, AllItems, inputgetter,
+                            allTradeRequests, allUsers,   allMeetings,  allTransactions, admininputgetter);
                 } else if (loggedIn instanceof Admin) {
                     loggedIn = admininputgetter.mainMenu((Admin) loggedIn, allAdmins, allUsers, AllItems);
                 } else if (loggedIn.equals("exit")) {
