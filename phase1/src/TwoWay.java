@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -5,7 +6,7 @@ import java.util.List;
  *  Subclass of Transaction, instantiated when a two way trade is made (an exchange of Items)
  */
 
-public class TwoWay extends Transaction {
+public class TwoWay extends Transaction implements Serializable  {
     User firstTrader;
     User secondTrader;
     List<Item> items;

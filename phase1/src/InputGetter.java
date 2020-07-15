@@ -1014,9 +1014,14 @@ public class InputGetter {
         //A frozen account is one where you can log in and look for items, but you cannot arrange any transactions.
         // A user who has been frozen can request that the administrative user unfreezes their account.
         boolean frozenAccount = user.getIsFrozen();
+        boolean pseudoFrozenAccount = user.getIsPseudoFrozen();
 
-        if (frozenAccount) { //first off, tell them that they are frozen
-            System.out.print("\uD83E\uDD76 Your account is frozen!" +
+        if (frozenAccount || pseudoFrozenAccount) { //first off, tell them that they are frozen
+           String actionTaker = "by Admin. ";
+           if (pseudoFrozenAccount)
+               actionTaker = "by System. ";
+
+            System.out.print("\uD83E\uDD76 Your account is frozen!" + actionTaker +
                     " You are not able to do any trades until you are unfrozen by admin.\n" +
                     "\uD83C\uDFC1 Please ask Admin to unfreeze your account!\n\n");
 

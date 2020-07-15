@@ -1,7 +1,9 @@
+import java.io.Serializable;
+
 /**
  * Subclass of Transaction, instantiated when a one way trade is made (an attempt to strictly borrow/lend)
  */
-public class OneWay extends Transaction {
+public class OneWay extends Transaction implements Serializable {
 
     private final User borrower;
 
