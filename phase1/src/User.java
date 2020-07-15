@@ -1,7 +1,8 @@
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 /**
  * represent a User with name and password. store and getter for all values of a user.
  */
@@ -22,6 +23,7 @@ public class User extends Account {
     private List<Transaction> cancelledTransactions;
     private List<Transaction> agreedUponMeeting;
     private List<Transaction> secondAgreedUponMeeting;
+    private Map<Integer, List<TradeRequest>> weeklyRequestLimit;
 
 
 
@@ -56,6 +58,12 @@ public class User extends Account {
         cancelledTransactions = new ArrayList<>();
         agreedUponMeeting = new ArrayList<>();
         secondAgreedUponMeeting = new ArrayList<>();
+        this.weeklyRequestLimit = new HashMap<>();
+
+        for (int i =1; i<53; i++){
+            List<TradeRequest> temp = new ArrayList<>();
+            this.weeklyRequestLimit.put(i, temp);
+        }
 
     }
 
@@ -226,5 +234,9 @@ public class User extends Account {
 
     public List<Transaction> getSecondAgreedUponMeeting(){
         return this.secondAgreedUponMeeting;
+    }
+
+    public Map<Integer, List<TradeRequest>> getWeeklyRequestLimit(){
+        return this.weeklyRequestLimit;
     }
 }

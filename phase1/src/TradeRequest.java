@@ -1,3 +1,4 @@
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -13,6 +14,7 @@ public class TradeRequest {
     private String message;
     private boolean temp;
     private int status;
+    private Calendar date;
 
     /**
      * Constructs a TradeRequest instance. This class is instantiated by the User that attempts to initiate the Transaction, and should be stored within the receiving User's
@@ -25,13 +27,14 @@ public class TradeRequest {
      * @param message A string representation of any message the requester User may want to send to the receiver User.
      * @param temp A boolean regarding if the User requesting a TradeRequest wants a temporary Transaction or not.
      */
-    public TradeRequest(int requestType, User requester, User receiver, List<Item> itemList, String message, boolean temp){
+    public TradeRequest(int requestType, User requester, User receiver, List<Item> itemList, String message, boolean temp, Calendar date){
         this.requestType = requestType;
         this.requester = requester;
         this.receiver = receiver;
         this.message = message;
         this.status = 0;
         this.temp = temp;
+        this.date = date;
         if(this.requestType == 1){
            this.requesterItem = null;
            this.receiverItem = itemList.get(0);
@@ -120,5 +123,9 @@ public class TradeRequest {
      */
    public boolean getTemp(){
         return this.temp;
+   }
+
+   public Calendar getDate(){
+       return this.date;
    }
 }

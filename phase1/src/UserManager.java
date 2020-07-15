@@ -1,5 +1,6 @@
 import java.util.*;
 
+
 /**
  * Creates, keeps track of, and changes values of Users.
  */
@@ -381,4 +382,16 @@ public class UserManager extends AccountManager {
     public void removeFromSecondAgreedUponMeeting(User user, Transaction trade){
         user.getSecondAgreedUponMeeting().remove(trade);
     }
+
+   public boolean checkWeeklyRequestLimit(User user, TradeRequest request){
+        Integer temp = request.getDate().get(Calendar.WEEK_OF_YEAR);
+        List<TradeRequest> temp2 = user.getWeeklyRequestLimit().get(temp);
+
+        if(temp2.size() >= this.getWeeklyTransactionLimit()){
+            return false;
+        }else{
+            temp2.add(request);
+            return true;
+        }
+   }
 }

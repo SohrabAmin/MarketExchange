@@ -156,9 +156,6 @@ public class TransactionManager implements Serializable {
         if (transaction instanceof OneWay) {
             temp1 = userManager.getUser(((OneWay) transaction).getBorrower());
             temp2 = userManager.getUser(((OneWay) transaction).getLender());
-
-
-
         } else {
             temp1 = userManager.getUser(((TwoWay) transaction).getFirstTrader());
             temp2 = userManager.getUser(((TwoWay) transaction).getSecondTrader());
@@ -172,7 +169,6 @@ public class TransactionManager implements Serializable {
         if (temp2.getCancelledTransactions().size() == userManager.getIncompleteTransactionLimit()) {
             userManager.pseudoFreeze(temp2);
         }
-
         if(transaction.getTradeStatus() == 0){
             userManager.removeFromPendingTrades(temp1, transaction);
             userManager.removeFromPendingTrades(temp2, transaction);
@@ -180,7 +176,6 @@ public class TransactionManager implements Serializable {
             userManager.removeFromAgreedUponMeetings(temp1, transaction);
             userManager.removeFromAgreedUponMeetings(temp2, transaction);
         }
-
     }
 
     /**
