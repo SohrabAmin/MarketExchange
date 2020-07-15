@@ -22,11 +22,12 @@ public class TradeRequestManager implements Serializable {
     }
 
     /**
-     * Adds an instance of TradeRequest to a User's pendingRequests.
+     * Adds an instance of TradeRequest to one of three attributes in TradeRequestManager: pending, confirmed or cancelled, depending on
+     * the User receiving the Trade Request's response. Also, adds to User's pendingRequests if request is not yet acted upon by receiving User.
      * @param userManager The instance of UserManager, to access addToPendingRequest.
      * @param request The given instance of TradeRequest.
      */
-    public void receiveTradeRequest(UserManager userManager, TradeRequest request){
+    public void receiveTradeRequest(UserManager userManager, TradeRequest request) {
 
         if (request.getStatus() == 0) {
             this.pending.add(request);
@@ -34,38 +35,19 @@ public class TradeRequestManager implements Serializable {
             User temp = userManager.getUser(request.getReceiver());
             userManager.addToPendingRequests(temp, request);
 
-//            for (int i = 0; i < userManager.getAllUsers().size(); i++){
-//                if (request.getReceiver().getName().equals(userManager.getAllUsers().get(i).getName())){
-//                    userManager.getAllUsers().get(i).updatePendingRequests(request);
-//                }
-
-            //    }
-            /// request.getReceiver().updatePendingRequests(request);
-            // userManager.addToPendingRequests(request.getReceiver() , request);
-        } else if (request.getStatus() == 1) {
             this.confirmed.add(request);
         } else {
             this.denied.add(request);
         }
-
-
-//        if (request.getStatus() == 0) {
-//            this.pending.add(request);
-//            User temp = request.getReceiver();
-//            userManager.addToPendingRequests(temp , request);
-//        } else if (request.getStatus() == 1) {
-//            this.confirmed.add(request);
-//        } else {
-//            this.denied.add(request);
-//        }
     }
+
 
     /**
      * Updates attribute list(s) (pending/denied/confirmed) depending on the wishes of the User receiving the TradeRequest.
-     * @param transactionManager The instance of transactionManager, required for accessing handleConfirmedRequest
+     * @param transactionManager The instance of transactionManager, required for accessing handleConfirmedRequest.
      * @param userManager The instance of userManager, required for accessing handleConfirmedRequest.
      * @param request The given TradeRequest that the receiving User intends to act upon.
-     * @param status come back to this.
+     * @param status The status the system intends to give to this TradeRequest.
      */
     public void updateRequestStatus(TransactionManager transactionManager, UserManager userManager, TradeRequest request, int status){
         if (request.getStatus() == 0) {
@@ -94,7 +76,7 @@ public class TradeRequestManager implements Serializable {
      * Accepts the TradeRequest within a User's pendingList, creates an instance of Transaction.
      * @param transactionManager The instance of TransactionManager.
      * @param userManager The instance of UserManager.
-     * @param request
+     * @param request The status the system intends to give to this TradeRequest.
      */
     public void handleConfirmedRequest(TransactionManager transactionManager, UserManager userManager, TradeRequest request){ /* require Manager classes for accessing method receiveTransaction */
         userManager.removeFromPendingRequests(request.getReceiver(), request);
