@@ -37,11 +37,11 @@ public class TradeSystem {
         top3TP.add(oops);
         allUsers.getAllUsers().get(0).setTopTradingPartners(top3TP);
 
-        Item myitem = new Item("sock for Mo", hi, "its cute");
-        Item myitem2 = new Item("sock for Tina", hi, "its 2cute");
-        Item myitem3 = new Item("sock2 for Tina", hello, "its 2cute");
+        Item myitem = new Item("sock", hi, "its cute");
+        Item myitem2 = new Item("book", hello, "its 2cute");
+        Item myitem3 = new Item("pencil", hello, "its 2cute");
 
-        AllItems.addItem(myitem);
+
      //   allUsers.addToInventory(allUsers.getUser(hi), myitem);
 
         AllItems.addItem(myitem2);
@@ -49,6 +49,9 @@ public class TradeSystem {
 
         AllItems.addItem(myitem3);
         allUsers.addToInventory(allUsers.getUser(hello), myitem3);
+
+        AllItems.addItem(myitem);
+        allUsers.addToInventory(allUsers.getUser(hi), myitem);
 
 
         System.out.println("UserManager is initiated. There should be no Users. There are: "

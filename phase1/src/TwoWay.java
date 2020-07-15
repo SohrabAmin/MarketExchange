@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,6 +25,7 @@ public class TwoWay extends Transaction {
         super(temp);
         this.firstTrader = item1.getOwner();
         this.secondTrader = item2.getOwner();
+        items = new ArrayList<>();
         this.items.add(item1);
         this.items.add(item2);
     }
