@@ -5,8 +5,16 @@ import java.io.InputStreamReader;
 import java.security.PublicKey;
 import java.util.*;
 
+
+//Note: how to put emojis in the code was found here: http://dplatz.de/blog/2019/emojis-for-java-commandline.html
 public class InputGetter {
 
+
+    /**
+     * Creates a Calendar object from date string
+     * @param allUsers is our source used when authenticating
+     * @return Object: either the user who is logged in, back or exit
+     */
 
     public Object authenticator(UserManager allUsers) {
 
@@ -20,7 +28,7 @@ public class InputGetter {
 
         System.out.println("Type 'signup' to create an account or 'login' to access your account or 'exit' to exit at anytime.");
         try {
-            String input = br.readLine().toLowerCase();
+            String input = br.readLine().toLowerCase(); //make sure that Login and login are both used
             //user wants to signup for an account
             if (input.equals("exit")){
                 return input;
@@ -81,11 +89,25 @@ public class InputGetter {
                 System.out.println("Wrong username or password. Please try Again");
                 return authenticator(allUsers);
             }
+            else {
+                System.out.print("Invalid Command! Try again!\n");
+                return authenticator(allUsers);
+
+            }
         } catch (IOException e) {
             System.out.println("Something went wrong");
         }
         return authenticator(allUsers);
     }
+
+
+
+    /**
+     * Returns the wishlist of the user. In addition, you can remove items from the wishlist here.
+     * @param user is the user that is currently logged in
+     * @param allUsers is a list of all users which also has their wishlist stored
+     * @return Object: returns either "back" or the user who is currently logged in
+     */
 
     public Object wishlist(User user, UserManager allUsers) {
         List<Item> wishlist = user.getWishlist();
@@ -119,6 +141,13 @@ public class InputGetter {
         return null;
     }
 
+    /**
+     * Prints out the inventory of the user
+     * @param user is the user that is currently logged in
+     * @param allUsers is a list of all users which also has their inventory stored
+     * @return Object: returns either "back" or the user who is currently logged in
+     */
+
     public User inventory(User user,UserManager allUsers) {
         User me = allUsers.getUser(user);
         List<Item> in = me.getInventory();
@@ -133,23 +162,65 @@ public class InputGetter {
         return user;
     }
 
-    public Object Browse(User user, ItemManager allItems, UserManager allUsers) {
-        // "1. Sock : white clear "
+
+
+    public void DisplayBrowse (User user, ItemManager allItems, UserManager allUsers){
 
         List<Item> allItems2 = allItems.getSystemInventory();
         if (allItems2.size() == 0){
             System.out.println("There are no items to browse!");
-            return "back";
+            return;
         }
-        for (int i = 0; i < allItems2.size(); i++) {
-            System.out.println("\uD83D\uDCE6" + (i + 1) + ". " + allItems2.get(i).getName() + " : "
-                    + allItems2.get(i).getDescription() +  " owner is: " + allItems2.get(i).getOwner().getName() + "\n");
-        }
-        System.out.print("Enter ID of the item you would like to add to your wishlist or type 'back' to get to main menu.\n");
 
+        //Display every item we have. Make sure if the item is owned by the user, show that it is owned by user
+        for (int i = 0; i < allItems2.size(); i++) {
+            String selfowned = "";
+            String emoji = "\uD83D\uDCE6 ";
+            if (allItems2.get(i).getOwner().getName().equals(user.getName())){ //change the emoji and add OWNED BY YOU if the user is the owner of the item
+                selfowned = "  [OWNED BY YOU] ";
+                emoji = "\u2714 ";
+
+            }
+            System.out.println( emoji + (i + 1) + ". " + allItems2.get(i).getName() + " : "
+                    + allItems2.get(i).getDescription()  + selfowned + "\n");
+        }
+
+
+
+    }
+
+    /**
+     * You can browse all items
+     * @param user is the user that is currently logged in
+     * @param allUsers is a list of all users which also has their wishlist stored
+     * @return Object: returns either "back" or the user who is currently logged in
+     */
+
+    public Object Browse(User user, ItemManager allItems, UserManager allUsers) {
+        // "1. Sock : white clear "
+
+        DisplayBrowse ( user,  allItems,  allUsers);
+
+        //add to wishlist
+        System.out.print("Enter ID of the item you would like to add to your wishlist or type 'back' to get to main menu.\n");
+        return addToWishList(user, allItems, allUsers);
+
+    }
+
+    /**
+     *  Add selected item to the wishlist of the user
+     * @param user is the user that is currently logged in
+     * @param allUsers is a list of all users which also has their wishlist stored
+     * @param allItems is a list of all items in the system
+     * @return Object: returns either "back" or the user who is currently logged in
+     */
+
+    public Object addToWishList (User user, ItemManager allItems, UserManager allUsers){
         Scanner sc = new Scanner(System.in);
+        List<Item> allItems2 = allItems.getSystemInventory();
+
         Object input = sc.nextLine();
-        if (input.equals("back")){
+        if (input.equals("back")){ //if they pressed back ,do nothing
             return "back";
         }
         try {
@@ -158,19 +229,38 @@ public class InputGetter {
             return null;
         }
 
-        if ((Integer) input < allItems2.size()) {
+        if ((Integer) input <= allItems2.size()) { //get item and add to wishlist
             Item item = allItems2.get((Integer) input - 1);
             allUsers.addToWishlist(user, item);
             System.out.print("Item has been added to your wishlist \uD83C\uDF20\n");
         }
         else {
-            System.out.print("This ID is invalid. Please try again!\n");
+            System.out.print("\uD83E\uDDD0 This ID is invalid. Please try again!\n");
         }
         return "back";
+
+
+
+
     }
+
+
+    /**
+     *  Initiates a trade and creates a trade request between the users.
+     * @param user is the user that is currently logged in
+     * @param allUsers is a list of all users which also has their wishlist stored
+     * @param allItems is a list of all items in the system
+     * @param allTradeRequests is a list of all requested trades that havent been approved by other side
+     * @return Object: returns either "back" or the user who is currently logged in
+     */
+
 
     public Object Trade(User user, ItemManager allItems, TradeRequestManager allTradeRequests, UserManager allUsers) {
         Scanner sc = new Scanner(System.in);    //System.in is a standard input stream
+
+        System.out.print("Here are the available items!:\n");
+        DisplayBrowse ( user,  allItems,  allUsers);
+
         System.out.print("Please type in the ID of the item you would like to trade or 'back' to return to the main menu.\n");
         Object inum = sc.nextLine();
         if (inum.equals("back")){
@@ -182,13 +272,52 @@ public class InputGetter {
             return null;
         }
 
+
+
+
+        if (allItems.getSystemInventory().size() < (Integer)inum){
+
+            System.out.print("\uD83E\uDDD0 Item does not exist! Please try again!\n");
+            return user;
+
+        }
+
+
+        //the item they have selected
         Item tradeItem = allItems.getSystemInventory().get((Integer) inum - 1);
+
+
+        //block owner from making trades with themselves
+        if (tradeItem.getOwner().getName().equals(user.getName()))
+        {
+            System.out.print("\uD83E\uDDD0 You are the owner so you cannot trade with yourself!\n");
+            return null;
+
+
+        }
+
+
+
+
+        //myList is the list of items used to feed into the 1way or 2 way trades
         List<Item> myList = new ArrayList<>();
         myList.add(tradeItem);
 
         System.out.println("Please type '1' for one way trade and '2' for two way trade or 'back' to cancel the " +
                 "current trade and restart.");
+
+        //trade type
         Object tType = sc.nextLine();
+
+        //input error handling
+
+        if (!tType.equals("1")  && !tType.equals("2")){
+            System.out.print("\uD83E\uDDD0 Invalid response. Please try again.\n");
+            return null;
+
+        }
+
+
         if (tType.equals("back")){
             return null;
         }
@@ -196,30 +325,42 @@ public class InputGetter {
             tType = Integer.parseInt((String) tType);
         } catch(NumberFormatException e) {
             //brings them back to the first prompt where it asks to type the ID of the item.
-            System.out.print("Invalid response. Please try again.\n");
+            System.out.print("\uD83E\uDDD0 Invalid response. Please try again.\n");
             return null;
         }
 
         System.out.println("Please type '1' for temporary trade and '2' for permanent trade or 'back' to cancel the " +
                 "current trade and restart.");
         Object type = sc.nextLine();
+        //type is type of the trade temporary or permenant
         if (type.equals("back")){
             return null;
         }
+
+
         try {
             type = Integer.parseInt((String) type);
         } catch(NumberFormatException e) {
-            System.out.print("Invalid response. Please try again.\n");
+            System.out.print("\uD83E\uDDD0 Invalid response. Please try again.\n");
             return null;
         }
+
+        //make sure they dont put anything invalid
+
         boolean trade = false;
 
-        if ((int) type == 1) {
+        if ((int) type != 1 && (int) type != 2){
+            System.out.print("\uD83E\uDDD0 Invalid response. Please try again.\n");
+            return null;
+        }
+
+
+        if ((int) type == 1) { //we determine if it is a 1 way trade or 2 way
             trade = true;
         } else if ((int) type == 2) {
             trade = false;
         } else {
-            System.out.print("Invalid response. Please try again.\n");
+            System.out.print("\uD83E\uDDD0 Invalid response. Please try again.\n");
             return null;
         }
 
@@ -235,12 +376,12 @@ public class InputGetter {
                 System.out.print("\nTrade request has been sent successfully.\n");
                 return "back";
             } else if (confirmation.equals("2")){
-                System.out.print("\nTrade has been cancelled.\n");
+                System.out.print("\n\u274E Trade has been cancelled.\n");
 
 
                 return null;
             } else{
-                System.out.print("Invalid response. Please try again.\n");
+                System.out.print("\uD83E\uDDD0 Invalid response. Please try again.\n");
                 return null;
             }
             //trade request is made and it is pending in user's pendingRequests
@@ -254,7 +395,7 @@ public class InputGetter {
             List<Item> in = me.getInventory();
             if (in.size() == 0) {
                 System.out.print("Your inventory is empty!\n");
-                System.out.print("Trade initiation has been cancelled.\n");
+                System.out.print("\u274E Trade initiation has been cancelled.\n");
                 return null;
             }
 
@@ -264,6 +405,17 @@ public class InputGetter {
             }
 
             Object inum2 = sc.nextLine();
+            Integer inputAsInt = Integer.parseInt((String) inum2);
+            //make sure that they input the correct number
+            if ((int)inputAsInt > in.size() ||(int)inputAsInt < 1 ){ //if out of range
+                System.out.print("\uD83E\uDDD0 Invalid response. Please try again.\n");
+                return null;
+
+
+            }
+
+
+
             //returns them to the first prompt where they enter the id of the item to trade
             if (inum2.equals("back")){
                 return null;
@@ -272,12 +424,12 @@ public class InputGetter {
             try {
                 inum2 = Integer.parseInt((String) inum2);
             } catch (NumberFormatException e) {
-                System.out.print("Invalid response. Please try again.\n");
+                System.out.print("\uD83E\uDDD0 Invalid response. Please try again.\n");
                 return null;
             }
             Item salam = in.get((int) inum2-1);
             System.out.println("The item you want to trade is: " + in.get((int)inum2-1).getName() + "\n");
-            System.out.print("Please enter '1' to confirm this trade or '2' to cancel the current trade and restart.");
+            System.out.print("Please enter '1' to confirm this trade or '2' to cancel the current trade and restart.\n");
             String confirmation = sc.nextLine();
             if (confirmation.equals("1")) {
                 myList.add(salam);
@@ -290,28 +442,26 @@ public class InputGetter {
                 System.out.print("\nTrade has been cancelled.\n");
                 return null;
             } else {
-                System.out.print("Invalid response. Please try again.\n");
+                System.out.print("\uD83E\uDDD0 Invalid response. Please try again.Request cancelled.\n");
                 return null;
             }
 
         } else {
-            System.out.println("Invalid response. Please try again.\n");
+            System.out.println("Invalid response. Please try again.Request cancelled.\n");
             return null;
         }
     }
 
-    public User Messages(User user,UserManager allUsers) {
-        System.out.print("What would you like to see? Type 'Trade' for Trade Requests or " +
-                "type 'Meeting' for meeting requests. Type 'back' to go back to the main menu.\n");
-        Scanner sc1 = new Scanner(System.in);
-        String input = sc1.next();
 
-        if (input.equals("back"))
-            return user;
-        if (input.equals("Meeting")) {
-            System.out.print("\nHere are your pending meetings: \n");
-            //implement loop that gets pending meetings !!!
-        } else if (input.equals("Trade")) {
+    /**
+     *  Shows all pending trades. User can then go and approve their trades
+     * @param user is the user that is currently logged in
+     * @param allUsers is a list of all users which also has their wishlist stored
+     * @return Object: returns either "back" or the user who is currently logged in
+     */
+
+    public User PendingTrades(User user,UserManager allUsers) {
+//no error checking needed!
             System.out.print("\nHere are your pending Trades: \n");
             User Person = allUsers.getUser(user);
             if (Person.getPendingRequests().size() == 0) {
@@ -329,18 +479,32 @@ public class InputGetter {
                             Person.getPendingRequests().get(i).getMessage() + ext+ "\n");
                 }
             }
-        } else {
-            System.out.print("Invalid command.\n\n");
-            return user;
-        }
+
         return user;
     }
 
-    public void RejectTrade(User user,UserManager allUsers, MeetingManager allMeetings, TradeRequest request, TransactionManager allTransactions){
+
+    /**
+     *  If a trade is rejected, then the traderequest gets removed from the user's pending list
+     * @param user is the user that is currently logged in
+     * @param allUsers is a list of all users which also has their wishlist stored
+     * @return Object: returns either "back" or the user who is currently logged in
+     */
+
+    public void RejectTrade(User user,UserManager allUsers, TradeRequest request){
         allUsers.removeFromPendingRequests(user,  request);
         System.out.print("\u274E Rejected!\n");
     }
 
+
+
+    /**
+     *  If a trade is approved, then we create an instance of 1way or 2way transaction and feed in the meeting
+     * @param user is the user that is currently logged in
+     * @param allUsers is a list of all users which also has their wishlist stored
+     * @parm allMeetings
+     * @return Object: returns either "back" or the user who is currently logged in
+     */
     public void ApprovedTrade(User user,UserManager allUsers, MeetingManager allMeetings, TradeRequest request, TransactionManager allTransactions){
         System.out.print("\u2705 Approved!\n");
         //if the trade request is approved, we should now start a trade and make a meeting
@@ -354,7 +518,7 @@ public class InputGetter {
         meeting.initialHistory (temp2.getName(), 1);
 
         allUsers.removeFromPendingRequests(allUsers.getUser(user), request);
-        if (request.getRequestType() == 1){ //1 way'
+        if (request.getRequestType() == 1){ //1 way
             OneWay on = new OneWay(temp1, request.getReceiverItem(), request.getTemp());
             on.setInitialMeeting(meeting);
             on.getInitialMeeting().changeLastEdit(user.getName());
@@ -451,7 +615,7 @@ public class InputGetter {
             ApprovedTrade( user, allUsers, allMeetings, request,  allTransactions);
             return null;
         } else if (nextInput.equals("2")) { //if item is rejected
-            RejectTrade( user, allUsers, allMeetings, request,  allTransactions);
+            RejectTrade( user, allUsers, request);
             return null;
         } else {
             System.out.print("\uD83E\uDDD0 What was that? Please try again!\n");
@@ -530,8 +694,6 @@ public class InputGetter {
 
         return user;
     }
-
-
 
     public Object NotifyAdmin (User user, AdminInputGetter adminInputGetter){
         adminInputGetter.addfrozenRequest(user);
@@ -725,10 +887,6 @@ public class InputGetter {
 
         return user; }
 
-
-
-
-
     public Object mainMenu(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests, UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions, AdminInputGetter admininputgetter ) {
         Scanner sc = new Scanner(System.in);    //System.in is a standard input stream
         System.out.print("----------------------------------------------------------------------------------------------" +
@@ -809,7 +967,7 @@ public class InputGetter {
 
 
             System.out.print("Please select number from the following:\n1.View Wishlist\n2.View Inventory\n" +
-                    "3.Browse Items\n4.Initiate Trade\n5.View Messages\n6.Approve Pending Trades\n" +
+                    "3.Browse Items\n4.Initiate Trade\n5.View Pending Trades\n6.Approve Pending Trades\n" +
                     "7.Add Item to inventory\n8.View most recent trades\n9.View most frequent trading partners\n10. View status of my items\n11. Add Item to wishlist\n" +
                     "12.View Approved Trades\n13. Approve Meeting\n14. Confirm Meeting\n15. Logout" + "\nEnter 'exit' to exit the system at any time.\n");
 
@@ -843,7 +1001,7 @@ public class InputGetter {
                     return user;
                 } else if (a.equals("5")) {
                     //view messages
-                    return system1.Messages(user, allUsers);
+                    return system1.PendingTrades(user, allUsers);
                 } else if (a.equals("8")) { //View most recent trades
                     MostRecentTrades(user, allUsers);
                 } else if (a.equals("9")) { //View most frequent trading partners
@@ -992,7 +1150,7 @@ public class InputGetter {
                         //prints the pending meetings
                         for (int i = 0; i < userTransactions.size(); i++) {
                             String otherSide = "";
-                            Integer confirmed = userTransactions.get(i).getInitialMeeting().userconfirmed(user.getName());
+                            Integer confirmed = userTransactions.get(i).getReturnMeeting().userconfirmed(user.getName());
                             String status = "";
                             if (confirmed == 1)
                                 status = " [CONFIRMED BY YOU] ";
