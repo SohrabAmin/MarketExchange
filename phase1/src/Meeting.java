@@ -38,10 +38,7 @@ public class Meeting {
                 counter++;
             }
         }
-        if (counter == 2)
-            return true;
-        else
-            return false;
+        return counter == 2;
     }
 
     /**
