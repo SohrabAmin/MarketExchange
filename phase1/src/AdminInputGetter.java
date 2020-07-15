@@ -10,22 +10,15 @@ import java.util.Scanner;
  */
 
 public class AdminInputGetter {
-    private List <User> frozenRequests;
+    private List <User> frozenRequests = new ArrayList<User>();
 
-
-    AdminInputGetter(){
-        frozenRequests = new ArrayList<User>();
+    /**
+     * Returns a list of all the Users in frozenRequest.
+     * @return List<User> returns list of Users in frozen Request
+     */
+    public List<User> getFrozenRequests(){
+        return frozenRequests;
     }
-
-
-    public void addfrozenRequest (User user){
-        frozenRequests.add(user);
-    }
-
-    public void removeFromfrozenRequest (User user){
-        frozenRequests.remove(user);
-    }
-
     /**
      * Reads input from user and lets them 'log in' to their account by verifying their username and password.
      *
@@ -83,6 +76,11 @@ public class AdminInputGetter {
      * Displays the main menu of an AdminUser and prompts the user for input.
      *
      * @param admin Account of the Admin.
+     * @return depending on what the Admin inputs it will return different objects:
+     *         returns Admin to TradeSystem() to either remain logged into the system and prompt mainMenu
+     *         returns null to log out of the system and allow another Admin to log in
+     *         returns String "exit" to tell TradeSystem() to end the program and save all the data before
+     *         exiting the System
      */
     public Object mainMenu(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems) {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -178,7 +176,13 @@ public class AdminInputGetter {
     }
 
     /**
+     * Allows admin to either view unfreeze requests, freeze and unfreeze users in the system.
      *
+     * @param allUsers UserManager which stores all the users in the system
+     * @return depending on what the Admin inputs it will return different objects:
+     *         returns null to tell mainmenu() to call FreezeOrUnfreeze() again
+     *         returns String "back" to tell mainmenu() to prompt main menu again so Admin can choose another
+     *                 main menu option
      */
     public Object FreezeOrUnfreeze(UserManager allUsers){
         System.out.println("What would you like to do? Please select the number beside the option or enter " +
@@ -211,6 +215,17 @@ public class AdminInputGetter {
         return null;
     }
 
+    /**
+     * Allows admin to view unfreeze requests they have and allows them to unfreeze any of those Users if they so choose.
+     * If they unfreeze a User, it will remove their request from frozenRequests and change their status isPseudoFrozen and
+     * isFrozen to false.
+     *
+     * @param allUsers UserManager which stores all the users in the system
+     * @return depending on what the Admin inputs it will return different objects:
+     *         returns null to tell mainmenu() to call FreezeOrUnfreeze() again
+     *         returns String "back" to tell mainmenu() to prompt main menu again so Admin can choose another
+     *                 main menu option
+     */
     public Object ViewUnfreezeRequests(UserManager allUsers){
         if (frozenRequests.size() == 0) {
             System.out.println("You have no unfreeze requests!");
@@ -232,6 +247,7 @@ public class AdminInputGetter {
                 return null;
             }
             allUsers.unfreeze(frozenRequests.get((Integer) line - 1));
+            allUsers.unPseudoFreeze(frozenRequests.get((Integer) line - 1));
             System.out.print("\u2705 Successfully unfrozen user: " +
                     allUsers.getUser(frozenRequests.get((Integer) line - 1)).getName() + "\n");
             frozenRequests.remove(frozenRequests.get((Integer) line - 1));
@@ -283,11 +299,9 @@ public class AdminInputGetter {
                 return null;
             }
             User chosenUser = frozenUsers.get((Integer) line - 1);
-            if (chosenUser.getIsPseudoFrozen()) {
-                allUsers.unPseudoFreeze(chosenUser);
-            } else { //frozenUser is frozen
-                allUsers.unfreeze(chosenUser);
-            }//if they requested to be unfrozen, they will be removed from the frozen request list
+            allUsers.unPseudoFreeze(chosenUser);
+            allUsers.unfreeze(chosenUser);
+            //if they requested to be unfrozen, they will be removed from the frozen request list
             for (User frozenRequest : frozenRequests) {
                 if (frozenRequest.getName().equals(chosenUser.getName())) {
                     removeFromfrozenRequest(chosenUser);
@@ -352,6 +366,12 @@ public class AdminInputGetter {
             } else { //user is not pseudo frozen
                 allUsers.freeze(chosenUser);
             }
+            //users will need to re-request to be unfrozen if they go from pseudo-frozen to actually frozen
+            for (User frozenRequest : frozenRequests) {
+                if (frozenRequest.getName().equals(chosenUser.getName())) {
+                    removeFromfrozenRequest(chosenUser);
+                }
+            }
             System.out.print("\u2705 Successfully frozen user: " +
                     allUsers.getUser(chosenUser).getName() + "\n");
             if ((unfrozenUsers.size() - 1) == 0){
@@ -362,6 +382,23 @@ public class AdminInputGetter {
         }
     }
 
+    /**
+     * Adds the User requesting to be unfrozen to the list of frozenRequests
+     *
+     * @param user the User requesting to be unfrozen
+     */
+    public void addfrozenRequest (User user){
+        frozenRequests.add(user);
+    }
+
+    /**
+     * Removes the user from the frozenRequests list
+     *
+     * @param user the User that has been removed from the list of frozenRequests
+     */
+    public void removeFromfrozenRequest (User user){
+        frozenRequests.remove(user);
+    }
 
     /**
      * Checks for items pending approval from all Users in UserManager and displays them to admin
