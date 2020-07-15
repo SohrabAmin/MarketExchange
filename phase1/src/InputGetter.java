@@ -315,13 +315,13 @@ public class InputGetter {
         if (tType.equals("back")){
             return null;
         }
+        //input error handling
+        if (!tType.equals("1")  && !tType.equals("2")){
+            System.out.print("\uD83E\uDDD0 Invalid response. Please try again.\n");
+            return null;
+        }
         try {
             tType = Integer.parseInt((String) tType);
-            //input error handling
-            if (!tType.equals("1")  && !tType.equals("2")){
-                System.out.print("\uD83E\uDDD0 Invalid response. Please try again.\n");
-                return null;
-            }
         } catch(NumberFormatException e) {
             //brings them back to the first prompt where it asks to type the ID of the item.
             System.out.print("\uD83E\uDDD0 Invalid response. Please try again.\n");
@@ -501,7 +501,6 @@ public class InputGetter {
             on.setInitialMeeting(meeting);
             allTransactions.addToPendingTransactions(on, allUsers);
             on.getInitialMeeting().changeLastEdit(user.getName());
-
         }
     }
 
