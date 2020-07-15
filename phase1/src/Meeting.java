@@ -23,8 +23,12 @@ public class Meeting {
         this.place = place;
         editHistory = new HashMap<>();
         confirm = new HashMap<>();
-
     }
+
+    /**
+     * Checks if both users have confimred the Meeting
+     * @return True if both users have confirmed Meeting, false otherwise.
+     */
     public boolean confirmedByBothSides (){
         //Used https://stackoverflow.com/questions/27254302/counting-duplicate-values-in-hashmap as reference
         int counter = 0;
@@ -34,50 +38,91 @@ public class Meeting {
                 counter++;
             }
         }
-    if (counter == 2)
-        return true;
-    else
-        return false;
+        if (counter == 2)
+            return true;
+        else
+            return false;
     }
 
+    /**
+     * Set confirmation values of both users to 0
+     * @param side1 name of first user
+     * @param side2 name of second user
+     */
     public void initialconfirm (String side1, String side2){
         confirm.put(side1, 0);
         confirm.put(side2, 0);
     }
 
+    /**
+     * Confirms users confirmation value of a Meeting
+     * @param name name of user
+     */
     public void meetingConfirmed (String name){
         confirm.replace(name, 1);
     }
 
+    /**
+     * Gets users confirmation value of a Meeting
+     * @param name name of user
+     * @return Integer representing if user confirmed Meeting
+     */
     public Integer userconfirmed (String name){
         return confirm.get(name);
     }
 
+    /**
+     * Get name of other user in Meeting
+     * @param name name of original user in Meeting
+     * @return name of other user in Meeting
+     */
     public String getOtherSide (String name){
-
-    for ( String key : confirm.keySet() ) {
-        if (!key.equals(name))
-            return key;
+        for ( String key : confirm.keySet() ) {
+            if (!key.equals(name))
+                return key;
+        }
+        return "error";
     }
-    return "error";
-    }
 
+    /**
+     * Puts a key-value pair in edit history hashmap
+     * @param name key to be put in
+     * @param num value to be put in
+     */
     public void initialHistory (String name, int num ){
         editHistory.put(name, num);
     }
 
+    /**
+     * Change last user who edited Meeting
+     * @param name name of user who last edited Meeting
+     */
     public void changeLastEdit (String name){
         lastEdit = name;
     }
 
+    /**
+     * Get name of user who last edited Meeting
+     * @return Name of user who edited Meeting last
+     */
     public String viewLastEdit (){
         return lastEdit;
     }
 
+    /**
+     * Edits the number edits of of a user
+     * @param user User who edited the meeting
+     * @param i New number of edits associated with user
+     */
     public void changeHistory (User user, int i){
         editHistory.replace(user.name, i);
     }
 
+    /**
+     * gets users edit history for Meeting
+     * @param user User who edited meeting
+     * @return number of times user has edited the meeting
+     */
     public int geteditHistory (String user){
         return editHistory.get(user);
     }
