@@ -21,6 +21,7 @@ public class User extends Account {
     private boolean isPseudoFrozen;
     private List<Transaction> cancelledTransactions;
     private List<Transaction> agreedUponMeeting;
+    private List<Transaction> secondAgreedUponMeeting;
 
 
 
@@ -54,6 +55,7 @@ public class User extends Account {
         pendingTrades = new ArrayList<>();
         cancelledTransactions = new ArrayList<>();
         agreedUponMeeting = new ArrayList<>();
+        secondAgreedUponMeeting = new ArrayList<>();
 
     }
 
@@ -221,4 +223,8 @@ public class User extends Account {
     }
 
     //TODO: consider overriding the equals method inherited from Object
+
+    public List<Transaction> getSecondAgreedUponMeeting(){
+        return this.secondAgreedUponMeeting;
+    }
 }

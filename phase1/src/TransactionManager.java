@@ -74,7 +74,7 @@ public class TransactionManager implements Serializable {
         }else if(tradeStatus == 2){
             this.pendingSecondExchange.add(transaction);
             handleFirstExchange(userManager, transaction, itemManager);
-        }else if(transaction.getTradeStatus() == 3){
+        }else if(tradeStatus == 3){
             this.completedTransaction.add(transaction);
             if(transaction.getTemp()){
                 handleSecondExchange(userManager, itemManager, transaction);
@@ -216,8 +216,8 @@ public class TransactionManager implements Serializable {
 
         }userManager.updateTradeHistory(temp1, transaction);
          userManager.updateTradeHistory(temp2, transaction);
-         userManager.removeFromAgreedUponMeetings(temp1, transaction);
-         userManager.removeFromAgreedUponMeetings(temp2, transaction);
+         userManager.removeFromSecondAgreedUponMeeting(temp1, transaction);
+         userManager.removeFromSecondAgreedUponMeeting(temp2, transaction);
     }
 
     public void handleFirstExchange(UserManager userManager, Transaction transaction, ItemManager itemManager){
@@ -244,6 +244,10 @@ public class TransactionManager implements Serializable {
             itemManager.setCurrentHolder(item2, temp1);
 
         }
+        userManager.removeFromAgreedUponMeetings(temp1, transaction);
+        userManager.removeFromAgreedUponMeetings(temp2, transaction);
+        userManager.addToSecondAgreedUponMeeting(temp1, transaction);
+        userManager.addToSecondAgreedUponMeeting(temp2, transaction);
     }
     public void handleCompletedPerm(UserManager userManager, ItemManager itemManager, Transaction transaction) {
         User temp1;

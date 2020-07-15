@@ -374,4 +374,11 @@ public class UserManager extends AccountManager {
         return null;
     }
 
+    public void addToSecondAgreedUponMeeting(User user, Transaction trade){
+        user.getSecondAgreedUponMeeting().add(trade);
+    }
+
+    public void removeFromSecondAgreedUponMeeting(User user, Transaction trade){
+        user.getSecondAgreedUponMeeting().remove(trade);
+    }
 }
