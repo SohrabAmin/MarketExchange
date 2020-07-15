@@ -40,7 +40,10 @@ public class TradeRequest {
         }
     }
 
-
+    /**
+     * Gets the message the initiating User may send to the receiving User.
+     * @return A String representation of the message.
+     */
     public String getMessage(){
         return message;
     }
