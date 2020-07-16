@@ -248,8 +248,8 @@ public class AdminInputGetter {
             }
             allUsers.unfreeze(frozenRequests.get((Integer) line - 1));
             allUsers.unPseudoFreeze(frozenRequests.get((Integer) line - 1));
-            System.out.print("\u2705 Successfully unfrozen user: " +
-                    allUsers.getUser(frozenRequests.get((Integer) line - 1)).getName() + "\n");
+            System.out.println("\u2705 Successfully unfrozen user: " +
+                    allUsers.getUser(frozenRequests.get((Integer) line - 1)).getName());
             frozenRequests.remove(frozenRequests.get((Integer) line - 1));
             return null; //brings them back to the list of unfreeze requests
         }
@@ -275,7 +275,7 @@ public class AdminInputGetter {
             }
         }
         if (frozenUsers.size() == 0) {
-            System.out.println("\nThere are no frozen users!\n");
+            System.out.println("\nThere are no frozen users!");
             return "back";
         }
         System.out.println("\nHere are the current frozen users:");
@@ -311,7 +311,7 @@ public class AdminInputGetter {
             System.out.println("\n\u2705 Successfully unfrozen user: " +
                     allUsers.getUser(chosenUser).getName());
             if ((frozenUsers.size() - 1) == 0) {
-                System.out.println("\nThere are no more frozen Users!\n");
+                System.out.println("\nThere are no more frozen Users!");
                 return "back";
             }
             return null;
@@ -337,7 +337,7 @@ public class AdminInputGetter {
             }
         }
         if (unfrozenUsers.size() == 0) {
-            System.out.println("\nThere are no non-frozen users!\n");
+            System.out.println("\nThere are no non-frozen users!");
             return "back";
         }
         System.out.println("\nHere are the current non-frozen users:");
@@ -375,9 +375,9 @@ public class AdminInputGetter {
                 }
             }
             System.out.println("\n\u2705 Successfully frozen user: " +
-                    allUsers.getUser(chosenUser).getName() + "\n");
+                    allUsers.getUser(chosenUser).getName());
             if ((unfrozenUsers.size() - 1) == 0) {
-                System.out.print("\nThere are no more non-frozen Users!\n");
+                System.out.println("\nThere are no more non-frozen Users!");
                 return "back";
             }
             return null;

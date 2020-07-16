@@ -12,7 +12,7 @@ public class TradeSystem {
     public UserManager allUsers = new UserManager();
     public TransactionManager allTransactions;
     public AdminManager allAdmins;
-    public ItemManager AllItems = new ItemManager();
+    public ItemManager allItems = new ItemManager();
     public MeetingManager allMeetings = new MeetingManager();
     public TradeRequestManager allTradeRequests;
     public Object currentUser;
@@ -22,7 +22,6 @@ public class TradeSystem {
      * Admins, Users, Meetings, Items and TradeRequests. It will call methods that allow Users and Admins to log in
      * and view the main menu as long as an Admin or User doesn't want to exit the system. If they choose to exit,
      * the gateways will be called again and saved the information for future use.
-     *
      * @throws IOException
      * @throws ClassNotFoundException
      */
@@ -39,44 +38,10 @@ public class TradeSystem {
         allTradeRequests = TradeRequestWriting.demoTradeRequestRead("TradeRequestList.ser");
         //populates the system inventory in the initialized ItemManager AllItems with all the saved
         //items in the file ItemList.ser
-        ItemWriting.demoItemRead("ItemList.ser", AllItems);
-        //creating users to test
-        allUsers.createUser("Tina", "123");
-        allUsers.createUser("Mo", "123");
-        allUsers.createUser("Tina2", "123");
-        User hello = new User("Tina", "123");
-        //sets Tina pword 123 to pseudo frozen for testing
-        // allUsers.getAllUsers().get(0).setIsPseudoFrozen(true);
-        // allUsers.freeze(allUsers.getAllUsers().get(0));
-        //allUsers.getAllUsers().get(0).setIsFrozen(true);
-        User hi = new User("Mo", "123");
-        User oops = new User("heloooooooo", "123");
-        List<User> top3TP = new ArrayList<>();
-        top3TP.add(hi);
-        top3TP.add(oops);
-        allUsers.getAllUsers().get(0).setTopTradingPartners(top3TP);
-        Item myitem = new Item("sock for Mo", hi, "its cute");
-        Item myitem2 = new Item("sock for Tina", hi, "its 2cute");
-        Item myitem3 = new Item("sock2 for Tina", hello, "its 2cute");
-        AllItems.addItem(myitem);
-        //   allUsers.addToInventory(allUsers.getUser(hi), myitem);
-        AllItems.addItem(myitem2);
-        allUsers.addToInventory(allUsers.getUser(hello), myitem2);
-        AllItems.addItem(myitem3);
-        allUsers.addToInventory(allUsers.getUser(hello), myitem3);
-        AllItems.addItem(myitem);
-        allUsers.addToInventory(allUsers.getUser(hi), myitem);
-        System.out.println("UserManager is initiated. There should be no Users. There are: "
-                + allUsers.getAllUsers().size() + " users");
-        //prints where the file is located
-        File findFile = new File("UserList.ser");
-        String filePath = findFile.getAbsolutePath();
-        System.out.println("The file location is:" + filePath);
-        //reads the file and prints the current users.
+        ItemWriting.demoItemRead("ItemList.ser", allItems);
+        //reads the file and populates UserManager allUsers with the Users stored in UserList.ser
         UserWriting.demoUserRead("UserList.ser", allUsers);
-        System.out.println("UserManager is now populated." +
-                "The current number of users in the file is:" + allUsers.getAllUsers().size());
-        System.out.println("the user manager contains the following users:" + allUsers.getAllUsers());
+
         //If there is no current User, prompts log in and prompts the correct menu depending on the type of Account
         while (currentUser == null) {
             LogInSystem system1 = new LogInSystem(allUsers, allAdmins);
@@ -89,10 +54,10 @@ public class TradeSystem {
             currentUser = loggedIn;
             while (loggedIn != null) {
                 if (loggedIn instanceof User) {
-                    loggedIn = inputgetter.mainMenu((User) loggedIn, AllItems, inputgetter,
-                            allTradeRequests, allUsers, allMeetings, allTransactions, admininputgetter, allAdmins);
+                    loggedIn = inputgetter.mainMenu((User) loggedIn, allItems, inputgetter, allTradeRequests,
+                            allUsers, allMeetings, allTransactions, admininputgetter, allAdmins);
                 } else if (loggedIn instanceof Admin) {
-                    loggedIn = admininputgetter.mainMenu((Admin) loggedIn, allAdmins, allUsers, AllItems);
+                    loggedIn = admininputgetter.mainMenu((Admin) loggedIn, allAdmins, allUsers, allItems);
                 } else if (loggedIn.equals("exit")) {
                     //loop will break if user decides to exit at any point while they are logged in
                     break;
@@ -107,7 +72,9 @@ public class TradeSystem {
             //and it will redirect back to the log in page
             currentUser = null;
         }
+
         System.out.print("Goodbye!\uD83D\uDEAA \n");
+
         //saves all the users in UserManager to an external file
         UserWriting.demoUserSave("UserList.ser", allUsers);
         //saves current AdminManager object allAdmins to external file
@@ -115,11 +82,8 @@ public class TradeSystem {
         //saves current TransactionManager object allTransactions to an external file
         TransactionWriting.demoTransactionSave("TransactionList.ser", allTransactions);
         //saves the systemInventory in AllItems to an external file
-        ItemWriting.demoItemSave("ItemList.ser", AllItems);
+        ItemWriting.demoItemSave("ItemList.ser", allItems);
         //saves current TradeRequest object allTradeRequests to an external file
         TradeRequestWriting.demoTradeRequestSave("TradeRequestList.ser", allTradeRequests);
-        System.out.println(allUsers.getAllUsers());
-        System.out.println("The current number of users in the file is:" + allUsers.getAllUsers().size());
-        System.out.println("the user manager contains the following:" + allUsers.getAllUsers());
     }
 }

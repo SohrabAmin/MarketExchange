@@ -936,14 +936,12 @@ public class InputGetter {
             User b = tt.getLender();
             if (user.getName().equals(b.getName())) {
                 b = tt.getBorrower();
-            }
-            if (tt.getInitialMeeting().geteditHistory(user.getName()) > tt.getInitialMeeting().geteditHistory(b.getName()) || tt.getInitialMeeting().viewLastEdit().equals(user.getName())) {
+            } if (tt.getInitialMeeting().geteditHistory(user.getName()) > tt.getInitialMeeting().geteditHistory(b.getName()) || tt.getInitialMeeting().viewLastEdit().equals(user.getName())) {
                 //if they have already made an edit and we are waiting on the other person to approve/suggest a new meeting
                 System.out.print("This pending transaction is currently waiting on the other party! Please try again later\n");
             } else {
                 //the person can now approve or propose a new time
                 System.out.print("You have selected: ");
-
                 System.out.print(tt.getLenderItem().getName() + " with " + b.getName() + "\n");
                 System.out.print("Here is the proposed meeting: " + tt.getInitialMeeting() + "\n");
                 System.out.print("Press 1 to approve. Press 2 to propose a new meeting. Press 3 to cancel\n");
@@ -957,9 +955,9 @@ public class InputGetter {
                     //provide warning if the is at their 3rd strike
 
                     //Daniel EDIT MEEEEEEE
-                    if (tt.getInitialMeeting().geteditHistory(user.getName()) + 1 == allAdmins.getMeetingEditThreshold())
+                    if (tt.getInitialMeeting().geteditHistory(user.getName()) + 1 == allAdmins.getMeetingEditThreshold()) {
                         System.out.print("\u2622 This is the last time you can propose a meeting.\nIf rejected, this transaction will be cancelled\n");
-
+                    }
                     //here is where the transaction gets cancelled because they couldnt make up their mind
                     if (tt.getInitialMeeting().geteditHistory(user.getName()) == allAdmins.getMeetingEditThreshold()) {
                         //one person reached 3 edits, its time to delete this transaction
@@ -983,7 +981,6 @@ public class InputGetter {
                         tt.getInitialMeeting().changeLastEdit(user.getName());
                     }
                 } else if (input.equals("3")) {
-
                     //need another method for usermanager so that transactions in progress but meeting is set
                     System.out.print("Your meeting has been cancelled!\n");
                     allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 4);
@@ -991,7 +988,6 @@ public class InputGetter {
             }
         }
         if (selectedT instanceof TwoWay) {
-
             TwoWay tt2 = (TwoWay) selectedT;
             User b2 = tt2.getFirstTrader(); //user b is the other party of this trade
             if (user.getName().equals(b2.getName())) {
@@ -1015,9 +1011,9 @@ public class InputGetter {
 
                 } else if (input.equals(("2"))) { //they want to propose a new time
                     //provide warning if the is at their 3rd strike
-                    if (tt2.getInitialMeeting().geteditHistory(user.getName()) + 1 == 3)
+                    if (tt2.getInitialMeeting().geteditHistory(user.getName()) + 1 == 3) {
                         System.out.print("\u2622 This is the last time you can propose a meeting.\nIf rejected, this transaction will be cancelled\n");
-
+                    }
                     //here is where the transaction gets cancelled because they couldnt make up their mind
                     if (tt2.getInitialMeeting().geteditHistory(user.getName()) == 3) {
                         //one person reached 3 edits, its time to delete this transaction
@@ -1080,9 +1076,10 @@ public class InputGetter {
                 String otherSide = "";
                 Integer confirmed = userTransactions.get(i).getInitialMeeting().userconfirmed(user.getName());
                 String status = "";
-                if (confirmed == 1)
+                if (confirmed == 1) {
                     status = " [CONFIRMED BY YOU] ";
-                System.out.print(Integer.toString(i + 1) + " . " + userTransactions.get(i).getInitialMeeting() + " With: " + userTransactions.get(i).getInitialMeeting().getOtherSide(user.getName()) + status + "\n");
+                }
+                System.out.print((i + 1) + " . " + userTransactions.get(i).getInitialMeeting() + " With: " + userTransactions.get(i).getInitialMeeting().getOtherSide(user.getName()) + status + "\n");
             }
             System.out.print("Please enter the ID of the meeting you would like to confirm.\n");
             Scanner sc11 = new Scanner(System.in);
@@ -1130,7 +1127,6 @@ public class InputGetter {
             } else if (selection.equals("2") || selection.equals("3")) { //cancelling
                 System.out.print("\u2639 We are sorry to hear that! Better luck next time!\n");
                 allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 4);
-
             }
         } else if (selection.equals("2")) {
             System.out.print("Here are your meetings to return items:\n");
@@ -1147,8 +1143,9 @@ public class InputGetter {
                 String otherSide = "";
                 Integer confirmed = userTransactions.get(i).getReturnMeeting().userconfirmed(user.getName());
                 String status = "";
-                if (confirmed == 1)
+                if (confirmed == 1) {
                     status = " [CONFIRMED BY YOU] ";
+                }
                 System.out.print(Integer.toString(i + 1) + " . " + userTransactions.get(i).getInitialMeeting() + " With: " + userTransactions.get(i).getInitialMeeting().getOtherSide(user.getName()) + status + "\n");
             }
             System.out.print("Please enter the ID of the meeting you would like to confirm.\n");
@@ -1171,12 +1168,9 @@ public class InputGetter {
                 if (selectedTransaction.getReturnMeeting().confirmedByBothSides()) {
                     //looks like the meeting was confirmed by both parties!
                     System.out.print("\uD83E\uDD29 Looks like the meeting was confirmed by both sides!\n ");
-
                     allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 3);
                 }
             }
-
-
         }
         return user;
     }
@@ -1238,7 +1232,6 @@ public class InputGetter {
         System.out.print("----------------------------------------------------------------------------------------------" +
                 "\n\uD83D\uDC4B Welcome back, " + user.getName() + "!\n");
 
-
         //A frozen account is one where you can log in and look for items, but you cannot arrange any transactions.
         // A user who has been frozen can request that the administrative user unfreezes their account.
         boolean frozenAccount = user.getIsFrozen();
@@ -1258,8 +1251,11 @@ public class InputGetter {
                     "4.Add Item to inventory\n5.View most recent trades\n6.View most frequent trading partners\n" +
                     "7.View status of my items\n8.Add Item to wishlist" +
                     "\n9.Request unfreeze!\n10.Logout" + "\nEnter 'exit' to exit the system at any time.\n");
+
             String a = sc.nextLine();
-            if (!a.equals("exit")) {
+            if (a.equals("exit")){
+                return a;
+            } else {
                 if (a.equals("1")) {//view wishlist
                     Object temp = system1.wishlist(user, allUsers);
                     while (temp == null) {
@@ -1405,7 +1401,6 @@ public class InputGetter {
                     return null;
                 }
             } else {//input is "exit"
-                System.out.print("Goodbye!\uD83D\uDEAA \n");
                 return a;
             }
         }
