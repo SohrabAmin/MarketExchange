@@ -412,7 +412,7 @@ public class InputGetter {
 
                 TradeRequest trades = new TradeRequest(1, user, tradeItem.getOwner(), myList, message, trade, today);
                 allUsers.addToWeeklyRequestLimit(user, trades);
-                allUsers.addOutboundRequest(user, trades);
+                allUsers.addToOutboundRequests(user, trades);
 
 
 
@@ -470,7 +470,7 @@ public class InputGetter {
                 myList.add(tradeItem);
                 TradeRequest request = new TradeRequest(2, user, tradeItem.getOwner(), myList, message, trade, today);
                 allTradeRequests.receiveTradeRequest(allUsers, request);
-                allUsers.addOutboundRequest(user, request);
+                allUsers.addToOutboundRequests(user, request);
                 allUsers.addToWeeklyRequestLimit(user, request);
                 System.out.print("\nTrade request has been sent successfully.\n");
                 return "back";
@@ -695,11 +695,11 @@ public class InputGetter {
             return null;
         } else if (nextInput.equals("1")) { //if trade is approved
             ApprovedTrade( user, allUsers, allMeetings, request,  allTransactions);
-            allUsers.RemoveFromOutboundRequest(user, request);
+            allUsers.removeFromOutboundRequests(user, request);
             return null;
         } else if (nextInput.equals("2")) { //if item is rejected
             RejectTrade(user, allUsers, request);
-            allUsers.RemoveFromOutboundRequest(user, request);
+            allUsers.removeFromOutboundRequests(user, request);
             return null;
         } else {
             System.out.print("\uD83E\uDDD0 What was that? Please try again!\n");

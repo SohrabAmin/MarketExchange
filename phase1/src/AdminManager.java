@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Keeps track of and adds Admins
+ * Keeps track of and adds Admins; stores and edits system thresholds
  */
 public class AdminManager implements Serializable {
     private List<Admin> allAdmins;
@@ -14,14 +14,6 @@ public class AdminManager implements Serializable {
     private int weeklyTransactionLimit = 7;
     private int incompleteTransactionLimit = 3;
 
-    /**
-     * Constructs the instance of AdminManager without needing an initial admin. It will
-     * be populated with an initial admin and list of admins through the reading
-     * and writing from an external file.
-     */
-    public AdminManager(){
-        allAdmins = new ArrayList<>();
-    }
     /**
      * Constructs the instance of AdminManager with an initial Admin and a list of Admins
      *
