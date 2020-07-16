@@ -406,15 +406,11 @@ public class UserManager extends AccountManager {
         user.getSecondAgreedUponMeeting().remove(transaction);
     }
 
-    public boolean checkWeeklyRequestLimit(User user, Calendar date) {
+    public boolean checkWeeklyRequestLimit(AdminManager adminManager, User user, Calendar date) {
         Integer temp = date.get(Calendar.WEEK_OF_YEAR);
         List<TradeRequest> temp2 = user.getWeeklyRequestLimit().get(temp);
 
-        if (temp2.size() >= this.getWeeklyTransactionLimit()) {
-            return false;
-        } else {
-            return true;
-        }
+        return temp2.size() < adminManager.getWeeklyTransactionLimit();
     }
 
     public void addToWeeklyRequestLimit(User user, TradeRequest request) {

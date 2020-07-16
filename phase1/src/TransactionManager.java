@@ -45,7 +45,7 @@ public class TransactionManager implements Serializable {
      * @param transaction The given Transaction.
      * @param tradeStatus The current status of a given Transaction.
      */
-    public void updateTransactionStatus(ItemManager itemManager, UserManager userManager, Transaction transaction, int tradeStatus) {
+    public void updateTransactionStatus(ItemManager itemManager, UserManager userManager, AdminManager adminManager, Transaction transaction, int tradeStatus) {
         User user1;
         User user2;
         if (transaction.getTradeStatus() == 0){
@@ -87,7 +87,7 @@ public class TransactionManager implements Serializable {
             }
         }else{
             this.cancelledTransaction.add(transaction);
-            handleCancelledTrade(userManager, transaction);
+            handleCancelledTrade(adminManager, userManager, transaction);
         }
 
         transaction.setTradeStatus(tradeStatus);
@@ -150,7 +150,7 @@ public class TransactionManager implements Serializable {
      * @param userManager The instance of UserManager.
      * @param transaction The given instance of Transaction.
      */
-    public void handleCancelledTrade(UserManager userManager, Transaction transaction) {
+    public void handleCancelledTrade(AdminManager adminManager, UserManager userManager, Transaction transaction) {
         User temp1;
         User temp2;
         if (transaction instanceof OneWay) {
@@ -163,10 +163,10 @@ public class TransactionManager implements Serializable {
         }
         userManager.addToCancelledTransactions(temp1, transaction);
         userManager.addToCancelledTransactions(temp2, transaction);
-        if (temp1.getCancelledTransactions().size() == userManager.getIncompleteTransactionLimit()) {
+        if (temp1.getCancelledTransactions().size() == adminManager.getIncompleteTransactionLimit()) {
             userManager.pseudoFreeze(temp1);
         }
-        if (temp2.getCancelledTransactions().size() == userManager.getIncompleteTransactionLimit()) {
+        if (temp2.getCancelledTransactions().size() == adminManager.getIncompleteTransactionLimit()) {
             userManager.pseudoFreeze(temp2);
         }
         if(transaction.getTradeStatus() == 0){

@@ -239,4 +239,5 @@ public class User extends Account {
     public Map<Integer, List<TradeRequest>> getWeeklyRequestLimit(){
         return this.weeklyRequestLimit;
     }
+
 }
