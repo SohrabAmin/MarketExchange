@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 
@@ -5,7 +6,7 @@ import java.util.List;
  * Constructs a trade request, that a User can send to another User if the want to initiated a Transaction. Notice this difference from a Transaction, as
  * the system does not create an instance of Transaction unless the corresponding TradeRequest has been approved by the User receiving the TradeRequest.
  */
-public class TradeRequest {
+public class TradeRequest implements Serializable {
     private User requester;
     private User receiver;
     private int requestType;//1 way or 2 way
