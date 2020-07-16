@@ -256,6 +256,7 @@ public class InputGetter {
             System.out.println("There are no items to browse!");
             return "back";
         }
+        System.out.println("\nHere are the current items in the system's inventory:\n");
         //if there are items in the inventory, it will print the items in the following format:
         // 1. Item Name: Description Owner is: OwnerName
         for (int i = 0; i < allItems2.size(); i++) {
@@ -263,7 +264,7 @@ public class InputGetter {
                     + allItems2.get(i).getDescription() + " Owner is: " + allItems2.get(i).getOwner().getName() + "\n");
         }
         //asks the user if they want to add an item to their wishlist
-        System.out.print("Enter ID of the item you would like to add to your wishlist or type 'back' to get to main menu.\n");
+        System.out.println("Enter ID of the item you would like to add to your wishlist or type 'back' to get to main menu.");
 
         Scanner sc = new Scanner(System.in);
         Object input = sc.nextLine();
@@ -273,23 +274,24 @@ public class InputGetter {
         try {
             input = Integer.parseInt((String) input);
         } catch (NumberFormatException e) {
+            System.out.println("\n\uD83E\uDDD0 This ID is invalid. Please try again!");
             return null;
         }
         //checks to see if the ID of the item actually exists
-        if ((Integer) input < allItems2.size()) {
+        if ((Integer) input <= allItems2.size()) {
             Item item = allItems2.get((Integer) input - 1);
             //checks to see if the item is already in the user's wishlist
             for (int i = 0; i < user.getWishlist().size(); i++) {
                 if (item.equals(user.getWishlist().get(i))) {
-                    System.out.print("Item is already in your wishlist!");
+                    System.out.println("\nItem is already in your wishlist!");
                     return null;
                 }
             }
             allUsers.addToWishlist(user, item);
-            System.out.print("Item has been added to your wishlist \uD83C\uDF20\n");
+            System.out.println("\nItem has been added to your wishlist \uD83C\uDF20");
             return null;
         } else {
-            System.out.print("\uD83E\uDDD0 This ID is invalid. Please try again!\n");
+            System.out.println("\n\uD83E\uDDD0 This ID is invalid. Please try again!");
         }
         return "back";
     }
