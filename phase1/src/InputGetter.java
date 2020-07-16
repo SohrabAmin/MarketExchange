@@ -169,21 +169,18 @@ public class InputGetter {
         User me = allUsers.getUser(user);
         List<Item> in = me.getInventory();
         //if the user's inventory is empty
-
-        if (in.size() == 0)
-            System.out.print("Your inventory is empty!\n\n");
-        else { //if the user's inventory is not empty
-            System.out.print("Your inventory: \n\n");
-            for (int i = 0; i < in.size(); i++) {
-                System.out.println("\uD83D\uDCE6 " + Integer.toString(i+1) + " . " + in.get(i).getName());
-            }
+        if (in.size() == 0){
+            System.out.println("\nYour inventory is empty!\n");
+             return null;//if the user's inventory is not empty
         }
-        if (in.size() == 0)
-            return "back";
+        System.out.println("Your inventory:");
+        for (int i = 0; i < in.size(); i++) {
+            System.out.println("\uD83D\uDCE6 " + (i+1) + " . " + in.get(i).getName());
+            }
         Scanner sc = new Scanner(System.in);
         //asks if the User wants to remove an item from their wishlist
-        System.out.print("If you would like to remove an item, please enter the ID of the item you would like to remove " +
-                "or type 'back'\n");
+        System.out.println("If you would like to remove an item, please enter the ID of the item you would like to remove " +
+                "or type 'back'");
         Object input = sc.nextLine();
         //returns them to the main menu if they wish to go "back"
         if (input.equals("back")){
@@ -198,8 +195,7 @@ public class InputGetter {
         //remove the item they requested from inventory
         allUsers.removeFromInventory(allUsers.getUser(user), in.get((Integer) input - 1));
         System.out.println("Item has been removed successfully!");
-        return "back";
-
+        return null;
     }
 
     public void DisplayBrowse (User user, ItemManager allItems, UserManager allUsers){
@@ -715,7 +711,7 @@ public class InputGetter {
         }
         System.out.print("Please enter the description of item you would like to add or 'back' to go back to the main menu.\n");
         String description = sc.nextLine();
-        if (itemName.equals("back")){
+        if (description.equals("back")){
             return "back";
         }
         Item newItem = new Item(itemName, user, description);
@@ -1173,7 +1169,11 @@ public class InputGetter {
                     }
                     return user;
                 } else if (a.equals("2")) { //view inventory
-                    return system1.inventory(user, allUsers);
+                    Object temp =  system1.inventory(user, allUsers);
+                    while (temp == null) {
+                        temp = system1.inventory(user, allUsers);
+                    }
+                    return user;
                 } else if (a.equals("3")) { //browse items
                     Object temp = system1.Browse(user, allItems, allUsers);
                     while (temp == null) {
@@ -1304,10 +1304,6 @@ public class InputGetter {
                             allTransactions.updateTransactionStatus(allItems, allUsers, selectedTransaction, 4);
 
                         }
-
-
-
-
                     }
                     else if (selection.equals("2")){
                         System.out.print("Here are your meetings to return items:\n");
