@@ -1,6 +1,5 @@
 import java.util.*;
 
-
 /**
  * Creates, keeps track of, and changes values of Users.
  */
@@ -218,32 +217,44 @@ public class UserManager extends AccountManager {
         user.getItemHistory().put(item, "Pending");
     }
 
-    // TODO: update javadoc
     /**
-     * setter for the pending trade.
+     * Adds a Transaction to a User's list of pending trades
      *
-     * @param transaction to add meeting information to the trade that is not completed.
+     * @param user        User whose list of pending trades will be added to
+     * @param transaction Transaction to add to this User's list of pending trades
      */
     public void addToPendingTrades(User user, Transaction transaction) {
         user.getPendingTrades().add(transaction);
     }
 
-    // TODO: write javadoc
+    /**
+     * Removes a Transaction from a User's list of pending trades
+     *
+     * @param user        User who will have a Transaction removed from their list of pending trades
+     * @param transaction Transaction to remove from this User's list of pending trades
+     */
     public void removeFromPendingTrades(User user, Transaction transaction) {
         user.getPendingTrades().remove(transaction);
     }
 
-    // TODO: finish javadoc
     /**
-     * Adds a Transaction to a User's list of Transactions in
+     * Adds a Transaction to a User's list of agreedUponMeetings (Transactions containing a meeting to which both User
+     * and their trading partner have agreed, but the meeting has not transpired in real life)
      *
-     * @param user
-     * @param transaction Transaction containing the Meeting in question
+     * @param user        User whose list of agreedUponMeetings list will be added to
+     * @param transaction Transaction to add to this User's list of agreedUponMeetings
      */
-    public void addToAgreedUponMeetings (User user, Transaction transaction) {
+    public void addToAgreedUponMeetings(User user, Transaction transaction) {
         user.getAgreedUponMeeting().add(transaction);
     }
 
+    /**
+     * Removes a Transaction from a User's list of agreedUponMeetings (Transactions containing a meeting to which both
+     * User and their trading partner have agreed, but the meeting has not transpired in real life)
+     *
+     * @param user        User who will have a Transaction removed from their list of agreedUponMeetings
+     * @param transaction Transaction to remove from this User's list of agreedUponMeetings
+     */
     public void removeFromAgreedUponMeetings(User user, Transaction transaction) {
         user.getAgreedUponMeeting().remove(transaction);
     }
@@ -375,27 +386,40 @@ public class UserManager extends AccountManager {
         return null;
     }
 
-    public void addToSecondAgreedUponMeeting(User user, Transaction trade){
-        user.getSecondAgreedUponMeeting().add(trade);
+    /**
+     * Adds a Transaction to a User's list of trade-back Transactions
+     *
+     * @param user        User whose list of trade-back Transactions will be added to
+     * @param transaction Transaction to add to this User's list of trade-back Transactions
+     */
+    public void addToSecondAgreedUponMeeting(User user, Transaction transaction) {
+        user.getSecondAgreedUponMeeting().add(transaction);
     }
 
-    public void removeFromSecondAgreedUponMeeting(User user, Transaction trade){
-        user.getSecondAgreedUponMeeting().remove(trade);
+    /**
+     * Removes a Transaction from a User's list of of trade-back Transactions
+     *
+     * @param user        User who will have a Transaction removed from their list of trade-back Transactions
+     * @param transaction Transaction to remove from this User's list of trade-back Transactions
+     */
+    public void removeFromSecondAgreedUponMeeting(User user, Transaction transaction) {
+        user.getSecondAgreedUponMeeting().remove(transaction);
     }
 
-   public boolean checkWeeklyRequestLimit(User user, Calendar date){
+    public boolean checkWeeklyRequestLimit(User user, Calendar date) {
         Integer temp = date.get(Calendar.WEEK_OF_YEAR);
         List<TradeRequest> temp2 = user.getWeeklyRequestLimit().get(temp);
 
-        if(temp2.size() >= this.getWeeklyTransactionLimit()){
+        if (temp2.size() >= this.getWeeklyTransactionLimit()) {
             return false;
-        }else{
+        } else {
             return true;
         }
-   }
+    }
 
-   public void addToWeeklyRequestLimit(User user, TradeRequest request){
+    public void addToWeeklyRequestLimit(User user, TradeRequest request) {
         Integer temp = request.getDate().get(Calendar.WEEK_OF_YEAR);
         user.getWeeklyRequestLimit().get(temp).add(request);
-   }
+    }
+
 }
