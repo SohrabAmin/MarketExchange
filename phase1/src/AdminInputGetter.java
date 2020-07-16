@@ -275,7 +275,7 @@ public class AdminInputGetter {
             }
         }
         if (frozenUsers.size() == 0) {
-            System.out.println("\nThere are no frozen users!");
+            System.out.println("\nThere are no frozen users!\n");
             return "back";
         }
         System.out.println("\nHere are the current frozen users:");
@@ -311,7 +311,7 @@ public class AdminInputGetter {
             System.out.println("\n\u2705 Successfully unfrozen user: " +
                     allUsers.getUser(chosenUser).getName());
             if ((frozenUsers.size() - 1) == 0) {
-                System.out.println("\nThere are no more frozen Users!");
+                System.out.println("\nThere are no more frozen Users!\n");
                 return "back";
             }
             return null;
@@ -337,7 +337,7 @@ public class AdminInputGetter {
             }
         }
         if (unfrozenUsers.size() == 0) {
-            System.out.println("\nThere are no non-frozen users!");
+            System.out.println("\nThere are no non-frozen users!\n");
             return "back";
         }
         System.out.println("\nHere are the current non-frozen users:");
@@ -377,7 +377,7 @@ public class AdminInputGetter {
             System.out.println("\n\u2705 Successfully frozen user: " +
                     allUsers.getUser(chosenUser).getName());
             if ((unfrozenUsers.size() - 1) == 0) {
-                System.out.println("\nThere are no more non-frozen Users!");
+                System.out.println("\nThere are no more non-frozen Users!\n");
                 return "back";
             }
             return null;
@@ -494,8 +494,8 @@ public class AdminInputGetter {
         System.out.println("Meeting edits threshold: " + allAdmins.getMeetingEditThreshold());
         //prompts user to enter what threshold they wish to edit
         System.out.println("\nWhich threshold would you like to edit? Please enter the number beside the option.");
-        System.out.println("1. Lent - borrow threshold\n2. Weekly Transaction Limit\n3. Incomplete Transaction Limit" +
-                "4. Meeting Edits Threshold\n");
+        System.out.println("1.Lent - borrow threshold\n2.Weekly Transaction Limit\n3.Incomplete Transaction Limit" +
+                "\n4.Meeting Edits Threshold\n");
         System.out.println("Enter 'back' to return to the main menu.");
         Object thresholdOption = null;
         //checks to see if they entered a valid input (one of the options)
