@@ -6,8 +6,8 @@ public abstract class AccountManager {
     private int meetingEditThreshold = 3;
 
     // TODO: decide on a default value for the following thresholds
-    private int weeklyTransactionLimit;
-    private int incompleteTransactionLimit;
+    private int weeklyTransactionLimit = 3;
+    private int incompleteTransactionLimit = 1;
 
     /**
      * Verifies inputted login credentials

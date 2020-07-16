@@ -274,6 +274,23 @@ public class InputGetter {
     public Object Trade(User user, ItemManager allItems, TradeRequestManager allTradeRequests, UserManager allUsers) {
         Scanner sc = new Scanner(System.in);    //System.in is a standard input stream
 
+        if (user.getEligibility() >= allUsers.getLentMinusBorrowedThreshold()){
+            System.out.print("You are not eligible to do a trade! Sorry!\n");
+            return user;
+        }
+
+        //if eligible
+
+        Calendar today = Calendar.getInstance(); //get today's date
+        boolean limit =  allUsers.checkWeeklyRequestLimit( user, today);
+        if (!limit){
+            System.out.print("You have exceeded the weekly request limit! Can't make another trade! Sorry! \n");
+        return user;
+        }
+
+
+
+
         System.out.println("Here are the available items!:");
         DisplayBrowse ( user,  allItems,  allUsers);
 
@@ -359,7 +376,7 @@ public class InputGetter {
             System.out.print("\nPlease enter '1' to confirm this trade or '2' to cancel the current trade and restart.\n");
             String confirmation = sc.nextLine();
             if (confirmation.equals("1")) {
-                TradeRequest trades = new TradeRequest(1, user, tradeItem.getOwner(), myList, message, trade);
+                TradeRequest trades = new TradeRequest(1, user, tradeItem.getOwner(), myList, message, trade, today);
                 allTradeRequests.receiveTradeRequest(allUsers, trades);
                 System.out.print("\nTrade request has been sent successfully.\n");
                 return "back";
@@ -411,7 +428,7 @@ public class InputGetter {
             if (confirmation.equals("1")) {
                 myList.add(salam);
                 myList.add(tradeItem);
-                TradeRequest request = new TradeRequest(2, user, tradeItem.getOwner(), myList, message, trade);
+                TradeRequest request = new TradeRequest(2, user, tradeItem.getOwner(), myList, message, trade, today);
                 allTradeRequests.receiveTradeRequest(allUsers, request);
                 System.out.print("\nTrade request has been sent successfully.\n");
                 return "back";
@@ -590,7 +607,7 @@ public class InputGetter {
             }
 
             System.out.print("\uD83E\uDD1D" +(i+1) + ". " + Trades.get(i).getRequester().getName() +
-                    " Offers "+ Trades.get(i).getReceiverItem().getName() + ext+ "\n");
+                    " Wants "+ Trades.get(i).getReceiverItem().getName() + ext+ "\n");
         }
 
         //printed all pending requests
@@ -615,14 +632,14 @@ public class InputGetter {
         String ext2 = "";
         String temp = "Permanent";
         if (Person.getPendingRequests().get(pendingRequestIndex).getRequesterItem() != null){
-            ext2 = " With your item " + Person.getPendingRequests().get(pendingRequestIndex).getRequesterItem().getName();
+            ext2 = " For your item " + Person.getPendingRequests().get(pendingRequestIndex).getRequesterItem().getName();
         }
 
         if (Person.getPendingRequests().get(pendingRequestIndex).getTemp()) { //if temporary
             temp = "Temporary";
         }
         System.out.println("\uD83D\uDFE9 Requester: " + Trades.get(pendingRequestIndex).getRequester().getName() + "\n" +
-                "For item: " + Trades.get(pendingRequestIndex).getReceiverItem().getName() + ext2 +
+                "Wants item: " + Trades.get(pendingRequestIndex).getReceiverItem().getName() + ext2 +
                 "\n\uD83D\uDCACMessage:" + Trades.get(pendingRequestIndex).getMessage() +
                 "\n\nThis trade will be " + temp + ".\n");
 

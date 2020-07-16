@@ -302,8 +302,9 @@ public class AdminInputGetter {
             allUsers.unPseudoFreeze(chosenUser);
             allUsers.unfreeze(chosenUser);
             //if they requested to be unfrozen, they will be removed from the frozen request list
-            for (User frozenRequest : frozenRequests) {
-                if (frozenRequest.getName().equals(chosenUser.getName())) {
+
+            for (int i=0 ; i < frozenRequests.size(); i++){
+                if (frozenRequests.get(i).getName().equals(chosenUser.getName())) {
                     removeFromfrozenRequest(chosenUser);
                 }
             }
