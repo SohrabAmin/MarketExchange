@@ -42,6 +42,8 @@ public class TradeSystem {
         //reads the file and populates UserManager allUsers with the Users stored in UserList.ser
         UserWriting.demoUserRead("UserList.ser", allUsers);
 
+
+
         //If there is no current User, prompts log in and prompts the correct menu depending on the type of Account
         while (currentUser == null) {
             LogInSystem system1 = new LogInSystem(allUsers, allAdmins);
