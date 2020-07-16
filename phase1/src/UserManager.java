@@ -417,5 +417,13 @@ public class UserManager extends AccountManager {
         Integer temp = request.getDate().get(Calendar.WEEK_OF_YEAR);
         user.getWeeklyRequestLimit().get(temp).add(request);
     }
+    public void addOutboundRequest (User user, TradeRequest request){
+        user.getOutboundRequests().add(request);
+
+    }
+    public void RemoveFromOutboundRequest (User user, TradeRequest request){
+        user.getOutboundRequests().remove(request);
+
+    }
 
 }

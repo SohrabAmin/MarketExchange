@@ -8,7 +8,7 @@ import java.util.List;
 public class TradeRequest {
     private User requester;
     private User receiver;
-    private int requestType;
+    private int requestType;//1 way or 2 way
     private Item requesterItem;
     private Item receiverItem;
     private String message;

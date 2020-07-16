@@ -205,6 +205,16 @@ public class InputGetter {
         return null;
     }
 
+
+    /**
+     * Prints out all items that we have in the program
+     *
+     * @param user the User that wants to see their inventory
+     * @param allUsers the UserManager which stores the User user
+     * @param allItems stores all the items in the system
+     * @return returns a User which will prompt the main menu
+     */
+
     public void DisplayBrowse (User user, ItemManager allItems, UserManager allUsers){
 
         List<Item> allItems2 = allItems.getSystemInventory();
@@ -296,10 +306,10 @@ public class InputGetter {
      *         returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
      *                 main menu option
      */
-    public Object Trade(User user, ItemManager allItems, TradeRequestManager allTradeRequests, UserManager allUsers) {
+    public Object Trade(User user, ItemManager allItems, TradeRequestManager allTradeRequests, UserManager allUsers, AdminManager allAdmins) {
         Scanner sc = new Scanner(System.in);    //System.in is a standard input stream
 
-        if (user.getEligibility() >= allUsers.getLentMinusBorrowedThreshold()){
+        if (user.getEligibility() >= allAdmins.getLentMinusBorrowedThreshold()){
             System.out.print("You are not eligible to do a trade! Sorry!\n");
             return user;
         }
@@ -307,7 +317,7 @@ public class InputGetter {
         //if eligible
 
         Calendar today = Calendar.getInstance(); //get today's date
-        boolean limit =  allUsers.checkWeeklyRequestLimit( user, today);
+        boolean limit =  allUsers.checkWeeklyRequestLimit(allAdmins,  user, today);
         if (!limit){
             System.out.print("You have exceeded the weekly request limit! Can't make another trade! Sorry! \n");
         return user;
@@ -398,8 +408,14 @@ public class InputGetter {
             System.out.print("\nPlease enter '1' to confirm this trade or '2' to cancel the current trade and restart.\n");
             String confirmation = sc.nextLine();
             if (confirmation.equals("1")) {
+
+
                 TradeRequest trades = new TradeRequest(1, user, tradeItem.getOwner(), myList, message, trade, today);
                 allUsers.addToWeeklyRequestLimit(user, trades);
+                allUsers.addOutboundRequest(user, trades);
+
+
+
 
                 allTradeRequests.receiveTradeRequest(allUsers, trades);
                 System.out.print("\nTrade request has been sent successfully.\n");
@@ -454,6 +470,8 @@ public class InputGetter {
                 myList.add(tradeItem);
                 TradeRequest request = new TradeRequest(2, user, tradeItem.getOwner(), myList, message, trade, today);
                 allTradeRequests.receiveTradeRequest(allUsers, request);
+                allUsers.addOutboundRequest(user, request);
+                allUsers.addToWeeklyRequestLimit(user, request);
                 System.out.print("\nTrade request has been sent successfully.\n");
                 return "back";
             } else if (confirmation.equals("2")){
@@ -677,9 +695,11 @@ public class InputGetter {
             return null;
         } else if (nextInput.equals("1")) { //if trade is approved
             ApprovedTrade( user, allUsers, allMeetings, request,  allTransactions);
+            allUsers.RemoveFromOutboundRequest(user, request);
             return null;
         } else if (nextInput.equals("2")) { //if item is rejected
             RejectTrade(user, allUsers, request);
+            allUsers.RemoveFromOutboundRequest(user, request);
             return null;
         } else {
             System.out.print("\uD83E\uDDD0 What was that? Please try again!\n");
@@ -931,7 +951,7 @@ public class InputGetter {
                 if (input.equals("1")) { //if they approve
                     //need another method for usermanager so that transactions in progress but meeting is set
                     System.out.print("Your meeting has been set!\n");
-                    allTransactions.updateTransactionStatus(allItems, allUsers, selectedT, 1);
+                    allTransactions.updateTransactionStatus(allItems, allUsers,allAdmins,  selectedT, 1);
 
 
                 } else if (input.equals(("2"))) {
@@ -946,8 +966,8 @@ public class InputGetter {
                     //here is where the transaction gets cancelled because they couldnt make up their mind
                     if (tt.getInitialMeeting().geteditHistory(user.getName())  == allAdmins.getMeetingEditThreshold()){
                         //one person reached 3 edits, its time to delete this transaction
-                        allTransactions.handleCancelledTrade(allUsers, selectedT);
-                        allTransactions.updateTransactionStatus(allItems, allUsers, selectedT, 4) ;
+                        allTransactions.handleCancelledTrade(allAdmins, allUsers, selectedT);
+                        allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 4) ;
                         System.out.print("\uD83D\uDE22 Sorry! You couldn't agree on a time so we deleted the transaction!\n" +
                                 "Please try again!\n");
                         return user;
@@ -971,7 +991,7 @@ public class InputGetter {
 
                     //need another method for usermanager so that transactions in progress but meeting is set
                     System.out.print("Your meeting has been cancelled!\n");
-                    allTransactions.updateTransactionStatus(allItems, allUsers, selectedT, 4);
+                    allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins,  selectedT, 4);
 
                 } else {
 
@@ -1000,7 +1020,7 @@ public class InputGetter {
             String input = sc1.nextLine();
             if (input.equals("1")) { //if they approve
                 //need another method for usermanager so that transactions in progress but meeting is set
-                allTransactions.updateTransactionStatus(allItems, allUsers, selectedT, 1);
+                allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 1);
 
 
             } else if (input.equals(("2"))) { //they want to propose a new time
@@ -1011,8 +1031,8 @@ public class InputGetter {
                 //here is where the transaction gets cancelled because they couldnt make up their mind
                 if (tt2.getInitialMeeting().geteditHistory(user.getName())  == 3 ){
                     //one person reached 3 edits, its time to delete this transaction
-                    allTransactions.handleCancelledTrade(allUsers, selectedT);
-                    allTransactions.updateTransactionStatus(allItems, allUsers, selectedT, 4) ;
+                    allTransactions.handleCancelledTrade(allAdmins, allUsers, selectedT);
+                    allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins,  selectedT, 4) ;
                     System.out.print("\uD83D\uDE22 Sorry! You couldn't agree on a time so we deleted the transaction!\n" +
                             "Please try again!\n");
                     return user;
@@ -1053,7 +1073,7 @@ public class InputGetter {
      */
     public Object confirmMeetings(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests,
                            UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                           AdminInputGetter admininputgetter) {
+                           AdminInputGetter admininputgetter, AdminManager allAdmins) {
         System.out.print("Please select 1 for all your initial pending meetings and 2 for all return meetings\n");
         Scanner sc4 = new Scanner(System.in);    //System.in is a standard input stream
         String selection = sc4.nextLine();
@@ -1102,11 +1122,11 @@ public class InputGetter {
                     System.out.print("\uD83E\uDD29 Looks like the meeting was confirmed by both sides!\n ");
 
                     if (!selectedTransaction.getTemp()) { //if it was a permenant transaction
-                        allTransactions.updateTransactionStatus(allItems, allUsers, selectedTransaction, 3);
+                        allTransactions.updateTransactionStatus(allItems, allUsers,allAdmins, selectedTransaction, 3);
 
                     } else if (selectedTransaction.getTemp()) {
                         //if it was a temporary meeting, then I need to set up a second meeting
-                        allTransactions.updateTransactionStatus(allItems, allUsers, selectedTransaction, 2);
+                        allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 2);
                         //by now, the second agreed upon meeting is set for both users
                         Calendar date = selectedTransaction.getInitialMeeting().getDate();
                         date.add(Calendar.MONTH, 1);
@@ -1115,21 +1135,12 @@ public class InputGetter {
                         System.out.print("REMINDER: You need to return the borrowed item(s) back by " + returnMeeting.toString() + "\n");
                         //need to add return meeting to transactions
                         allTransactions.setFinalMeeting(selectedTransaction, returnMeeting);
-                        //-----
-//                                    //adding the return meeting to both people
-//                                    allUsers.addToSecondAgreedUponMeeting(user, selectedTransaction);
-//                                    //need to find the user that is on the other side
-//                                    String otherPartyName = selectedTransaction.getInitialMeeting().getOtherSide(user.name);
-//                                    for (int i = 0; i < allUsers.getAllUsers().size(); i++){
-//                                        if (allUsers.getAllUsers().get(i).getName().equals(otherPartyName)) {
-//                                            allUsers.addToSecondAgreedUponMeeting(allUsers.getAllUsers().get(i), selectedTransaction);
-//                                        }
-//                                    }
+
                     }
                 }
             } else if (selection.equals("2") || selection.equals("3")) { //cancelling
                 System.out.print("\u2639 We are sorry to hear that! Better luck next time!\n");
-                allTransactions.updateTransactionStatus(allItems, allUsers, selectedTransaction, 4);
+                allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 4);
 
             }
         } else if (selection.equals("2")) {
@@ -1157,11 +1168,7 @@ public class InputGetter {
             Transaction selectedTransaction = userTransactions.get(meetingIndex);
             System.out.print("You have selected:\n");
             Integer confirmed = selectedTransaction.getInitialMeeting().userconfirmed(user.getName());
-//                        if (confirmed == 1)
-//                        {
-//                            System.out.print("You have already confirmed this meeting!\n");
-//                            return user;
-//                        }
+//
             System.out.print(selectedTransaction.getInitialMeeting() + " With: " + selectedTransaction.getInitialMeeting().getOtherSide(user.getName()) + "\n");
             System.out.print("Press 1 to confirm that the meeting is done!\n");
             String action = sc11.nextLine();
@@ -1176,7 +1183,7 @@ public class InputGetter {
                     //looks like the meeting was confirmed by both parties!
                     System.out.print("\uD83E\uDD29 Looks like the meeting was confirmed by both sides!\n ");
 
-                    allTransactions.updateTransactionStatus(allItems, allUsers, selectedTransaction, 3);
+                    allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 3);
                 }
             }
 
@@ -1185,6 +1192,34 @@ public class InputGetter {
         return user;
     }
 
+
+    /**
+     * Prints pending outbound requests
+     *
+     * @param user frozen user sending the request to admin to be unfrozen
+     * @return returns User so that they can be redirected to the main menu
+     */
+
+
+    public Object PrintOutboundRequest (User user) {
+        System.out.print("Here is the status of your pending outbound requests:\n");
+        List<TradeRequest> outbound = user.getOutboundRequests();
+
+        if (outbound.size() == 0) {
+            System.out.print("You do not have any pending outbound requests!\n");
+            return user;
+        }
+        for (int i = 0; i < outbound.size(); i++) {
+            String extension = " ";
+            if (outbound.get(i).getRequestType() == 2)
+                extension = " in exchange for: " + outbound.get(i).getRequesterItem().getName();
+
+            System.out.print(Integer.toString(i + 1) + " . You requested for : " + outbound.get(i).getReceiverItem().getName() + extension + "\n");
+
+        }
+        return user;
+
+    }
 
 
 
@@ -1333,9 +1368,9 @@ public class InputGetter {
                     }
                     return user;
                 } else if (a.equals("4")) { //choose the id?
-                    Object temp = system1.Trade(user, allItems, allTradeRequests, allUsers);
+                    Object temp = system1.Trade(user, allItems, allTradeRequests, allUsers, allAdmins);
                     while (temp == null) {
-                        temp = system1.Trade(user, allItems, allTradeRequests, allUsers);
+                        temp = system1.Trade(user, allItems, allTradeRequests, allUsers, allAdmins);
                     }
                     //else input was "back", returns to main menu
                     return user;
@@ -1377,19 +1412,17 @@ public class InputGetter {
                         //first print all the meeting that are pending for this user
                     Object temp = system1.confirmMeetings( user,  allItems,  system1,  allTradeRequests,
                             allUsers,  allMeetings,  allTransactions,
-                            admininputgetter);
+                            admininputgetter, allAdmins);
                     while (temp == null) {
                         temp = system1.confirmMeetings( user,  allItems,  system1,  allTradeRequests,
                                 allUsers,  allMeetings,  allTransactions,
-                                admininputgetter);
+                                admininputgetter, allAdmins);
                     }
                     return user;
 
                 } else if (a.equals("15")) {
-                System.out.print("Here is the status of your outbound requests:\n");
-
-
-            }
+                    return PrintOutboundRequest (user);
+                }
             else if (a.equals("16")) {
                     //logout
                     return null;
