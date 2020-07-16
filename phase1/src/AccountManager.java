@@ -3,11 +3,11 @@
  */
 public abstract class AccountManager {
     private int lentMinusBorrowedThreshold = 1;
-    private int meetingEditThreshold = 3;
+    private int meetingEditThreshold = 1;
 
     // TODO: decide on a default value for the following thresholds
-    private int weeklyTransactionLimit = 3;
-    private int incompleteTransactionLimit = 1;
+    private int weeklyTransactionLimit = 7;
+    private int incompleteTransactionLimit = 3;
 
     /**
      * Verifies inputted login credentials

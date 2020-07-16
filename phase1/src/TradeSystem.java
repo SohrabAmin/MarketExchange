@@ -174,7 +174,7 @@ public class TradeSystem {
             while (loggedIn != null) {
                 if (loggedIn instanceof User) {
                     loggedIn = inputgetter.mainMenu((User) loggedIn, AllItems, inputgetter,
-                            allTradeRequests, allUsers, allMeetings, allTransactions, admininputgetter);
+                            allTradeRequests, allUsers, allMeetings, allTransactions, admininputgetter, allAdmins);
                 } else if (loggedIn instanceof Admin) {
                     loggedIn = admininputgetter.mainMenu((Admin) loggedIn, allAdmins, allUsers, AllItems);
                 } else if (loggedIn.equals("exit")) {

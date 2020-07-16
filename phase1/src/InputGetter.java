@@ -1,4 +1,3 @@
-import javax.jws.Oneway;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -192,6 +191,14 @@ public class InputGetter {
         } catch(NumberFormatException e) {
             return null;
         }
+
+        //make sure this item is not borrowed
+        if (!in.get((Integer) input - 1).getOwner().getName().equals(user.getName())){
+            System.out.print("You cannot remove item you have borrowed! Not removing!\n");
+            return null;
+
+
+        }
         //remove the item they requested from inventory
         allUsers.removeFromInventory(allUsers.getUser(user), in.get((Integer) input - 1));
         System.out.println("Item has been removed successfully!");
@@ -306,11 +313,6 @@ public class InputGetter {
         return user;
         }
 
-
-
-
-
-
         System.out.println("Here are the available items!:");
         DisplayBrowse ( user,  allItems,  allUsers);
 
@@ -398,10 +400,6 @@ public class InputGetter {
             if (confirmation.equals("1")) {
                 TradeRequest trades = new TradeRequest(1, user, tradeItem.getOwner(), myList, message, trade, today);
                 allUsers.addToWeeklyRequestLimit(user, trades);
-
-
-
-
 
                 allTradeRequests.receiveTradeRequest(allUsers, trades);
                 System.out.print("\nTrade request has been sent successfully.\n");
@@ -869,7 +867,7 @@ public class InputGetter {
      *                 main menu option
      */
     public Object PendingTransactionProcess(User user, ItemManager allItems, UserManager allUsers, MeetingManager
-            allMeetings, TransactionManager allTransactions){
+            allMeetings, TransactionManager allTransactions, AdminManager allAdmins){
 
         List <Transaction> pendingTransactions = user.getPendingTrades();
 
@@ -939,11 +937,14 @@ public class InputGetter {
                 } else if (input.equals(("2"))) {
                     //they want to propose a new time
                     //provide warning if the is at their 3rd strike
-                    if (tt.getInitialMeeting().geteditHistory(user.getName())+1  == 3 )
+
+
+                    //Daniel EDIT MEEEEEEE
+                    if (tt.getInitialMeeting().geteditHistory(user.getName())+1  == allAdmins.getMeetingEditThreshold())
                         System.out.print("\u2622 This is the last time you can propose a meeting.\nIf rejected, this transaction will be cancelled\n");
 
                     //here is where the transaction gets cancelled because they couldnt make up their mind
-                    if (tt.getInitialMeeting().geteditHistory(user.getName())  == 3 ){
+                    if (tt.getInitialMeeting().geteditHistory(user.getName())  == allAdmins.getMeetingEditThreshold()){
                         //one person reached 3 edits, its time to delete this transaction
                         allTransactions.handleCancelledTrade(allUsers, selectedT);
                         allTransactions.updateTransactionStatus(allItems, allUsers, selectedT, 4) ;
@@ -1037,6 +1038,157 @@ public class InputGetter {
     }
 
     /**
+     * Displays the pending transactions that the User user has. It will allow users to approve or edit the transactions
+     * they currently have pending.
+     *
+     * @param user the User that wants to view their pending transactions
+     * @param allItems ItemManager that stores the system's inventory
+     * @param allUsers UserManager that stores all the Users in the system
+     * @param allMeetings MeetingManager that deals with the creation of meetings
+     * @param allTransactions TransactionManager that stores all the information of all system transactions
+     * @return depending on what the User inputs it will return different objects:
+     *         returns null to tell mainmenu() to call PendingTransactionProcess() again
+     *         returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
+     *                 main menu option
+     */
+    public Object confirmMeetings(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests,
+                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
+                           AdminInputGetter admininputgetter) {
+        System.out.print("Please select 1 for all your initial pending meetings and 2 for all return meetings\n");
+        Scanner sc4 = new Scanner(System.in);    //System.in is a standard input stream
+        String selection = sc4.nextLine();
+
+        if (selection.equals("1")) {
+            List<Transaction> userTransactions = new ArrayList<>();
+            userTransactions = user.getAgreedUponMeeting();
+            if (userTransactions.size() == 0) {
+                System.out.print("No initial pending trade for you to confirm!\n");
+                return user;
+            }
+            System.out.print("Here are your pending meetings ready to be confirmed!\n");
+            //prints the pending meetings
+            for (int i = 0; i < userTransactions.size(); i++) {
+                String otherSide = "";
+                Integer confirmed = userTransactions.get(i).getInitialMeeting().userconfirmed(user.getName());
+                String status = "";
+                if (confirmed == 1)
+                    status = " [CONFIRMED BY YOU] ";
+                System.out.print(Integer.toString(i + 1) + " . " + userTransactions.get(i).getInitialMeeting() + " With: " + userTransactions.get(i).getInitialMeeting().getOtherSide(user.getName()) + status + "\n");
+            }
+            System.out.print("Please enter the ID of the meeting you would like to confirm.\n");
+            Scanner sc11 = new Scanner(System.in);
+            int meetingIndex = (Integer.parseInt(sc11.nextLine())) - 1;
+            Transaction selectedTransaction = userTransactions.get(meetingIndex);
+            System.out.print("You have selected:\n");
+            Integer confirmed = selectedTransaction.getInitialMeeting().userconfirmed(user.getName());
+            if (confirmed == 1) {
+                System.out.print("You have already confirmed this meeting!\n");
+                return user;
+            }
+            System.out.print(selectedTransaction.getInitialMeeting() + " With: " + selectedTransaction.getInitialMeeting().getOtherSide(user.getName()) + "\n");
+            System.out.print("Press 1 to confirm that the meeting is done! Press 2 to cancel the meeting and press 3 if you got stood up\n");
+
+
+            String action = sc11.nextLine();
+            if (action.equals("1")) {
+                //confirm meeting by the user
+                selectedTransaction.getInitialMeeting().meetingConfirmed(user.getName());
+
+                System.out.print("Confirmed that the meeting occurred on " + selectedTransaction.getInitialMeeting() + "\n");
+
+                //lets check if both people have confirmed meeting
+                if (selectedTransaction.getInitialMeeting().confirmedByBothSides()) {
+                    //looks like the meeting was confirmed by both parties!
+                    System.out.print("\uD83E\uDD29 Looks like the meeting was confirmed by both sides!\n ");
+
+                    if (!selectedTransaction.getTemp()) { //if it was a permenant transaction
+                        allTransactions.updateTransactionStatus(allItems, allUsers, selectedTransaction, 3);
+
+                    } else if (selectedTransaction.getTemp()) {
+                        //if it was a temporary meeting, then I need to set up a second meeting
+                        allTransactions.updateTransactionStatus(allItems, allUsers, selectedTransaction, 2);
+                        //by now, the second agreed upon meeting is set for both users
+                        Calendar date = selectedTransaction.getInitialMeeting().getDate();
+                        date.add(Calendar.MONTH, 1);
+                        Meeting returnMeeting = new Meeting(date, selectedTransaction.getInitialMeeting().getPlace());
+                        returnMeeting.initialconfirm(user.getName(), selectedTransaction.getInitialMeeting().getOtherSide(user.getName()));
+                        System.out.print("REMINDER: You need to return the borrowed item(s) back by " + returnMeeting.toString() + "\n");
+                        //need to add return meeting to transactions
+                        allTransactions.setFinalMeeting(selectedTransaction, returnMeeting);
+                        //-----
+//                                    //adding the return meeting to both people
+//                                    allUsers.addToSecondAgreedUponMeeting(user, selectedTransaction);
+//                                    //need to find the user that is on the other side
+//                                    String otherPartyName = selectedTransaction.getInitialMeeting().getOtherSide(user.name);
+//                                    for (int i = 0; i < allUsers.getAllUsers().size(); i++){
+//                                        if (allUsers.getAllUsers().get(i).getName().equals(otherPartyName)) {
+//                                            allUsers.addToSecondAgreedUponMeeting(allUsers.getAllUsers().get(i), selectedTransaction);
+//                                        }
+//                                    }
+                    }
+                }
+            } else if (selection.equals("2") || selection.equals("3")) { //cancelling
+                System.out.print("\u2639 We are sorry to hear that! Better luck next time!\n");
+                allTransactions.updateTransactionStatus(allItems, allUsers, selectedTransaction, 4);
+
+            }
+        } else if (selection.equals("2")) {
+            System.out.print("Here are your meetings to return items:\n");
+            List<Transaction> userTransactions = new ArrayList<>();
+            userTransactions = user.getSecondAgreedUponMeeting();
+
+            if (userTransactions.size() == 0) {
+                System.out.print("No pending trade for you to confirm!\n");
+                return user;
+            }
+            System.out.print("Here are your return pending meetings ready to be confirmed!\n");
+            //prints the pending meetings
+            for (int i = 0; i < userTransactions.size(); i++) {
+                String otherSide = "";
+                Integer confirmed = userTransactions.get(i).getReturnMeeting().userconfirmed(user.getName());
+                String status = "";
+                if (confirmed == 1)
+                    status = " [CONFIRMED BY YOU] ";
+                System.out.print(Integer.toString(i + 1) + " . " + userTransactions.get(i).getInitialMeeting() + " With: " + userTransactions.get(i).getInitialMeeting().getOtherSide(user.getName()) + status + "\n");
+            }
+            System.out.print("Please enter the ID of the meeting you would like to confirm.\n");
+            Scanner sc11 = new Scanner(System.in);
+            int meetingIndex = (Integer.parseInt(sc11.nextLine())) - 1;
+            Transaction selectedTransaction = userTransactions.get(meetingIndex);
+            System.out.print("You have selected:\n");
+            Integer confirmed = selectedTransaction.getInitialMeeting().userconfirmed(user.getName());
+//                        if (confirmed == 1)
+//                        {
+//                            System.out.print("You have already confirmed this meeting!\n");
+//                            return user;
+//                        }
+            System.out.print(selectedTransaction.getInitialMeeting() + " With: " + selectedTransaction.getInitialMeeting().getOtherSide(user.getName()) + "\n");
+            System.out.print("Press 1 to confirm that the meeting is done!\n");
+            String action = sc11.nextLine();
+            if (action.equals("1")) {
+                //confirm meeting by the user
+                selectedTransaction.getReturnMeeting().meetingConfirmed(user.getName());
+
+                System.out.print("Confirmed that the meeting occurred on " + selectedTransaction.getReturnMeeting() + "\n");
+
+                //lets check if both people have confirmed meeting
+                if (selectedTransaction.getReturnMeeting().confirmedByBothSides()) {
+                    //looks like the meeting was confirmed by both parties!
+                    System.out.print("\uD83E\uDD29 Looks like the meeting was confirmed by both sides!\n ");
+
+                    allTransactions.updateTransactionStatus(allItems, allUsers, selectedTransaction, 3);
+                }
+            }
+
+
+        }
+        return user;
+    }
+
+
+
+
+    /**
      * Displays the main menu, and prompts user for input depending on what they want to do.
      *
      * Unfrozen Users are able to do the following:
@@ -1064,7 +1216,7 @@ public class InputGetter {
      */
     public Object mainMenu(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests,
                            UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                           AdminInputGetter admininputgetter) {
+                           AdminInputGetter admininputgetter, AdminManager allAdmins) {
         Scanner sc = new Scanner(System.in);    //System.in is a standard input stream
         System.out.print("----------------------------------------------------------------------------------------------" +
                 "\n\uD83D\uDC4B Welcome back, " + user.getName() + "!\n");
@@ -1220,151 +1372,25 @@ public class InputGetter {
                     }
                     return user;
                 }else if (a.equals("13")){
-                    return system1.PendingTransactionProcess(user,  allItems, allUsers, allMeetings, allTransactions);
+                    return system1.PendingTransactionProcess(user,  allItems, allUsers, allMeetings, allTransactions,allAdmins );
                 } else if (a.equals("14")){ //confirm that the meeting went through
                         //first print all the meeting that are pending for this user
-
-                    System.out.print("Please select 1 for all your initial pending meetings and 2 for all return meetings\n");
-                    Scanner sc4 = new Scanner(System.in);    //System.in is a standard input stream
-                    String selection =  sc4.nextLine();
-
-                    if (selection.equals("1")) {
-                        List<Transaction> userTransactions = new ArrayList<>();
-                        userTransactions = user.getAgreedUponMeeting();
-                        if (userTransactions.size() == 0)
-                        {
-                            System.out.print("No initial pending trade for you to confirm!\n");
-                            return user;
-                        }
-                        System.out.print("Here are your pending meetings ready to be confirmed!\n");
-                        //prints the pending meetings
-                        for (int i = 0; i < userTransactions.size(); i++) {
-                            String otherSide = "";
-                            Integer confirmed = userTransactions.get(i).getInitialMeeting().userconfirmed(user.getName());
-                            String status = "";
-                            if (confirmed == 1)
-                                status = " [CONFIRMED BY YOU] ";
-                            System.out.print(Integer.toString(i + 1) + " . " + userTransactions.get(i).getInitialMeeting() + " With: " + userTransactions.get(i).getInitialMeeting().getOtherSide(user.getName()) + status + "\n");
-                        }
-                        System.out.print("Please enter the ID of the meeting you would like to confirm.\n");
-                        Scanner sc11 = new Scanner(System.in);
-                        int meetingIndex = (Integer.parseInt(sc11.nextLine())) - 1;
-                        Transaction selectedTransaction = userTransactions.get(meetingIndex);
-                        System.out.print("You have selected:\n");
-                        Integer confirmed = selectedTransaction.getInitialMeeting().userconfirmed(user.getName());
-                        if (confirmed == 1)
-                        {
-                            System.out.print("You have already confirmed this meeting!\n");
-                            return user;
-                        }
-                        System.out.print(selectedTransaction.getInitialMeeting() + " With: " + selectedTransaction.getInitialMeeting().getOtherSide(user.getName()) + "\n");
-                        System.out.print("Press 1 to confirm that the meeting is done! Press 2 to cancel the meeting and press 3 if you got stood up\n");
-
-
-                        String action = sc11.nextLine();
-                        if (action.equals("1")) {
-                            //confirm meeting by the user
-                            selectedTransaction.getInitialMeeting().meetingConfirmed(user.getName());
-
-                            System.out.print("Confirmed that the meeting occurred on " + selectedTransaction.getInitialMeeting()+"\n");
-
-                            //lets check if both people have confirmed meeting
-                            if (selectedTransaction.getInitialMeeting().confirmedByBothSides()) {
-                                //looks like the meeting was confirmed by both parties!
-                                System.out.print("\uD83E\uDD29 Looks like the meeting was confirmed by both sides!\n ");
-                                if (!selectedTransaction.getTemp()) { //if it was a permenant transaction
-                                    allTransactions.updateTransactionStatus(allItems, allUsers, selectedTransaction, 3);
-
-                                } else if (selectedTransaction.getTemp()){
-                                    //if it was a temporary meeting, then I need to set up a second meeting
-                                    allTransactions.updateTransactionStatus(allItems, allUsers, selectedTransaction, 2);
-                                    //by now, the second agreed upon meeting is set for both users
-                                    Calendar date = selectedTransaction.getInitialMeeting().getDate();
-                                    date.add(Calendar.MONTH, 1);
-                                    Meeting returnMeeting = new Meeting(date, selectedTransaction.getInitialMeeting().getPlace());
-                                    returnMeeting.initialconfirm (user.getName(), selectedTransaction.getInitialMeeting().getOtherSide(user.getName()));
-                                    System.out.print("REMINDER: You need to return the borrowed item(s) back by " + returnMeeting.toString() + "\n");
-                                    //need to add return meeting to transactions
-                                    allTransactions.setFinalMeeting(selectedTransaction, returnMeeting);
-                                    //-----
-//                                    //adding the return meeting to both people
-//                                    allUsers.addToSecondAgreedUponMeeting(user, selectedTransaction);
-//                                    //need to find the user that is on the other side
-//                                    String otherPartyName = selectedTransaction.getInitialMeeting().getOtherSide(user.name);
-//                                    for (int i = 0; i < allUsers.getAllUsers().size(); i++){
-//                                        if (allUsers.getAllUsers().get(i).getName().equals(otherPartyName)) {
-//                                            allUsers.addToSecondAgreedUponMeeting(allUsers.getAllUsers().get(i), selectedTransaction);
-//                                        }
-//                                    }
-                                }
-                            }
-                        }
-                        else if (selection.equals("2") || selection.equals("3")){ //cancelling
-                            System.out.print("\u2639 We are sorry to hear that! Better luck next time!\n");
-                            allTransactions.updateTransactionStatus(allItems, allUsers, selectedTransaction, 4);
-
-                        }
+                    Object temp = system1.confirmMeetings( user,  allItems,  system1,  allTradeRequests,
+                            allUsers,  allMeetings,  allTransactions,
+                            admininputgetter);
+                    while (temp == null) {
+                        temp = system1.confirmMeetings( user,  allItems,  system1,  allTradeRequests,
+                                allUsers,  allMeetings,  allTransactions,
+                                admininputgetter);
                     }
-                    else if (selection.equals("2")){
-                        System.out.print("Here are your meetings to return items:\n");
-                        List<Transaction> userTransactions = new ArrayList<>();
-                        userTransactions = user.getSecondAgreedUponMeeting();
+                    return user;
 
-                        if (userTransactions.size() == 0)
-                        {
-                            System.out.print("No pending trade for you to confirm!\n");
-                            return user;
-                        }
-                        System.out.print("Here are your return pending meetings ready to be confirmed!\n");
-                        //prints the pending meetings
-                        for (int i = 0; i < userTransactions.size(); i++) {
-                            String otherSide = "";
-                            Integer confirmed = userTransactions.get(i).getReturnMeeting().userconfirmed(user.getName());
-                            String status = "";
-                            if (confirmed == 1)
-                                status = " [CONFIRMED BY YOU] ";
-                            System.out.print(Integer.toString(i + 1) + " . " + userTransactions.get(i).getInitialMeeting() + " With: " + userTransactions.get(i).getInitialMeeting().getOtherSide(user.getName()) + status + "\n");
-                        }
-                        System.out.print("Please enter the ID of the meeting you would like to confirm.\n");
-                        Scanner sc11 = new Scanner(System.in);
-                        int meetingIndex = (Integer.parseInt(sc11.nextLine())) - 1;
-                        Transaction selectedTransaction = userTransactions.get(meetingIndex);
-                        System.out.print("You have selected:\n");
-                        Integer confirmed = selectedTransaction.getInitialMeeting().userconfirmed(user.getName());
-//                        if (confirmed == 1)
-//                        {
-//                            System.out.print("You have already confirmed this meeting!\n");
-//                            return user;
-//                        }
-                        System.out.print(selectedTransaction.getInitialMeeting() + " With: " + selectedTransaction.getInitialMeeting().getOtherSide(user.getName()) + "\n");
-                        System.out.print("Press 1 to confirm that the meeting is done!\n");
-                        String action = sc11.nextLine();
-                        if (action.equals("1")) {
-                            //confirm meeting by the user
-                            selectedTransaction.getReturnMeeting().meetingConfirmed(user.getName());
-
-                            System.out.print("Confirmed that the meeting occurred on " + selectedTransaction.getReturnMeeting()+"\n");
-
-                            //lets check if both people have confirmed meeting
-                            if (selectedTransaction.getReturnMeeting().confirmedByBothSides()) {
-                                //looks like the meeting was confirmed by both parties!
-                                System.out.print("\uD83E\uDD29 Looks like the meeting was confirmed by both sides!\n ");
-
-                                    allTransactions.updateTransactionStatus(allItems, allUsers, selectedTransaction, 3);
-                                }
-                            }
-                        }
-                    else if (a.equals("15")){
-                        System.out.print("Here is the status of your outbound requests:\n");
-                        //Tina
+                } else if (a.equals("15")) {
+                System.out.print("Here is the status of your outbound requests:\n");
 
 
-
-
-
-
-                    }
-                } else if (a.equals("16")) {
+            }
+            else if (a.equals("16")) {
                     //logout
                     return null;
                 }
