@@ -485,10 +485,10 @@ public class AdminInputGetter {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         //prints the current thresholds of the system
         System.out.println("\nHere are the current thresholds:");
-        System.out.println("Lent - borrow threshold: " + allUsers.getLentMinusBorrowedThreshold());
-        System.out.println("Weekly transaction limit: " + allUsers.getWeeklyTransactionLimit());
-        System.out.println("Incomplete transaction limit: " + allUsers.getIncompleteTransactionLimit());
-        System.out.println("Meeting edits threshold: " + allUsers.getMeetingEditThreshold());
+        System.out.println("Lent - borrow threshold: " + allAdmins.getLentMinusBorrowedThreshold());
+        System.out.println("Weekly transaction limit: " + allAdmins.getWeeklyTransactionLimit());
+        System.out.println("Incomplete transaction limit: " + allAdmins.getIncompleteTransactionLimit());
+        System.out.println("Meeting edits threshold: " + allAdmins.getMeetingEditThreshold());
         //prompts user to enter what threshold they wish to edit
         System.out.println("\nWhich threshold would you like to edit? Please enter the number beside the option.");
         System.out.println("1. Lent - borrow threshold\n2. Weekly Transaction Limit\n3. Incomplete Transaction Limit" +
@@ -537,22 +537,18 @@ public class AdminInputGetter {
         }
         if (newThreshold instanceof Integer) {
             if ((Integer) thresholdOption == 1) {
-                allUsers.setLentMinusBorrowedThreshold((Integer) newThreshold);
                 allAdmins.setLentMinusBorrowedThreshold((Integer) newThreshold);
                 System.out.println("\nThe threshold has been changed successfully. The lend - borrow threshold is now: " +
                         newThreshold + ".");
             } else if ((Integer) thresholdOption == 2) {
-                allUsers.setWeeklyTransactionLimit((Integer) newThreshold);
                 allAdmins.setWeeklyTransactionLimit((Integer) newThreshold);
                 System.out.println("\nThe threshold has been changed successfully. The weekly transaction limit " +
                         "threshold is now: " + newThreshold + ".");
             } else if ((Integer) thresholdOption == 3) {
-                allUsers.setIncompleteTransactionLimit((Integer) newThreshold);
                 allAdmins.setIncompleteTransactionLimit((Integer) newThreshold);
                 System.out.println("\nThe threshold has been changed successfully. The incomplete transaction limit " +
                         "threshold is now: " + newThreshold + ".");
             } else { //thresholdOption == 4
-                allUsers.setMeetingEditThreshold((Integer) newThreshold);
                 allAdmins.setMeetingEditThreshold((Integer) newThreshold);
                 System.out.println("\nThe threshold has been changed successfully. The meeting edits " +
                         "threshold is now: " + newThreshold + ".");

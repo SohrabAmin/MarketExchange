@@ -5,8 +5,14 @@ import java.util.List;
 /**
  * Keeps track of and adds Admins
  */
-public class AdminManager extends AccountManager implements Serializable {
+public class AdminManager implements Serializable {
     private List<Admin> allAdmins;
+
+    // system thresholds
+    private int lentMinusBorrowedThreshold = 1;
+    private int meetingEditThreshold = 3;
+    private int weeklyTransactionLimit = 7;
+    private int incompleteTransactionLimit = 3;
 
     /**
      * Constructs the instance of AdminManager without needing an initial admin. It will
@@ -48,11 +54,80 @@ public class AdminManager extends AccountManager implements Serializable {
     }
 
     /**
-     * Setter for the list of all Users in the system. Only AdminReadWrite should access this method.
+     * Getter for the threshold that dictates how much more a user has to have lent than borrowed, before trading
      *
-     * @param adminList new list of all Users
+     * @return current threshold
      */
-    void setAllAdmins(List<Admin> adminList) {
-        this.allAdmins = adminList;
+    public int getLentMinusBorrowedThreshold() {
+        return lentMinusBorrowedThreshold;
+    }
+
+    /**
+     * Setter for the threshold that dictates how much more a user has to have lent than borrowed, before trading;
+     * only an Admin should change this threshold
+     *
+     * @param lentMinusBorrowedThreshold new threshold
+     */
+    public void setLentMinusBorrowedThreshold(int lentMinusBorrowedThreshold) {
+        this.lentMinusBorrowedThreshold = lentMinusBorrowedThreshold;
+    }
+
+    /**
+     * Getter for the threshold that dictates how many times each user can edit a meeting before the meeting is
+     * cancelled
+     *
+     * @return current threshold
+     */
+    public int getMeetingEditThreshold() {
+        return meetingEditThreshold;
+    }
+
+    /**
+     * Setter for the threshold that dictates how many times each user can edit a meeting before the meeting is
+     * cancelled; only an Admin should change this threshold
+     *
+     * @param meetingEditThreshold new threshold
+     */
+    public void setMeetingEditThreshold(int meetingEditThreshold) {
+        this.meetingEditThreshold = meetingEditThreshold;
+    }
+
+    /**
+     * Getter for the threshold that dictates the number of transactions any one User can conduct in one week
+     *
+     * @return current threshold
+     */
+    public int getWeeklyTransactionLimit() {
+        return weeklyTransactionLimit;
+    }
+
+    /**
+     * Setter for the threshold that dictates the number of transactions any one User can conduct in one week; only an
+     * Admin should change this threshold
+     *
+     * @param weeklyTransactionLimit new threshold
+     */
+    public void setWeeklyTransactionLimit(int weeklyTransactionLimit) {
+        this.weeklyTransactionLimit = weeklyTransactionLimit;
+    }
+
+    /**
+     * Getter for the threshold that dictates how many transactions a User can leave incomplete before their account is
+     * frozen
+     *
+     * @return current threshold
+     */
+    public int getIncompleteTransactionLimit() {
+        return incompleteTransactionLimit;
+    }
+
+    /**
+     * Setter for the threshold that dictates how many transactions a User can leave incomplete before their account is
+     * frozen
+     *
+     * @param incompleteTransactionLimit new threshold
+     */
+    public void setIncompleteTransactionLimit(int incompleteTransactionLimit) {
+        this.incompleteTransactionLimit = incompleteTransactionLimit;
     }
 }

@@ -3,7 +3,7 @@ import java.util.*;
 /**
  * Creates, keeps track of, and changes values of Users.
  */
-public class UserManager extends AccountManager {
+public class UserManager {
     private List<User> userList;
 
     /**
@@ -90,16 +90,6 @@ public class UserManager extends AccountManager {
      */
     public void addToDraftInventory(User user, Item item) {
         user.getDraftInventory().add(item);
-    }
-
-    /**
-     * Removes an Item from a User's draft inventory
-     *
-     * @param user User whose draft inventory will have an Item removed from it
-     * @param item Item to be removed from this User's draft inventory
-     */
-    public void removeFromDraftInventory(User user, Item item) {
-        user.getDraftInventory().remove(item);
     }
 
     /**

@@ -147,14 +147,6 @@ public class User extends Account {
         return pendingTrades;
     }
 
-//    /**
-//     * setter for the requests sent out by the user
-//     * @param outboundRequest to add Trade requests to the list of requests sent out by this user
-//     */
-//    public List <TradeRequest>  getOutboundRequest(TradeRequest outboundRequest) {
-//        return outboundRequests;
-//    }
-
     /**
      * getter for cancelled transactions
      * @return the cancelled transactions as a List
