@@ -29,16 +29,16 @@ import java.util.List;
 //        //either returns the saved AdminManager object with all the stored admin information
 //        //or creates a new AdminManager object with a default admin with user name Tina and password 123456
 //        //if the file AdminList.ser is empty
-//        allAdmins = adminWriting.demoAdminRead("AdminList.ser");
+//        allAdmins = AdminWriting.demoAdminRead("AdminList.ser");
 //        //either returns the saved TransactionManager object with all the stored Transactions
 //        //or creates a new Transaction object if file TransactionList.ser is empty
-//        allTransactions = transactionWriting.demoTransactionRead("TransactionList.ser");
+//        allTransactions = TransactionWriting.demoTransactionRead("TransactionList.ser");
 //        //either returns the saved TradeRequest object with all the stored Trade Requests
 //        //or creates a new TradeRequest object if file TradeRequestList.ser is empty
-//        allTradeRequests = tradeRequestWriting.demoTradeRequestRead("TradeRequestList.ser");
+//        allTradeRequests = TradeRequestWriting.demoTradeRequestRead("TradeRequestList.ser");
 //        //populates the system inventory in the initialized ItemManager AllItems with all the saved
 //        //items in the file ItemList.ser
-//        itemWriting.demoItemRead("ItemList.ser", AllItems);
+//        ItemWriting.demoItemRead("ItemList.ser", AllItems);
 //        //reads the file and populates UserManager allUsers with the Users stored in UserList.ser
 //        userWriting.demoUserRead("UserList.ser", allUsers);
 //
@@ -78,13 +78,13 @@ import java.util.List;
 //        //saves all the users in UserManager to an external file
 //        userWriting.demoUserSave("UserList.ser", allUsers);
 //        //saves current AdminManager object allAdmins to external file
-//        adminWriting.demoAdminSave("AdminList.ser", allAdmins);
+//        AdminWriting.demoAdminSave("AdminList.ser", allAdmins);
 //        //saves current TransactionManager object allTransactions to an external file
-//        transactionWriting.demoTransactionSave("TransactionList.ser", allTransactions);
+//        TransactionWriting.demoTransactionSave("TransactionList.ser", allTransactions);
 //        //saves the systemInventory in AllItems to an external file
-//        itemWriting.demoItemSave("ItemList.ser", AllItems);
+//        ItemWriting.demoItemSave("ItemList.ser", AllItems);
 //        //saves current TradeRequest object allTradeRequests to an external file
-//        tradeRequestWriting.demoTradeRequestSave("TradeRequestList.ser", allTradeRequests);
+//        TradeRequestWriting.demoTradeRequestSave("TradeRequestList.ser", allTradeRequests);
 //    }
 //}
 /**
@@ -114,16 +114,16 @@ public class TradeSystem {
         //either returns the saved AdminManager object with all the stored admin information
         //or creates a new AdminManager object with a default admin with user name Tina and password 123456
         //if the file AdminList.ser is empty
-        allAdmins = adminWriting.demoAdminRead("AdminList.ser");
+        allAdmins = AdminWriting.demoAdminRead("AdminList.ser");
         //either returns the saved TransactionManager object with all the stored Transactions
         //or creates a new Transaction object if file TransactionList.ser is empty
-        allTransactions = transactionWriting.demoTransactionRead("TransactionList.ser");
+        allTransactions = TransactionWriting.demoTransactionRead("TransactionList.ser");
         //either returns the saved TradeRequest object with all the stored Trade Requests
         //or creates a new TradeRequest object if file TradeRequestList.ser is empty
-        allTradeRequests = tradeRequestWriting.demoTradeRequestRead("TradeRequestList.ser");
+        allTradeRequests = TradeRequestWriting.demoTradeRequestRead("TradeRequestList.ser");
         //populates the system inventory in the initialized ItemManager AllItems with all the saved
         //items in the file ItemList.ser
-        itemWriting.demoItemRead("ItemList.ser", AllItems);
+        ItemWriting.demoItemRead("ItemList.ser", AllItems);
         //creating users to test
         allUsers.createUser("Tina", "123");
         allUsers.createUser("Mo", "123");
@@ -157,7 +157,7 @@ public class TradeSystem {
         String filePath = findFile.getAbsolutePath();
         System.out.println("The file location is:" + filePath);
         //reads the file and prints the current users.
-        userWriting.demoUserRead("UserList.ser", allUsers);
+        UserWriting.demoUserRead("UserList.ser", allUsers);
         System.out.println("UserManager is now populated." +
                 "The current number of users in the file is:" + allUsers.getAllUsers().size());
         System.out.println("the user manager contains the following users:" + allUsers.getAllUsers());
@@ -193,15 +193,15 @@ public class TradeSystem {
         }
         System.out.print("Goodbye!\uD83D\uDEAA \n");
         //saves all the users in UserManager to an external file
-        userWriting.demoUserSave("UserList.ser", allUsers);
+        UserWriting.demoUserSave("UserList.ser", allUsers);
         //saves current AdminManager object allAdmins to external file
-        adminWriting.demoAdminSave("AdminList.ser", allAdmins);
+        AdminWriting.demoAdminSave("AdminList.ser", allAdmins);
         //saves current TransactionManager object allTransactions to an external file
-        transactionWriting.demoTransactionSave("TransactionList.ser", allTransactions);
+        TransactionWriting.demoTransactionSave("TransactionList.ser", allTransactions);
         //saves the systemInventory in AllItems to an external file
-        itemWriting.demoItemSave("ItemList.ser", AllItems);
+        ItemWriting.demoItemSave("ItemList.ser", AllItems);
         //saves current TradeRequest object allTradeRequests to an external file
-        tradeRequestWriting.demoTradeRequestSave("TradeRequestList.ser", allTradeRequests);
+        TradeRequestWriting.demoTradeRequestSave("TradeRequestList.ser", allTradeRequests);
         System.out.println(allUsers.getAllUsers());
         System.out.println("The current number of users in the file is:" + allUsers.getAllUsers().size());
         System.out.println("the user manager contains the following:" + allUsers.getAllUsers());

@@ -7,11 +7,11 @@ import java.io.IOException;
  * by calling gateway AdminReadWrite which handles the actual reading and writing of information from the external
  * file and send it back to the TradeSystem class which stores AdminManager.
  */
-public class tradeRequestWriting {
+public class TradeRequestWriting {
 
     public static TradeRequestManager demoTradeRequestRead(String fileName) throws IOException, ClassNotFoundException {
-        // creates transactionReadWrite which manages the saving and loading users.
-        tradeRequestReadWrite trRW = new tradeRequestReadWrite(fileName);
+        // creates TransactionReadWrite which manages the saving and loading users.
+        TradeRequestReadWrite trRW = new TradeRequestReadWrite(fileName);
 
         // Deserializes contents of the SER file
         TradeRequestManager temp = trRW.readFromFile(fileName);
@@ -29,7 +29,7 @@ public class tradeRequestWriting {
      * @throws ClassNotFoundException
      */
     public static void demoTradeRequestSave(String fileName, TradeRequestManager trM) throws IOException, ClassNotFoundException {
-        tradeRequestReadWrite trRW = new tradeRequestReadWrite(fileName);
+        TradeRequestReadWrite trRW = new TradeRequestReadWrite(fileName);
         trRW.saveToFile(fileName, trM);
     }
 }

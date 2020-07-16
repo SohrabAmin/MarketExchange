@@ -7,7 +7,7 @@ import java.io.IOException;
  * Class deals with the reading, writing and populating of Users in the systems UserManager class based on
  * information from an external file.
  */
-public class userWriting {
+public class UserWriting {
 
     public static void demoUserRead(String fileName, UserManager u) throws IOException, ClassNotFoundException {
         // creates UserReadWrite which manages the saving and loading users.

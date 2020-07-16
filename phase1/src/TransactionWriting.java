@@ -6,11 +6,11 @@ import java.io.IOException;
  * Class deals with the reading, writing and populating the variables in the systems TransactionManager class based on
  * information from an external file.
  */
-public class transactionWriting {
+public class TransactionWriting {
 
     public static TransactionManager demoTransactionRead(String fileName) throws IOException, ClassNotFoundException {
-        // creates transactionReadWrite which manages the saving and loading of TransactionManager.
-        transactionReadWrite tmRW = new transactionReadWrite(fileName);
+        // creates TransactionReadWrite which manages the saving and loading of TransactionManager.
+        TransactionReadWrite tmRW = new TransactionReadWrite(fileName);
 
         // Deserializes contents of the SER file
         TransactionManager temp = tmRW.readFromFile(fileName);
@@ -28,7 +28,7 @@ public class transactionWriting {
      * @throws ClassNotFoundException
      */
     public static void demoTransactionSave(String fileName, TransactionManager tm) throws IOException, ClassNotFoundException {
-        transactionReadWrite tmRW = new transactionReadWrite(fileName);
+        TransactionReadWrite tmRW = new TransactionReadWrite(fileName);
         tmRW.saveToFile(fileName, tm);
     }
 }

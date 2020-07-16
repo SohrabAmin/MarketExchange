@@ -14,21 +14,26 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.List;
 
+
 // NOTE: This class is based off of StudentManager from logging in Week 6 Modules on Quercus.
 
 /**
- * Gateway class that manages the actual saving and loading of transactionManager to the external file.
+ * Gateway class that manages the actual saving and loading of items to the external file.
  */
-public class transactionReadWrite implements Serializable {
+public class ItemReadWrite implements Serializable {
+    /**
+     * A List containing all items.
+     */
+    private List<Item> items;
 
     /**
-     * Creates a new empty transactionReadWrite. Checks to see if file already exists; if it doesn't, it will
-     *      * create a new file with the name fileName. If it does exist, it will read from the file.
+     * Creates a new empty ItemReadWrite. Checks to see if file already exists; if it doesn't, it will
+     * create a new file with the name fileName. If it does exist, it will read from the file.
      *
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    public transactionReadWrite(String fileName) throws ClassNotFoundException, IOException {
+    public ItemReadWrite(String fileName) throws ClassNotFoundException, IOException {
         // Reads serializable objects from file.
         // Populates the record list using stored data, if it exists.
         File file = new File(fileName);
@@ -42,14 +47,13 @@ public class transactionReadWrite implements Serializable {
     }
 
     /**
-     * Reads the file at fileName and either returns the TransactionManager stored in the file
-     * or returns null.
+     * Stores the items from the file at path filePath.
      *
      * @param fileName the path of the data file
      * @throws FileNotFoundException if filePath is not a valid path
      */
 
-    public TransactionManager readFromFile(String fileName) throws ClassNotFoundException {
+    public void readFromFile(String fileName) throws ClassNotFoundException {
         File findFile = new File(fileName);
         String filepath = findFile.getAbsolutePath();
         try {
@@ -58,36 +62,47 @@ public class transactionReadWrite implements Serializable {
             ObjectInput input = new ObjectInputStream(buffer);
 
             // deserialize the list in the file by reading
-            TransactionManager temp = (TransactionManager) input.readObject();
+            List temp = (List<Item>) input.readObject();
             //closes the file
             input.close();
-            // as long as the file is not empty, it will populate admins with the list stored in the file
-            if (temp != null) {
-                return temp;
+            // as long as the file is not empty, it will populate users with the list stored in the file
+            if (temp != null){
+                items = temp;
             }
-        } catch (
-                IOException ex) {
+        } catch (IOException ex) {
         }
-        return null;
     }
 
     /**
-     * Writes TransactionManager object tm to external file at filePath.
+     * Writes the items from ItemManager itemManager to file at filePath.
      *
-     * @param tm the TransactionManager that is instantiated in the current System that needs to be saved.
      * @param fileName the file to write the records to
+     * @param itemManager the ItemManager object which stores the systemInventory
      * @throws IOException
      */
-    public void saveToFile(String fileName, TransactionManager tm) throws IOException {
+    public void saveToFile(String fileName, ItemManager itemManager) throws IOException {
         File findFile = new File(fileName);
         String filePath = findFile.getAbsolutePath();
         OutputStream file = new FileOutputStream(filePath);
         OutputStream buffer = new BufferedOutputStream(file);
         ObjectOutput output = new ObjectOutputStream(buffer);
 
-        // serialize TransactionManager tm
-        output.writeObject(tm);
+        // serialize the list of all Users in UserManager userManager
+        output.writeObject(itemManager.getSystemInventory());
         output.close();
+    }
+
+    /**
+     * Populates the ItemManager of the system.
+     *
+     * @param im the itemManager that is to be populated.
+     */
+    public void populateUserManager(ItemManager im) {
+        // As long as items is not null and contains a list of items from the file
+        // (i.e. file is not empty), then populate the ItemManager of the system.
+        if(items != null){
+            im.setSystemInventory(items);
+        }
     }
 }
 

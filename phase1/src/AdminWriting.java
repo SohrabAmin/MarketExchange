@@ -8,7 +8,7 @@ import java.util.List;
  * by calling gateway AdminReadWrite which handles the actual reading and writing of information from the external
  * file and send it back to the TradeSystem class which stores AdminManager.
  */
-public class adminWriting {
+public class AdminWriting {
     /**
      * Deals with reading from the external file fileName and if it is not empty, it will return the AdminManager
      * object stored in fileName; if it is empty, it will create an initial Admin and return a new AdminManager
