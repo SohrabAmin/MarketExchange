@@ -165,19 +165,41 @@ public class InputGetter {
      * @param allUsers the UserManager which stores the User user
      * @return returns a User which will prompt the main menu
      */
-    public User inventory(User user,UserManager allUsers) {
+    public Object inventory(User user,UserManager allUsers) {
         User me = allUsers.getUser(user);
         List<Item> in = me.getInventory();
         //if the user's inventory is empty
+
         if (in.size() == 0)
             System.out.print("Your inventory is empty!\n\n");
         else { //if the user's inventory is not empty
             System.out.print("Your inventory: \n\n");
             for (int i = 0; i < in.size(); i++) {
-                System.out.println("\uD83D\uDCE6" + in.get(i).getName());
+                System.out.println("\uD83D\uDCE6 " + Integer.toString(i+1) + " . " + in.get(i).getName());
             }
         }
-        return user;
+        if (in.size() == 0)
+            return "back";
+        Scanner sc = new Scanner(System.in);
+        //asks if the User wants to remove an item from their wishlist
+        System.out.print("If you would like to remove an item, please enter the ID of the item you would like to remove " +
+                "or type 'back'\n");
+        Object input = sc.nextLine();
+        //returns them to the main menu if they wish to go "back"
+        if (input.equals("back")){
+            return "back";
+        } try {
+            //will try to turn the input into an integer
+            //if input is not an integer, returns null and recalls wishlist()
+            input = Integer.parseInt((String) input);
+        } catch(NumberFormatException e) {
+            return null;
+        }
+        //remove the item they requested from inventory
+        allUsers.removeFromInventory(allUsers.getUser(user), in.get((Integer) input - 1));
+        System.out.println("Item has been removed successfully!");
+        return "back";
+
     }
 
     public void DisplayBrowse (User user, ItemManager allItems, UserManager allUsers){
@@ -291,6 +313,8 @@ public class InputGetter {
 
 
 
+
+
         System.out.println("Here are the available items!:");
         DisplayBrowse ( user,  allItems,  allUsers);
 
@@ -377,6 +401,12 @@ public class InputGetter {
             String confirmation = sc.nextLine();
             if (confirmation.equals("1")) {
                 TradeRequest trades = new TradeRequest(1, user, tradeItem.getOwner(), myList, message, trade, today);
+                allUsers.addToWeeklyRequestLimit(user, trades);
+
+
+
+
+
                 allTradeRequests.receiveTradeRequest(allUsers, trades);
                 System.out.print("\nTrade request has been sent successfully.\n");
                 return "back";
@@ -1081,7 +1111,11 @@ public class InputGetter {
                 return user;
                 }
                 else if (a.equals("2")) { //view inventory
-                    return system1.inventory(user, allUsers);
+                    Object temp =  system1.inventory(user, allUsers);
+                    while (temp == null) {
+                        temp = system1.inventory(user, allUsers);
+                    }
+                    return user;
                 } else if (a.equals("3")) { //browse items
                     Object temp = system1.Browse(user, allItems, allUsers);
                     while (temp == null) {
@@ -1127,7 +1161,7 @@ public class InputGetter {
                     "3.Browse Items\n4.Initiate Trade\n5.View Pending Trade Requests\n6.Approve Pending Trade Requests\n" +
                     "7.Add Item to inventory\n8.View most recent trades\n9.View most frequent trading partners\n" +
                     "10. View status of my items\n11. Add Item to wishlist\n" +
-                    "12.View Approved Trades\n13. Approve Meeting\n14. Confirm Meetings for Approved Trades\n15. Logout" +
+                    "12.View Approved Trades\n13. Approve Meeting\n14. Confirm Meetings for Approved Trades\n15.View status of outbound requests\n16. Logout" +
                     "\nEnter 'exit' to exit the system at any time.\n");
 
             String a = sc.nextLine();
@@ -1324,7 +1358,17 @@ public class InputGetter {
                                 }
                             }
                         }
-                } else if (a.equals("15")) {
+                    else if (a.equals("15")){
+                        System.out.print("Here is the status of your outbound requests:\n");
+                        //Tina
+
+
+
+
+
+
+                    }
+                } else if (a.equals("16")) {
                     //logout
                     return null;
                 }
