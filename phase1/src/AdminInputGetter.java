@@ -488,9 +488,11 @@ public class AdminInputGetter {
         System.out.println("Lent - borrow threshold: " + allUsers.getLentMinusBorrowedThreshold());
         System.out.println("Weekly transaction limit: " + allUsers.getWeeklyTransactionLimit());
         System.out.println("Incomplete transaction limit: " + allUsers.getIncompleteTransactionLimit());
+        System.out.println("Meeting edits threshold: " + allUsers.getMeetingEditThreshold());
         //prompts user to enter what threshold they wish to edit
         System.out.println("\nWhich threshold would you like to edit? Please enter the number beside the option.");
-        System.out.println("1. Lent - borrow threshold\n2. Weekly Transaction Limit\n3. Incomplete Transaction Limit\n");
+        System.out.println("1. Lent - borrow threshold\n2. Weekly Transaction Limit\n3. Incomplete Transaction Limit" +
+                "4. Meeting Edits Threshold\n");
         System.out.println("Enter 'back' to return to the main menu.");
         Object thresholdOption = null;
         //checks to see if they entered a valid input (one of the options)
@@ -544,10 +546,15 @@ public class AdminInputGetter {
                 allAdmins.setWeeklyTransactionLimit((Integer) newThreshold);
                 System.out.println("\nThe threshold has been changed successfully. The weekly transaction limit " +
                         "threshold is now: " + newThreshold + ".");
-            } else{ //thresholdOption == 3
+            } else if ((Integer) thresholdOption == 3) {
                 allUsers.setIncompleteTransactionLimit((Integer) newThreshold);
                 allAdmins.setIncompleteTransactionLimit((Integer) newThreshold);
                 System.out.println("\nThe threshold has been changed successfully. The incomplete transaction limit " +
+                        "threshold is now: " + newThreshold + ".");
+            } else { //thresholdOption == 4
+                allUsers.setMeetingEditThreshold((Integer) newThreshold);
+                allAdmins.setMeetingEditThreshold((Integer) newThreshold);
+                System.out.println("\nThe threshold has been changed successfully. The meeting edits " +
                         "threshold is now: " + newThreshold + ".");
             }
         } else {

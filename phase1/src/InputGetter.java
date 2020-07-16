@@ -748,7 +748,6 @@ public class InputGetter {
         allUsers.addToDraftInventory(user, newItem);
         System.out.print("\n \u2705 Your request is sent to admin for approval!\n");
         allUsers.addToItemHistory(user, newItem);
-
         return null;
     }
 
@@ -789,7 +788,6 @@ public class InputGetter {
         for (int i = 0; i < MostRecent.size(); i++) {
             System.out.print("\uD83D\uDC51" + (i + 1) + ". " + MostRecent.get(i).getName() + " : " +
                     MostRecent.get(i).getDescription() + "\n");
-
         }
         return user;
     }
@@ -952,12 +950,9 @@ public class InputGetter {
                     //need another method for usermanager so that transactions in progress but meeting is set
                     System.out.print("Your meeting has been set!\n");
                     allTransactions.updateTransactionStatus(allItems, allUsers,allAdmins,  selectedT, 1);
-
-
                 } else if (input.equals(("2"))) {
                     //they want to propose a new time
                     //provide warning if the is at their 3rd strike
-
 
                     //Daniel EDIT MEEEEEEE
                     if (tt.getInitialMeeting().geteditHistory(user.getName())+1  == allAdmins.getMeetingEditThreshold())
@@ -992,13 +987,7 @@ public class InputGetter {
                     //need another method for usermanager so that transactions in progress but meeting is set
                     System.out.print("Your meeting has been cancelled!\n");
                     allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins,  selectedT, 4);
-
-                } else {
-
-
                 }
-
-
             }
     } if (selectedT instanceof TwoWay){
 
@@ -1192,15 +1181,12 @@ public class InputGetter {
         return user;
     }
 
-
     /**
      * Prints pending outbound requests
      *
      * @param user frozen user sending the request to admin to be unfrozen
      * @return returns User so that they can be redirected to the main menu
      */
-
-
     public Object PrintOutboundRequest (User user) {
         System.out.print("Here is the status of your pending outbound requests:\n");
         List<TradeRequest> outbound = user.getOutboundRequests();
@@ -1211,18 +1197,14 @@ public class InputGetter {
         }
         for (int i = 0; i < outbound.size(); i++) {
             String extension = " ";
-            if (outbound.get(i).getRequestType() == 2)
+            if (outbound.get(i).getRequestType() == 2) {
                 extension = " in exchange for: " + outbound.get(i).getRequesterItem().getName();
-
-            System.out.print(Integer.toString(i + 1) + " . You requested for : " + outbound.get(i).getReceiverItem().getName() + extension + "\n");
-
+            }
+            System.out.print((i + 1) + " . You requested for : " + outbound.get(i).getReceiverItem().getName() + extension + "\n");
         }
         return user;
-
     }
-
-
-
+    
     /**
      * Displays the main menu, and prompts user for input depending on what they want to do.
      *
@@ -1284,16 +1266,7 @@ public class InputGetter {
                         temp = system1.wishlist(user,  allUsers);
                     }
                     return user;
-                }
-                else if (a.equals("9")){
-                    if (admininputgetter.getFrozenRequests().contains(user)){
-                        System.out.println("You have already requested to be unfrozen! Please be patient.");
-                        return user;
-                    }
-                    NotifyAdmin (user, admininputgetter);
-                return user;
-                }
-                else if (a.equals("2")) { //view inventory
+                } else if (a.equals("2")) { //view inventory
                     Object temp =  system1.inventory(user, allUsers);
                     while (temp == null) {
                         temp = system1.inventory(user, allUsers);
@@ -1326,7 +1299,13 @@ public class InputGetter {
                     }
                     return user;
                 } else if (a.equals("9")){
-            } else if (a.equals("10")) { //logout
+                    if (admininputgetter.getFrozenRequests().contains(user)){
+                        System.out.println("You have already requested to be unfrozen! Please be patient.");
+                        return user;
+                    }
+                    NotifyAdmin(user, admininputgetter);
+                    return user;
+                } else if (a.equals("10")) { //logout
                     return null;
                 }
         }
@@ -1419,11 +1398,9 @@ public class InputGetter {
                                 admininputgetter, allAdmins);
                     }
                     return user;
-
                 } else if (a.equals("15")) {
                     return PrintOutboundRequest (user);
-                }
-            else if (a.equals("16")) {
+                } else if (a.equals("16")) {
                     //logout
                     return null;
                 }
