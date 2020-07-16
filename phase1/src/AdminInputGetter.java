@@ -85,8 +85,8 @@ public class AdminInputGetter {
     public Object mainMenu(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems) {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        System.out.print("----------------------------------------------------------------------------------------------" +
-                "\n\uD83D\uDC4B Welcome back, " + admin.getName() + "\n");
+        System.out.println("----------------------------------------------------------------------------------------------" +
+                "\n\uD83D\uDC4B Welcome back, " + admin.getName());
 
         List<Item> allPendingItems = new ArrayList<>();
         for (int i = 0; i < allUsers.getAllUsers().size(); i++){
@@ -100,7 +100,6 @@ public class AdminInputGetter {
                 allFrozenUsers.add(allUsers.getAllUsers().get(i));
             }
         }
-
         List<User> possibleFrozenPeople = new ArrayList<>();
         for (int i = 0; i < allUsers.getAllUsers().size(); i++){
             if (allUsers.getAllUsers().get(i).getIsPseudoFrozen()) {
@@ -109,16 +108,16 @@ public class AdminInputGetter {
             }
         }
         if (frozenRequests.size() > 0)
-            System.out.print("\uD83D\uDCF3 You have " + frozenRequests.size() + " Frozen user requests!\n");
+            System.out.println("\uD83D\uDCF3 You have " + frozenRequests.size() + " Frozen user requests!");
 
         //if they have frozen users, show it here
         if (allFrozenUsers.size() > 0){
-            System.out.print("\u2603 You have " + allFrozenUsers.size() + " Frozen users!\n");
+            System.out.println("\u2603 You have " + allFrozenUsers.size() + " Frozen users!");
         }
 
         //if they have pending items, show it here
         if (allPendingItems.size() > 0){
-            System.out.print("\uD83D\uDCE9 You have " + allPendingItems.size() + " Pending Item Requests!\n");
+            System.out.println("\uD83D\uDCE9 You have " + allPendingItems.size() + " Pending Item Requests!");
         }
         System.out.println("Please select from the following by entering the number beside the option:" +
                 " \n1.Add new admin\n2.Change system threshold \n" +
@@ -132,7 +131,7 @@ public class AdminInputGetter {
                     Object temp = addAdmin(allAdmins);
                     //successful addition of a new admin
                     if (temp instanceof Admin) {
-                        System.out.println("\n New admin has been added successfully.\n");
+                        System.out.println("\nNew admin has been added successfully.\n");
                         return admin;
                         //user decided to exit
                     } else if (temp == null){
@@ -187,7 +186,7 @@ public class AdminInputGetter {
     public Object FreezeOrUnfreeze(UserManager allUsers){
         System.out.println("What would you like to do? Please select the number beside the option or enter " +
         "'back' to return to the main menu.");
-        System.out.println("1.View unfreeze requests\n2.View and unfreeze frozen users\n3.View and freeze users");
+        System.out.println("1.View unfreeze requests\n2.Unfreeze frozen users\n3.Freeze users");
         Scanner sc = new Scanner(System.in);
         Object input = sc.nextLine();
         if (input.equals("back")){
@@ -228,14 +227,14 @@ public class AdminInputGetter {
      */
     public Object ViewUnfreezeRequests(UserManager allUsers){
         if (frozenRequests.size() == 0) {
-            System.out.println("You have no unfreeze requests!");
+            System.out.println("\nYou have no unfreeze requests!\n");
             return "back";
         }
-        System.out.print("Here are freeze requests:\n");
+        System.out.println("\nHere are freeze requests:");
         for (int i = 0 ; i < frozenRequests.size() ; i++){
-            System.out.print((i+1) + " . " + frozenRequests.get(i).getName() + "\n");
+            System.out.println((i+1) + " . " + frozenRequests.get(i).getName());
         }
-        System.out.print("Please enter the number of the user you would like to unfreeze or 'back' to go back.\n");
+        System.out.println("Please enter the number of the user you would like to unfreeze or 'back' to go back.");
         Scanner sc = new Scanner(System.in);
         Object line = sc.nextLine();
         if (line.equals("back")) {
@@ -274,10 +273,10 @@ public class AdminInputGetter {
             frozenUsers.add(allUsers.getAllUsers().get(i));
             }
         } if (frozenUsers.size() == 0){
-            System.out.print("There are no frozen users!\n");
+            System.out.println("\nThere are no frozen users!\n");
             return "back";
         }
-        System.out.print("Here are the current frozen users:\n");
+        System.out.println("\nHere are the current frozen users:");
         for (int i = 0 ; i < frozenUsers.size(); i++){
             String reqUnfreeze = "";
             for (User frozenRequest : frozenRequests) {
@@ -287,7 +286,7 @@ public class AdminInputGetter {
             }
             System.out.println((i + 1) + ". " + frozenUsers.get(i).getName() + " " + reqUnfreeze);
         }
-        System.out.print("Please enter the number of the user you would like to unfreeze or 'back' to go back.\n");
+        System.out.println("Please enter the number of the user you would like to unfreeze or 'back' to go back.");
         Scanner sc = new Scanner(System.in);
         Object line = sc.nextLine();
         if (line.equals("back")) {
@@ -302,16 +301,15 @@ public class AdminInputGetter {
             allUsers.unPseudoFreeze(chosenUser);
             allUsers.unfreeze(chosenUser);
             //if they requested to be unfrozen, they will be removed from the frozen request list
-
             for (int i=0 ; i < frozenRequests.size(); i++){
                 if (frozenRequests.get(i).getName().equals(chosenUser.getName())) {
                     removeFromfrozenRequest(chosenUser);
                 }
             }
-            System.out.print("\u2705 Successfully unfrozen user: " +
-                    allUsers.getUser(chosenUser).getName() + "\n");
+            System.out.println("\n\u2705 Successfully unfrozen user: " +
+                    allUsers.getUser(chosenUser).getName());
             if ((frozenUsers.size() - 1) == 0){
-                System.out.print("There are no more frozen Users!");
+                System.out.println("\nThere are no more frozen Users!\n");
                 return "back";
             }
             return null;
@@ -336,10 +334,10 @@ public class AdminInputGetter {
                 unfrozenUsers.add(allUsers.getAllUsers().get(i));
             }
         } if (unfrozenUsers.size() == 0){
-            System.out.print("There are no non-frozen users!\n");
+            System.out.println("\nThere are no non-frozen users!\n");
             return "back";
         }
-        System.out.print("Here are the current non-frozen users:\n");
+        System.out.println("\nHere are the current non-frozen users:");
         for (int i = 0 ; i < unfrozenUsers.size(); i++){
             String reqUnfreeze = "";
             for (User frozenRequest : frozenRequests) {
@@ -349,7 +347,7 @@ public class AdminInputGetter {
             }
             System.out.println((i + 1) + ". " + unfrozenUsers.get(i).getName() + " " + reqUnfreeze);
         }
-        System.out.print("Please enter the number of the user you would like to freeze or 'back' to go back.\n");
+        System.out.println("\nPlease enter the number of the user you would like to freeze or 'back' to go back.");
         Scanner sc = new Scanner(System.in);
         Object line = sc.nextLine();
         if (line.equals("back")) {
@@ -368,15 +366,15 @@ public class AdminInputGetter {
                 allUsers.freeze(chosenUser);
             }
             //users will need to re-request to be unfrozen if they go from pseudo-frozen to actually frozen
-            for (User frozenRequest : frozenRequests) {
-                if (frozenRequest.getName().equals(chosenUser.getName())) {
+            for (int i=0 ; i < frozenRequests.size(); i++){
+                if (frozenRequests.get(i).getName().equals(chosenUser.getName())) {
                     removeFromfrozenRequest(chosenUser);
                 }
             }
-            System.out.print("\u2705 Successfully frozen user: " +
+            System.out.println("\n\u2705 Successfully frozen user: " +
                     allUsers.getUser(chosenUser).getName() + "\n");
             if ((unfrozenUsers.size() - 1) == 0){
-                System.out.print("There are no more non-frozen Users!");
+                System.out.print("\nThere are no more non-frozen Users!\n");
                 return "back";
             }
             return null;
@@ -420,17 +418,17 @@ public class AdminInputGetter {
         }
         //no pending items
         if (allPendingItems.size() == 0){
-            System.out.print("There are no pending item requests to approve!\n");
+            System.out.println("There are no pending item requests to approve!\n");
             return "back";
         }
         //prints out all the pending items in the system
-        System.out.print("Here are the pending items:");
+        System.out.println("Here are the pending items:");
         for (int i = 0; i < allPendingItems.size(); i++) {
             String j = Integer.toString(i + 1);
-            System.out.print("\n" + j + ". " + allPendingItems.get(i).getName() + " : " + allPendingItems.get(i).getDescription());
+            System.out.println(j + ". " + allPendingItems.get(i).getName() + " : " + allPendingItems.get(i).getDescription());
         }
         //admin needs to choose an item to approve or reject
-        System.out.print("\nPlease enter the number of the item you would like to approve or 'back' to return to the main menu.\n");
+        System.out.println("Please enter the number of the item you would like to approve or 'back' to return to the main menu.");
         Scanner sc = new Scanner(System.in);
         Object input = sc.nextLine();
         if (input.equals("back")) {
@@ -454,20 +452,20 @@ public class AdminInputGetter {
         try {
             nextInput = Integer.parseInt((String) nextInput);
         } catch (NumberFormatException e) {
-            System.out.print("\n \uD83E\uDDD0 What was that? Please try again!\n");
+            System.out.println("\uD83E\uDDD0 What was that? Please try again!");
             return null;
         }
         if ((Integer) nextInput == 1) { //if item is approved
             allUsers.approveDraftInventoryItem(allUsers.getUser(chosenItem.getOwner()), chosenItem, allItems);
-            System.out.print("\u2705 Approved!\n");
+            System.out.println("\u2705 Approved!");
 
             return null;
         } else if ((Integer) nextInput == 2) { //if item is rejected
             allUsers.rejectDraftInventoryItem(allUsers.getUser(chosenItem.getOwner()), chosenItem);
-            System.out.print("\u274E Rejected!\n");
+            System.out.println("\u274E Rejected!\n");
             return null;
         } else {
-            System.out.print("\n \uD83E\uDDD0 What was that? Please try again!\n");
+            System.out.println("\uD83E\uDDD0 What was that? Please try again!");
             return null;
             }
     }
@@ -540,17 +538,17 @@ public class AdminInputGetter {
                 allUsers.setLentMinusBorrowedThreshold((Integer) newThreshold);
                 allAdmins.setLentMinusBorrowedThreshold((Integer) newThreshold);
                 System.out.println("\nThe threshold has been changed successfully. The lend - borrow threshold is now: " +
-                        newThreshold + ". \n");
+                        newThreshold + ".");
             } else if ((Integer) thresholdOption == 2) {
                 allUsers.setWeeklyTransactionLimit((Integer) newThreshold);
                 allAdmins.setWeeklyTransactionLimit((Integer) newThreshold);
                 System.out.println("\nThe threshold has been changed successfully. The weekly transaction limit " +
-                        "threshold is now: " + newThreshold + ". \n");
+                        "threshold is now: " + newThreshold + ".");
             } else{ //thresholdOption == 3
                 allUsers.setIncompleteTransactionLimit((Integer) newThreshold);
                 allAdmins.setIncompleteTransactionLimit((Integer) newThreshold);
                 System.out.println("\nThe threshold has been changed successfully. The incomplete transaction limit " +
-                        "threshold is now: " + newThreshold + ". \n");
+                        "threshold is now: " + newThreshold + ".");
             }
         } else {
                 System.out.println("\nThe threshold has been changed unsuccessfully. Please try again.");
@@ -577,7 +575,7 @@ public class AdminInputGetter {
         ArrayList<String> temp = new ArrayList<>();
 
         System.out.println("Please enter 'continue' to proceed to adding a new Admin or 'back' to return to the " +
-                "Admin menu." + "Enter 'exit' to exit the system at any time.");
+                "Admin menu." + " Enter 'exit' to exit the system at any time.");
         try {
             String input = br.readLine();
             if (input.equals("exit")) {
