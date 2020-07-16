@@ -1,4 +1,3 @@
-import java.io.File;
 import java.io.IOException;
 
 // NOTE: This class is based off of DemoManager from logging in Week 6 Modules on Quercus.
@@ -19,7 +18,7 @@ public class UserWriting {
     }
 
     /**
-     *  Saves the users from userManager into the UserList file.
+     * Saves the users from userManager into the UserList file.
      *
      * @param userManager
      * @throws IOException

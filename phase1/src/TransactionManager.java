@@ -1,6 +1,6 @@
-
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Manages all Transactions. Changing their values by accessing their setters/getters. Stores all instances of Transactions. Should only be instantiated once.
@@ -48,26 +48,26 @@ public class TransactionManager implements Serializable {
     public void updateTransactionStatus(ItemManager itemManager, UserManager userManager, AdminManager adminManager, Transaction transaction, int tradeStatus) {
         User user1;
         User user2;
-        if (transaction.getTradeStatus() == 0){
+        if (transaction.getTradeStatus() == 0) {
             this.inProgressTransaction.remove(transaction);
-        } else if(transaction.getTradeStatus() == 1){
+        } else if (transaction.getTradeStatus() == 1) {
             this.finalizedMeeting.remove(transaction);
-        }else if(transaction.getTradeStatus() == 2){
+        } else if (transaction.getTradeStatus() == 2) {
             this.pendingSecondExchange.remove(transaction);
-        }else if(transaction.getTradeStatus() == 3){
+        } else if (transaction.getTradeStatus() == 3) {
             this.completedTransaction.remove(transaction);
-        }else{
+        } else {
             this.cancelledTransaction.remove(transaction);
         }
 
-        if (tradeStatus == 0){
+        if (tradeStatus == 0) {
             this.inProgressTransaction.add(transaction);
-        } else if(tradeStatus == 1){
+        } else if (tradeStatus == 1) {
             this.finalizedMeeting.add(transaction);
-            if(transaction instanceof OneWay){
+            if (transaction instanceof OneWay) {
                 user1 = userManager.getUser(((OneWay) transaction).getBorrower());
                 user2 = userManager.getUser(((OneWay) transaction).getLender());
-            }else{
+            } else {
                 user1 = userManager.getUser(((TwoWay) transaction).getFirstTrader());
                 user2 = userManager.getUser(((TwoWay) transaction).getSecondTrader());
             }
@@ -75,17 +75,17 @@ public class TransactionManager implements Serializable {
             userManager.removeFromPendingTrades(user2, transaction);
             userManager.addToAgreedUponMeetings(user1, transaction);
             userManager.addToAgreedUponMeetings(user2, transaction);
-        }else if(tradeStatus == 2){
+        } else if (tradeStatus == 2) {
             this.pendingSecondExchange.add(transaction);
             handleFirstExchange(userManager, transaction, itemManager);
-        }else if(tradeStatus == 3){
+        } else if (tradeStatus == 3) {
             this.completedTransaction.add(transaction);
-            if(transaction.getTemp()){
+            if (transaction.getTemp()) {
                 handleSecondExchange(userManager, itemManager, transaction);
-            }else{
+            } else {
                 handleCompletedPerm(userManager, itemManager, transaction);
             }
-        }else{
+        } else {
             this.cancelledTransaction.add(transaction);
             handleCancelledTrade(adminManager, userManager, transaction);
         }
@@ -119,17 +119,18 @@ public class TransactionManager implements Serializable {
     /**
      * Adds a given new Transaction to the attribute list pendingTransaction held in TransactionManager.
      * Pending implies the Transaction is in progress.
+     *
      * @param transaction The specified Transaction that has been created.
      * @param userManager The instance of UserManager.
      */
     public void addToPendingTransactions(Transaction transaction, UserManager userManager) {
         User user1;
         User user2;
-        if (transaction instanceof OneWay){
+        if (transaction instanceof OneWay) {
             user1 = userManager.getUser(((OneWay) transaction).getBorrower());
             user2 = userManager.getUser(((OneWay) transaction).getLender());
 
-        }else{
+        } else {
             user1 = userManager.getUser(((TwoWay) transaction).getFirstTrader());
             user2 = userManager.getUser(((TwoWay) transaction).getSecondTrader());
         }
@@ -141,7 +142,6 @@ public class TransactionManager implements Serializable {
 
 
     }
-
 
 
     /**
@@ -169,10 +169,10 @@ public class TransactionManager implements Serializable {
         if (temp2.getCancelledTransactions().size() == adminManager.getIncompleteTransactionLimit()) {
             userManager.pseudoFreeze(temp2);
         }
-        if(transaction.getTradeStatus() == 0){
+        if (transaction.getTradeStatus() == 0) {
             userManager.removeFromPendingTrades(temp1, transaction);
             userManager.removeFromPendingTrades(temp2, transaction);
-        }else if(transaction.getTradeStatus() == 1){
+        } else if (transaction.getTradeStatus() == 1) {
             userManager.removeFromAgreedUponMeetings(temp1, transaction);
             userManager.removeFromAgreedUponMeetings(temp2, transaction);
         }
@@ -180,11 +180,12 @@ public class TransactionManager implements Serializable {
 
     /**
      * Handles the back-end completion of a temporary Transaction. Notice the second exchange is returning objects back to original owner. Only called in updateTransactionStatus.
+     *
      * @param userManager The instance of UserManager.
      * @param transaction The given temporary Transaction.
      * @param itemManager The instance of ItemManager.
      */
-    public void handleSecondExchange(UserManager userManager, ItemManager itemManager, Transaction transaction){
+    public void handleSecondExchange(UserManager userManager, ItemManager itemManager, Transaction transaction) {
         User temp1;
         User temp2;
         Item item1;
@@ -194,32 +195,35 @@ public class TransactionManager implements Serializable {
             temp2 = userManager.getUser(((OneWay) transaction).getLender());
             userManager.removeFromInventory(temp1, item1);
             userManager.addToInventory(temp2, item1);
-            itemManager.setCurrentHolder(item1,temp2);
+            itemManager.setCurrentHolder(item1, temp2);
 
         } else {
             temp1 = userManager.getUser(((TwoWay) transaction).getFirstTrader());
             temp2 = userManager.getUser(((TwoWay) transaction).getSecondTrader());
             item1 = ((TwoWay) transaction).getSecondItem();
             Item item2 = ((TwoWay) transaction).getFirstItem();
-            userManager.removeFromInventory(temp2,item2);
+            userManager.removeFromInventory(temp2, item2);
             userManager.removeFromInventory(temp1, item1);
             userManager.addToInventory(temp1, item2);
             userManager.addToInventory(temp2, item1);
             itemManager.setCurrentHolder(item1, temp2);
             itemManager.setCurrentHolder(item2, temp1);
 
-        }userManager.updateTradeHistory(temp1, transaction);
-         userManager.updateTradeHistory(temp2, transaction);
-         userManager.removeFromSecondAgreedUponMeeting(temp1, transaction);
-         userManager.removeFromSecondAgreedUponMeeting(temp2, transaction);
+        }
+        userManager.updateTradeHistory(temp1, transaction);
+        userManager.updateTradeHistory(temp2, transaction);
+        userManager.removeFromSecondAgreedUponMeetings(temp1, transaction);
+        userManager.removeFromSecondAgreedUponMeetings(temp2, transaction);
     }
+
     /**
      * Handles the back-end completion of a temporary Transaction. Notice the first exchange is giving Item(s) to the User(s). Only called in updateTransactionStatus.
+     *
      * @param userManager The instance of UserManager.
      * @param transaction The given temporary Transaction.
      * @param itemManager The instance of ItemManager.
      */
-    public void handleFirstExchange(UserManager userManager, Transaction transaction, ItemManager itemManager){
+    public void handleFirstExchange(UserManager userManager, Transaction transaction, ItemManager itemManager) {
         User temp1;
         User temp2;
         Item item1;
@@ -229,7 +233,7 @@ public class TransactionManager implements Serializable {
             temp2 = userManager.getUser(((OneWay) transaction).getLender());
             userManager.removeFromInventory(temp2, item1);
             userManager.addToInventory(temp1, item1);
-            itemManager.setCurrentHolder(item1,temp1);
+            itemManager.setCurrentHolder(item1, temp1);
             temp1.increaseEligibility();
             temp2.decreaseEligibility();
         } else {
@@ -237,7 +241,7 @@ public class TransactionManager implements Serializable {
             temp2 = userManager.getUser(((TwoWay) transaction).getSecondTrader());
             item1 = ((TwoWay) transaction).getFirstItem();
             Item item2 = ((TwoWay) transaction).getSecondItem();
-            userManager.removeFromInventory(temp1,item1);
+            userManager.removeFromInventory(temp1, item1);
             userManager.removeFromInventory(temp2, item2);
             userManager.addToInventory(temp2, item1);
             userManager.addToInventory(temp1, item2);
@@ -247,12 +251,13 @@ public class TransactionManager implements Serializable {
         }
         userManager.removeFromAgreedUponMeetings(temp1, transaction);
         userManager.removeFromAgreedUponMeetings(temp2, transaction);
-        userManager.addToSecondAgreedUponMeeting(temp1, transaction);
-        userManager.addToSecondAgreedUponMeeting(temp2, transaction);
+        userManager.addToSecondAgreedUponMeetings(temp1, transaction);
+        userManager.addToSecondAgreedUponMeetings(temp2, transaction);
     }
 
     /**
      * Handles the back-end results of a permanent Transaction occurring. This is only called by updateTransactionStatus.
+     *
      * @param userManager The instance of UserManager.
      * @param itemManager The instance of ItemManager.
      * @param transaction The given temporary Transaction.
@@ -267,17 +272,17 @@ public class TransactionManager implements Serializable {
             temp2 = userManager.getUser(((OneWay) transaction).getLender());
             userManager.removeFromInventory(temp2, item1);
             userManager.addToInventory(temp1, item1);
-            itemManager.setCurrentHolder(item1,temp1);
+            itemManager.setCurrentHolder(item1, temp1);
             itemManager.setOwner(item1, temp1);
             temp1.decreaseEligibility();
             temp2.increaseEligibility();
 
-        }else{
+        } else {
             temp1 = userManager.getUser(((TwoWay) transaction).getFirstTrader());
             temp2 = userManager.getUser(((TwoWay) transaction).getSecondTrader());
             item1 = ((TwoWay) transaction).getFirstItem();
             Item item2 = ((TwoWay) transaction).getSecondItem();
-            userManager.removeFromInventory(temp1,item1);
+            userManager.removeFromInventory(temp1, item1);
             userManager.removeFromInventory(temp2, item2);
             userManager.addToInventory(temp2, item1);
             userManager.addToInventory(temp1, item2);

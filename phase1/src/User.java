@@ -1,8 +1,8 @@
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 /**
  * represent a User with name and password. store and getter for all values of a user.
  */
@@ -21,25 +21,18 @@ public class User extends Account {
     private List<Transaction> pendingTrades;
     private boolean isPseudoFrozen;
     private List<Transaction> cancelledTransactions;
-    private List<Transaction> agreedUponMeeting;
-    private List<Transaction> secondAgreedUponMeeting;
+    private List<Transaction> agreedUponMeetings;
+    private List<Transaction> secondAgreedUponMeetings;
     private Map<Integer, List<TradeRequest>> weeklyRequestLimit;
-
 
 
     public User() {
     }
+
     /**
-     * constructs an instance of User with name and password and a list of wishlist, inventory
-     * draftInventory means items being added to inventory but waiting for admin's approval,
-     * tradeHistory: past 3 trades
-     * pendingRequest: trade requests that are received but not replied yet.
-     * ItemHistory: all the items being added to the inventory( even though it is traded).
-     * outboundRequests: trade requests that are sent out by the user
-     * pendingTrades: user and his trading partner have agreed to trade but trade is not finished.
-     * cancelledTransactions: transactions that are cancelled by the users
-     * agreedUponMeeting: user and his partner have agreed on the final meeting but the meeting has not happened yet
-     * @param name of this user as a string
+     * constructs an instance of User with name and password
+     *
+     * @param name     of this user as a string
      * @param password of this user as a string
      */
 
@@ -56,11 +49,11 @@ public class User extends Account {
         outboundRequests = new ArrayList<>();
         pendingTrades = new ArrayList<>();
         cancelledTransactions = new ArrayList<>();
-        agreedUponMeeting = new ArrayList<>();
-        secondAgreedUponMeeting = new ArrayList<>();
+        agreedUponMeetings = new ArrayList<>();
+        secondAgreedUponMeetings = new ArrayList<>();
         this.weeklyRequestLimit = new HashMap<>();
 
-        for (int i =1; i<53; i++){
+        for (int i = 1; i < 53; i++) {
             List<TradeRequest> temp = new ArrayList<>();
             this.weeklyRequestLimit.put(i, temp);
         }
@@ -69,15 +62,18 @@ public class User extends Account {
 
     /**
      * getter for itemHistory
+     *
      * @return all the items that has been added to inventory no matter that item is traded or not.
      */
 
     public HashMap<Item, String> getItemHistory() {
         return ItemHistory;
     }
+
     /**
      * getter for user's wishlist
-     * @return this user's withlist as a list
+     *
+     * @return this user's wishlist as a list
      */
     public ArrayList<Item> getWishlist() {
         return wishlist;
@@ -85,6 +81,7 @@ public class User extends Account {
 
     /**
      * getter for user's inventory
+     *
      * @return this user's inventory as a ArrayList
      */
     public ArrayList<Item> getInventory() {
@@ -92,7 +89,8 @@ public class User extends Account {
     }
 
     /**
-     * getter for user's draft inventory which invluding the items the user add to the inventory but waiting for admin's approval.
+     * getter for user's draft inventory which including the items the user add to the inventory but waiting for admin's approval.
+     *
      * @return this user's draft inventory as a ArrayList
      */
     public ArrayList<Item> getDraftInventory() {
@@ -100,8 +98,9 @@ public class User extends Account {
     }
 
     /**
-     * getter for user's sucessful Trade History
-     * @return this user's past sucessful trade as a list of transactions.
+     * getter for user's successful Trade History
+     *
+     * @return this user's past successful trade as a list of transactions.
      */
     public List<Transaction> getTradeHistory() {
         return this.tradeHistory;
@@ -109,6 +108,7 @@ public class User extends Account {
 
     /**
      * setter for user's successful trade history
+     *
      * @param transaction to add a transaction to this user's trade history
      */
     public void addTradeHistory(Transaction transaction) {
@@ -117,6 +117,7 @@ public class User extends Account {
 
     /**
      * getter for user's pending requests that user receives
+     *
      * @return this user's pending requests as a List.
      */
     public List<TradeRequest> getPendingRequests() {
@@ -125,6 +126,7 @@ public class User extends Account {
 
     /**
      * getter for the top 3 most frequent trading partners
+     *
      * @return the 3 most frequent trading partners as a List of User
      */
     public List<User> getTopTradingPartners() {
@@ -133,6 +135,7 @@ public class User extends Account {
 
     /**
      * getter for trade requests that user send out for a trade
+     *
      * @return trade requests sent by this user as a List.
      */
     public List<TradeRequest> getOutboundRequests() {
@@ -141,6 +144,7 @@ public class User extends Account {
 
     /**
      * getter for the trades that is not completed but the trade is not finished yet.
+     *
      * @return List of transactions for this user's trade that is not yet completed
      */
     public List<Transaction> getPendingTrades() {
@@ -149,6 +153,7 @@ public class User extends Account {
 
     /**
      * getter for cancelled transactions
+     *
      * @return the cancelled transactions as a List
      */
     public List<Transaction> getCancelledTransactions() {
@@ -157,6 +162,7 @@ public class User extends Account {
 
     /**
      * setter for topTradingPartners
+     *
      * @param topTradingPartners to add or change the 3 most frequent trading partners to the list
      */
     public void setTopTradingPartners(List<User> topTradingPartners) {
@@ -166,12 +172,16 @@ public class User extends Account {
 
     /**
      * getter for agreedUponMeeting
+     *
      * @return a list of  transactions of which the meeting is finalized but not happened
      */
-    public List<Transaction> getAgreedUponMeeting(){ return agreedUponMeeting;}
+    public List<Transaction> getAgreedUponMeeting() {
+        return agreedUponMeetings;
+    }
 
     /**
      * getter for if user is frozen,
+     *
      * @return this user's frozen status( frozen or not frozen)
      */
     public boolean getIsFrozen() {
@@ -180,6 +190,7 @@ public class User extends Account {
 
     /**
      * setter for if user is frozen
+     *
      * @param isFrozen to change the user's status of frozen or not frozen as boolean
      */
     public void setIsFrozen(boolean isFrozen) {
@@ -188,33 +199,40 @@ public class User extends Account {
     }
 
     /**
-     * gettter for if user is PseudoFrzoen, A pseudo-frozen User is prevented from conducting transactions until
+     * getter for if user is PseudoFrozen, A pseudo-frozen User is prevented from conducting transactions until
      * an Admin decides to either freeze the User or let the User slide
+     *
      * @return the status if this user is PseudoFrozen as a boolean
      */
     public boolean getIsPseudoFrozen() {
         return isPseudoFrozen;
     }
+
     /**
-     * setter for isPseodoFrozen
-     * @param isPseudoFrozen to this user as if he is pseudofrozen
+     * setter for isPseudoFrozen
+     *
+     * @param isPseudoFrozen to this user as if he is pseudo-frozen
      */
     public void setIsPseudoFrozen(boolean isPseudoFrozen) {
         this.isPseudoFrozen = isPseudoFrozen;
     }
+
     /**
      * getter for eligibility. eligibility is the number of items this user can trade
+     *
      * @return the number of items this user can trade as int
      */
     public int getEligibility() {
         return eligibility;
     }
+
     /**
      * set the eligibility increase one unit per item this user lent
      */
     public void increaseEligibility() {
         this.eligibility += 1;
     }
+
     /**
      * set the eligibility decreases one unit per item this user borrowed
      */
@@ -222,14 +240,23 @@ public class User extends Account {
         this.eligibility -= 1;
     }
 
-    //TODO: consider overriding the equals method inherited from Object
-
-    public List<Transaction> getSecondAgreedUponMeeting(){
-        return this.secondAgreedUponMeeting;
+    /**
+     * Getter for this User's list of trade-back Transactions
+     *
+     * @return This User's list of trade-back Transactions
+     */
+    public List<Transaction> getSecondAgreedUponMeeting() {
+        return this.secondAgreedUponMeetings;
     }
 
-    public Map<Integer, List<TradeRequest>> getWeeklyRequestLimit(){
+    /**
+     * Getter for this User's map of (week of the year) --> (Transactions requested)
+     *
+     * @return This User's map of (week of the year) --> (Transactions requested)
+     */
+    public Map<Integer, List<TradeRequest>> getWeeklyRequestLimit() {
         return this.weeklyRequestLimit;
     }
 
+    //TODO: consider overriding the equals method inherited from Object
 }

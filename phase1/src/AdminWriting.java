@@ -1,5 +1,4 @@
 import java.io.IOException;
-import java.util.List;
 
 // NOTE: This class is based off of DemoManager from logging in Week 6 Modules on Quercus.
 
@@ -32,7 +31,7 @@ public class AdminWriting {
     }
 
     /**
-     *  Saves the admins from adminManager into the AdminList file.
+     * Saves the admins from adminManager into the AdminList file.
      *
      * @param adminManager AdminManager object which stores all Admin information
      * @throws IOException

@@ -18,7 +18,7 @@ public class ItemWriting {
     }
 
     /**
-     *  Saves the items from itemManager's system inventory into the external file.
+     * Saves the items from itemManager's system inventory into the external file.
      *
      * @param itemManager
      * @throws IOException

@@ -1,17 +1,4 @@
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.util.List;
 
 
@@ -66,7 +53,7 @@ public class UserReadWrite implements Serializable {
             //closes the file
             input.close();
             // as long as the file is not empty, it will populate users with the list stored in the file
-            if (temp != null){
+            if (temp != null) {
                 users = temp;
             }
         } catch (IOException ex) {
@@ -99,7 +86,7 @@ public class UserReadWrite implements Serializable {
     public void populateUserManager(UserManager um) {
         // As long as users is not null and contains a list of Users from the file
         // (i.e. file is not empty), then populate the UserManager of the system.
-        if(users != null){
+        if (users != null) {
             um.setAllUsers(users);
         }
     }

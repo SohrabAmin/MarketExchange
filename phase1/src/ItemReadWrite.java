@@ -1,17 +1,4 @@
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.util.List;
 
 
@@ -66,7 +53,7 @@ public class ItemReadWrite implements Serializable {
             //closes the file
             input.close();
             // as long as the file is not empty, it will populate users with the list stored in the file
-            if (temp != null){
+            if (temp != null) {
                 items = temp;
             }
         } catch (IOException ex) {
@@ -76,7 +63,7 @@ public class ItemReadWrite implements Serializable {
     /**
      * Writes the items from ItemManager itemManager to file at filePath.
      *
-     * @param fileName the file to write the records to
+     * @param fileName    the file to write the records to
      * @param itemManager the ItemManager object which stores the systemInventory
      * @throws IOException
      */
@@ -100,7 +87,7 @@ public class ItemReadWrite implements Serializable {
     public void populateUserManager(ItemManager im) {
         // As long as items is not null and contains a list of items from the file
         // (i.e. file is not empty), then populate the ItemManager of the system.
-        if(items != null){
+        if (items != null) {
             im.setSystemInventory(items);
         }
     }

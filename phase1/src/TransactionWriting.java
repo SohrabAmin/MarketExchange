@@ -14,14 +14,14 @@ public class TransactionWriting {
 
         // Deserializes contents of the SER file
         TransactionManager temp = tmRW.readFromFile(fileName);
-        if (temp == null){
+        if (temp == null) {
             return new TransactionManager();
         }
         return temp;
     }
 
     /**
-     *  Saves the TransactionManager tm into the external file.
+     * Saves the TransactionManager tm into the external file.
      *
      * @param tm current TransactionManager object that needs to be saved to the external file
      * @throws IOException

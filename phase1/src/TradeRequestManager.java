@@ -1,6 +1,6 @@
 import java.io.Serializable;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Manages all TradeRequests. Changes values in TradeRequest by accessing getters/setters. Should only be instantiated once.
@@ -15,7 +15,7 @@ public class TradeRequestManager implements Serializable {
      * Constructs an instance of TradeRequestManager. Does not require an arguments for instantiation, however, this constructor
      * will initialize three list attributes: pending, denied and confirmed.
      */
-    public TradeRequestManager(){
+    public TradeRequestManager() {
         this.pending = new ArrayList<TradeRequest>();
         this.denied = new ArrayList<TradeRequest>();
         this.confirmed = new ArrayList<TradeRequest>();
@@ -24,8 +24,9 @@ public class TradeRequestManager implements Serializable {
     /**
      * Adds an instance of TradeRequest to one of three attributes in TradeRequestManager: pending, confirmed or cancelled, depending on
      * the User receiving the Trade Request's response. Also, adds to User's pendingRequests if request is not yet acted upon by receiving User.
+     *
      * @param userManager The instance of UserManager, to access addToPendingRequest.
-     * @param request The given instance of TradeRequest.
+     * @param request     The given instance of TradeRequest.
      */
     public void receiveTradeRequest(UserManager userManager, TradeRequest request) {
 
@@ -44,12 +45,13 @@ public class TradeRequestManager implements Serializable {
 
     /**
      * Updates attribute list(s) (pending/denied/confirmed) depending on the wishes of the User receiving the TradeRequest.
+     *
      * @param transactionManager The instance of transactionManager, required for accessing handleConfirmedRequest.
-     * @param userManager The instance of userManager, required for accessing handleConfirmedRequest.
-     * @param request The given TradeRequest that the receiving User intends to act upon.
-     * @param status The status the system intends to give to this TradeRequest.
+     * @param userManager        The instance of userManager, required for accessing handleConfirmedRequest.
+     * @param request            The given TradeRequest that the receiving User intends to act upon.
+     * @param status             The status the system intends to give to this TradeRequest.
      */
-    public void updateRequestStatus(TransactionManager transactionManager, UserManager userManager, TradeRequest request, int status){
+    public void updateRequestStatus(TransactionManager transactionManager, UserManager userManager, TradeRequest request, int status) {
         if (request.getStatus() == 0) {
             this.pending.remove(request);
         } else if (request.getStatus() == 1) {
@@ -74,21 +76,21 @@ public class TradeRequestManager implements Serializable {
 
     /**
      * Accepts the TradeRequest within a User's pendingList, creates an instance of Transaction.
+     *
      * @param transactionManager The instance of TransactionManager.
-     * @param userManager The instance of UserManager.
-     * @param request The status the system intends to give to this TradeRequest.
+     * @param userManager        The instance of UserManager.
+     * @param request            The status the system intends to give to this TradeRequest.
      */
-    public void handleConfirmedRequest(TransactionManager transactionManager, UserManager userManager, TradeRequest request){ /* require Manager classes for accessing method receiveTransaction */
+    public void handleConfirmedRequest(TransactionManager transactionManager, UserManager userManager, TradeRequest request) { /* require Manager classes for accessing method receiveTransaction */
         userManager.removeFromPendingRequests(request.getReceiver(), request);
-        if(request.getRequestType() == 1){
+        if (request.getRequestType() == 1) {
             OneWay temp = new OneWay(request.getRequester(), request.getReceiverItem(), request.getTemp());
-           // transactionManager.receiveTransaction(temp);
-        }else{
+            // transactionManager.receiveTransaction(temp);
+        } else {
             TwoWay temp = new TwoWay(request.getRequesterItem(), request.getReceiverItem(), request.getTemp());
-           // transactionManager.receiveTransaction(temp);
+            // transactionManager.receiveTransaction(temp);
         }
     }
-
 
 
 }

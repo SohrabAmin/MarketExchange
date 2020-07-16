@@ -1,18 +1,4 @@
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.io.Serializable;
-import java.util.List;
+import java.io.*;
 
 // NOTE: This class is based off of StudentManager from logging in Week 6 Modules on Quercus.
 
@@ -23,7 +9,7 @@ public class TradeRequestReadWrite implements Serializable {
 
     /**
      * Creates a new empty TradeRequestReadWrite. Checks to see if file already exists; if it doesn't, it will
-     *      * create a new file with the name fileName. If it does exist, it will read from the file.
+     * * create a new file with the name fileName. If it does exist, it will read from the file.
      *
      * @throws IOException
      * @throws ClassNotFoundException
@@ -74,11 +60,11 @@ public class TradeRequestReadWrite implements Serializable {
     /**
      * Writes TradeRequestManager object trM to external file at filePath.
      *
-     * @param trM the TransactionManager that is instantiated in the current System that needs to be saved.
+     * @param trM      the TransactionManager that is instantiated in the current System that needs to be saved.
      * @param fileName the file to write the records to
      * @throws IOException
      */
-    public void saveToFile(String fileName,TradeRequestManager trM) throws IOException {
+    public void saveToFile(String fileName, TradeRequestManager trM) throws IOException {
         File findFile = new File(fileName);
         String filePath = findFile.getAbsolutePath();
         OutputStream file = new FileOutputStream(filePath);

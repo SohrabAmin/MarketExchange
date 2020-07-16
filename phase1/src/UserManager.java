@@ -14,6 +14,17 @@ public class UserManager {
     }
 
     /**
+     * Creates a User and adds them to the list of all Users
+     *
+     * @param newUserUsername new User's account username
+     * @param newUserPassword new User's account password
+     */
+    public void createUser(String newUserUsername, String newUserPassword) {
+        User newUser = new User(newUserUsername, newUserPassword);
+        userList.add(newUser);
+    }
+
+    /**
      * Getter for the list of all Users in the system
      *
      * @return list of all Users
@@ -29,17 +40,6 @@ public class UserManager {
      */
     void setAllUsers(List<User> userList) {
         this.userList = userList;
-    }
-
-    /**
-     * Creates a User and adds them to the list of all Users
-     *
-     * @param newUserUsername new User's account username
-     * @param newUserPassword new User's account password
-     */
-    public void createUser(String newUserUsername, String newUserPassword) {
-        User newUser = new User(newUserUsername, newUserPassword);
-        userList.add(newUser);
     }
 
     /**
@@ -131,36 +131,6 @@ public class UserManager {
     }
 
     /**
-     * Adds a TradeRequest to a User's pending trade requests
-     *
-     * @param user    User who will receive a new TradeRequest
-     * @param request TradeRequest to be received by this User
-     */
-    public void addToPendingRequests(User user, TradeRequest request) {
-        user.getPendingRequests().add(request);
-    }
-
-    /**
-     * Removes a TradeRequest from a User's pending trade requests
-     *
-     * @param user    User who will have a TradeRequest removed from their pending trade requests
-     * @param request TradeRequest to be removed from this User's pending trade requests
-     */
-    public void removeFromPendingRequests(User user, TradeRequest request) {
-        user.getPendingRequests().remove(request);
-    }
-
-    /**
-     * Adds a cancelled transaction to a User's list of cancelled transactions
-     *
-     * @param user                 User whose list of cancelled transactions will be added to
-     * @param cancelledTransaction cancelled transaction to be added to this User's list of cancelled transactions
-     */
-    public void addToCancelledTransactions(User user, Transaction cancelledTransaction) {
-        user.getCancelledTransactions().add(cancelledTransaction);
-    }
-
-    /**
      * Moves an Item from a User's draft inventory to their inventory (after an Admin approves this Item)
      *
      * @param user User who will have a draft inventory Item approved
@@ -185,17 +155,6 @@ public class UserManager {
     }
 
     /**
-     * Updates a User's trade history
-     *
-     * @param user        User whose trade history is to be updated
-     * @param transaction Transaction to be added to this User's trade history
-     */
-    public void updateTradeHistory(User user, Transaction transaction) {
-        user.addTradeHistory(transaction);
-        this.updateTopTradingPartners(user);
-    }
-
-    /**
      * Adds an Item to a User's itemHistory (list of items that have been submitted to the system)
      *
      * @param user User whose itemHistory will be added to
@@ -203,6 +162,86 @@ public class UserManager {
      */
     public void addToItemHistory(User user, Item item) {
         user.getItemHistory().put(item, "Pending");
+    }
+
+    /**
+     * Changes an Item's status (either "Pending", "Approved", or "Rejected") in a User's itemHistory (list of items
+     * that have been submitted to the system). Only an Admin should change an Item's status
+     *
+     * @param user   User whose Item will have its status changed
+     * @param item   Item whose status is to be changed
+     * @param status this Item's new status
+     */
+    public void changeItemStatus(User user, Item item, String status) {
+        user.getItemHistory().replace(item, status);
+    }
+
+    /**
+     * Checks the number of Transactions a User has requested in a week against the weekly Transaction limit
+     *
+     * @param adminManager The instance of AdminManager
+     * @param user         User whose number of requested Transactions in a week will be checked against the weekly
+     *                     Transaction limit
+     * @param date         A Calendar representing the date, in the week in question
+     * @return True if and only if the number of Transactions this User requested in the given week is less than the
+     * weekly transaction limit
+     */
+    public boolean checkWeeklyRequestLimit(AdminManager adminManager, User user, Calendar date) {
+        Integer temp = date.get(Calendar.WEEK_OF_YEAR);
+        List<TradeRequest> temp2 = user.getWeeklyRequestLimit().get(temp);
+
+        return temp2.size() < adminManager.getWeeklyTransactionLimit();
+    }
+
+    /**
+     * Adds a Transaction to a User's list of Transactions requested in a given week
+     *
+     * @param user    User whose list of Transactions requested in a given week will be added to
+     * @param request TradeRequest to add to this User's list of Transactions requested in a given week
+     */
+    public void addToWeeklyRequestLimit(User user, TradeRequest request) {
+        Integer temp = request.getDate().get(Calendar.WEEK_OF_YEAR);
+        user.getWeeklyRequestLimit().get(temp).add(request);
+    }
+
+    /**
+     * Adds a TradeRequest to a User's list of outbound TradeRequests
+     *
+     * @param user    User whose list of outbound TradeRequests will be added to
+     * @param request TradeRequest to add to this User's list of outbound TradeRequests
+     */
+    public void addToOutboundRequests(User user, TradeRequest request) {
+        user.getOutboundRequests().add(request);
+    }
+
+    /**
+     * Removes a TradeRequest from a User's list of outbound TradeRequests
+     *
+     * @param user    User who will have a TradeRequest removed from their list of outbound TradeRequests
+     * @param request TradeRequest to remove from this User's list of outbound TradeRequests
+     */
+    public void removeFromOutboundRequests(User user, TradeRequest request) {
+        user.getOutboundRequests().remove(request);
+    }
+
+    /**
+     * Adds a TradeRequest to a User's pending trade requests
+     *
+     * @param user    User who will receive a new TradeRequest
+     * @param request TradeRequest to be received by this User
+     */
+    public void addToPendingRequests(User user, TradeRequest request) {
+        user.getPendingRequests().add(request);
+    }
+
+    /**
+     * Removes a TradeRequest from a User's pending trade requests
+     *
+     * @param user    User who will have a TradeRequest removed from their pending trade requests
+     * @param request TradeRequest to be removed from this User's pending trade requests
+     */
+    public void removeFromPendingRequests(User user, TradeRequest request) {
+        user.getPendingRequests().remove(request);
     }
 
     /**
@@ -248,15 +287,34 @@ public class UserManager {
     }
 
     /**
-     * Changes an Item's status (either "Pending", "Approved", or "Rejected") in a User's itemHistory (list of items
-     * that have been submitted to the system). Only an Admin should change an Item's status
+     * Adds a Transaction to a User's list of trade-back Transactions
      *
-     * @param user   User whose Item will have its status changed
-     * @param item   Item whose status is to be changed
-     * @param status this Item's new status
+     * @param user        User whose list of trade-back Transactions will be added to
+     * @param transaction Transaction to add to this User's list of trade-back Transactions
      */
-    public void changeItemStatus(User user, Item item, String status) {
-        user.getItemHistory().replace(item, status);
+    public void addToSecondAgreedUponMeetings(User user, Transaction transaction) {
+        user.getSecondAgreedUponMeeting().add(transaction);
+    }
+
+    /**
+     * Removes a Transaction from a User's list of of trade-back Transactions
+     *
+     * @param user        User who will have a Transaction removed from their list of trade-back Transactions
+     * @param transaction Transaction to remove from this User's list of trade-back Transactions
+     */
+    public void removeFromSecondAgreedUponMeetings(User user, Transaction transaction) {
+        user.getSecondAgreedUponMeeting().remove(transaction);
+    }
+
+    /**
+     * Updates a User's trade history
+     *
+     * @param user        User whose trade history is to be updated
+     * @param transaction Transaction to be added to this User's trade history
+     */
+    public void updateTradeHistory(User user, Transaction transaction) {
+        user.getTradeHistory().add(transaction);
+        this.updateTopTradingPartners(user);
     }
 
     /**
@@ -359,6 +417,16 @@ public class UserManager {
     }
 
     /**
+     * Adds a cancelled transaction to a User's list of cancelled transactions
+     *
+     * @param user                 User whose list of cancelled transactions will be added to
+     * @param cancelledTransaction cancelled transaction to be added to this User's list of cancelled transactions
+     */
+    public void addToCancelledTransactions(User user, Transaction cancelledTransaction) {
+        user.getCancelledTransactions().add(cancelledTransaction);
+    }
+
+    /**
      * Used to associate a User that is an attribute of another object with the corresponding User in the system's list
      * of all Users
      *
@@ -372,74 +440,6 @@ public class UserManager {
             }
         }
         return null;
-    }
-
-    /**
-     * Adds a Transaction to a User's list of trade-back Transactions
-     *
-     * @param user        User whose list of trade-back Transactions will be added to
-     * @param transaction Transaction to add to this User's list of trade-back Transactions
-     */
-    public void addToSecondAgreedUponMeeting(User user, Transaction transaction) {
-        user.getSecondAgreedUponMeeting().add(transaction);
-    }
-
-    /**
-     * Removes a Transaction from a User's list of of trade-back Transactions
-     *
-     * @param user        User who will have a Transaction removed from their list of trade-back Transactions
-     * @param transaction Transaction to remove from this User's list of trade-back Transactions
-     */
-    public void removeFromSecondAgreedUponMeeting(User user, Transaction transaction) {
-        user.getSecondAgreedUponMeeting().remove(transaction);
-    }
-
-    /**
-     * Checks the number of Transactions a User has requested in a week against the weekly Transaction limit
-     *
-     * @param adminManager The instance of AdminManager
-     * @param user         User whose number of requested Transactions in a week will be checked against the weekly
-     *                     Transaction limit
-     * @param date         A Calendar representing the date, in the week in question
-     * @return True if and only if the number of Transactions this User requested in the given week is less than the
-     * weekly transaction limit
-     */
-    public boolean checkWeeklyRequestLimit(AdminManager adminManager, User user, Calendar date) {
-        Integer temp = date.get(Calendar.WEEK_OF_YEAR);
-        List<TradeRequest> temp2 = user.getWeeklyRequestLimit().get(temp);
-
-        return temp2.size() < adminManager.getWeeklyTransactionLimit();
-    }
-
-    /**
-     * Adds a Transaction to a User's list of Transactions requested in a given week
-     *
-     * @param user    User whose list of Transactions requested in a given week will be added to
-     * @param request TradeRequest to add to this User's list of Transactions requested in a given week
-     */
-    public void addToWeeklyRequestLimit(User user, TradeRequest request) {
-        Integer temp = request.getDate().get(Calendar.WEEK_OF_YEAR);
-        user.getWeeklyRequestLimit().get(temp).add(request);
-    }
-
-    /**
-     * Adds a TradeRequest to a User's list of outbound TradeRequests
-     *
-     * @param user    User whose list of outbound TradeRequests will be added to
-     * @param request TradeRequest to add to this User's list of outbound TradeRequests
-     */
-    public void addToOutboundRequests(User user, TradeRequest request) {
-        user.getOutboundRequests().add(request);
-    }
-
-    /**
-     * Removes a TradeRequest from a User's list of outbound TradeRequests
-     *
-     * @param user    User who will have a TradeRequest removed from their list of outbound TradeRequests
-     * @param request TradeRequest to remove from this User's list of outbound TradeRequests
-     */
-    public void removeFromOutboundRequests(User user, TradeRequest request) {
-        user.getOutboundRequests().remove(request);
     }
 
 }

@@ -13,9 +13,10 @@ public class OneWay extends Transaction implements Serializable {
 
     /**
      * Constructor for OneWay. Requires a borrower of type User, an Item for the User to attain, and a boolean temp which specifies if OneWay is temporary.
+     *
      * @param borrower The User that intends to borrow an item from another User.
-     * @param item The Item the borrower intends to attain.
-     * @param temp If the OneWay is temporary or not.
+     * @param item     The Item the borrower intends to attain.
+     * @param temp     If the OneWay is temporary or not.
      */
     public OneWay(User borrower, Item item, boolean temp) {
         super(temp);
@@ -26,14 +27,16 @@ public class OneWay extends Transaction implements Serializable {
 
     /**
      * Getter for the borrower of the OneWay.
+     *
      * @return The borrower of a given OneWay.
      */
-    public User getBorrower(){
+    public User getBorrower() {
         return this.borrower;
     }
 
     /**
      * Getter for the lender, or the User giving an Item to another User.
+     *
      * @return The lender of a given OneWay.
      */
     public User getLender() {
@@ -42,9 +45,10 @@ public class OneWay extends Transaction implements Serializable {
 
     /**
      * Setter for the lender, or the User giving an Item to another User.
+     *
      * @return The lender of a given OneWay.
      */
-    public Item getLenderItem(){
+    public Item getLenderItem() {
         return this.item;
     }
 

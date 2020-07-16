@@ -1,18 +1,4 @@
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.io.Serializable;
-import java.util.List;
+import java.io.*;
 
 // NOTE: This class is based off of StudentManager from logging in Week 6 Modules on Quercus.
 
@@ -23,7 +9,7 @@ public class TransactionReadWrite implements Serializable {
 
     /**
      * Creates a new empty TransactionReadWrite. Checks to see if file already exists; if it doesn't, it will
-     *      * create a new file with the name fileName. If it does exist, it will read from the file.
+     * * create a new file with the name fileName. If it does exist, it will read from the file.
      *
      * @throws IOException
      * @throws ClassNotFoundException
@@ -74,7 +60,7 @@ public class TransactionReadWrite implements Serializable {
     /**
      * Writes TransactionManager object tm to external file at filePath.
      *
-     * @param tm the TransactionManager that is instantiated in the current System that needs to be saved.
+     * @param tm       the TransactionManager that is instantiated in the current System that needs to be saved.
      * @param fileName the file to write the records to
      * @throws IOException
      */

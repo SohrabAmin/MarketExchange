@@ -14,8 +14,7 @@ public class Meeting {
     private HashMap<String, Integer> confirm; //0 for not confirmed - 1 for confirmed that meeting took place
 
     /**
-     *
-     * @param date date of Meeting
+     * @param date  date of Meeting
      * @param place place of Meeting
      */
     public Meeting(Calendar date, String place) {
@@ -27,14 +26,15 @@ public class Meeting {
 
     /**
      * Checks if both users have confimred the Meeting
+     *
      * @return True if both users have confirmed Meeting, false otherwise.
      */
-    public boolean confirmedByBothSides (){
+    public boolean confirmedByBothSides() {
         //Used https://stackoverflow.com/questions/27254302/counting-duplicate-values-in-hashmap as reference
         int counter = 0;
         Integer countingFor = 1;
-        for(String key : confirm.keySet()) {            // iterate through all the keys in this HashMap
-            if(confirm.get(key).equals(countingFor)) {  // if a key maps to the string you need, increment the counter
+        for (String key : confirm.keySet()) {            // iterate through all the keys in this HashMap
+            if (confirm.get(key).equals(countingFor)) {  // if a key maps to the string you need, increment the counter
                 counter++;
             }
         }
@@ -43,38 +43,42 @@ public class Meeting {
 
     /**
      * Set confirmation values of both users to 0
+     *
      * @param side1 name of first user
      * @param side2 name of second user
      */
-    public void initialconfirm (String side1, String side2){
+    public void initialconfirm(String side1, String side2) {
         confirm.put(side1, 0);
         confirm.put(side2, 0);
     }
 
     /**
      * Confirms users confirmation value of a Meeting
+     *
      * @param name name of user
      */
-    public void meetingConfirmed (String name){
+    public void meetingConfirmed(String name) {
         confirm.replace(name, 1);
     }
 
     /**
      * Gets users confirmation value of a Meeting
+     *
      * @param name name of user
      * @return Integer representing if user confirmed Meeting
      */
-    public Integer userconfirmed (String name){
+    public Integer userconfirmed(String name) {
         return confirm.get(name);
     }
 
     /**
      * Get name of other user in Meeting
+     *
      * @param name name of original user in Meeting
      * @return name of other user in Meeting
      */
-    public String getOtherSide (String name){
-        for ( String key : confirm.keySet() ) {
+    public String getOtherSide(String name) {
+        for (String key : confirm.keySet()) {
             if (!key.equals(name))
                 return key;
         }
@@ -83,49 +87,55 @@ public class Meeting {
 
     /**
      * Puts a key-value pair in edit history hashmap
+     *
      * @param name key to be put in
-     * @param num value to be put in
+     * @param num  value to be put in
      */
-    public void initialHistory (String name, int num ){
+    public void initialHistory(String name, int num) {
         editHistory.put(name, num);
     }
 
     /**
      * Change last user who edited Meeting
+     *
      * @param name name of user who last edited Meeting
      */
-    public void changeLastEdit (String name){
+    public void changeLastEdit(String name) {
         lastEdit = name;
     }
 
     /**
      * Get name of user who last edited Meeting
+     *
      * @return Name of user who edited Meeting last
      */
-    public String viewLastEdit (){
+    public String viewLastEdit() {
         return lastEdit;
     }
 
     /**
      * Edits the number edits of of a user
+     *
      * @param user User who edited the meeting
-     * @param i New number of edits associated with user
+     * @param i    New number of edits associated with user
      */
-    public void changeHistory (User user, int i){
+    public void changeHistory(User user, int i) {
         editHistory.replace(user.name, i);
     }
 
     /**
      * gets users edit history for Meeting
+     *
      * @param user User who edited meeting
      * @return number of times user has edited the meeting
      */
-    public int geteditHistory (String user){
+    public int geteditHistory(String user) {
         return editHistory.get(user);
     }
 
     /**
      * gets date for Meeting
+     *
      * @return this Meetings date
      */
     public Calendar getDate() {
@@ -134,6 +144,7 @@ public class Meeting {
 
     /**
      * gets place of Meeting
+     *
      * @return this Meeting place
      */
     public String getPlace() {
@@ -142,6 +153,7 @@ public class Meeting {
 
     /**
      * gets confirmed value of Meeting
+     *
      * @return this Meetings confirmed value
      */
     public Boolean getConfirmed() {
@@ -150,6 +162,7 @@ public class Meeting {
 
     /**
      * gets number of times meeting was edited
+     *
      * @return number of meeting edits
      */
     public int getEdits() {
@@ -158,6 +171,7 @@ public class Meeting {
 
     /**
      * sets date for Meeting
+     *
      * @param date date to be set for Meeting
      */
     public void setDate(Calendar date) {
@@ -166,6 +180,7 @@ public class Meeting {
 
     /**
      * sets place for Meeting
+     *
      * @param place place to be set for Meeting
      */
     public void setPlace(String place) {
@@ -181,6 +196,7 @@ public class Meeting {
 
     /**
      * sets value of edits
+     *
      * @param edits new number of edits
      */
     public void setEdits(int edits) {
@@ -189,6 +205,7 @@ public class Meeting {
 
     /**
      * Returns a string representation of this Meeting.
+     *
      * @return String of this Meetings date and place.
      */
     @Override

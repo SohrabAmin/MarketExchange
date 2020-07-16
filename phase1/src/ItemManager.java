@@ -29,7 +29,7 @@ public class ItemManager implements Serializable {
         item.setCurrentHolder(user);
     }
 
-    public void setSystemInventory(List<Item> inventory){
+    public void setSystemInventory(List<Item> inventory) {
         this.systemInventory = inventory;
     }
 

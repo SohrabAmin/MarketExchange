@@ -44,5 +44,4 @@ public class UserIterator implements Iterator<String> {
     }
 
 
-
 }

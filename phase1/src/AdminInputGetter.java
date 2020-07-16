@@ -10,15 +10,17 @@ import java.util.Scanner;
  */
 
 public class AdminInputGetter {
-    private List <User> frozenRequests = new ArrayList<User>();
+    private List<User> frozenRequests = new ArrayList<User>();
 
     /**
      * Returns a list of all the Users in frozenRequest.
+     *
      * @return List<User> returns list of Users in frozen Request
      */
-    public List<User> getFrozenRequests(){
+    public List<User> getFrozenRequests() {
         return frozenRequests;
     }
+
     /**
      * Reads input from user and lets them 'log in' to their account by verifying their username and password.
      *
@@ -62,8 +64,7 @@ public class AdminInputGetter {
             }
             if (input.equals("back")) {
                 return null;
-            }
-            else {
+            } else {
                 return authenticator(allAdmins);
             }
         } catch (IOException e) {
@@ -77,10 +78,10 @@ public class AdminInputGetter {
      *
      * @param admin Account of the Admin.
      * @return depending on what the Admin inputs it will return different objects:
-     *         returns Admin to TradeSystem() to either remain logged into the system and prompt mainMenu
-     *         returns null to log out of the system and allow another Admin to log in
-     *         returns String "exit" to tell TradeSystem() to end the program and save all the data before
-     *         exiting the System
+     * returns Admin to TradeSystem() to either remain logged into the system and prompt mainMenu
+     * returns null to log out of the system and allow another Admin to log in
+     * returns String "exit" to tell TradeSystem() to end the program and save all the data before
+     * exiting the System
      */
     public Object mainMenu(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems) {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -89,19 +90,19 @@ public class AdminInputGetter {
                 "\n\uD83D\uDC4B Welcome back, " + admin.getName());
 
         List<Item> allPendingItems = new ArrayList<>();
-        for (int i = 0; i < allUsers.getAllUsers().size(); i++){
+        for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
             allPendingItems.addAll(allUsers.getAllUsers().get(i).getDraftInventory());
         }
 
         List<User> allFrozenUsers = new ArrayList<>();
-        for (int i = 0; i < allUsers.getAllUsers().size(); i++){
-            if (allUsers.getAllUsers().get(i).getIsFrozen() ) {
+        for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
+            if (allUsers.getAllUsers().get(i).getIsFrozen()) {
                 //if getIsFrozen returns true for frozen accounts
                 allFrozenUsers.add(allUsers.getAllUsers().get(i));
             }
         }
         List<User> possibleFrozenPeople = new ArrayList<>();
-        for (int i = 0; i < allUsers.getAllUsers().size(); i++){
+        for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
             if (allUsers.getAllUsers().get(i).getIsPseudoFrozen()) {
                 //if getIsFrozen returns true for frozen accounts
                 possibleFrozenPeople.add(allUsers.getAllUsers().get(i));
@@ -111,12 +112,12 @@ public class AdminInputGetter {
             System.out.println("\uD83D\uDCF3 You have " + frozenRequests.size() + " Frozen user requests!");
 
         //if they have frozen users, show it here
-        if (allFrozenUsers.size() > 0){
+        if (allFrozenUsers.size() > 0) {
             System.out.println("\u2603 You have " + allFrozenUsers.size() + " Frozen users!");
         }
 
         //if they have pending items, show it here
-        if (allPendingItems.size() > 0){
+        if (allPendingItems.size() > 0) {
             System.out.println("\uD83D\uDCE9 You have " + allPendingItems.size() + " Pending Item Requests!");
         }
         System.out.println("Please select from the following by entering the number beside the option:" +
@@ -134,7 +135,7 @@ public class AdminInputGetter {
                         System.out.println("\nNew admin has been added successfully.\n");
                         return admin;
                         //user decided to exit
-                    } else if (temp == null){
+                    } else if (temp == null) {
                         return null;
                         //user entered "back"
                     } else {
@@ -142,21 +143,21 @@ public class AdminInputGetter {
                     }
                 } else if (input.equals("2")) {
                     Object temp = changeThreshold(allUsers, allAdmins);
-                    while (temp == null){
+                    while (temp == null) {
                         temp = changeThreshold(allUsers, allAdmins);
                     }
                     //else input was "back", returns to main menu
                     return admin;
                 } else if (input.equals("3")) {
                     Object temp = approvalPendingItems(allUsers, allItems);
-                    while (temp == null){
+                    while (temp == null) {
                         temp = approvalPendingItems(allUsers, allItems);
                     }
                     //else input was "back", returns to main menu
                     return admin;
                 } else if (input.equals("4")) { //freeze or unfreeze users
                     Object temp = FreezeOrUnfreeze(allUsers);
-                    while (temp == null){
+                    while (temp == null) {
                         temp = FreezeOrUnfreeze(allUsers);
                     }
                     //else input was "back", returns to main menu
@@ -179,33 +180,33 @@ public class AdminInputGetter {
      *
      * @param allUsers UserManager which stores all the users in the system
      * @return depending on what the Admin inputs it will return different objects:
-     *         returns null to tell mainmenu() to call FreezeOrUnfreeze() again
-     *         returns String "back" to tell mainmenu() to prompt main menu again so Admin can choose another
-     *                 main menu option
+     * returns null to tell mainmenu() to call FreezeOrUnfreeze() again
+     * returns String "back" to tell mainmenu() to prompt main menu again so Admin can choose another
+     * main menu option
      */
-    public Object FreezeOrUnfreeze(UserManager allUsers){
+    public Object FreezeOrUnfreeze(UserManager allUsers) {
         System.out.println("What would you like to do? Please select the number beside the option or enter " +
-        "'back' to return to the main menu.");
+                "'back' to return to the main menu.");
         System.out.println("1.View unfreeze requests\n2.Unfreeze frozen users\n3.Freeze users");
         Scanner sc = new Scanner(System.in);
         Object input = sc.nextLine();
-        if (input.equals("back")){
+        if (input.equals("back")) {
             return "back";
-        } else if (input.equals("1")){
+        } else if (input.equals("1")) {
             Object temp = ViewUnfreezeRequests(allUsers);
-            while (temp == null){
+            while (temp == null) {
                 temp = ViewUnfreezeRequests(allUsers);
             } //else input was "back", displays Freeze or Unfreeze screen
             return null;
-        } else if (input.equals("2")){
+        } else if (input.equals("2")) {
             Object temp = Unfreeze(allUsers);
-            while (temp == null){
+            while (temp == null) {
                 temp = Unfreeze(allUsers);
             } //else input was "back", displays Freeze or Unfreeze screen
             return null;
-        } else if (input.equals("3")){
+        } else if (input.equals("3")) {
             Object temp = Freeze(allUsers);
-            while (temp == null){
+            while (temp == null) {
                 temp = Freeze(allUsers);
             } //else input was "back", displays Freeze or Unfreeze screen
             return null;
@@ -221,18 +222,18 @@ public class AdminInputGetter {
      *
      * @param allUsers UserManager which stores all the users in the system
      * @return depending on what the Admin inputs it will return different objects:
-     *         returns null to tell mainmenu() to call FreezeOrUnfreeze() again
-     *         returns String "back" to tell mainmenu() to prompt main menu again so Admin can choose another
-     *                 main menu option
+     * returns null to tell mainmenu() to call FreezeOrUnfreeze() again
+     * returns String "back" to tell mainmenu() to prompt main menu again so Admin can choose another
+     * main menu option
      */
-    public Object ViewUnfreezeRequests(UserManager allUsers){
+    public Object ViewUnfreezeRequests(UserManager allUsers) {
         if (frozenRequests.size() == 0) {
             System.out.println("\nYou have no unfreeze requests!\n");
             return "back";
         }
         System.out.println("\nHere are freeze requests:");
-        for (int i = 0 ; i < frozenRequests.size() ; i++){
-            System.out.println((i+1) + " . " + frozenRequests.get(i).getName());
+        for (int i = 0; i < frozenRequests.size(); i++) {
+            System.out.println((i + 1) + " . " + frozenRequests.get(i).getName());
         }
         System.out.println("Please enter the number of the user you would like to unfreeze or 'back' to go back.");
         Scanner sc = new Scanner(System.in);
@@ -260,24 +261,25 @@ public class AdminInputGetter {
      *
      * @param allUsers UserManager which stores all the Users in the system
      * @return depending on what the Admin inputs it will return different objects:
-     *         returns null to tell FreezeOrUnfreeze() to call Unfreeze() again
-     *         returns String "back" to tell FreezeOrUnfreeze() to prompt main menu again so Admin can choose another
-     *                 main menu option
+     * returns null to tell FreezeOrUnfreeze() to call Unfreeze() again
+     * returns String "back" to tell FreezeOrUnfreeze() to prompt main menu again so Admin can choose another
+     * main menu option
      */
-    public Object Unfreeze(UserManager allUsers){
-        List <User> frozenUsers = new ArrayList<>();
-        for (int i = 0; i < allUsers.getAllUsers().size(); i++){
+    public Object Unfreeze(UserManager allUsers) {
+        List<User> frozenUsers = new ArrayList<>();
+        for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
             if (allUsers.getAllUsers().get(i).getIsFrozen() || allUsers.getAllUsers().get(i).getIsPseudoFrozen()) {
                 //if getIsFrozen returns true for frozen accounts
                 // or if getIsPseudoFrozen returns true for pseudo frozen users
-            frozenUsers.add(allUsers.getAllUsers().get(i));
+                frozenUsers.add(allUsers.getAllUsers().get(i));
             }
-        } if (frozenUsers.size() == 0){
+        }
+        if (frozenUsers.size() == 0) {
             System.out.println("\nThere are no frozen users!\n");
             return "back";
         }
         System.out.println("\nHere are the current frozen users:");
-        for (int i = 0 ; i < frozenUsers.size(); i++){
+        for (int i = 0; i < frozenUsers.size(); i++) {
             String reqUnfreeze = "";
             for (User frozenRequest : frozenRequests) {
                 if (frozenRequest.getName().equals(frozenUsers.get(i).getName())) {
@@ -301,14 +303,14 @@ public class AdminInputGetter {
             allUsers.unPseudoFreeze(chosenUser);
             allUsers.unfreeze(chosenUser);
             //if they requested to be unfrozen, they will be removed from the frozen request list
-            for (int i=0 ; i < frozenRequests.size(); i++){
+            for (int i = 0; i < frozenRequests.size(); i++) {
                 if (frozenRequests.get(i).getName().equals(chosenUser.getName())) {
                     removeFromfrozenRequest(chosenUser);
                 }
             }
             System.out.println("\n\u2705 Successfully unfrozen user: " +
                     allUsers.getUser(chosenUser).getName());
-            if ((frozenUsers.size() - 1) == 0){
+            if ((frozenUsers.size() - 1) == 0) {
                 System.out.println("\nThere are no more frozen Users!\n");
                 return "back";
             }
@@ -322,23 +324,24 @@ public class AdminInputGetter {
      *
      * @param allUsers UserManager which stores all the Users in the system
      * @return depending on what the Admin inputs it will return different objects:
-     *         returns null to tell FreezeOrUnfreeze() to call Freeze() again
-     *         returns String "back" to tell FreezeOrUnfreeze() to prompt main menu again so Admin can choose another
-     *                 main menu option
+     * returns null to tell FreezeOrUnfreeze() to call Freeze() again
+     * returns String "back" to tell FreezeOrUnfreeze() to prompt main menu again so Admin can choose another
+     * main menu option
      */
-    public Object Freeze(UserManager allUsers){
-        List <User> unfrozenUsers = new ArrayList<>();
-        for (int i = 0; i < allUsers.getAllUsers().size(); i++){
+    public Object Freeze(UserManager allUsers) {
+        List<User> unfrozenUsers = new ArrayList<>();
+        for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
             if (!allUsers.getAllUsers().get(i).getIsFrozen() || allUsers.getAllUsers().get(i).getIsPseudoFrozen()) {
                 //if getIsFrozen is not true or if getIsPseudoFrozen returns true for pseudo frozen users
                 unfrozenUsers.add(allUsers.getAllUsers().get(i));
             }
-        } if (unfrozenUsers.size() == 0){
+        }
+        if (unfrozenUsers.size() == 0) {
             System.out.println("\nThere are no non-frozen users!\n");
             return "back";
         }
         System.out.println("\nHere are the current non-frozen users:");
-        for (int i = 0 ; i < unfrozenUsers.size(); i++){
+        for (int i = 0; i < unfrozenUsers.size(); i++) {
             String reqUnfreeze = "";
             for (User frozenRequest : frozenRequests) {
                 if (frozenRequest.getName().equals(unfrozenUsers.get(i).getName())) {
@@ -366,14 +369,14 @@ public class AdminInputGetter {
                 allUsers.freeze(chosenUser);
             }
             //users will need to re-request to be unfrozen if they go from pseudo-frozen to actually frozen
-            for (int i=0 ; i < frozenRequests.size(); i++){
+            for (int i = 0; i < frozenRequests.size(); i++) {
                 if (frozenRequests.get(i).getName().equals(chosenUser.getName())) {
                     removeFromfrozenRequest(chosenUser);
                 }
             }
             System.out.println("\n\u2705 Successfully frozen user: " +
                     allUsers.getUser(chosenUser).getName() + "\n");
-            if ((unfrozenUsers.size() - 1) == 0){
+            if ((unfrozenUsers.size() - 1) == 0) {
                 System.out.print("\nThere are no more non-frozen Users!\n");
                 return "back";
             }
@@ -386,7 +389,7 @@ public class AdminInputGetter {
      *
      * @param user the User requesting to be unfrozen
      */
-    public void addfrozenRequest (User user){
+    public void addfrozenRequest(User user) {
         frozenRequests.add(user);
     }
 
@@ -395,7 +398,7 @@ public class AdminInputGetter {
      *
      * @param user the User that has been removed from the list of frozenRequests
      */
-    public void removeFromfrozenRequest (User user){
+    public void removeFromfrozenRequest(User user) {
         frozenRequests.remove(user);
     }
 
@@ -406,9 +409,9 @@ public class AdminInputGetter {
      *
      * @param allUsers UserManager which holds all the Users in the system
      * @return depending on what the Admin inputs it will return different objects:
-     *         returns null to tell mainmenu() to call approvalPendingItems() again
-     *         returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
-     *                 main menu option
+     * returns null to tell mainmenu() to call approvalPendingItems() again
+     * returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
+     * main menu option
      */
     public Object approvalPendingItems(UserManager allUsers, ItemManager allItems) {
         //Creates a list of all pending items in the system
@@ -417,7 +420,7 @@ public class AdminInputGetter {
             allPendingItems.addAll(allUsers.getAllUsers().get(i).getDraftInventory());
         }
         //no pending items
-        if (allPendingItems.size() == 0){
+        if (allPendingItems.size() == 0) {
             System.out.println("There are no pending item requests to approve!\n");
             return "back";
         }
@@ -446,7 +449,7 @@ public class AdminInputGetter {
         System.out.print("Input '1' to approve or input '2' to reject or 'back' to return to the list of pending items.\n");
 
         Object nextInput = sc.nextLine();
-        if (nextInput.equals("back")){
+        if (nextInput.equals("back")) {
             return null;
         }
         try {
@@ -467,19 +470,19 @@ public class AdminInputGetter {
         } else {
             System.out.println("\uD83E\uDDD0 What was that? Please try again!");
             return null;
-            }
+        }
     }
 
     /**
      * Changes the lentMinusBorrowedThreshold which dictates how much more a user has to have lent than borrowed,
      * before trading. The threshold change affects all Users in the system.
      *
-     * @param allUsers changes LentMinusBorrowedThreshold variable in the system's UserManager
+     * @param allUsers  changes LentMinusBorrowedThreshold variable in the system's UserManager
      * @param allAdmins changes LentMinusBorrowedThreshold variable in the system's AdminManager
      * @return depending on what the Admin inputs it will return different objects:
-     *         returns null to tell mainmenu() to call changeThreshold() again
-     *         returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
-     *                 main menu option
+     * returns null to tell mainmenu() to call changeThreshold() again
+     * returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
+     * main menu option
      */
     public Object changeThreshold(UserManager allUsers, AdminManager allAdmins) {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -554,8 +557,8 @@ public class AdminInputGetter {
                         "threshold is now: " + newThreshold + ".");
             }
         } else {
-                System.out.println("\nThe threshold has been changed unsuccessfully. Please try again.");
-                return null;
+            System.out.println("\nThe threshold has been changed unsuccessfully. Please try again.");
+            return null;
         }
         return null;
     }
@@ -565,10 +568,10 @@ public class AdminInputGetter {
      *
      * @param allAdmins AdminManager stores all the Admin information.
      * @return depending on what the Admin inputs it will return different objects:
-     *         returns null to tell mainmenu() to call addAdmin() again
-     *         returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
-     *                 main menu option
-     *         returns String "exit" to prompt TradeSystem to save all the information and exit the System
+     * returns null to tell mainmenu() to call addAdmin() again
+     * returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
+     * main menu option
+     * returns String "exit" to prompt TradeSystem to save all the information and exit the System
      */
     public Object addAdmin(AdminManager allAdmins) {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -607,11 +610,10 @@ public class AdminInputGetter {
                 }
                 allAdmins.addAdmin(temp.get(0), temp.get(1));
                 return (allAdmins.getAllAdmins().get(allAdmins.getAllAdmins().size() - 1));
-            }
-            else if(input.equals("back")){
+            } else if (input.equals("back")) {
                 return "back";
             }
-            } catch (IOException ioException) {
+        } catch (IOException ioException) {
             ioException.printStackTrace();
         }
         return null;

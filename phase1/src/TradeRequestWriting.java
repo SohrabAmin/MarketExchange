@@ -15,14 +15,14 @@ public class TradeRequestWriting {
 
         // Deserializes contents of the SER file
         TradeRequestManager temp = trRW.readFromFile(fileName);
-        if (temp == null){
+        if (temp == null) {
             return new TradeRequestManager();
         }
         return temp;
     }
 
     /**
-     *  Saves the TradeRequestManager trM into the external file.
+     * Saves the TradeRequestManager trM into the external file.
      *
      * @param trM current TradeRequestManager object that needs to be saved to the external file
      * @throws IOException
