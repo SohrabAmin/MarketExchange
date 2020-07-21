@@ -169,7 +169,7 @@ public class InputGetter {
         //if the user's inventory is empty
         if (in.size() == 0) {
             System.out.println("\nYour inventory is empty!\n");
-            return null;//if the user's inventory is not empty
+            return "back";//if the user's inventory is not empty
         }
         System.out.println("Your inventory:");
         for (int i = 0; i < in.size(); i++) {
