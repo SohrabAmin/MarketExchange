@@ -259,10 +259,11 @@ public class InputGetter {
         System.out.println("\nHere are the current items in the system's inventory:\n");
         //if there are items in the inventory, it will print the items in the following format:
         // 1. Item Name: Description Owner is: OwnerName
-        for (int i = 0; i < allItems2.size(); i++) {
-            System.out.println("\uD83D\uDCE6" + (i + 1) + ". " + allItems2.get(i).getName() + ": "
-                    + allItems2.get(i).getDescription() + " Owner is: " + allItems2.get(i).getOwner().getName() + "\n");
-        }
+//        for (int i = 0; i < allItems2.size(); i++) {
+//            System.out.println("\uD83D\uDCE6" + (i + 1) + ". " + allItems2.get(i).getName() + ": "
+//                    + allItems2.get(i).getDescription() + " Owner is: " + allItems2.get(i).getOwner().getName() + "\n");
+//        }
+        DisplayBrowse (user, allItems, allUsers);
         //asks the user if they want to add an item to their wishlist
         System.out.println("Enter ID of the item you would like to add to your wishlist or type 'back' to get to main menu.");
 
