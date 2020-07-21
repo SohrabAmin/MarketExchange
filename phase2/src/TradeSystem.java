@@ -9,12 +9,13 @@ import java.util.List;
 public class TradeSystem {
     public InputGetter inputgetter = new InputGetter();
     public AdminInputGetter admininputgetter = new AdminInputGetter();
+    public MeetingManager allMeetings = new MeetingManager();
     public UserManager allUsers = new UserManager();
+    public ItemManager allItems = new ItemManager();
     public TransactionManager allTransactions;
     public AdminManager allAdmins;
-    public ItemManager allItems = new ItemManager();
-    public MeetingManager allMeetings = new MeetingManager();
     public TradeRequestManager allTradeRequests;
+    public ReadWrite readwrite = new ReadWrite();
     public Object currentUser;
 
     /**
@@ -29,19 +30,18 @@ public class TradeSystem {
         //either returns the saved AdminManager object with all the stored admin information
         //or creates a new AdminManager object with a default admin with user name Tina and password 123456
         //if the file AdminList.ser is empty
-        allAdmins = AdminWriting.demoAdminRead("AdminList.ser");
+        allAdmins = readwrite.adminPopulate("AdminList.ser");
         //either returns the saved TransactionManager object with all the stored Transactions
         //or creates a new Transaction object if file TransactionList.ser is empty
-        allTransactions = TransactionWriting.demoTransactionRead("TransactionList.ser");
+        allTransactions = readwrite.transactionManagerPopulate("TransactionList.ser");
         //either returns the saved TradeRequest object with all the stored Trade Requests
         //or creates a new TradeRequest object if file TradeRequestList.ser is empty
-        allTradeRequests = TradeRequestWriting.demoTradeRequestRead("TradeRequestList.ser");
+        allTradeRequests = readwrite.tradeRequestPopulate("TradeRequestList.ser");
         //populates the system inventory in the initialized ItemManager AllItems with all the saved
         //items in the file ItemList.ser
-        ItemWriting.demoItemRead("ItemList.ser", allItems);
+        readwrite.itemPopulate(allItems, "ItemList.ser");
         //reads the file and populates UserManager allUsers with the Users stored in UserList.ser
-        UserWriting.demoUserRead("UserList.ser", allUsers);
-
+        readwrite.userPopulate(allUsers, "UserList.ser");
 
 
         //If there is no current User, prompts log in and prompts the correct menu depending on the type of Account
@@ -78,14 +78,14 @@ public class TradeSystem {
         System.out.print("Goodbye!\uD83D\uDEAA \n");
 
         //saves all the users in UserManager to an external file
-        UserWriting.demoUserSave("UserList.ser", allUsers);
+        readwrite.saveToFile("UserList.ser", allUsers);
         //saves current AdminManager object allAdmins to external file
-        AdminWriting.demoAdminSave("AdminList.ser", allAdmins);
+        readwrite.saveToFile("AdminList.ser", allAdmins);
         //saves current TransactionManager object allTransactions to an external file
-        TransactionWriting.demoTransactionSave("TransactionList.ser", allTransactions);
+        readwrite.saveToFile("TransactionList.ser", allTransactions);
         //saves the systemInventory in AllItems to an external file
-        ItemWriting.demoItemSave("ItemList.ser", allItems);
+        readwrite.saveToFile("ItemList.ser", allItems);
         //saves current TradeRequest object allTradeRequests to an external file
-        TradeRequestWriting.demoTradeRequestSave("TradeRequestList.ser", allTradeRequests);
+        readwrite.saveToFile("TradeRequestList.ser", allTradeRequests);
     }
 }

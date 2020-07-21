@@ -1,9 +1,10 @@
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * Creates, keeps track of, and changes values of Users.
  */
-public class UserManager {
+public class UserManager implements Serializable {
     private List<User> userList;
 
     /**
@@ -34,7 +35,7 @@ public class UserManager {
     }
 
     /**
-     * Setter for the list of all Users in the system. Only UserReadWrite should access this method.
+     * Setter for the list of all Users in the system. Only ReadWrite should access this method.
      *
      * @param userList new list of all Users
      */
