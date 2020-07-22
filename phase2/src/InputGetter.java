@@ -288,6 +288,11 @@ public class InputGetter {
                     return null;
                 }
             }
+
+            allUsers.addToFC (item.getCategory(), user);
+
+
+
             allUsers.addToWishlist(user, item);
             System.out.println("\nItem has been added to your wishlist \uD83C\uDF20");
             return null;
@@ -296,6 +301,35 @@ public class InputGetter {
         }
         return "back";
     }
+
+    //this method is taken from https://www.geeksforgeeks.org/how-to-find-the-entry-with-largest-value-in-a-java-map/
+    public static <K, V extends Comparable<V> > Map.Entry<K, V>
+    getMaxEntryInMapBasedOnValue(Map<K, V> map)
+    {
+        // To store the result
+        Map.Entry<K, V> entryWithMaxValue = null;
+
+        // Iterate in the map to find the required entry
+        for (Map.Entry<K, V> currentEntry : map.entrySet()) {
+
+            if (
+                // If this is the first entry, set result as this
+                    entryWithMaxValue == null
+
+                            // If this entry's value is more than the max value
+                            // Set this entry as the max
+                            || currentEntry.getValue()
+                            .compareTo(entryWithMaxValue.getValue())
+                            > 0) {
+
+                entryWithMaxValue = currentEntry;
+            }
+        }
+
+        // Return the entry with highest value
+        return entryWithMaxValue;
+    }
+
 
     /**
      * Initiates a one-way or two-way trade between two Users. Prompts user for details of the trade.
@@ -441,21 +475,46 @@ public class InputGetter {
                 System.out.print("\u274E Trade initiation has been cancelled.\n");
                 return null;
             }
-            System.out.print("Your inventory: \n");
+            System.out.print("\nYour inventory: \n");
 
             //Here is where we print the person's inventory
+            boolean suggested = false;
             List <Item> otherPersonWL= new ArrayList<>();
             otherPersonWL= allUsers.getUser(tradeItem.getOwner()).getWishlist();
             for (int i = 0; i < in.size(); i++) {
                 String recom = "\n";
-                for (int j = 0; j < otherPersonWL.size(); j++){
-                    if (in.get(i).getName().equals(otherPersonWL.get(j).getName())){
-                        recom = " <- [RECOMMENDED] item is in item owner's wishlist!\n";
-                    }
-
-                }
+//                for (int j = 0; j < otherPersonWL.size(); j++){
+//                    if (in.get(i).getName().equals(otherPersonWL.get(j).getName())){
+//                        recom = " <- [RECOMMENDED] item is in item owner's wishlist!\n";
+//                        suggested = true;
+//                    }
+//
+//                }
                 System.out.println(i + 1 + ". " + in.get(i).getName() + recom);
             }
+
+            //system can make its suggestions here if nothing from the owner's wishlist was in inventory :(
+            if (!suggested){
+                String Recommend = "";
+                User otherSide = allUsers.getUser(tradeItem.getOwner());
+                //finding the category that the person is most fan of
+                Map.Entry<String, Integer> category = getMaxEntryInMapBasedOnValue(otherSide.getFrequentCategory());
+                //now ive found the most frequently wanted category or if they are all zero, i recommend the first one
+                //now i need to scan through the inventory to see if i can recommend anything from there
+
+                for (int i=0; i< in.size();i++){
+                    if (category.getKey().equals(in.get(i).getCategory())) {
+                        Recommend = in.get(i).getName();
+                        break;
+                    }
+                    else Recommend = in.get(0).getName(); //if you cant find anything, just grab the oldest item in the inventory to trade
+
+                }
+
+            System.out.print("System Suggestion based on other party's interest: " + Recommend +"\n");
+            }
+
+
             Object inum2 = sc.nextLine();
             //returns them to the first prompt where they enter the id of the item to trade
             if (inum2.equals("back")) {
@@ -723,6 +782,9 @@ public class InputGetter {
         //method that handles approve or reject
     }
 
+
+
+
     /**
      * Deals with requesting to add a new item to the system's inventory. Prompts user for details of the item
      * and sends a request to the Admin for approval. Adds the item to the User's item history so they can
@@ -747,9 +809,62 @@ public class InputGetter {
         if (description.equals("back")) {
             return "back";
         }
-        Item newItem = new Item(itemName, user, description);
+        System.out.print("Please enter the category of item you would like to add or 'back' to go back to the main menu.\n");
+        System.out.print("Please choose the category of item by typing the number or 'back' to go back to the main menu.\n");
+        System.out.print("1.Electronics\n2.Automotive and car accessories\n3.Baby\n4.Beauty, Health and Personal Care\n5.Books\n6.Home and Kitchen Supplies\n" +
+                "7.Clothing\n8.Movies, music and TV\n9.Office Supplies\n10.Gaming\n");
+
+        String ID = sc.nextLine();
+
+        String category = "Undefined";
+        while (category.equals("Undefined")){
+            if (ID.equals("back")) {
+                return "back";
+            }
+            else if (ID.equals("1")){
+                category = "Electronics";
+            }
+            else if (ID.equals("2")){
+                category = "Automotive and car accessories";
+            }
+            else if (ID.equals("3")){
+                category = "Baby";
+            }
+            else if (ID.equals("4")){
+                category = "Beauty, Health and Personal Care";
+            }
+            else if (ID.equals("5")){
+                category = "Books";
+            }
+            else if (ID.equals("6")){
+                category = "Home and Kitchen supplies";
+
+            }
+            else if (ID.equals("7")){
+                category = "Clothing";
+
+            }
+            else if (ID.equals("8")){
+                category = "Movies, music and TV";
+
+            }
+            else if (ID.equals("9")){
+                category = "Office Supplies";
+
+            }
+            else if (ID.equals("10")){
+                category = "Gaming";
+            }
+            else
+            {
+                System.out.print("Please enter a category for the product!\n");
+            }
+        }
+
+
+        Item newItem = new Item(itemName, user, description, category);
         System.out.println("The item you wish to add is the following: ");
-        System.out.println("Item name: " + newItem.getName() + "\n" + "Item description: " + newItem.getDescription());
+        System.out.println("Item name: " + newItem.getName() + "\n" + "Item description: " + newItem.getDescription() + "\n Item Category:" + newItem.getCategory());
         System.out.println("\nIf this is correct, please enter '1'. If you would like to change the item, " +
                 "please enter '2'.");
         String confirmation = sc.nextLine();
@@ -760,6 +875,7 @@ public class InputGetter {
             }
             return null;
         }
+
         allUsers.addToDraftInventory(user, newItem);
         System.out.print("\n \u2705 Your request is sent to admin for approval!\n");
         allUsers.addToItemHistory(user, newItem);
@@ -852,9 +968,63 @@ public class InputGetter {
         if (name.equals("back")) {
             return "back";
         }
-        Item wishlistItem = new Item(name, null, description);
+        System.out.print("Please choose the category of item by typing the number or 'back' to go back to the main menu.\n");
+        System.out.print("1.Electronics\n2.Automotive and car accessories\n3.Baby\n4.Beauty, Health and Personal Care\n5.Books\n6.Home and Kitchen Supplies\n" +
+                "7.Clothing\n8.Movies, music and TV\n9.Office Supplies\n10.Gaming\n");
+
+        String ID = sc.nextLine();
+
+        String category = "Undefined";
+        while (category.equals("Undefined")){
+        if (name.equals("back")) {
+            return "back";
+        }
+        else if (ID.equals("1")){
+            category = "Electronics";
+        }
+        else if (ID.equals("2")){
+            category = "Automotive and car accessories";
+           }
+        else if (ID.equals("3")){
+            category = "Baby";
+                   }
+        else if (ID.equals("4")){
+            category = "Beauty, Health and Personal Care";
+                 }
+        else if (ID.equals("5")){
+            category = "Books";
+                  }
+        else if (ID.equals("6")){
+            category = "Home and Kitchen supplies";
+
+        }
+        else if (ID.equals("7")){
+            category = "Clothing";
+
+        }
+        else if (ID.equals("8")){
+            category = "Movies, music and TV";
+
+        }
+        else if (ID.equals("9")){
+            category = "Office Supplies";
+
+        }
+        else if (ID.equals("10")){
+            category = "Gaming";
+                   }
+        else
+        {
+            System.out.print("Please enter a category for the product!\n");
+        }
+        }
+
+
+
+
+        Item wishlistItem = new Item(name, null, description, category);
         System.out.println("The item you wish to add to your wishlist is the following: ");
-        System.out.println("Item name: " + wishlistItem.getName() + "\n" + "Item description: " + wishlistItem.getDescription());
+        System.out.println("Item name: " + wishlistItem.getName() + "\n" + "Item description: " + wishlistItem.getDescription() + "\nItem category: " + wishlistItem.getCategory());
         System.out.println("\nIf this is correct, please enter '1'. If you would like to change the item, " +
                 "please enter '2'.");
 
@@ -866,7 +1036,40 @@ public class InputGetter {
             }
             return null;
         }
+
+
+        //adding item to the person's
         allUsers.addToWishlist(user, wishlistItem);
+        if (ID.equals("1")){
+            allUsers.addToFC("Electronics", user);
+        }
+        else if (ID.equals("2")){
+            allUsers.addToFC("Automotive and car accessories", user);
+        }
+        else if (ID.equals("3")){
+            allUsers.addToFC("Baby", user);
+        }
+        else if (ID.equals("4")){
+            allUsers.addToFC("Beauty, Health and Personal Care", user);
+        }
+        else if (ID.equals("5")){
+            allUsers.addToFC("Books", user);
+        }
+        else if (ID.equals("6")){
+            allUsers.addToFC("Home and Kitchen Supplies", user);
+        }
+        else if (ID.equals("7")){
+            allUsers.addToFC("Clothing", user);
+        }
+        else if (ID.equals("8")){
+            allUsers.addToFC("Movies, music and TV", user);
+        }
+        else if (ID.equals("9")){
+            allUsers.addToFC("Office Supplies", user);
+        }
+        else if (ID.equals("10")){
+            allUsers.addToFC("Gaming", user);
+        }
         System.out.print("Item has been added to your wishlist \uD83C\uDF20\n");
 
         return "back";

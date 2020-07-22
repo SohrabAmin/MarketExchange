@@ -443,4 +443,12 @@ public class UserManager implements Serializable {
         return null;
     }
 
+    public void addToFC (String category, User user){
+        Integer old = user.getFrequentCategory().get(category);
+        Integer score = old +1;
+        user.getFrequentCategory().replace(category, score);
+        return;
+
+
+    }
 }

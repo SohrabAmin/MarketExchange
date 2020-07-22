@@ -24,6 +24,7 @@ public class User extends Account {
     private List<Transaction> agreedUponMeetings;
     private List<Transaction> secondAgreedUponMeetings;
     private Map<Integer, List<TradeRequest>> weeklyRequestLimit;
+    private Map <String, Integer> FrequentCategory;
 
 
     public User() {
@@ -52,12 +53,32 @@ public class User extends Account {
         agreedUponMeetings = new ArrayList<>();
         secondAgreedUponMeetings = new ArrayList<>();
         this.weeklyRequestLimit = new HashMap<>();
+        this.FrequentCategory = new HashMap<>();
 
         for (int i = 1; i < 53; i++) {
             List<TradeRequest> temp = new ArrayList<>();
             this.weeklyRequestLimit.put(i, temp);
         }
 
+        //initializing the frequentCategories
+        this.FrequentCategory.put ("Electronics", 0);
+        this.FrequentCategory.put("Automotive and car accessories",0);
+        this.FrequentCategory.put("Baby", 0);
+        this.FrequentCategory.put("Beauty, Health and Personal Care",0);
+        this.FrequentCategory.put("Books",0);
+        this.FrequentCategory.put("Home and Kitchen Supplies", 0);
+        this.FrequentCategory.put("Clothing",0);
+        this.FrequentCategory.put("Movies, music and TV",0);
+        this.FrequentCategory.put("Office Supplies",0);
+        this.FrequentCategory.put("Gaming",0);
+
+
+
+    }
+
+
+    public Map<String, Integer> getFrequentCategory(){
+        return FrequentCategory;
     }
 
     /**

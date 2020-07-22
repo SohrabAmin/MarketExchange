@@ -5,13 +5,15 @@ public class Item implements Serializable {
     private User owner;
     private User currentHolder;
     private String description;
+    private String category;
 
 
-    public Item(String name, User owner, String description) {
+    public Item(String name, User owner, String description, String category) {
         this.name = name;
         this.owner = owner;
         this.description = description;
         this.currentHolder = null;
+        this.category = category;
     }
 
     public String getName() {
@@ -45,4 +47,7 @@ public class Item implements Serializable {
     public String getDescription() {
         return description;
     }
+    public String getCategory(){
+    return category;
+        }
 }
