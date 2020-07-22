@@ -442,8 +442,19 @@ public class InputGetter {
                 return null;
             }
             System.out.print("Your inventory: \n");
+
+            //Here is where we print the person's inventory
+            List <Item> otherPersonWL= new ArrayList<>();
+            otherPersonWL= allUsers.getUser(tradeItem.getOwner()).getWishlist();
             for (int i = 0; i < in.size(); i++) {
-                System.out.println(i + 1 + ". " + in.get(i).getName());
+                String recom = "\n";
+                for (int j = 0; j < otherPersonWL.size(); j++){
+                    if (in.get(i).getName().equals(otherPersonWL.get(j).getName())){
+                        recom = " <- [RECOMMENDED] item is in item owner's wishlist!\n";
+                    }
+
+                }
+                System.out.println(i + 1 + ". " + in.get(i).getName() + recom);
             }
             Object inum2 = sc.nextLine();
             //returns them to the first prompt where they enter the id of the item to trade
