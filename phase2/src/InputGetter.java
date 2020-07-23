@@ -302,7 +302,10 @@ public class InputGetter {
         return "back";
     }
 
-    //this method is taken from https://www.geeksforgeeks.org/how-to-find-the-entry-with-largest-value-in-a-java-map/
+
+
+    //taken from https://www.geeksforgeeks.org/how-to-find-the-entry-with-largest-value-in-a-java-map/
+    // Find the entry with highest value
     public static <K, V extends Comparable<V> > Map.Entry<K, V>
     getMaxEntryInMapBasedOnValue(Map<K, V> map)
     {
@@ -369,7 +372,7 @@ public class InputGetter {
             return "back";
         }
         try {
-            inum = Integer.parseInt((String) inum);
+           inum = Integer.parseInt((String) inum);
         } catch (NumberFormatException e) {
             return null;
         }
@@ -378,6 +381,9 @@ public class InputGetter {
             System.out.print("\uD83E\uDDD0 Item does not exist! Please try again!\n");
             return null;
         }
+
+        System.out.print(inum);
+
 
         //the item they have selected
         Item tradeItem = allItems.getSystemInventory().get((Integer) inum - 1);
@@ -564,7 +570,6 @@ public class InputGetter {
      * @param allUsers UserManager which stores User user
      * @return returns the User user so that they can go back to the main menu after viewing their messages.
      */
-
     public User PendingTrades(User user, UserManager allUsers) {
 //no error checking needed!
         System.out.print("\nHere are your pending Trades: \n");
@@ -1446,15 +1451,19 @@ public class InputGetter {
                            UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
                            AdminInputGetter admininputgetter, AdminManager allAdmins) {
         Scanner sc = new Scanner(System.in);    //System.in is a standard input stream
-        System.out.print("----------------------------------------------------------------------------------------------" +
-                "\n\uD83D\uDC4B Welcome back, " + user.getName() + "!\n");
+
 
         //A frozen account is one where you can log in and look for items, but you cannot arrange any transactions.
         // A user who has been frozen can request that the administrative user unfreezes their account.
         boolean frozenAccount = user.getIsFrozen();
         boolean pseudoFrozenAccount = user.getIsPseudoFrozen();
 
+
+
+//if they are frozen
         if (frozenAccount || pseudoFrozenAccount) { //first off, tell them that they are frozen
+            System.out.print("----------------------------------------------------------------------------------------------" +
+                    "\n\uD83D\uDC4B Welcome back, " + user.getName() + "!\n");
             String actionTaker = "by Admin.";
             if (pseudoFrozenAccount)
                 actionTaker = "by System.";
@@ -1522,7 +1531,94 @@ public class InputGetter {
                     return null;
                 }
             }
-        } else {
+        }
+       //if they are not frozen
+        else if (user.getName().equals("Demo")){
+            System.out.print("-------------------------------------------------------\n\uD83E\uDD16 Hello Demo User \uD83E\uDD16\n");
+
+
+
+            System.out.print("Please select number from the following:\n" +
+                    "\uD83C\uDD94 Indicates that signup/login as user is required!\n1.View Wishlist\n2.View Inventory \uD83C\uDD94 \n" +
+                    "3.Browse Items\n4.Initiate Trade \uD83C\uDD94 \n5.View Pending Trade Requests \uD83C\uDD94\n6.Approve Pending Trade Requests \uD83C\uDD94\n" +
+                    "7.Add Item to inventory \uD83C\uDD94\n8.View most recent trades \uD83C\uDD94\n9.View most frequent trading partners \uD83C\uDD94\n" +
+                    "10. View status of my items \uD83C\uDD94\n11. Add Item to wishlist\n" +
+                    "12. Approve Meeting \uD83C\uDD94\n13. Confirm Meetings for Approved Trades \uD83C\uDD94\n" +
+                    "14.View status of outbound requests \uD83C\uDD94\n15. Logout" +
+                    "\nEnter 'exit' to exit the system at any time.\n");
+
+            String a = sc.nextLine();
+            if (!a.equals("exit")) {
+                if (a.equals("1")) { //view wishlist
+                    System.out.print("-------------------------------------------------------\n\uD83D\uDC81 Your wishlist are items that you want to have in the future!\n");
+                    Object temp = system1.wishlist(user, allUsers);
+                    while (temp == null) {
+                        temp = system1.wishlist(user, allUsers);
+                    }
+                    return user;
+                } else if (a.equals("2")) { //view inventory
+                    System.out.print("-------------------------------------------------------\n\uD83D\uDC81 As a user, you can add items to be added to your inventory. Once you add an item, the item is sent to approval to Admin.\n");
+                    return user;
+                } else if (a.equals("3")) { //browse items
+                    System.out.print("-------------------------------------------------------\n\uD83D\uDC81 As a user, you can see all items available in the system to trade. Each item is approved by an admin.\n");
+                    Object temp = system1.Browse(user, allItems, allUsers);
+                    while (temp == null) {
+                        temp = system1.Browse(user, allItems, allUsers);
+                    }
+                    return user;
+                } else if (a.equals("4")) { //choose the id?
+                    System.out.print("-------------------------------------------------------\n\uD83D\uDC81 As a user, you can choose an item and initiate a 1way or 2way permenant/temporary trade.\n");
+                    //else input was "back", returns to main menu
+                    return user;
+                } else if (a.equals("5")) {
+                    System.out.print("-------------------------------------------------------\n\uD83D\uDC81 As a user, you can see any pending trade requests.\n");
+                    return user;
+                } else if (a.equals("8")) { //View most recent trades
+                    System.out.print("-------------------------------------------------------\n\uD83D\uDC81 As a user, you can see information about your 3 most recent trades.\n");
+                    return user;
+                } else if (a.equals("9")) { //View most frequent trading partners
+                    System.out.print("-------------------------------------------------------\n\uD83D\uDC81 As a user, you can see who your most frequently trading partners are.\n");
+                } else if (a.equals("6")) {
+                    System.out.print("-------------------------------------------------------\n\uD83D\uDC81 As a user, you can look through all trade requests and their details and decide if you want to confirm or reject the trade.\n");
+                    return user;
+
+                } else if (a.equals("7")) { //request to add new item
+                    System.out.print("-------------------------------------------------------\n\uD83D\uDC81 As a user, you can add items to your inventory. However, once added, the request will be sent to admin for approval. \n" +
+                            "Once approved, the item will show up in your inventory and it will be visible to other users when browsing.\n");
+                    return user;
+                } else if (a.equals("10")) {
+                    System.out.print("-------------------------------------------------------\n\uD83D\uDC81 As a user, you can see a list of all items you have ever submitted to the system and whether they were approved/rejected by admin or still pending on admin's approval.\n");
+                    return user;
+                } else if (a.equals("11")) {
+                    System.out.print("-------------------------------------------------------\n\uD83D\uDC81 As a user, you can add items to your wishlist that you would like to purchase.\n");
+                    return user;
+                }
+                else if (a.equals("12")) {
+                    System.out.print("-------------------------------------------------------\n\uD83D\uDC81 As a user, once a trade is accepted by the other party, you can see the suggested meeting, approve meeting or suggest an alternative meeting here.\n");
+                    return user;
+
+                } else if (a.equals("13")) {
+                    System.out.print("-------------------------------------------------------\n\uD83D\uDC81 As a user, here you can confirm a meeting happened or if it did not happen. If the meeting did not happen, both parties may be penalized.\n");
+                    return user;
+                } else if (a.equals("14")) {
+                    System.out.print("-------------------------------------------------------\n\uD83D\uDC81 As a user, you can see the status of the outbound trade requests you have sent.\n");
+                } else if (a.equals("15")) {
+                    System.out.print("-------------------------------------------------------\n\uD83D\uDC81 Logging out as Demo!\n");
+                    //logout
+                    return null;
+                }
+                else { //if they input invalid response
+                    System.out.print("\uD83E\uDDD0 Invalid Response!\n");
+                    return user;
+                }
+            } else {//input is "exit"
+
+                return a;
+            }
+
+        }else {
+            System.out.print("----------------------------------------------------------------------------------------------" +
+                    "\n\uD83D\uDC4B Welcome back, " + user.getName() + "!\n");
             if (allUsers.getUser(user).getPendingRequests().size() > 0) {
                 System.out.print("\uD83D\uDCE9 You have " + allUsers.getUser(user).getPendingRequests().size() +
                         " Pending Trade Requests!\n");
@@ -1532,11 +1628,14 @@ public class InputGetter {
                         " Pending Transactions!\n");
             }
 
+
+
+
             System.out.print("Please select number from the following:\n1.View Wishlist\n2.View Inventory\n" +
                     "3.Browse Items\n4.Initiate Trade\n5.View Pending Trade Requests\n6.Approve Pending Trade Requests\n" +
                     "7.Add Item to inventory\n8.View most recent trades\n9.View most frequent trading partners\n" +
                     "10. View status of my items\n11. Add Item to wishlist\n" +
-                    "12.View Approved Trades\n13. Approve Meeting\n14. Confirm Meetings for Approved Trades\n15.View status of outbound requests\n16. Logout" +
+                    "12. Approve Meeting\n13. Confirm Meetings for Approved Trades\n14.View status of outbound requests\n15. Logout" +
                     "\nEnter 'exit' to exit the system at any time.\n");
 
             String a = sc.nextLine();
@@ -1598,9 +1697,9 @@ public class InputGetter {
                         temp = system1.addToWishlist(user, allUsers);
                     }
                     return user;
-                } else if (a.equals("13")) {
+                } else if (a.equals("12")) {
                     return system1.PendingTransactionProcess(user, allItems, allUsers, allMeetings, allTransactions, allAdmins);
-                } else if (a.equals("14")) { //confirm that the meeting went through
+                } else if (a.equals("13")) { //confirm that the meeting went through
                     //first print all the meeting that are pending for this user
                     Object temp = system1.confirmMeetings(user, allItems, system1, allTradeRequests,
                             allUsers, allMeetings, allTransactions,
@@ -1611,9 +1710,9 @@ public class InputGetter {
                                 admininputgetter, allAdmins);
                     }
                     return user;
-                } else if (a.equals("15")) {
+                } else if (a.equals("14")) {
                     return PrintOutboundRequest(user);
-                } else if (a.equals("16")) {
+                } else if (a.equals("15")) {
                     //logout
                     return null;
                 }

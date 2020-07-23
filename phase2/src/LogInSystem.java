@@ -18,7 +18,7 @@ public class LogInSystem {
     public Object LogIn(InputGetter inputgetter, AdminInputGetter admininputgetter) {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("\uD83D\uDECD Welcome To Trade Market! \uD83D\uDECD\nIf you are an admin, please enter 'admin'. If otherwise, please enter 'user'. " +
-                "Enter 'exit' to exit the system.");
+                "Enter 'demo' to enter demo mode. \n Enter 'exit' to exit the system.");
         try {
             String input = br.readLine();
             {
@@ -26,6 +26,11 @@ public class LogInSystem {
                 //so TradeSystem knows to exit the system
                 if (input.equals("exit")) {
                     return new String("exit");
+                }
+                else if (input.equals("Demo") || input.equals("demo")){
+                    User Demo = new User("Demo", "123");
+                    return Demo;
+
                 }
                 //if they are a user, it will call the authenticator() method in InputGetter
                 else if (input.equals("user")) {
