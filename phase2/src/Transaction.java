@@ -1,6 +1,4 @@
-/**
- * Superclass for OneWay and TwoWay. Stores essential attributes for a Transaction Object. Should never be instantiated.
- */
+
 public class Transaction {
 
 
