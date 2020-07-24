@@ -18,8 +18,8 @@ public class OneWay extends Transaction implements Serializable {
      * @param item     The Item the borrower intends to attain.
      * @param temp     If the OneWay is temporary or not.
      */
-    public OneWay(User borrower, Item item, boolean temp) {
-        super(temp);
+    public OneWay(User borrower, Item item, boolean temp, boolean virtual) {
+        super(temp, virtual);
         this.borrower = borrower;
         this.lender = item.getOwner();
         this.item = item;

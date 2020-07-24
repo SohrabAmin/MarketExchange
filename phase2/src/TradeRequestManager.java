@@ -10,7 +10,6 @@ public class TradeRequestManager implements Serializable {
     private List<TradeRequest> pending;
     private List<TradeRequest> denied;
     private List<TradeRequest> confirmed;
-
     /**
      * Constructs an instance of TradeRequestManager. Does not require an arguments for instantiation, however, this constructor
      * will initialize three list attributes: pending, denied and confirmed.
@@ -30,16 +29,26 @@ public class TradeRequestManager implements Serializable {
      */
     public void receiveTradeRequest(UserManager userManager, TradeRequest request) {
 
-        if (request.getStatus() == 0) {
-            this.pending.add(request);
+        User user1;
+        User user2;
+        User user3;
 
-            User temp = userManager.getUser(request.getReceiver());
-            userManager.addToPendingRequests(temp, request);
 
-            this.confirmed.add(request);
-        } else {
-            this.denied.add(request);
+        if(request instanceof typeOneRequest){
+            user1 = userManager.getUser(((typeOneRequest) request).getFirstUser());
+            user2 = userManager.getUser(((typeOneRequest) request).getSecondUser());
+            user3 = null;
+        }else if(request instanceof typeTwoRequest){
+            user1 = userManager.getUser(((typeTwoRequest) request).getFirstUser());
+            user2 = userManager.getUser(((typeTwoRequest) request).getSecondUser());
+            user3 = null;
+        }else{
+            user1 = userManager.getUser(((typeThreeRequest) request).getFirstUser());
+            user2 = userManager.getUser(((typeThreeRequest) request).getSecondUser());
+            user3 = userManager.getUser(((typeThreeRequest) request).getThirdUser());
         }
+
+
     }
 
 

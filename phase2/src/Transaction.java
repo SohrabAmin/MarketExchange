@@ -12,13 +12,17 @@ public class Transaction {
 
     private Meeting returnMeeting;
 
+    private boolean virtual;
+
+
     /**
      * Transaction constructor, requires boolean: True if transaction is temporary, False if permanent.
      *
      * @param temp If this transaction is temporary
      */
-    public Transaction(boolean temp) {
+    public Transaction(boolean temp, boolean virtual) {
         this.temp = temp;
+        this.virtual = virtual;
         this.initialMeeting = null;
         this.returnMeeting = null;
     }

@@ -1,38 +1,28 @@
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-/**
- * Subclass of Transaction, instantiated when a TwoWay Transaction is made (an exchange of Items).
- */
+public class ThreeWay extends Transaction{
 
-public class TwoWay extends Transaction implements Serializable {
+
     private User firstTrader;
+
     private User secondTrader;
+
+    private User thirdTrader;
+
     private List<Item> items;
 
-    /**
-     * Constructor of TwoWay. Requires the item of the first User, the Item of the second User, and the boolean regarding if it's temporary. True: TwoWay is temporary. False: TwoWay is permanent.
-     *
-     * @param item1 The Item the first User is giving to the second User.
-     * @param item2 The Item the second User is giving to the first User.
-     * @param temp  If the TwoWay is temporary.
-     */
-    public TwoWay(Item item1, Item item2, boolean temp, boolean virtual) {
 
+    public ThreeWay(Item item1, Item item2, Item item3, boolean temp, boolean virtual){
         super(temp, virtual);
         this.firstTrader = item1.getOwner();
         this.secondTrader = item2.getOwner();
+        this.thirdTrader = item3.getOwner();
         this.items = new ArrayList<>();
         this.items.add(item1);
         this.items.add(item2);
+        this.items.add(item3);
     }
 
-    /**
-     * Getter for the firstTrader of a TwoWay; The User who initiates the TwoWay.
-     *
-     * @return The firstTrader; the User who initiates the TwoWay.
-     */
     public User getFirstTrader() {
         return this.firstTrader;
     }
@@ -45,6 +35,9 @@ public class TwoWay extends Transaction implements Serializable {
     public User getSecondTrader() {
         return this.secondTrader;
     }
+
+
+    public User getThirdTrader(){return this.thirdTrader;}
 
     /**
      * Getter for the Item the firstTrader is giving.
@@ -63,4 +56,6 @@ public class TwoWay extends Transaction implements Serializable {
     public Item getSecondItem() {
         return this.items.get(1);
     }
+
+    public Item getThirdItem(){return this.items.get(2);}
 }

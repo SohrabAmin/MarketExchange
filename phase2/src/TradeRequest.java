@@ -7,11 +7,6 @@ import java.util.List;
  * the system does not create an instance of Transaction unless the corresponding TradeRequest has been approved by the User receiving the TradeRequest.
  */
 public class TradeRequest implements Serializable {
-    private User requester;
-    private User receiver;
-    private int requestType;//1 way or 2 way
-    private Item requesterItem;
-    private Item receiverItem;
     private String message;
     private boolean temp;
     private int status;
@@ -29,21 +24,11 @@ public class TradeRequest implements Serializable {
      * @param message     A string representation of any message the requester User may want to send to the receiver User.
      * @param temp        A boolean regarding if the User requesting a TradeRequest wants a temporary Transaction or not.
      */
-    public TradeRequest(int requestType, User requester, User receiver, List<Item> itemList, String message, boolean temp, Calendar date) {
-        this.requestType = requestType;
-        this.requester = requester;
-        this.receiver = receiver;
+    public TradeRequest(String message, boolean temp, Calendar date) {
         this.message = message;
         this.status = 0;
         this.temp = temp;
         this.date = date;
-        if (this.requestType == 1) {
-            this.requesterItem = null;
-            this.receiverItem = itemList.get(0);
-        } else {
-            this.requesterItem = itemList.get(0);
-            this.receiverItem = itemList.get(1);
-        }
     }
 
     /**
@@ -55,23 +40,6 @@ public class TradeRequest implements Serializable {
         return message;
     }
 
-    /**
-     * Gets whether the User who initiated the TradeRequest wants a OneWay or TwoWay Transaction.
-     *
-     * @return Integer representing initiating User's requestType. 1: OneWay, 2: TwoWay.
-     */
-    public int getRequestType() {
-        return this.requestType;
-    }
-
-    /**
-     * Sets whether the User who initiated the TradeRequest wants a OneWay or TwoWay Transaction.
-     *
-     * @param requestType Integer representing initiating User's requestType. 1: OneWay, 2: TwoWay.
-     */
-    public void setRequestType(int requestType) {
-        this.requestType = requestType;
-    }
 
     /**
      * Gets the current status of a TradeRequest.
@@ -89,44 +57,6 @@ public class TradeRequest implements Serializable {
      */
     public void setStatus(int status) {
         this.status = status;
-    }
-
-    /**
-     * Gets the User who initiates the TradeRequest. Notice this is the User that will have an instance of TradeRequest in pendingRequests, unless otherwise
-     * acted upon.
-     *
-     * @return The User who initiates the TradeRequest.
-     */
-    public User getRequester() {
-        return this.requester;
-    }
-
-    /**
-     * Gets the User who receives the TradeRequest. Notice this is the User that will have an instance of TradeRequest in pendingRequests, unless otherwise
-     * acted upon.
-     *
-     * @return The User who receives the TradeRequest.
-     */
-    public User getReceiver() {
-        return this.receiver;
-    }
-
-    /**
-     * Gets the Item that is to be given, belonging to the User who initiates the TradeRequest
-     *
-     * @return The User who sends TradeRequest
-     */
-    public Item getRequesterItem() {
-        return this.requesterItem;
-    }
-
-    /**
-     * Gets the Item that the requesting User wants, belonging to the User who receives the TradeRequest
-     *
-     * @return The User who receives TradeRequest
-     */
-    public Item getReceiverItem() {
-        return this.receiverItem;
     }
 
     /**
