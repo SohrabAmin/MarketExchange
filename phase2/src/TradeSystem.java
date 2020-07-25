@@ -47,7 +47,7 @@ public class TradeSystem {
         //If there is no current User, prompts log in and prompts the correct menu depending on the type of Account
         while (currentUser == null) {
             LogInSystem system1 = new LogInSystem(allUsers, allAdmins);
-            Object loggedIn = system1.LogIn(inputgetter, admininputgetter);
+            Object loggedIn = system1.LogIn();
             //if they decide to exit at any point, loggedIn will equal "exit" and it will break the loop
             //and proceed to save the current information and exit the system
             if (loggedIn != null && loggedIn.equals("exit")) {
