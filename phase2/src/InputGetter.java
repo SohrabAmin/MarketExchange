@@ -348,6 +348,7 @@ public class InputGetter {
             System.out.print("You are not eligible to do a trade! Sorry!\n");
             return user;
         }
+
         //if eligible
 
         Calendar today = Calendar.getInstance(); //get today's date
@@ -378,6 +379,7 @@ public class InputGetter {
 
         System.out.print(inum);
 
+
         //the item they have selected
         Item tradeItem = allItems.getSystemInventory().get((Integer) inum - 1);
 
@@ -392,6 +394,7 @@ public class InputGetter {
 
         System.out.println("Please type '1' for one way trade and '2' for two way trade or 'back' to cancel the " +
                 "current trade and restart.");
+
         //trade type
         Object tType = sc.nextLine();
 
@@ -410,10 +413,11 @@ public class InputGetter {
             System.out.print("\uD83E\uDDD0 Invalid response. Please try again.\n");
             return null;
         }
+
         System.out.println("Please type '1' for temporary trade and '2' for permanent trade or 'back' to cancel the " +
                 "current trade and restart.");
         Object type = sc.nextLine();
-        //type is type of the trade temporary or permanent
+        //type is type of the trade temporary or permenant
         if (type.equals("back")) {
             return null;
         }
@@ -433,6 +437,7 @@ public class InputGetter {
             System.out.print("\uD83E\uDDD0 Invalid response. Please try again.\n");
             return null;
         }
+
         System.out.print("Please put a message for the owner of the item:\n");
         String message = sc.nextLine();
         if ((int) tType == 1) { //1 way trade, do the following
@@ -1436,7 +1441,6 @@ public class InputGetter {
     public Object mainMenu(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests,
                            UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
                            AdminInputGetter admininputgetter, AdminManager allAdmins) {
-        Scanner sc = new Scanner(System.in);    //System.in is a standard input stream
         //A frozen account is one where you can log in and look for items, but you cannot arrange any transactions.
         // A user who has been frozen can request that the administrative user unfreezes their account.
         boolean frozenAccount = user.getIsFrozen();
@@ -1495,8 +1499,9 @@ public class InputGetter {
         System.out.print("Please select number from the following:\n1.View Wishlist\n2.View Inventory\n" +
                 "3.Browse Items\n4.Initiate Trade\n5.View Pending Trade Requests\n6.Approve Pending Trade Requests\n" +
                 "7.Add Item to inventory\n8.View most recent trades\n9.View most frequent trading partners\n" +
-                "10. View status of my items\n11. Add Item to wishlist\n" +
-                "12. Approve Meeting\n13. Confirm Meetings for Approved Trades\n14.View status of outbound requests\n15. Logout" +
+                "10.View status of my items\n11.Add Item to wishlist\n" +
+                "12.Approve Meeting\n13.Confirm Meetings for Approved Trades\n14.View status of outbound requests\n" +
+                "15.Change Account Settings\n16.Logout" +
                 "\nEnter 'exit' to exit the system at any time.\n");
 
         Scanner sc = new Scanner(System.in);
@@ -1635,7 +1640,7 @@ public class InputGetter {
             }
             return null;
         }
-        System.out.println("That is not a valid option, please try again.");
+        System.out.println("\nThat is not a valid option, please try again.\n");
         return null;
         }
 
@@ -1679,7 +1684,7 @@ public class InputGetter {
             System.out.println("You have successfully removed your location.");
         } else if (input.equals("3")){
             return "account settings";
-        }System.out.println("You selected an invalid option, please try again.");
+        }System.out.println("\nYou selected an invalid option, please try again.\n");
         return null;
     }
 
@@ -1694,7 +1699,7 @@ public class InputGetter {
     public Object passwordChange(User user) {
         System.out.println("If you like to continue with changing your password, please enter '1'. " +
                 "Otherwise, please enter '2' to go back to the" +
-                " other account settings. Enter 'back' to return to the main menu.");
+                " other account settings.\nEnter 'back' to return to the main menu.");
         Scanner sc = new Scanner(System.in);
         String input2 = sc.nextLine();
         if (input2.equals("back")) {
@@ -1707,14 +1712,14 @@ public class InputGetter {
                 String newPassword = sc.nextLine();
                 user.setPassword(newPassword);
                 System.out.println("\nYou have successfully changed your password.\n");
-                return "back";
+                return "account settings";
             }
             System.out.println("Incorrect password. Please try again.");
             return null;
         } else if (input2.equals("2")) {
             return "account settings";
         }
-        System.out.println("You did not select a valid option. Please try again.");
+        System.out.println("\nYou did not select a valid option. Please try again.\n");
         return null;
     }
 
@@ -1731,7 +1736,7 @@ public class InputGetter {
         System.out.println("\nYour current username is " + user.getName() + "\n");
         System.out.println("If you like to continue with changing your username, please enter '1'. " +
                 "Otherwise, please enter '2' to go back to the" +
-        " other account settings. Enter 'back' to return to the main menu.");
+        " other account settings.\nEnter 'back' to return to the main menu.");
         Scanner sc = new Scanner(System.in);
         String input2 = sc.nextLine();
         if (input2.equals("back")) {
@@ -1749,12 +1754,12 @@ public class InputGetter {
             //user's new username
             user.setName(newName);
             System.out.println("\nYou have successfully changed your username. Your username is now " +
-                    user.getName() + "\n");
-            return "back";
+                    user.getName() + ".\n");
+            return "account settings";
         } else if (input2.equals("2")) {
             return "account settings";
             }
-        System.out.println("You did not select a valid option. Please try again.");
+        System.out.println("\nYou did not select a valid option. Please try again.\n");
         return null;
         }
 
@@ -1790,10 +1795,10 @@ public class InputGetter {
                 "\uD83C\uDD94 Indicates that signup/login as user is required!\n1.View Wishlist\n2.View Inventory \uD83C\uDD94 \n" +
                 "3.Browse Items\n4.Initiate Trade \uD83C\uDD94 \n5.View Pending Trade Requests \uD83C\uDD94\n6.Approve Pending Trade Requests \uD83C\uDD94\n" +
                 "7.Add Item to inventory \uD83C\uDD94\n8.View most recent trades \uD83C\uDD94\n9.View most frequent trading partners \uD83C\uDD94\n" +
-                "10. View status of my items \uD83C\uDD94\n11. Add Item to wishlist\n" +
-                "12. Approve Meeting \uD83C\uDD94\n13. Confirm Meetings for Approved Trades \uD83C\uDD94\n" +
-                "14.View status of outbound requests \uD83C\uDD94\n15. Logout" +
-                "\nEnter 'exit' to exit the system at any time.\n");
+                "10.View status of my items \uD83C\uDD94\n11.Add Item to wishlist\n" +
+                "12.Approve Meeting \uD83C\uDD94\n13.Confirm Meetings for Approved Trades \uD83C\uDD94\n" +
+                "14.View status of outbound requests \uD83C\uDD94\n" + "15.Change Account Settings \uD83C\uDD94\n" +
+                "16.Logout" + "\nEnter 'exit' to exit the system at any time.\n");
 
         Scanner sc = new Scanner(System.in);
         String a = sc.nextLine();
@@ -1935,7 +1940,7 @@ public class InputGetter {
                 "3.Browse Items\n" +
                 "4.Add Item to inventory\n5.View most recent trades\n6.View most frequent trading partners\n" +
                 "7.View status of my items\n8.Add Item to wishlist" +
-                "\n9.Request unfreeze!\n10.Logout" + "\nEnter 'exit' to exit the system at any time.\n");
+                "\n9.Request unfreeze!\n10.Change Account Settings\n11.Logout" + "\nEnter 'exit' to exit the system at any time.\n");
 
         String a = sc.nextLine();
         if (a.equals("exit")){
