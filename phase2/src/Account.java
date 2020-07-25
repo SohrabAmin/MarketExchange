@@ -24,5 +24,21 @@ public abstract class Account implements Serializable {
     public String getName() {
         return name;
     }
+
+    /**
+     * setter for account name
+     * @param name the account's name
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * setter for account password
+     * @param password the password of the account
+     */
+    public void setPassword(String password){
+        this.password = password;
+    }
 }
 

@@ -25,6 +25,7 @@ public class User extends Account {
     private List<Transaction> secondAgreedUponMeetings;
     private Map<Integer, List<TradeRequest>> weeklyRequestLimit;
     private Map <String, Integer> FrequentCategory;
+    private String location;
 
 
     public User() {
@@ -280,4 +281,8 @@ public class User extends Account {
     }
 
     //TODO: consider overriding the equals method inherited from Object
+
+    public void setLocation(String location) {this.location = location;}
+
+    public String getLocation() {return this.location;}
 }
