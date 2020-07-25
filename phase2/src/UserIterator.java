@@ -12,8 +12,7 @@ public class UserIterator implements Iterator<String> {
     public UserIterator() {
         properties.add("UserName: ");
         properties.add("Password: ");
-
-
+        properties.add("Location (Optional- enter '1' if you don't wish to add location): ");
     }
 
     @Override

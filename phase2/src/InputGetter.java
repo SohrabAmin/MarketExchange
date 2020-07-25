@@ -472,7 +472,7 @@ public class InputGetter {
             for (int i = 0; i < Person.getPendingRequests().size(); i++) {
                 String ext = "";
                 //RequesterItem : Item of the requester
-                //RecieverItem: Item of the reciever
+                //ReceiverItem: Item of the receiver
 
                 if (Person.getPendingRequests().get(i).getRequesterItem() != null) {
                     ext = " With your item " + Person.getPendingRequests().get(i).getRequesterItem().getName();
@@ -677,8 +677,6 @@ public class InputGetter {
         //select if you want to approve or reject
         //method that handles approve or reject
     }
-
-
 
 
     /**

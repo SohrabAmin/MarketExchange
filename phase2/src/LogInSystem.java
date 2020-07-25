@@ -112,6 +112,9 @@ public class LogInSystem {
                 }
                 //if username doesn't already exist, it will create a user and returns it
                 allUsers.createUser(temp.get(0), temp.get(1));
+                if (!temp.get(2).equals('1')) {
+                    allUsers.getAllUsers().get(allUsers.getAllUsers().size() - 1).setLocation(temp.get(3));
+                }
                 return allUsers.getAllUsers().get(allUsers.getAllUsers().size() - 1);
 
                 //user wants to login to their account
