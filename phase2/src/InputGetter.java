@@ -679,6 +679,8 @@ public class InputGetter {
     }
 
 
+
+
     /**
      * Deals with requesting to add a new item to the system's inventory. Prompts user for details of the item
      * and sends a request to the Admin for approval. Adds the item to the User's item history so they can
@@ -1552,9 +1554,9 @@ public class InputGetter {
      */
     public Object locationChange(User user) {
         if (user.getLocation() == null) {
-            System.out.println("You currently have no set location.");
+            System.out.println("\nYou currently have no set location.");
         } else {
-            System.out.println("Your current set location is " + user.getLocation());
+            System.out.println("\nYour current set location is " + user.getLocation());
         }
         System.out.println("\nHot tip: By setting a location, you will have the option to sort browse items" +
                 " so you will only see items from users in the same location as you!\n");
@@ -1569,13 +1571,13 @@ public class InputGetter {
             return "back";
         } else if (input.equals("1")){
             if (user.getLocation() == null) {
-                System.out.println("You currently have no set location.");
+                System.out.println("\nYou currently have no set location.\n");
             } else {
-                System.out.println("Your current set location is " + user.getLocation());
+                System.out.println("\nYour current set location is " + user.getLocation() + "\n");
             }
             System.out.println("Please enter the name of the new location:");
             user.setLocation(sc.nextLine());
-            System.out.println("You have successfully changed your location to " + user.getLocation());
+            System.out.println("You have successfully changed your location to " + user.getLocation() + ".");
             return null;
         } else if (input.equals("2")){
             user.setLocation(null);
