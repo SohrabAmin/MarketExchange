@@ -94,11 +94,11 @@ public class TradeRequestManager implements Serializable {
         userManager.removeFromPendingRequests(request.getReceiver(), request);
         if (request.getRequestType() == 1) {
             OneWay temp = new OneWay(request.getRequester(), request.getReceiverItem(), request.getTemp());
-            // transactionManager.receiveTransaction(temp);
+            transactionManager.receiveTransaction(temp);
         } else {
             TwoWay temp = new TwoWay(request.getRequesterItem(), request.getReceiverItem(), request.getTemp());
-            // transactionManager.receiveTransaction(temp);
-        }
+            transactionManager.receiveTransaction(temp);
+       }
     }
 
 

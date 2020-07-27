@@ -1,13 +1,35 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 //Note: how to put emojis in the code was found here: http://dplatz.de/blog/2019/emojis-for-java-commandline.html
 public class InputGetter {
+    private static final Logger undoLogger = Logger.getLogger(AdminInputGetter.class.getName());
+    private static Handler fileHandler = null;
+
+    static {
+        try {
+            fileHandler = new FileHandler("UndoLog.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public InputGetter() {
+        undoLogger.setLevel(Level.ALL);
+        fileHandler.setLevel(Level.ALL);
+        undoLogger.addHandler(fileHandler);
+
+        undoLogger.setUseParentHandlers(false);
+        // Credit for the above line goes to
+        // https://stackoverflow.com/questions/2533227/how-can-i-disable-the-default-console-handler-while-using-the-java-logging-api
+    }
 
     /**
      * Prints out the wishlist of the User user showing the name and description of the items. Also in charge of
@@ -119,21 +141,22 @@ public class InputGetter {
         if (user.getLocation() != null) {
             Scanner sc = new Scanner(System.in);
             System.out.println("Please enter '1' to view only items from users in the same location as you or "
-            + "'2' to view all items in the system.");
+                    + "'2' to view all items in the system.");
             String input = sc.nextLine();
-            if (input.equals('1')){
+            if (input.equals('1')) {
                 List<Item> temp = new ArrayList<>();
                 for (int i = 0; i < allItems.getSystemInventory().size(); i++) {
                     if (allItems.getSystemInventory().get(i).getOwner().getLocation().equals(user.getLocation())) {
                         temp.add(allItems.getSystemInventory().get(i));
                     }
-                } if (temp.size() == 0) {
+                }
+                if (temp.size() == 0) {
                     System.out.println("There are no items from other users in the same location as you. "
-                    + "The system will display all current items regardless of location instead.");
+                            + "The system will display all current items regardless of location instead.");
                 } else { //temp.size() != 0
                     allItems2 = temp;
                 }
-            } else if (!input.equals('2')){
+            } else if (!input.equals('2')) {
                 System.out.println("That is not a valid option, please try again!");
                 DisplayBrowse(user, allItems);
             }
@@ -186,7 +209,8 @@ public class InputGetter {
         if (input.equals("back")) {
             return "back";
         }
-        try { input = Integer.parseInt((String) input);
+        try {
+            input = Integer.parseInt((String) input);
         } catch (NumberFormatException e) {
             System.out.println("\n\uD83E\uDDD0 This ID is invalid. Please try again!");
             return null;
@@ -201,7 +225,7 @@ public class InputGetter {
                     return null;
                 }
             }
-            allUsers.addToFC (item.getCategory(), user);
+            allUsers.addToFC(item.getCategory(), user);
             allUsers.addToWishlist(user, item);
             System.out.println("\nItem has been added to your wishlist \uD83C\uDF20");
             return null;
@@ -210,11 +234,11 @@ public class InputGetter {
         }
         return "back";
     }
-    
+
     //taken from https://www.geeksforgeeks.org/how-to-find-the-entry-with-largest-value-in-a-java-map/
     // Find the entry with highest value
-    public static <K, V extends Comparable<V> > Map.Entry<K, V> getMaxEntryInMapBasedOnValue(Map<K, V> map)
-    {// To store the result
+    public static <K, V extends Comparable<V>> Map.Entry<K, V>
+    getMaxEntryInMapBasedOnValue(Map<K, V> map) {// To store the result
         Map.Entry<K, V> entryWithMaxValue = null;
         // Iterate in the map to find the required entry
         for (Map.Entry<K, V> currentEntry : map.entrySet()) {
@@ -272,7 +296,7 @@ public class InputGetter {
             return "back";
         }
         try {
-           inum = Integer.parseInt((String) inum);
+            inum = Integer.parseInt((String) inum);
         } catch (NumberFormatException e) {
             return null;
         }
@@ -354,6 +378,9 @@ public class InputGetter {
                 allUsers.addToWeeklyRequestLimit(user, trades);
                 allUsers.addToOutboundRequests(user, trades);
                 allTradeRequests.receiveTradeRequest(allUsers, trades);
+
+                undoLogger.log(Level.INFO, user.getName() + ",updateRequestStatus," + trades + ",2");
+
                 System.out.print("\nTrade request has been sent successfully.\n");
                 return "back";
             } else if (confirmation.equals("2")) {
@@ -381,8 +408,8 @@ public class InputGetter {
 
             //Here is where we print the person's inventory
             boolean suggested = false;
-            List <Item> otherPersonWL= new ArrayList<>();
-            otherPersonWL= allUsers.getUser(tradeItem.getOwner()).getWishlist();
+            List<Item> otherPersonWL = new ArrayList<>();
+            otherPersonWL = allUsers.getUser(tradeItem.getOwner()).getWishlist();
             for (int i = 0; i < in.size(); i++) {
                 String recom = "\n";
 //                for (int j = 0; j < otherPersonWL.size(); j++){
@@ -396,7 +423,7 @@ public class InputGetter {
             }
 
             //system can make its suggestions here if nothing from the owner's wishlist was in inventory :(
-            if (!suggested){
+            if (!suggested) {
                 String Recommend = "";
                 User otherSide = allUsers.getUser(tradeItem.getOwner());
                 //finding the category that the person is most fan of
@@ -404,16 +431,16 @@ public class InputGetter {
                 //now ive found the most frequently wanted category or if they are all zero, i recommend the first one
                 //now i need to scan through the inventory to see if i can recommend anything from there
 
-                for (int i=0; i< in.size();i++){
+                for (int i = 0; i < in.size(); i++) {
                     if (category.getKey().equals(in.get(i).getCategory())) {
                         Recommend = in.get(i).getName();
                         break;
-                    }
-                    else Recommend = in.get(0).getName(); //if you cant find anything, just grab the oldest item in the inventory to trade
+                    } else
+                        Recommend = in.get(0).getName(); //if you cant find anything, just grab the oldest item in the inventory to trade
 
                 }
 
-            System.out.print("System Suggestion based on other party's interest: " + Recommend +"\n");
+                System.out.print("System Suggestion based on other party's interest: " + Recommend + "\n");
             }
 
 
@@ -444,6 +471,9 @@ public class InputGetter {
                 allTradeRequests.receiveTradeRequest(allUsers, request);
                 allUsers.addToOutboundRequests(user, request);
                 allUsers.addToWeeklyRequestLimit(user, request);
+
+                undoLogger.log(Level.INFO, user.getName() + ",updateRequestStatus," + request + ",2");
+
                 System.out.print("\nTrade request has been sent successfully.\n");
                 return "back";
             } else if (confirmation.equals("2")) {
@@ -683,6 +713,7 @@ public class InputGetter {
         //method that handles approve or reject
     }
 
+
     /**
      * Deals with requesting to add a new item to the system's inventory. Prompts user for details of the item
      * and sends a request to the Admin for approval. Adds the item to the User's item history so they can
@@ -712,7 +743,7 @@ public class InputGetter {
                 + "Enter 'back' to go back to the main menu.");
         String option = sc.nextLine();
         String tradeOrSell = "Undefined";
-        if (option.equals("back")){
+        if (option.equals("back")) {
             return "back";
         }
         while (tradeOrSell.equals("Undefined")) {
@@ -751,39 +782,43 @@ public class InputGetter {
         String ID = sc.nextLine();
 
         String category = "Undefined";
-        while (category.equals("Undefined")){
+        while (category.equals("Undefined")) {
             if (ID.equals("back")) {
                 return "back";
-            } else if (ID.equals("1")){
+            } else if (ID.equals("1")) {
                 category = "Electronics";
-            } else if (ID.equals("2")){
+            } else if (ID.equals("2")) {
                 category = "Automotive and car accessories";
-            } else if (ID.equals("3")){
+            } else if (ID.equals("3")) {
                 category = "Baby";
-            } else if (ID.equals("4")){
+            } else if (ID.equals("4")) {
                 category = "Beauty, Health and Personal Care";
-            } else if (ID.equals("5")){
+            } else if (ID.equals("5")) {
                 category = "Books";
-            } else if (ID.equals("6")){
+            } else if (ID.equals("6")) {
                 category = "Home and Kitchen supplies";
-            } else if (ID.equals("7")){
+
+            } else if (ID.equals("7")) {
                 category = "Clothing";
-            } else if (ID.equals("8")){
+
+            } else if (ID.equals("8")) {
                 category = "Movies, music and TV";
-            } else if (ID.equals("9")){
+
+            } else if (ID.equals("9")) {
                 category = "Office Supplies";
-            } else if (ID.equals("10")){
+
+            } else if (ID.equals("10")) {
                 category = "Gaming";
             } else {
                 System.out.print("Please enter a category for the product!\n");
             }
         }
         Item newItem;
-        if (tradeOrSell.equals("sell")){
+        if (tradeOrSell.equals("sell")) {
             newItem = new Item(itemName, user, description, category, price);
             System.out.println("The item you wish to add is the following: ");
             System.out.println("Item name: " + newItem.getName() + "\n" + "Item description: " +
-                    newItem.getDescription() + "\n" +  "Price: " + newItem.getPrice() + "\n"
+                    newItem.getDescription() + "\n" + "Price: " + newItem.getPrice() + "\n"
                     + "Item Category:" + newItem.getCategory());
         } else {
             newItem = new Item(itemName, user, description, category);
@@ -823,6 +858,7 @@ public class InputGetter {
         }
         for (int i = 0; i < top3TP.size(); i++) {
             System.out.print("\uD83D\uDC51" + (i + 1) + ". " + top3TP.get(i).getName() + "\n");
+
         }
         return user;
     }
@@ -900,51 +936,37 @@ public class InputGetter {
         String ID = sc.nextLine();
 
         String category = "Undefined";
-        while (category.equals("Undefined")){
-        if (name.equals("back")) {
-            return "back";
-        }
-        else if (ID.equals("1")){
-            category = "Electronics";
-        }
-        else if (ID.equals("2")){
-            category = "Automotive and car accessories";
-           }
-        else if (ID.equals("3")){
-            category = "Baby";
-                   }
-        else if (ID.equals("4")){
-            category = "Beauty, Health and Personal Care";
-                 }
-        else if (ID.equals("5")){
-            category = "Books";
-                  }
-        else if (ID.equals("6")){
-            category = "Home and Kitchen supplies";
+        while (category.equals("Undefined")) {
+            if (name.equals("back")) {
+                return "back";
+            } else if (ID.equals("1")) {
+                category = "Electronics";
+            } else if (ID.equals("2")) {
+                category = "Automotive and car accessories";
+            } else if (ID.equals("3")) {
+                category = "Baby";
+            } else if (ID.equals("4")) {
+                category = "Beauty, Health and Personal Care";
+            } else if (ID.equals("5")) {
+                category = "Books";
+            } else if (ID.equals("6")) {
+                category = "Home and Kitchen supplies";
 
-        }
-        else if (ID.equals("7")){
-            category = "Clothing";
+            } else if (ID.equals("7")) {
+                category = "Clothing";
 
-        }
-        else if (ID.equals("8")){
-            category = "Movies, music and TV";
+            } else if (ID.equals("8")) {
+                category = "Movies, music and TV";
 
-        }
-        else if (ID.equals("9")){
-            category = "Office Supplies";
+            } else if (ID.equals("9")) {
+                category = "Office Supplies";
 
+            } else if (ID.equals("10")) {
+                category = "Gaming";
+            } else {
+                System.out.print("Please enter a category for the product!\n");
+            }
         }
-        else if (ID.equals("10")){
-            category = "Gaming";
-                   }
-        else
-        {
-            System.out.print("Please enter a category for the product!\n");
-        }
-        }
-
-
 
 
         Item wishlistItem = new Item(name, null, description, category);
@@ -965,34 +987,28 @@ public class InputGetter {
 
         //adding item to the person's
         allUsers.addToWishlist(user, wishlistItem);
-        if (ID.equals("1")){
+
+        undoLogger.log(Level.INFO, user.getName() + ",removeFromWishlist," + wishlistItem.getName());
+
+        if (ID.equals("1")) {
             allUsers.addToFC("Electronics", user);
-        }
-        else if (ID.equals("2")){
+        } else if (ID.equals("2")) {
             allUsers.addToFC("Automotive and car accessories", user);
-        }
-        else if (ID.equals("3")){
+        } else if (ID.equals("3")) {
             allUsers.addToFC("Baby", user);
-        }
-        else if (ID.equals("4")){
+        } else if (ID.equals("4")) {
             allUsers.addToFC("Beauty, Health and Personal Care", user);
-        }
-        else if (ID.equals("5")){
+        } else if (ID.equals("5")) {
             allUsers.addToFC("Books", user);
-        }
-        else if (ID.equals("6")){
+        } else if (ID.equals("6")) {
             allUsers.addToFC("Home and Kitchen Supplies", user);
-        }
-        else if (ID.equals("7")){
+        } else if (ID.equals("7")) {
             allUsers.addToFC("Clothing", user);
-        }
-        else if (ID.equals("8")){
+        } else if (ID.equals("8")) {
             allUsers.addToFC("Movies, music and TV", user);
-        }
-        else if (ID.equals("9")){
+        } else if (ID.equals("9")) {
             allUsers.addToFC("Office Supplies", user);
-        }
-        else if (ID.equals("10")){
+        } else if (ID.equals("10")) {
             allUsers.addToFC("Gaming", user);
         }
         System.out.print("Item has been added to your wishlist \uD83C\uDF20\n");
@@ -1078,7 +1094,8 @@ public class InputGetter {
             User b = tt.getLender();
             if (user.getName().equals(b.getName())) {
                 b = tt.getBorrower();
-            } if (tt.getInitialMeeting().geteditHistory(user.getName()) > tt.getInitialMeeting().geteditHistory(b.getName()) || tt.getInitialMeeting().viewLastEdit().equals(user.getName())) {
+            }
+            if (tt.getInitialMeeting().geteditHistory(user.getName()) > tt.getInitialMeeting().geteditHistory(b.getName()) || tt.getInitialMeeting().viewLastEdit().equals(user.getName())) {
                 //if they have already made an edit and we are waiting on the other person to approve/suggest a new meeting
                 System.out.print("This pending transaction is currently waiting on the other party! Please try again later\n");
             } else {
@@ -1092,6 +1109,9 @@ public class InputGetter {
                     //need another method for usermanager so that transactions in progress but meeting is set
                     System.out.print("Your meeting has been set!\n");
                     allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 1);
+
+                    undoLogger.log(Level.INFO, "updateTransactionStatus," + user + "," + selectedT + ",0");
+
                 } else if (input.equals(("2"))) {
                     //they want to propose a new time
                     //provide warning if the is at their 3rd strike
@@ -1105,6 +1125,9 @@ public class InputGetter {
                         //one person reached 3 edits, its time to delete this transaction
                         allTransactions.handleCancelledTrade(allAdmins, allUsers, selectedT);
                         allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 4);
+
+                        undoLogger.log(Level.INFO, "updateTransactionStatus," + user + "," + selectedT + ",0");
+
                         System.out.print("\uD83D\uDE22 Sorry! You couldn't agree on a time so we deleted the transaction!\n" +
                                 "Please try again!\n");
                         return user;
@@ -1126,6 +1149,8 @@ public class InputGetter {
                     //need another method for usermanager so that transactions in progress but meeting is set
                     System.out.print("Your meeting has been cancelled!\n");
                     allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 4);
+
+                    undoLogger.log(Level.INFO, "updateTransactionStatus," + user + "," + selectedT + ",0");
                 }
             }
         }
@@ -1150,6 +1175,7 @@ public class InputGetter {
                     //need another method for usermanager so that transactions in progress but meeting is set
                     allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 1);
 
+                    undoLogger.log(Level.INFO, "updateTransactionStatus," + user + "," + selectedT + ",0");
 
                 } else if (input.equals(("2"))) { //they want to propose a new time
                     //provide warning if the is at their 3rd strike
@@ -1161,6 +1187,9 @@ public class InputGetter {
                         //one person reached 3 edits, its time to delete this transaction
                         allTransactions.handleCancelledTrade(allAdmins, allUsers, selectedT);
                         allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 4);
+
+                        undoLogger.log(Level.INFO, "updateTransactionStatus," + user + "," + selectedT + ",0");
+
                         System.out.print("\uD83D\uDE22 Sorry! You couldn't agree on a time so we deleted the transaction!\n" +
                                 "Please try again!\n");
                         return user;
@@ -1379,9 +1408,9 @@ public class InputGetter {
             return frozenMainMenu(user, allItems, system1, allTradeRequests, allUsers, allMeetings,
                     allTransactions, admininputgetter, allAdmins);
         }
-       //if they are not frozen
-       //they are a demo user without an account
-        else if (user.getName().equals("Demo")){
+        //if they are not frozen
+        //they are a demo user without an account
+        else if (user.getName().equals("Demo")) {
             return demoMainMenu(user, allItems, system1, allTradeRequests, allUsers, allMeetings,
                     allTransactions, admininputgetter, allAdmins);
         } else {
@@ -1389,6 +1418,7 @@ public class InputGetter {
                     allTransactions, admininputgetter, allAdmins);
         }
     }
+
     /**
      * Displays the main menu for a normal, unfrozen user and prompts user for input depending on what
      * they want to do.
@@ -1414,7 +1444,7 @@ public class InputGetter {
      */
     public Object userMainMenu(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests,
                                UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                               AdminInputGetter admininputgetter, AdminManager allAdmins){
+                               AdminInputGetter admininputgetter, AdminManager allAdmins) {
         System.out.print("----------------------------------------------------------------------------------------------" +
                 "\n\uD83D\uDC4B Welcome back, " + user.getName() + "!\n");
         if (allUsers.getUser(user).getPendingRequests().size() > 0) {
@@ -1504,14 +1534,14 @@ public class InputGetter {
                 return user;
             } else if (a.equals("14")) {
                 return PrintOutboundRequest(user);
-            } else if(a.equals("15")){
+            } else if (a.equals("15")) {
                 //change account settings
                 Object temp = system1.accountSettings(user, allUsers);
                 while (temp == null) {
                     temp = system1.accountSettings(user, allUsers);
                 }
                 return user;
-            }else if (a.equals("16")) {
+            } else if (a.equals("16")) {
                 //logout
                 return null;
             }
@@ -1524,7 +1554,8 @@ public class InputGetter {
     /**
      * Deals with changing the account settings of User-- they are able to change their username,
      * password and/or location.
-     * @param user the User who wants to change their account settings
+     *
+     * @param user     the User who wants to change their account settings
      * @param allUsers UserManager which stores all the users in the system
      * @return depending on what the User inputs it will return different objects:
      * returns null to tell mainmenu() to call accountSettings() again
@@ -1546,7 +1577,7 @@ public class InputGetter {
             while (temp == null) {
                 temp = userNameChange(user, allUsers);
             }
-            if (temp.equals("back")){
+            if (temp.equals("back")) {
                 return "back";
             }
             return null;
@@ -1555,31 +1586,32 @@ public class InputGetter {
             while (temp == null) {
                 temp = passwordChange(user);
             }
-            if (temp.equals("back")){
+            if (temp.equals("back")) {
                 return "back";
             }
             return null;
-        } else if(input.equals("3")) {
+        } else if (input.equals("3")) {
             Object temp = locationChange(user);
             while (temp == null) {
                 temp = locationChange(user);
             }
-            if (temp.equals("back")){
+            if (temp.equals("back")) {
                 return "back";
             }
             return null;
         }
         System.out.println("\nThat is not a valid option, please try again.\n");
         return null;
-        }
+    }
 
     /**
      * Deals with changing the User user's location.
+     *
      * @param user the User that wants to change their location
      * @return returns different objects depending on the User user's input
-     *      returns "back" to return to the main menu
-     *      returns null to tell the accountSettings() to call locationChange() again
-     *      returns "account settings" to tell main menu to call accountSettings() again
+     * returns "back" to return to the main menu
+     * returns null to tell the accountSettings() to call locationChange() again
+     * returns "account settings" to tell main menu to call accountSettings() again
      */
     public Object locationChange(User user) {
         if (user.getLocation() == null) {
@@ -1598,7 +1630,7 @@ public class InputGetter {
         String input = sc.nextLine();
         if (input.equals("back")) {
             return "back";
-        } else if (input.equals("1")){
+        } else if (input.equals("1")) {
             if (user.getLocation() == null) {
                 System.out.println("\nYou currently have no set location.\n");
             } else {
@@ -1608,22 +1640,24 @@ public class InputGetter {
             user.setLocation(sc.nextLine());
             System.out.println("You have successfully changed your location to " + user.getLocation() + ".");
             return null;
-        } else if (input.equals("2")){
+        } else if (input.equals("2")) {
             user.setLocation(null);
             System.out.println("You have successfully removed your location.");
-        } else if (input.equals("3")){
+        } else if (input.equals("3")) {
             return "account settings";
-        }System.out.println("\nYou selected an invalid option, please try again.\n");
+        }
+        System.out.println("\nYou selected an invalid option, please try again.\n");
         return null;
     }
 
     /**
      * Deals with changing the User user's password.
+     *
      * @param user the User that wants to change their password
      * @return returns different objects depending on the User user's input
-     *      returns "back" to return to the main menu
-     *      returns null to tell the accountSettings() to call passwordChange() again
-     *      returns "account settings" to tell main menu to call accountSettings() again
+     * returns "back" to return to the main menu
+     * returns null to tell the accountSettings() to call passwordChange() again
+     * returns "account settings" to tell main menu to call accountSettings() again
      */
     public Object passwordChange(User user) {
         System.out.println("If you like to continue with changing your password, please enter '1'. " +
@@ -1636,7 +1670,7 @@ public class InputGetter {
         } else if (input2.equals("1")) {
             System.out.println("Please enter your current password:");
             String oldPassword = sc.nextLine();
-            if (oldPassword.equals(user.getPassword())){
+            if (oldPassword.equals(user.getPassword())) {
                 System.out.println("Please enter the new password:");
                 String newPassword = sc.nextLine();
                 user.setPassword(newPassword);
@@ -1654,18 +1688,19 @@ public class InputGetter {
 
     /**
      * Deals with changing the User user's username.
-     * @param user the User that wants to change their username
+     *
+     * @param user     the User that wants to change their username
      * @param allUsers UserManager that stores all the users in the system
      * @return returns different objects depending on the User user's input
-     *      returns "back" to return to the main menu
-     *      returns null to tell the accountSettings() to call userNameChange() again
-     *      returns "account settings" to tell main menu to call accountSettings() again
+     * returns "back" to return to the main menu
+     * returns null to tell the accountSettings() to call userNameChange() again
+     * returns "account settings" to tell main menu to call accountSettings() again
      */
     public Object userNameChange(User user, UserManager allUsers) {
         System.out.println("\nYour current username is " + user.getName() + "\n");
         System.out.println("If you like to continue with changing your username, please enter '1'. " +
                 "Otherwise, please enter '2' to go back to the" +
-        " other account settings.\nEnter 'back' to return to the main menu.");
+                " other account settings.\nEnter 'back' to return to the main menu.");
         Scanner sc = new Scanner(System.in);
         String input2 = sc.nextLine();
         if (input2.equals("back")) {
@@ -1687,10 +1722,10 @@ public class InputGetter {
             return "account settings";
         } else if (input2.equals("2")) {
             return "account settings";
-            }
+        }
         System.out.println("\nYou did not select a valid option. Please try again.\n");
         return null;
-        }
+    }
 
     /**
      * Displays the main menu for a demo user and prompts user for input depending on what they want to do.
@@ -1718,7 +1753,7 @@ public class InputGetter {
      */
     public Object demoMainMenu(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests,
                                UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                               AdminInputGetter admininputgetter, AdminManager allAdmins){
+                               AdminInputGetter admininputgetter, AdminManager allAdmins) {
         System.out.print("-------------------------------------------------------\n\uD83E\uDD16 Hello Demo User \uD83E\uDD16\n");
         System.out.print("Please select number from the following:\n" +
                 "\uD83C\uDD94 Indicates that signup/login as user is required!\n1.View Wishlist\n2.View Inventory \uD83C\uDD94 \n" +
@@ -1776,7 +1811,7 @@ public class InputGetter {
                         "Once approved, the item will show up in your inventory and it will be visible to other " +
                         "users when browsing.\n");
                 return user;
-            }  else if (a.equals("8")) { //View most recent trades
+            } else if (a.equals("8")) { //View most recent trades
                 System.out.print("-------------------------------------------------------\n" +
                         "\uD83D\uDC81 As a user, you can see information about your 3 most recent trades.\n");
                 return user;
@@ -1793,8 +1828,7 @@ public class InputGetter {
                         "\n\uD83D\uDC81 As a user, you can add items to your wishlist that you would " +
                         "like to purchase.\n");
                 return user;
-            }
-            else if (a.equals("12")) {
+            } else if (a.equals("12")) {
                 System.out.print("-------------------------------------------------------" +
                         "\n\uD83D\uDC81 As a user, once a trade is accepted by the other party, " +
                         "you can see the suggested meeting, approve meeting or suggest an alternative " +
@@ -1809,7 +1843,7 @@ public class InputGetter {
                 System.out.print("-------------------------------------------------------" +
                         "\n\uD83D\uDC81 As a user, you can see the status of the outbound trade requests " +
                         "you have sent.\n");
-            } else if (a.equals("15")){
+            } else if (a.equals("15")) {
                 System.out.print("-------------------------------------------------------" +
                         "\n\uD83D\uDC81 As a user, you can change your account settings; this includes changing" +
                         " your username, password and set location.\n");
@@ -1818,8 +1852,7 @@ public class InputGetter {
                         "\n\uD83D\uDC81 Logging out as Demo!\n");
                 //logout
                 return null;
-            }
-            else { //if they input invalid response
+            } else { //if they input invalid response
                 System.out.print("\uD83E\uDDD0 Invalid Response!\n");
                 return user;
             }
@@ -1851,8 +1884,8 @@ public class InputGetter {
      * exiting the System
      */
     public Object frozenMainMenu(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests,
-                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                           AdminInputGetter admininputgetter, AdminManager allAdmins){
+                                 UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
+                                 AdminInputGetter admininputgetter, AdminManager allAdmins) {
         Scanner sc = new Scanner(System.in);
 
         System.out.print("----------------------------------------------------------------------------------------------" +
@@ -1872,7 +1905,7 @@ public class InputGetter {
                 "\n9.Request unfreeze!\n10.Change Account Settings\n11.Logout" + "\nEnter 'exit' to exit the system at any time.\n");
 
         String a = sc.nextLine();
-        if (a.equals("exit")){
+        if (a.equals("exit")) {
             return a;
         } else {
             if (a.equals("1")) {//view wishlist
@@ -1920,14 +1953,13 @@ public class InputGetter {
                 }
                 NotifyAdmin(user, admininputgetter);
                 return user;
-            } else if (a.equals("10")){
+            } else if (a.equals("10")) {
                 Object temp = system1.accountSettings(user, allUsers);
                 while (temp == null) {
                     temp = system1.accountSettings(user, allUsers);
                 }
                 return user;
-            }
-            else if (a.equals("11")) { //logout
+            } else if (a.equals("11")) { //logout
                 return null;
             }
         }

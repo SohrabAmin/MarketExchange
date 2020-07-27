@@ -10,7 +10,7 @@ import java.util.Scanner;
  */
 
 public class AdminInputGetter {
-    private List<User> frozenRequests = new ArrayList<User>();
+    private List<User> frozenRequests = new ArrayList<>();
 
     /**
      * Returns a list of all the Users in frozenRequest.
