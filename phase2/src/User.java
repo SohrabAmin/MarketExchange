@@ -26,6 +26,7 @@ public class User extends Account {
     private Map<Integer, List<TradeRequest>> weeklyRequestLimit;
     private Map <String, Integer> FrequentCategory;
     private String location;
+    private Integer points;
 
 
     public User() {
@@ -285,4 +286,8 @@ public class User extends Account {
     public void setLocation(String location) {this.location = location;}
 
     public String getLocation() {return this.location;}
+
+    public Integer getPoints() {
+        return this.points;
+    }
 }
