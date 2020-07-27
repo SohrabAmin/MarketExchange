@@ -7,6 +7,7 @@ public class Item implements Serializable {
     private String description;
     private String category;
     private double price;
+    private Boolean toSell = false;
 
 
     public Item(String name, User owner, String description, String category) {
@@ -24,6 +25,7 @@ public class Item implements Serializable {
         this.currentHolder = null;
         this.category = category;
         this.price = price;
+        this.toSell = true;
     }
 
 
