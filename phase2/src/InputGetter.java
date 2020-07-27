@@ -139,15 +139,20 @@ public class InputGetter {
             }
         }
         //Display every item we have. Make sure if the item is owned by the user, show that it is owned by user
+        //shows the price if it is for sale
         for (int i = 0; i < allItems2.size(); i++) {
             String selfowned = "";
+            String tradeOrSell = "  [TRADE]";
             String emoji = "\uD83D\uDCE6 ";
             if (allItems2.get(i).getOwner().getName().equals(user.getName())) { //change the emoji and add OWNED BY YOU if the user is the owner of the item
                 selfowned = "  [OWNED BY YOU] ";
                 emoji = "\u2714 ";
             }
-            System.out.println(emoji + (i + 1) + ". " + allItems2.get(i).getName() + " : "
-                    + allItems2.get(i).getDescription() + selfowned + "\n");
+            if (!allItems2.get(i).getToSell()) {
+                tradeOrSell = "  [SELLING for " + allItems2.get(i).getPrice() + "]";
+            }
+            System.out.println(emoji + (i + 1) + ". " + allItems2.get(i).getName() + ": "
+                    + allItems2.get(i).getDescription() + tradeOrSell + selfowned + "\n");
         }
         return allItems2;
     }
@@ -172,7 +177,7 @@ public class InputGetter {
             return "back";
         }
         System.out.println("\nHere are the current items in the system's inventory:\n");
-        allItems2 = DisplayBrowse (user, allItems);
+        allItems2 = DisplayBrowse(user, allItems);
         //asks the user if they want to add an item to their wishlist
         System.out.println("Enter ID of the item you would like to add to your wishlist or type 'back' to get to main menu.");
 
@@ -205,10 +210,10 @@ public class InputGetter {
         }
         return "back";
     }
+    
     //taken from https://www.geeksforgeeks.org/how-to-find-the-entry-with-largest-value-in-a-java-map/
     // Find the entry with highest value
-    public static <K, V extends Comparable<V> > Map.Entry<K, V>
-    getMaxEntryInMapBasedOnValue(Map<K, V> map)
+    public static <K, V extends Comparable<V> > Map.Entry<K, V> getMaxEntryInMapBasedOnValue(Map<K, V> map)
     {// To store the result
         Map.Entry<K, V> entryWithMaxValue = null;
         // Iterate in the map to find the required entry
@@ -678,9 +683,6 @@ public class InputGetter {
         //method that handles approve or reject
     }
 
-
-
-
     /**
      * Deals with requesting to add a new item to the system's inventory. Prompts user for details of the item
      * and sends a request to the Admin for approval. Adds the item to the User's item history so they can
@@ -705,9 +707,45 @@ public class InputGetter {
         if (description.equals("back")) {
             return "back";
         }
-        System.out.print("Please enter the category of item you would like to add or 'back' to go back to the main menu.\n");
-        System.out.print("Please choose the category of item by typing the number or 'back' to go back to the main menu.\n");
-        System.out.print("1.Electronics\n2.Automotive and car accessories\n3.Baby\n4.Beauty, Health and Personal Care\n5.Books\n6.Home and Kitchen Supplies\n" +
+
+        System.out.print("Please enter '1' if you want to trade this item or enter '2' if you wish to sell this item.\n"
+                + "Enter 'back' to go back to the main menu.");
+        String option = sc.nextLine();
+        String tradeOrSell = "Undefined";
+        if (option.equals("back")){
+            return "back";
+        }
+        while (tradeOrSell.equals("Undefined")) {
+            if (option.equals("1")) {
+                tradeOrSell = "trade";
+            } else if (option.equals("2")) {
+                tradeOrSell = "sell";
+            } else {
+                System.out.println("That is not a valid option! Please try again.");
+            }
+        }
+        Double price = null;
+        if (tradeOrSell.equals("sell")) {
+            while (price == null) {
+                System.out.println("Please enter the price you would like to sell this item for or 'back' " +
+                        "to return to the main menu.");
+                String priceInput = sc.nextLine();
+                if (priceInput.equals("back")) {
+                    return "back";
+                }
+                try {
+                    Double temp = Double.parseDouble(priceInput);
+                    price = (double) Math.round(temp * 100) / 100;
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid price! Please try again.");
+                }
+            }
+        }
+
+        System.out.print("Please choose the category of item you would like to add " +
+                "by typing the number or 'back' to go back to the main menu.\n");
+        System.out.print("1.Electronics\n2.Automotive and car accessories\n3.Baby\n4.Beauty, Health and Personal Care" +
+                "\n5.Books\n6.Home and Kitchen Supplies\n" +
                 "7.Clothing\n8.Movies, music and TV\n9.Office Supplies\n10.Gaming\n");
 
         String ID = sc.nextLine();
@@ -716,51 +754,43 @@ public class InputGetter {
         while (category.equals("Undefined")){
             if (ID.equals("back")) {
                 return "back";
-            }
-            else if (ID.equals("1")){
+            } else if (ID.equals("1")){
                 category = "Electronics";
-            }
-            else if (ID.equals("2")){
+            } else if (ID.equals("2")){
                 category = "Automotive and car accessories";
-            }
-            else if (ID.equals("3")){
+            } else if (ID.equals("3")){
                 category = "Baby";
-            }
-            else if (ID.equals("4")){
+            } else if (ID.equals("4")){
                 category = "Beauty, Health and Personal Care";
-            }
-            else if (ID.equals("5")){
+            } else if (ID.equals("5")){
                 category = "Books";
-            }
-            else if (ID.equals("6")){
+            } else if (ID.equals("6")){
                 category = "Home and Kitchen supplies";
-
-            }
-            else if (ID.equals("7")){
+            } else if (ID.equals("7")){
                 category = "Clothing";
-
-            }
-            else if (ID.equals("8")){
+            } else if (ID.equals("8")){
                 category = "Movies, music and TV";
-
-            }
-            else if (ID.equals("9")){
+            } else if (ID.equals("9")){
                 category = "Office Supplies";
-
-            }
-            else if (ID.equals("10")){
+            } else if (ID.equals("10")){
                 category = "Gaming";
-            }
-            else
-            {
+            } else {
                 System.out.print("Please enter a category for the product!\n");
             }
         }
-
-
-        Item newItem = new Item(itemName, user, description, category);
-        System.out.println("The item you wish to add is the following: ");
-        System.out.println("Item name: " + newItem.getName() + "\n" + "Item description: " + newItem.getDescription() + "\n Item Category:" + newItem.getCategory());
+        Item newItem;
+        if (tradeOrSell.equals("sell")){
+            newItem = new Item(itemName, user, description, category, price);
+            System.out.println("The item you wish to add is the following: ");
+            System.out.println("Item name: " + newItem.getName() + "\n" + "Item description: " +
+                    newItem.getDescription() + "\n" +  "Price: " + newItem.getPrice() + "\n"
+                    + "Item Category:" + newItem.getCategory());
+        } else {
+            newItem = new Item(itemName, user, description, category);
+            System.out.println("The item you wish to add is the following: ");
+            System.out.println("Item name: " + newItem.getName() + "\n" + "Item description: " +
+                    newItem.getDescription() + "\n Item Category:" + newItem.getCategory());
+        }
         System.out.println("\nIf this is correct, please enter '1'. If you would like to change the item, " +
                 "please enter '2'.");
         String confirmation = sc.nextLine();
@@ -793,7 +823,6 @@ public class InputGetter {
         }
         for (int i = 0; i < top3TP.size(); i++) {
             System.out.print("\uD83D\uDC51" + (i + 1) + ". " + top3TP.get(i).getName() + "\n");
-
         }
         return user;
     }

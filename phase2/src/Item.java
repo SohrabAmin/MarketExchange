@@ -60,9 +60,11 @@ public class Item implements Serializable {
     public String getDescription() {
         return description;
     }
+
     public String getCategory(){
     return category;
         }
+
     public double getPrice() {
         return this.price;
     }
@@ -70,4 +72,6 @@ public class Item implements Serializable {
     public void setPrice(double newPrice) {
         this.price = newPrice;
     }
+
+    public Boolean getToSell() {return this.toSell;}
 }
