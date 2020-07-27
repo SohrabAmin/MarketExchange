@@ -290,4 +290,8 @@ public class User extends Account {
     public Integer getPoints() {
         return this.points;
     }
+
+    public void setPoints(int newPoints) {
+        this.points = newPoints;
+    }
 }
