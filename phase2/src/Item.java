@@ -6,6 +6,7 @@ public class Item implements Serializable {
     private User currentHolder;
     private String description;
     private String category;
+    private double price;
 
 
     public Item(String name, User owner, String description, String category) {
@@ -15,6 +16,16 @@ public class Item implements Serializable {
         this.currentHolder = null;
         this.category = category;
     }
+
+    public Item(String name, User owner, String description, String category, double price){
+        this.name = name;
+        this.owner = owner;
+        this.description = description;
+        this.currentHolder = null;
+        this.category = category;
+        this.price = price;
+    }
+
 
     public String getName() {
         return name;
