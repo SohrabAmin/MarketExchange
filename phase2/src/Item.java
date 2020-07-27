@@ -61,4 +61,11 @@ public class Item implements Serializable {
     public String getCategory(){
     return category;
         }
+    public double getPrice() {
+        return this.price;
+    }
+
+    public void setPrice(double newPrice) {
+        this.price = newPrice;
+    }
 }
