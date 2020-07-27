@@ -4,13 +4,15 @@ import java.util.List;
 
 /**
  * Constructs a trade request, that a User can send to another User if the want to initiated a Transaction. Notice this difference from a Transaction, as
- * the system does not create an instance of Transaction unless the corresponding TradeRequest has been approved by the User receiving the TradeRequest.
+ * the system does not create an instance of Transaction unless the corresponding TradeRequest has been approved by the User receiving the TradeRequest. Notice we
+ * assuming noMeeting Transactions are permanent, as it's illogical to "return" and emailed item.
  */
 public class TradeRequest implements Serializable {
     private String message;
     private boolean temp;
     private int status;
     private Calendar date;
+    private boolean noMeeting;
 
     /**
      * Constructs a TradeRequest instance. This class is instantiated by the User that attempts to initiate the Transaction, and should be stored within the receiving User's
@@ -24,11 +26,12 @@ public class TradeRequest implements Serializable {
      * @param message     A string representation of any message the requester User may want to send to the receiver User.
      * @param temp        A boolean regarding if the User requesting a TradeRequest wants a temporary Transaction or not.
      */
-    public TradeRequest(String message, boolean temp, Calendar date) {
+    public TradeRequest(String message, boolean temp, Calendar date, boolean noMeeting) {
         this.message = message;
         this.status = 0;
         this.temp = temp;
         this.date = date;
+        this.noMeeting = noMeeting;
     }
 
     /**
@@ -70,5 +73,9 @@ public class TradeRequest implements Serializable {
 
     public Calendar getDate() {
         return this.date;
+    }
+
+    public Boolean getNoMeeting(){
+        return this.noMeeting;
     }
 }

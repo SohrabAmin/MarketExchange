@@ -8,8 +8,8 @@ public class typeOneRequest extends TradeRequest {
     private Item item;
 
 
-    public typeOneRequest(User user1, Item item, String message, boolean temp, Calendar date){
-        super(message, temp, date);
+    public typeOneRequest(User user1, Item item, String message, boolean temp, Calendar date, boolean noMeeting){
+        super(message, temp, date, noMeeting);
         this.user1 = user1;
         this.user2 = item.getOwner();
         this.item = item;

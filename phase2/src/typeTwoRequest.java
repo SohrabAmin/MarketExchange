@@ -9,8 +9,8 @@ public class typeTwoRequest extends TradeRequest {
     private Item item2;
 
 
-    public typeTwoRequest(Item item1, Item item2,  String message, boolean temp, Calendar date){
-        super(message, temp, date);
+    public typeTwoRequest(Item item1, Item item2,  String message, boolean temp, Calendar date, boolean noMeeting){
+        super(message, temp, date, noMeeting);
         this.user1 = item1.getOwner();
         this.user2 = item2.getOwner();
         this.item1 = item1;

@@ -11,8 +11,8 @@ public class typeThreeRequest extends TradeRequest {
     private Item item3;
 
 
-    public typeThreeRequest(Item item1, Item item2, Item item3,  String message, boolean temp, Calendar date){
-        super(message, temp, date);
+    public typeThreeRequest(Item item1, Item item2, Item item3,  String message, boolean temp, Calendar date, boolean noMeeting){
+        super(message, temp, date, noMeeting);
         this.user1 = item1.getOwner();
         this.user2 = item2.getOwner();
         this.user3 = item3.getOwner();
