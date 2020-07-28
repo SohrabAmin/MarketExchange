@@ -379,7 +379,7 @@ public class InputGetter {
                 allUsers.addToOutboundRequests(user, trades);
                 allTradeRequests.receiveTradeRequest(allUsers, trades);
 
-                undoLogger.log(Level.INFO, user.getName() + ",updateRequestStatus," + trades + ",2");
+                undoLogger.log(Level.INFO, user.getName() + ",updateRequestStatus," + trades + ",0");
 
                 System.out.print("\nTrade request has been sent successfully.\n");
                 return "back";
@@ -472,7 +472,7 @@ public class InputGetter {
                 allUsers.addToOutboundRequests(user, request);
                 allUsers.addToWeeklyRequestLimit(user, request);
 
-                undoLogger.log(Level.INFO, user.getName() + ",updateRequestStatus," + request + ",2");
+                undoLogger.log(Level.INFO, user.getName() + ",updateRequestStatus," + request + ",0");
 
                 System.out.print("\nTrade request has been sent successfully.\n");
                 return "back";
@@ -1110,7 +1110,7 @@ public class InputGetter {
                     System.out.print("Your meeting has been set!\n");
                     allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 1);
 
-                    undoLogger.log(Level.INFO, "updateTransactionStatus," + user + "," + selectedT + ",0");
+                    undoLogger.log(Level.INFO, "updateTransactionStatus," + user + "," + selectedT + ",1");
 
                 } else if (input.equals(("2"))) {
                     //they want to propose a new time
@@ -1126,7 +1126,7 @@ public class InputGetter {
                         allTransactions.handleCancelledTrade(allAdmins, allUsers, selectedT);
                         allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 4);
 
-                        undoLogger.log(Level.INFO, "updateTransactionStatus," + user + "," + selectedT + ",0");
+                        undoLogger.log(Level.INFO, "updateTransactionStatus," + user + "," + selectedT + ",4");
 
                         System.out.print("\uD83D\uDE22 Sorry! You couldn't agree on a time so we deleted the transaction!\n" +
                                 "Please try again!\n");
@@ -1150,7 +1150,7 @@ public class InputGetter {
                     System.out.print("Your meeting has been cancelled!\n");
                     allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 4);
 
-                    undoLogger.log(Level.INFO, "updateTransactionStatus," + user + "," + selectedT + ",0");
+                    undoLogger.log(Level.INFO, "updateTransactionStatus," + user + "," + selectedT + ",4");
                 }
             }
         }
@@ -1175,7 +1175,7 @@ public class InputGetter {
                     //need another method for usermanager so that transactions in progress but meeting is set
                     allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 1);
 
-                    undoLogger.log(Level.INFO, "updateTransactionStatus," + user + "," + selectedT + ",0");
+                    undoLogger.log(Level.INFO, "updateTransactionStatus," + user + "," + selectedT + ",1");
 
                 } else if (input.equals(("2"))) { //they want to propose a new time
                     //provide warning if the is at their 3rd strike
@@ -1188,7 +1188,7 @@ public class InputGetter {
                         allTransactions.handleCancelledTrade(allAdmins, allUsers, selectedT);
                         allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 4);
 
-                        undoLogger.log(Level.INFO, "updateTransactionStatus," + user + "," + selectedT + ",0");
+                        undoLogger.log(Level.INFO, "updateTransactionStatus," + user + "," + selectedT + ",4");
 
                         System.out.print("\uD83D\uDE22 Sorry! You couldn't agree on a time so we deleted the transaction!\n" +
                                 "Please try again!\n");

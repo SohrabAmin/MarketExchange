@@ -98,5 +98,19 @@ public class Transaction {
     public void setReturnMeeting(Meeting meeting) {
         this.returnMeeting = meeting;
     }
-}
 
+    /**
+     * Returns a String representation of a Transaction, with nicely formatted attributes
+     *
+     * @return String representation of this Transaction
+     */
+    public String toString() {
+        return "Transaction" +
+                "; \nStatus: " + this.tradeStatus +
+                "; \nIs temporary?: " + this.temp +
+                "; \nIs in-person?: " + !this.virtual +
+                "; \nInitial meeting: " + this.initialMeeting +
+                "; \nReturn meeting: " + this.returnMeeting + ".\n";
+    }
+
+}

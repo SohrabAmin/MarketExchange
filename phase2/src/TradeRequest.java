@@ -1,6 +1,5 @@
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.List;
 
 /**
  * Constructs a trade request, that a User can send to another User if the want to initiated a Transaction. Notice this difference from a Transaction, as
@@ -75,7 +74,7 @@ public class TradeRequest implements Serializable {
         return this.date;
     }
 
-    public Boolean getNoMeeting(){
+    public Boolean getNoMeeting() {
         return this.noMeeting;
     }
 }
