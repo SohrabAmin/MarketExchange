@@ -15,7 +15,7 @@ public class InputGetter {
 
     static {
         try {
-            fileHandler = new FileHandler("UndoLog.csv");
+            fileHandler = new FileHandler("UndoLog.txt");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -379,7 +379,7 @@ public class InputGetter {
                 allUsers.addToOutboundRequests(user, trades);
                 allTradeRequests.receiveTradeRequest(allUsers, trades);
 
-                undoLogger.log(Level.INFO, user.getName() + ",updateRequestStatus," + trades + ",0");
+                undoLogger.log(Level.INFO, trades.toString());
 
                 System.out.print("\nTrade request has been sent successfully.\n");
                 return "back";
@@ -472,7 +472,7 @@ public class InputGetter {
                 allUsers.addToOutboundRequests(user, request);
                 allUsers.addToWeeklyRequestLimit(user, request);
 
-                undoLogger.log(Level.INFO, user.getName() + ",updateRequestStatus," + request + ",0");
+                undoLogger.log(Level.INFO, request.toString());
 
                 System.out.print("\nTrade request has been sent successfully.\n");
                 return "back";
@@ -988,7 +988,7 @@ public class InputGetter {
         //adding item to the person's
         allUsers.addToWishlist(user, wishlistItem);
 
-        undoLogger.log(Level.INFO, user.getName() + ",removeFromWishlist," + wishlistItem.getName());
+        undoLogger.log(Level.INFO, user.getName() + " added " + wishlistItem.getName() + " to their wishlist.");
 
         if (ID.equals("1")) {
             allUsers.addToFC("Electronics", user);
@@ -1110,7 +1110,7 @@ public class InputGetter {
                     System.out.print("Your meeting has been set!\n");
                     allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 1);
 
-                    undoLogger.log(Level.INFO, "updateTransactionStatus," + user + "," + selectedT + ",1");
+                    undoLogger.log(Level.INFO, selectedT.toString());
 
                 } else if (input.equals(("2"))) {
                     //they want to propose a new time
@@ -1126,7 +1126,7 @@ public class InputGetter {
                         allTransactions.handleCancelledTrade(allAdmins, allUsers, selectedT);
                         allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 4);
 
-                        undoLogger.log(Level.INFO, "updateTransactionStatus," + user + "," + selectedT + ",4");
+                        undoLogger.log(Level.INFO, selectedT.toString());
 
                         System.out.print("\uD83D\uDE22 Sorry! You couldn't agree on a time so we deleted the transaction!\n" +
                                 "Please try again!\n");
@@ -1150,7 +1150,7 @@ public class InputGetter {
                     System.out.print("Your meeting has been cancelled!\n");
                     allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 4);
 
-                    undoLogger.log(Level.INFO, "updateTransactionStatus," + user + "," + selectedT + ",4");
+                    undoLogger.log(Level.INFO, selectedT.toString());
                 }
             }
         }
@@ -1175,7 +1175,7 @@ public class InputGetter {
                     //need another method for usermanager so that transactions in progress but meeting is set
                     allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 1);
 
-                    undoLogger.log(Level.INFO, "updateTransactionStatus," + user + "," + selectedT + ",1");
+                    undoLogger.log(Level.INFO, selectedT.toString());
 
                 } else if (input.equals(("2"))) { //they want to propose a new time
                     //provide warning if the is at their 3rd strike
@@ -1188,7 +1188,7 @@ public class InputGetter {
                         allTransactions.handleCancelledTrade(allAdmins, allUsers, selectedT);
                         allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 4);
 
-                        undoLogger.log(Level.INFO, "updateTransactionStatus," + user + "," + selectedT + ",4");
+                        undoLogger.log(Level.INFO, selectedT.toString());
 
                         System.out.print("\uD83D\uDE22 Sorry! You couldn't agree on a time so we deleted the transaction!\n" +
                                 "Please try again!\n");
