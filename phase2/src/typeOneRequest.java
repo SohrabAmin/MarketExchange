@@ -1,5 +1,10 @@
 import java.util.Calendar;
 
+/**
+ * Constructs a OneWay TradeRequest, that a User can send to another User if the want to initiated a Transaction. Notice this difference from a Transaction, as
+ * the system does not create an instance of Transaction unless the corresponding TradeRequest has been approved by the User receiving the TradeRequest. Notice we
+ * assuming noMeeting Transactions are permanent, as it's illogical to "return" and emailed item.
+ */
 public class typeOneRequest extends TradeRequest {
 
 
@@ -7,7 +12,16 @@ public class typeOneRequest extends TradeRequest {
     private User user2;
     private Item item;
 
-
+    /**
+     * Constructs a OneWay TradeRequest instance. This class is instantiated by the User that attempts to initiate the Transaction, and should be stored within the receiving User's
+     * pendingRequest. If the receiving User accepts the conditions of the Transaction, they may accept the TradeRequest, and an instance of Transaction is created.
+     * @param user1 The User initiated the TradeRequest
+     * @param item The Item User1 currently wants.
+     * @param message A String representation of any message user1 may want to send user2.
+     * @param temp A boolean representing if the TradeRequest will be temp or not.
+     * @param date A Calender representing the date/time the TradeRequest was sent.
+     * @param noMeeting A boolean that determines the TradeRequest will have no meeting (true: This Transaction will not have a Meeting, false: This Transaction will have a Meeting.)
+     */
     public typeOneRequest(User user1, Item item, String message, boolean temp, Calendar date, boolean noMeeting) {
         super(message, temp, date, noMeeting);
         this.user1 = user1;

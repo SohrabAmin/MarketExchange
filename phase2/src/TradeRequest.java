@@ -16,12 +16,8 @@ public class TradeRequest implements Serializable {
     /**
      * Constructs a TradeRequest instance. This class is instantiated by the User that attempts to initiate the Transaction, and should be stored within the receiving User's
      * pendingRequest. If the receiving User accepts the conditions of the Transaction, they may accept the TradeRequest, and an instance of Transaction is created.
-     *
-     * @param requestType An integer that determines whether the trade is temporary or not: 1- Permanent Transaction, 2- Temporary Transaction.
-     * @param requester   The User who initiates the Transaction.
-     * @param receiver    The User who receives the TradeRequest.
-     * @param itemList    An ArrayList of Items containing the Items being exchanged. If this is a TwoWay, the requester User's item should be in the first index,
-     *                    and the receiver User's item to give in the second index. If this is a OneWay, simply place the Item in the first index.
+     * @param date        A Calender representing the date/time the TradeRequest was initiated.
+     * @param noMeeting   A boolean representing if a meeting will be required or not.
      * @param message     A string representation of any message the requester User may want to send to the receiver User.
      * @param temp        A boolean regarding if the User requesting a TradeRequest wants a temporary Transaction or not.
      */
