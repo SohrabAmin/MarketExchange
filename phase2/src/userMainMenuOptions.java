@@ -1,3 +1,5 @@
+import java.util.logging.Logger;
+
 public interface userMainMenuOptions {
     /**
      * Classes that implement this interface are the main menu options for User. All those classes should
@@ -22,5 +24,5 @@ public interface userMainMenuOptions {
 
     public Object execute(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                          AdminInputGetter admininputgetter, AdminManager allAdmins);
+                          AdminInputGetter admininputgetter, AdminManager allAdmins, Logger undoLogger);
 }
