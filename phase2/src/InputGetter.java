@@ -171,8 +171,8 @@ public class InputGetter {
                 selfowned = "  [OWNED BY YOU] ";
                 emoji = "\u2714 ";
             }
-            if (!allItems2.get(i).getToSell()) {
-                tradeOrSell = "  [SELLING for " + allItems2.get(i).getPrice() + "]";
+            if (!allItems2.get(i).getSellable()) {
+                tradeOrSell = "  [SELLING for " + allItems2.get(i).getSellable() + "]";
             }
             System.out.println(emoji + (i + 1) + ". " + allItems2.get(i).getName() + ": "
                     + allItems2.get(i).getDescription() + tradeOrSell + selfowned + "\n");
@@ -1020,11 +1020,11 @@ public class InputGetter {
      * Notifies the Admin of a Request to Unfreeze from User user.
      *
      * @param user             frozen user sending the request to admin to be unfrozen
-     * @param adminInputGetter contains the method for adding frozen requests
+     * @param allAdmins contains the method for adding frozen requests
      * @return returns User so that they can be redirected to the main menu
      */
-    public Object NotifyAdmin(User user, AdminInputGetter adminInputGetter) {
-        adminInputGetter.addfrozenRequest(user);
+    public Object NotifyAdmin(User user, AdminManager allAdmins) {
+        allAdmins.addfrozenRequest(user);
         System.out.print("Your request is successfully submitted!\n");
         return user;
     }
@@ -1947,11 +1947,11 @@ public class InputGetter {
                 }
                 return user;
             } else if (a.equals("9")) {
-                if (admininputgetter.getFrozenRequests().contains(user)) {
+                if (allAdmins.getFrozenRequests().contains(user)) {
                     System.out.println("You have already requested to be unfrozen! Please be patient.");
                     return user;
                 }
-                NotifyAdmin(user, admininputgetter);
+                NotifyAdmin(user, allAdmins);
                 return user;
             } else if (a.equals("10")) {
                 Object temp = system1.accountSettings(user, allUsers);

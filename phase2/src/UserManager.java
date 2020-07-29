@@ -449,7 +449,28 @@ public class UserManager implements Serializable {
         Integer score = old +1;
         user.getFrequentCategory().replace(category, score);
         return;
-
-
     }
+
+    public List<User> getAllFrozenUsers() {
+        List<User> allFrozenUsers = new ArrayList<>();
+        for (int i = 0; i < userList.size(); i++) {
+            if (userList.get(i).getIsFrozen()) {
+                //if getIsFrozen returns true for frozen accounts
+                allFrozenUsers.add(userList.get(i));
+            }
+        }
+        return allFrozenUsers;
+    }
+
+    public List<User> getAllPseudoFrozenUsers() {
+        List<User> possibleFrozenPeople = new ArrayList<>();
+        for (int i = 0; i < userList.size(); i++) {
+            if (userList.get(i).getIsPseudoFrozen()) {
+                //if getIsFrozen returns true for frozen accounts
+                possibleFrozenPeople.add(userList.get(i));
+            }
+        }
+        return possibleFrozenPeople;
+    }
+
 }

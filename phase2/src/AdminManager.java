@@ -14,6 +14,8 @@ public class AdminManager implements Serializable {
     private int weeklyTransactionLimit = 7;
     private int incompleteTransactionLimit = 3;
 
+    private List<User> frozenRequests = new ArrayList<>();
+
     /**
      * Constructs the instance of AdminManager with an initial Admin and a list of Admins
      *
@@ -122,4 +124,33 @@ public class AdminManager implements Serializable {
     public void setIncompleteTransactionLimit(int incompleteTransactionLimit) {
         this.incompleteTransactionLimit = incompleteTransactionLimit;
     }
+
+    /**
+     * Returns a list of all the Users in frozenRequest.
+     *
+     * @return List<User> returns list of Users in frozen Request
+     */
+    public List<User> getFrozenRequests() {
+        return frozenRequests;
+    }
+
+    /**
+     * Adds the User requesting to be unfrozen to the list of frozenRequests
+     *
+     * @param user the User requesting to be unfrozen
+     */
+    public void addfrozenRequest(User user) {
+        frozenRequests.add(user);
+    }
+
+    /**
+     * Removes the user from the frozenRequests list
+     *
+     * @param user the User that has been removed from the list of frozenRequests
+     */
+    public void removeFromfrozenRequest(User user) {
+        frozenRequests.remove(user);
+    }
+
+
 }
