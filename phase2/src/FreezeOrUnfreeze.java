@@ -8,8 +8,11 @@ public class FreezeOrUnfreeze implements adminMainMenuOptions{
      * Allows admin to either view unfreeze requests, freeze and unfreeze users in the system.
      *
      * @param allUsers UserManager which stores all the users in the system
+     * @param admin the current Admin logged into the system
+     * @param allAdmins AdminManager which holds all the Admins, FrozenRequests and Thresholds in the system
+     * @param allItems ItemManager which holds the system inventory
      * @return depending on what the Admin inputs it will return different objects:
-     * returns null to tell mainmenu() to call FreezeOrUnfreeze() again
+     * returns null to tell mainmenu() to call execute() again
      * returns String "back" to tell mainmenu() to prompt main menu again so Admin can choose another
      * main menu option
      */
@@ -50,6 +53,7 @@ public class FreezeOrUnfreeze implements adminMainMenuOptions{
      * isFrozen to false.
      *
      * @param allUsers UserManager which stores all the users in the system
+     * @param allAdmins Adminmanager which stores the FrozenRequests
      * @return depending on what the Admin inputs it will return different objects:
      * returns null to tell mainmenu() to call FreezeOrUnfreeze() again
      * returns String "back" to tell mainmenu() to prompt main menu again so Admin can choose another
@@ -89,6 +93,7 @@ public class FreezeOrUnfreeze implements adminMainMenuOptions{
      * which User they wish to unfreeze and unfreezes those Users
      *
      * @param allUsers UserManager which stores all the Users in the system
+     * @param allAdmins AdminManager which stores the FrozenRequests
      * @return depending on what the Admin inputs it will return different objects:
      * returns null to tell FreezeOrUnfreeze() to call Unfreeze() again
      * returns String "back" to tell FreezeOrUnfreeze() to prompt main menu again so Admin can choose another
@@ -152,6 +157,7 @@ public class FreezeOrUnfreeze implements adminMainMenuOptions{
      * which User they wish to freeze and freezes those Users
      *
      * @param allUsers UserManager which stores all the Users in the system
+     * @param allAdmins AdminManager which stores the FrozenRequests
      * @return depending on what the Admin inputs it will return different objects:
      * returns null to tell FreezeOrUnfreeze() to call Freeze() again
      * returns String "back" to tell FreezeOrUnfreeze() to prompt main menu again so Admin can choose another
@@ -193,10 +199,8 @@ public class FreezeOrUnfreeze implements adminMainMenuOptions{
             User chosenUser = unfrozenUsers.get((Integer) line - 1);
             if (chosenUser.getIsPseudoFrozen()) { //user is pseudo frozen
                 allUsers.unPseudoFreeze(chosenUser);
-                allUsers.freeze(chosenUser);
-            } else { //user is not pseudo frozen
-                allUsers.freeze(chosenUser);
             }
+            allUsers.freeze(chosenUser);
             //users will need to re-request to be unfrozen if they go from pseudo-frozen to actually frozen
             for (int i = 0; i < allAdmins.getFrozenRequests().size(); i++) {
                 if (allAdmins.getFrozenRequests().get(i).getName().equals(chosenUser.getName())) {

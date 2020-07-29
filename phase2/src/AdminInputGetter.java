@@ -47,7 +47,7 @@ public class AdminInputGetter {
                 " \n1.Add new admin\n2.Change system threshold \n" +
                 "3.View items that need to be approved\n4.Freeze or unfreeze users\n5.Log out\n" +
                 "Enter 'exit' to exit at any time.");
-        AdminChosenOption option = new AdminChosenOption();
+        ChosenOption option = new ChosenOption();
         try {
             String input = br.readLine();
             if (!input.equals("exit")) {

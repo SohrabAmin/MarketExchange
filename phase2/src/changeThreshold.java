@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.List;
 
 public class changeThreshold implements adminMainMenuOptions{
 
@@ -11,9 +10,11 @@ public class changeThreshold implements adminMainMenuOptions{
      *
      * @param allUsers  changes LentMinusBorrowedThreshold variable in the system's UserManager
      * @param allAdmins changes LentMinusBorrowedThreshold variable in the system's AdminManager
+     * @param admin the current Admin logged into the system
+     * @param allItems ItemManager which holds the system inventory
      * @return depending on what the Admin inputs it will return different objects:
-     * returns null to tell mainmenu() to call changeThreshold() again
-     * returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
+     * returns null to tell mainmenu() to call execute() again
+     * returns String "back" to tell mainmenu() to prompt main menu again so Admin can choose another
      * main menu option
      */
     public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems) {

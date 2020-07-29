@@ -2,21 +2,28 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
 
-public class addAdmin implements  adminMainMenuOptions{
+public class addAdmin implements adminMainMenuOptions{
 
     /**
-     * Adds a new admin to the list of all Admins in AdminManager.
+     * Adds a new admin to the list of all Admins in AdminManager. Only the initial admin should be able to add new
+     * admins.
      *
-     * @param allAdmins AdminManager stores all the Admin information.
+     * @param admin the current Admin logged into the system
+     * @param allAdmins AdminManager which holds all the Admins, FrozenRequests and Thresholds in the system
+     * @param allUsers UserManager which holds all the Users in the system
+     * @param allItems ItemManager which holds the system inventory
      * @return depending on what the Admin inputs it will return different objects:
-     * returns null to tell mainmenu() to call addAdmin() again
-     * returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
+     * returns null to tell mainmenu() to call execute() again
+     * returns String "back" to tell mainmenu() to prompt main menu again so Admin can choose another
      * main menu option
      * returns String "exit" to prompt TradeSystem to save all the information and exit the System
      */
     public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems) {
+        if (!admin.getIsInitialAdmin()) {
+            System.out.println("Sorry but you do not have the authorization to add new admins!");
+            return "back";
+        }
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         UserIterator prompts = new UserIterator();
         int curr = 0;

@@ -9,10 +9,13 @@ public class approvePendingItem implements adminMainMenuOptions{
      * who can then decide to approve the item which will move the item to the User's inventory
      * or reject the item which will remove the item altogether.
      *
+     * @param admin the current Admin logged into the system
+     * @param allAdmins AdminManager which holds all the Admins, FrozenRequests and Thresholds in the system
      * @param allUsers UserManager which holds all the Users in the system
+     * @param allItems ItemManager which holds the system inventory
      * @return depending on what the Admin inputs it will return different objects:
-     * returns null to tell mainmenu() to call approvalPendingItems() again
-     * returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
+     * returns null to tell mainmenu() to call execute() again
+     * returns String "back" to tell mainmenu() to prompt main menu again so Admin can choose another
      * main menu option
      */
     public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems) {
