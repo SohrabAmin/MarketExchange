@@ -28,6 +28,8 @@ public class User extends Account {
     private String location;
     private Integer points;
 
+    //potential hash map for outbound requests to help admins undo
+
 
     public User() {
     }

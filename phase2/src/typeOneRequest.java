@@ -11,6 +11,7 @@ public class typeOneRequest extends TradeRequest {
     private User user1;
     private User user2;
     private Item item;
+    private boolean monetized;
 
     /**
      * Constructs a OneWay TradeRequest instance. This class is instantiated by the User that attempts to initiate the Transaction, and should be stored within the receiving User's
@@ -22,11 +23,12 @@ public class typeOneRequest extends TradeRequest {
      * @param date A Calender representing the date/time the TradeRequest was sent.
      * @param noMeeting A boolean that determines the TradeRequest will have no meeting (true: This Transaction will not have a Meeting, false: This Transaction will have a Meeting.)
      */
-    public typeOneRequest(User user1, Item item, String message, boolean temp, Calendar date, boolean noMeeting) {
+    public typeOneRequest(User user1, Item item, String message, boolean temp, Calendar date, boolean noMeeting, boolean monetized) {
         super(message, temp, date, noMeeting);
         this.user1 = user1;
         this.user2 = item.getOwner();
         this.item = item;
+        this.monetized = monetized;
     }
 
     public User getFirstUser() {

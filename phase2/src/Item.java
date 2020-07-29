@@ -6,26 +6,27 @@ public class Item implements Serializable {
     private User currentHolder;
     private String description;
     private String category;
-    private double price;
-    private Boolean toSell = false;
+    private boolean virtual; //add setter/getter
+    private boolean tradable;
+    private boolean sellable;
+    private boolean rentable;
+    private double sellPrice;
+    private double rentPrice;
 
 
-    public Item(String name, User owner, String description, String category) {
+    public Item(String name, User owner, String description, String category, boolean virtual, boolean tradable, boolean sellable, boolean rentable,
+                double sellPrice, double rentPrice){
         this.name = name;
         this.owner = owner;
         this.description = description;
         this.currentHolder = null;
         this.category = category;
-    }
-
-    public Item(String name, User owner, String description, String category, double price){
-        this.name = name;
-        this.owner = owner;
-        this.description = description;
-        this.currentHolder = null;
-        this.category = category;
-        this.price = price;
-        this.toSell = true;
+        this.sellPrice = sellPrice;
+        this.rentPrice = rentPrice;
+        this.rentable = rentable;
+        this.sellable = sellable;
+        this.tradable = tradable;
+        this.virtual = virtual;
     }
 
 
@@ -65,13 +66,32 @@ public class Item implements Serializable {
     return category;
         }
 
-    public double getPrice() {
-        return this.price;
+    public boolean getVirtual(){
+        return this.virtual;
     }
 
-    public void setPrice(double newPrice) {
-        this.price = newPrice;
+    public void changeTradable(boolean tradable){
+        this.tradable = tradable;
     }
 
-    public Boolean getToSell() {return this.toSell;}
+    public void changeSellable(boolean sellable){
+        this.sellable = sellable;
+    }
+
+    public void changeRentable(boolean rentable){
+        this.rentable = rentable;
+    }
+
+    public void setSellPrice(double price){
+        this.sellPrice = price;
+    }
+
+    public void setRentPrice(double price){
+    }
+
+    public boolean getSellable(){return this.sellable;}
+    public boolean getRentable(){return this.rentable;}
+    public boolean getTradable(){return this.tradable;}
+    public double getSellPrice(){return this.sellPrice;}
+    public double getRentPrice(){return this.rentPrice;}
 }
