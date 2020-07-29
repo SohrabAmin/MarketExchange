@@ -1,23 +1,24 @@
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.FileHandler;
-import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 
 //Note: how to put emojis in the code was found here: http://dplatz.de/blog/2019/emojis-for-java-commandline.html
 public class InputGetter {
     private static final Logger undoLogger = Logger.getLogger(AdminInputGetter.class.getName());
-    private static Handler fileHandler = null;
+    private File undoLog = new File("UndoLog.txt");
+    private static FileHandler fileHandler;
 
     static {
         try {
-            fileHandler = new FileHandler("UndoLog.txt");
+            fileHandler = new FileHandler("UndoLog.txt", true);
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Unable to initialize FileHandler.");
         }
     }
 
@@ -26,6 +27,7 @@ public class InputGetter {
         fileHandler.setLevel(Level.ALL);
         undoLogger.addHandler(fileHandler);
 
+        // Prevent fileHandler from printing to the console:
         undoLogger.setUseParentHandlers(false);
         // Credit for the above line goes to
         // https://stackoverflow.com/questions/2533227/how-can-i-disable-the-default-console-handler-while-using-the-java-logging-api
