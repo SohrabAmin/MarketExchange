@@ -81,6 +81,14 @@ public class UserManager implements Serializable {
         user.setIsPseudoFrozen(false);
     }
 
+    public void goOnVacation(User user) {
+        user.setIsOnVacation(true);
+    }
+
+    public void returnFromVacation(User user) {
+        user.setIsOnVacation(false);
+    }
+
     /**
      * Adds an Item to a User's draft inventory
      *

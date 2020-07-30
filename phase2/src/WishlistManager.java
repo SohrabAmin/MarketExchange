@@ -168,7 +168,7 @@ public class WishlistManager implements userMainMenuOptions {
         //adding item to the person's
         allUsers.addToWishlist(user, wishlistItem);
 
-        undoLogger.log(Level.INFO, user.getName() + " added " + wishlistItem.getName() + " to their wishlist.");
+        undoLogger.log(Level.INFO, user.getName() + " added " + wishlistItem.getName() + " to their wishlist.\n");
 
         if (ID.equals("1")) {
             allUsers.addToFC("Electronics", user);

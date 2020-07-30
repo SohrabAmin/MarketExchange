@@ -64,15 +64,19 @@ public class InputGetter {
         // A user who has been frozen can request that the administrative user unfreezes their account.
         boolean frozenAccount = user.getIsFrozen();
         boolean pseudoFrozenAccount = user.getIsPseudoFrozen();
-//if they are frozen
+        //if they are frozen
         if (frozenAccount || pseudoFrozenAccount) { //first off, tell them that they are frozen
             return frozenMainMenu(user, allItems, allTradeRequests, allUsers, allMeetings, allTransactions, allAdmins);
         }
-        //if they are not frozen
-        //they are a demo user without an account
+        //if they are a demo user without an account
         else if (user.getName().equals("Demo")) {
             return demoMainMenu(user, allItems, allTradeRequests, allUsers, allMeetings, allTransactions, allAdmins);
-        } else {
+        }
+        // if they are on vacation
+        else if (user.getIsOnVacation()) {
+            return vacationMainMenu(user);
+        }
+        else {
             return userMainMenu(user, allItems, allTradeRequests, allUsers, allMeetings, allTransactions, allAdmins);
         }
     }
@@ -111,12 +115,12 @@ public class InputGetter {
             System.out.print("\u23F3 You have " + allUsers.getUser(user).getPendingTrades().size() +
                     " Pending Transactions!\n");
         }
-        System.out.print("Please select number from the following:\n1.View and edit Wishlist\n2.View Inventory\n" +
-                "3.Browse Items\n4.Initiate Trade\n5.View Pending Trade Requests\n6.Approve Pending Trade Requests\n" +
-                "7.Add Item to inventory\n8.View most recent trades\n9.View most frequent trading partners\n" +
-                "10.View status of my items\n" +
-                "11.Approve Meeting\n12.Confirm Meetings for Approved Trades\n13.View status of outbound requests\n" +
-                "14.Change Account Settings\n15.Logout" +
+        System.out.print("Please select number from the following:\n1. View and edit Wishlist\n2. View Inventory\n" +
+                "3. Browse Items\n4. Initiate Trade\n5. View Pending Trade Requests\n6. Approve Pending Trade Requests\n" +
+                "7. Add Item to inventory\n8. View most recent trades\n9. View most frequent trading partners\n" +
+                "10. View status of my items\n" +
+                "11. Approve Meeting\n12. Confirm Meetings for Approved Trades\n13. View status of outbound requests\n" +
+                "14. Change Account Settings\n15. Go on vacation\n16. Logout" +
                 "\nEnter 'exit' to exit the system at any time.\n");
 
         ChosenOption option = new ChosenOption();
@@ -153,7 +157,10 @@ public class InputGetter {
                     option.setChosenOption(new PrintOutboundRequests());
                 } else if (input.equals("14")) { //change account settings
                     option.setChosenOption(new AccountSettingsManager());
-                } else if (input.equals("15")) { //logout
+                } else if (input.equals("15")) { //go on vacation
+                    option.setChosenOption(new VacationPrompter());
+                }
+                else if (input.equals("16")) { //logout
                     return null;
                 } else { //returns to main menu
                     System.out.println("That is not a valid option. Please try again.");
@@ -161,10 +168,17 @@ public class InputGetter {
                 }
                 Object result = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
                         allTransactions, allAdmins, undoLogger);
+
                 while (result == null) {
                     result = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
                             allTransactions, allAdmins, undoLogger);
                 }
+
+                // this check is used to log user out when they confirm that they are going on vacation
+                if (result.equals("exit")) {
+                    return "exit";
+                }
+
                 return user;
             }
             return input;
@@ -399,4 +413,27 @@ public class InputGetter {
         }
         return user;
     }
+
+    public Object vacationMainMenu (User user) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("----------------------------------------------------------------------------------------------" +
+                "\n\uD83D\uDC4B Welcome back, " + user.getName() + "!\n");
+        System.out.println("Are you still on vacation? If so, press 1. If not, press 2.");
+        String confirmation = scanner.nextLine();
+        if (confirmation.equals("1")) {
+            System.out.println("Go enjoy your vacation!");
+            return "exit";
+        }
+        else if (confirmation.equals("2")) {
+            System.out.println("We hope you enjoyed your vacation!");
+            user.setIsOnVacation(false);
+            //TODO: use undoLogger to add items back to user's inventory
+            return user;
+        }
+        else {
+            System.out.println("Invalid option. Please try again.");
+            return user;
+        }
+    }
+
 }

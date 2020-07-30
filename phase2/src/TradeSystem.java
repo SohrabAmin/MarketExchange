@@ -1,7 +1,4 @@
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * TradeSystem initializes all the controllers and use cases in the system.
@@ -23,6 +20,7 @@ public class TradeSystem {
      * Admins, Users, Meetings, Items and TradeRequests. It will call methods that allow Users and Admins to log in
      * and view the main menu as long as an Admin or User doesn't want to exit the system. If they choose to exit,
      * the gateways will be called again and saved the information for future use.
+     *
      * @throws IOException
      * @throws ClassNotFoundException
      */

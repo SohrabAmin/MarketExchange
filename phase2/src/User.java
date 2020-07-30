@@ -27,6 +27,7 @@ public class User extends Account {
     private Map <String, Integer> FrequentCategory;
     private String location;
     private Integer points;
+    private boolean isOnVacation;
 
     //potential hash map for outbound requests to help admins undo
 
@@ -240,6 +241,14 @@ public class User extends Account {
      */
     public void setIsPseudoFrozen(boolean isPseudoFrozen) {
         this.isPseudoFrozen = isPseudoFrozen;
+    }
+
+    public boolean getIsOnVacation () {
+        return this.isOnVacation;
+    }
+
+    public void setIsOnVacation (boolean isOnVacation) {
+        this.isOnVacation = isOnVacation;
     }
 
     /**
