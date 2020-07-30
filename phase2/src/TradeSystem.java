@@ -54,8 +54,8 @@ public class TradeSystem {
             currentUser = loggedIn;
             while (loggedIn != null) {
                 if (loggedIn instanceof User) {
-                    loggedIn = inputgetter.mainMenu((User) loggedIn, allItems, inputgetter, allTradeRequests,
-                            allUsers, allMeetings, allTransactions, admininputgetter, allAdmins);
+                    loggedIn = inputgetter.callMainMenu((User) loggedIn, allItems, allTradeRequests,
+                            allUsers, allMeetings, allTransactions, allAdmins);
                 } else if (loggedIn instanceof Admin) {
                     loggedIn = admininputgetter.mainMenu((Admin) loggedIn, allAdmins, allUsers, allItems);
                 } else if (loggedIn.equals("exit")) {
