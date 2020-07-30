@@ -5,16 +5,9 @@ import java.util.logging.Logger;
 
 public class WishlistManager implements userMainMenuOptions {
 
-    // placeholder for Tina Tsan
-    public Object execute(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests,
-                          UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                          AdminInputGetter admininputgetter, AdminManager allAdmins, Logger undoLogger) {
-        return null;
-    }
-
     /**
-     * Prints out the wishlist of the User user showing the name and description of the items. Also in charge of
-     * removing items from wishlist as per User input.
+     * Prints out the wishlist of the User user showing the name and description of the items. Allows user to edit
+     * their wishlist by adding or removing items.
      *
      * @param user     the User that is requesting to see/edit their wishlist.
      * @param allUsers UserManager which stores the User user.
@@ -23,7 +16,10 @@ public class WishlistManager implements userMainMenuOptions {
      * returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
      * main menu option
      */
-    public Object wishlist(User user, UserManager allUsers) {
+    public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
+                          UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
+                          AdminManager allAdmins, Logger undoLogger) {
+
         List<Item> wishlist = user.getWishlist();
         //if wishlist is empty, returns "back" which will bring them back to main menu
         if (wishlist.size() == 0) {
@@ -37,10 +33,40 @@ public class WishlistManager implements userMainMenuOptions {
         }
         if (wishlist.size() == 0)
             return "back";
+
+        System.out.println("Please enter '1' to remove an item, '2' to add a new item or 'back' to return to the" +
+                " main menu.");
+
+        Scanner sc = new Scanner(System.in);
+        String input = sc.nextLine();
+        if (input.equals("back")) {
+            return "back";
+        } else if (input.equals("1")) {
+            return removeFromWishlist(user, allUsers);
+        } else if (input.equals("2")) {
+            return addToWishlist(user, allUsers, undoLogger);
+        } else {
+            System.out.println("That is not a valid option! Please try again.");
+            return null;
+        }
+    }
+
+    /**
+     * Deals with removing a new item to the User's wishlist. Prompts user for the item they want to remove and
+     * removes it
+     *
+     * @param user     the User requesting to remove an item from their wishlist
+     * @param allUsers UserManager which stores all Users
+     * @return depending on what the User inputs it will return different objects:
+     * returns null to tell mainmenu() to call addtoWishlist() again
+     * returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
+     * main menu option
+     */
+    public Object removeFromWishlist(User user, UserManager allUsers) {
         Scanner sc = new Scanner(System.in);
         //asks if the User wants to remove an item from their wishlist
         System.out.print("If you would like to remove an item, please enter the ID of the item you would like to remove " +
-                "or type 'back'\n");
+                "or type 'back' to return.\n");
         Object input = sc.nextLine();
         //returns them to the main menu if they wish to go "back"
         if (input.equals("back")) {
@@ -54,7 +80,7 @@ public class WishlistManager implements userMainMenuOptions {
             return null;
         }
         //remove the item they requested from wishlist
-        allUsers.removeFromWishlist(allUsers.getUser(user), wishlist.get((Integer) input - 1));
+        allUsers.removeFromWishlist(allUsers.getUser(user), user.getWishlist().get((Integer) input - 1));
         System.out.println("Item has been removed successfully!");
         return null;
     }
@@ -70,7 +96,7 @@ public class WishlistManager implements userMainMenuOptions {
      * returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
      * main menu option
      */
-    public Object addToWishlist(User user, UserManager allUsers) {
+    public Object addToWishlist(User user, UserManager allUsers, Logger undoLogger) {
         System.out.print("Please enter the name of item you would like to add to your wishlist " +
                 "or 'back' to go back to the main menu.\n");
         Scanner sc = new Scanner(System.in);
@@ -122,10 +148,11 @@ public class WishlistManager implements userMainMenuOptions {
             }
         }
 
-
-        Item wishlistItem = new Item(name, null, description, category);
+        Item wishlistItem = new Item(name, null, description, category, false, false, false,
+                false, 0.0, 0.0);
         System.out.println("The item you wish to add to your wishlist is the following: ");
-        System.out.println("Item name: " + wishlistItem.getName() + "\n" + "Item description: " + wishlistItem.getDescription() + "\nItem category: " + wishlistItem.getCategory());
+        System.out.println("Item name: " + wishlistItem.getName() + "\n" + "Item description: " + wishlistItem.getDescription() +
+                "\nItem category: " + wishlistItem.getCategory());
         System.out.println("\nIf this is correct, please enter '1'. If you would like to change the item, " +
                 "please enter '2'.");
 
@@ -137,7 +164,6 @@ public class WishlistManager implements userMainMenuOptions {
             }
             return null;
         }
-
 
         //adding item to the person's
         allUsers.addToWishlist(user, wishlistItem);
@@ -162,12 +188,13 @@ public class WishlistManager implements userMainMenuOptions {
             allUsers.addToFC("Movies, music and TV", user);
         } else if (ID.equals("9")) {
             allUsers.addToFC("Office Supplies", user);
-        } else if (ID.equals("10")) {
+        } else {//ID.equals("10"))
             allUsers.addToFC("Gaming", user);
         }
         System.out.print("Item has been added to your wishlist \uD83C\uDF20\n");
 
-        return "back";
+        return null;
     }
+
 
 }

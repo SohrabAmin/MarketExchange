@@ -1,5 +1,7 @@
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -45,38 +47,33 @@ public class InputGetter {
      *
      * @param user             the user that is currently logged in to the system
      * @param allItems         ItemManager that stores the system's inventory
-     * @param system1          InputGetter which contains all the methods that are in charge of each option in the main menu
      * @param allTradeRequests TradeRequestManager that stores all the Trade Requests in the system
      * @param allUsers         UserManager that stores all the Users in the system
      * @param allMeetings      MeetingManager that deals with the creation of meetings
      * @param allTransactions  TransactionManager that stores all the Transactions in the system
-     * @param admininputgetter AdminInputGetter which contains all the methods for tasks that Admins can do
      * @return depending on what the User inputs it will return different objects:
      * returns User to TradeSystem() to either remain logged into the system and prompt mainMenu
      * returns null to log out of the system and allow another User to log in
      * returns String "exit" to tell TradeSystem() to end the program and save all the data before
      * exiting the System
      */
-    public Object mainMenu(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests,
+    public Object mainMenu(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                            UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                           AdminInputGetter admininputgetter, AdminManager allAdmins) {
+                            AdminManager allAdmins) {
         //A frozen account is one where you can log in and look for items, but you cannot arrange any transactions.
         // A user who has been frozen can request that the administrative user unfreezes their account.
         boolean frozenAccount = user.getIsFrozen();
         boolean pseudoFrozenAccount = user.getIsPseudoFrozen();
 //if they are frozen
         if (frozenAccount || pseudoFrozenAccount) { //first off, tell them that they are frozen
-            return frozenMainMenu(user, allItems, system1, allTradeRequests, allUsers, allMeetings,
-                    allTransactions, admininputgetter, allAdmins);
+            return frozenMainMenu(user, allItems, allTradeRequests, allUsers, allMeetings, allTransactions, allAdmins);
         }
         //if they are not frozen
         //they are a demo user without an account
         else if (user.getName().equals("Demo")) {
-            return demoMainMenu(user, allItems, system1, allTradeRequests, allUsers, allMeetings,
-                    allTransactions, admininputgetter, allAdmins);
+            return demoMainMenu(user, allItems, allTradeRequests, allUsers, allMeetings, allTransactions, allAdmins);
         } else {
-            return userMainMenu(user, allItems, system1, allTradeRequests, allUsers, allMeetings,
-                    allTransactions, admininputgetter, allAdmins);
+            return userMainMenu(user, allItems, allTradeRequests, allUsers, allMeetings, allTransactions, allAdmins);
         }
     }
 
@@ -91,21 +88,19 @@ public class InputGetter {
      *
      * @param user             the user that is currently logged in to the system
      * @param allItems         ItemManager that stores the system's inventory
-     * @param system1          InputGetter which contains all the methods that are in charge of each option in the main menu
      * @param allTradeRequests TradeRequestManager that stores all the Trade Requests in the system
      * @param allUsers         UserManager that stores all the Users in the system
      * @param allMeetings      MeetingManager that deals with the creation of meetings
      * @param allTransactions  TransactionManager that stores all the Transactions in the system
-     * @param admininputgetter AdminInputGetter which contains all the methods for tasks that Admins can do
      * @return depending on what the User inputs it will return different objects:
      * returns User to TradeSystem() to either remain logged into the system and prompt mainMenu
      * returns null to log out of the system and allow another User to log in
      * returns String "exit" to tell TradeSystem() to end the program and save all the data before
      * exiting the System
      */
-    public Object userMainMenu(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests,
+    public Object userMainMenu(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                                UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                               AdminInputGetter admininputgetter, AdminManager allAdmins) {
+                               AdminManager allAdmins) {
         System.out.print("----------------------------------------------------------------------------------------------" +
                 "\n\uD83D\uDC4B Welcome back, " + user.getName() + "!\n");
         if (allUsers.getUser(user).getPendingRequests().size() > 0) {
@@ -116,102 +111,65 @@ public class InputGetter {
             System.out.print("\u23F3 You have " + allUsers.getUser(user).getPendingTrades().size() +
                     " Pending Transactions!\n");
         }
-        System.out.print("Please select number from the following:\n1.View Wishlist\n2.View Inventory\n" +
+        System.out.print("Please select number from the following:\n1.View and edit Wishlist\n2.View Inventory\n" +
                 "3.Browse Items\n4.Initiate Trade\n5.View Pending Trade Requests\n6.Approve Pending Trade Requests\n" +
                 "7.Add Item to inventory\n8.View most recent trades\n9.View most frequent trading partners\n" +
-                "10.View status of my items\n11.Add Item to wishlist\n" +
-                "12.Approve Meeting\n13.Confirm Meetings for Approved Trades\n14.View status of outbound requests\n" +
-                "15.Change Account Settings\n16.Logout" +
+                "10.View status of my items\n" +
+                "11.Approve Meeting\n12.Confirm Meetings for Approved Trades\n13.View status of outbound requests\n" +
+                "14.Change Account Settings\n15.Logout" +
                 "\nEnter 'exit' to exit the system at any time.\n");
 
-        Scanner sc = new Scanner(System.in);
-        String a = sc.nextLine();
-        if (!a.equals("exit")) {
-            if (a.equals("1")) { //view wishlist
-                UserChosenOption option = new UserChosenOption();
-                option.setChosenOption(new WishlistManager());
-                Object temp = option.executeOption(user, allItems, system1, allTradeRequests, allUsers, allMeetings, allTransactions,
-                        admininputgetter, allAdmins);
-                while (temp == null) {
-                    temp = option.executeOption(user, allItems, system1, allTradeRequests, allUsers, allMeetings, allTransactions,
-                            admininputgetter, allAdmins);
+        ChosenOption option = new ChosenOption();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        try {
+            String input = br.readLine();
+            if (!input.equals("exit")) {
+                if (input.equals("1")) { //view and edit wishlist
+                    option.setChosenOption(new WishlistManager());
+                } else if (input.equals("2")) { //view inventory
+                    option.setChosenOption(new InventoryManager());
+                } else if (input.equals("3")) { //browse
+                    option.setChosenOption(new Browse());
+                } else if (input.equals("4")) { //initiate trade
+                    option.setChosenOption(new TradeInitiator());
+                } else if (input.equals("5")) { //view pending trade requests
+                    option.setChosenOption(new PrintUserMessages());
+                } else if (input.equals("6")) { //approve trade reqs
+                    option.setChosenOption(new ApproveTrade());
+                } else if (input.equals("7")) { //add item to inventory
+                    option.setChosenOption(new AddItemToSystem());
+                } else if (input.equals("8")) { //view recent trades
+                    option.setChosenOption(new PrintMostRecentTrades());
+                } else if (input.equals("9")) { //view most freq trading partners
+                    option.setChosenOption(new PrintTop3TradingPartners());
+                } else if (input.equals("10")){  //view item status
+                    option.setChosenOption(new PrintItemHistory());
+                } else if (input.equals("11")) { //approve meeting
+                    option.setChosenOption(new PendingTransactionProcess());
+                } else if (input.equals("12")) { //confirm meeting for approved trades
+                    option.setChosenOption(new ConfirmMeetings());
+                } else if (input.equals("13")) { //view outbound req status
+                    option.setChosenOption(new PrintOutboundRequests());
+                } else if (input.equals("14")) { //change account settings
+                    option.setChosenOption(new AccountSettingsManager());
+                } else if (input.equals("15")) { //logout
+                    return null;
+                } else { //returns to main menu
+                    System.out.println("That is not a valid option. Please try again.");
+                    return user;
+                }
+                Object result = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
+                        allTransactions, allAdmins, undoLogger);
+                while (result == null) {
+                    result = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
+                            allTransactions, allAdmins, undoLogger);
                 }
                 return user;
-            } else if (a.equals("2")) { //view inventory
-                Object temp = system1.inventory(user, allUsers);
-                while (temp == null) {
-                    temp = system1.inventory(user, allUsers);
-                }
-                return user;
-            } else if (a.equals("3")) { //browse items
-                Object temp = system1.Browse(user, allItems, allUsers);
-                while (temp == null) {
-                    temp = system1.Browse(user, allItems, allUsers);
-                }
-                return user;
-            } else if (a.equals("4")) { //choose the id?
-                Object temp = system1.Trade(user, allItems, allTradeRequests, allUsers, allAdmins);
-                while (temp == null) {
-                    temp = system1.Trade(user, allItems, allTradeRequests, allUsers, allAdmins);
-                }
-                //else input was "back", returns to main menu
-                return user;
-            } else if (a.equals("5")) {
-                //view messages
-                return system1.PendingTrades(user, allUsers);
-            } else if (a.equals("6")) {
-                Object temp = system1.ApproveTrade(user, allUsers, allMeetings, allTransactions);
-                while (temp == null) {
-                    temp = system1.ApproveTrade(user, allUsers, allMeetings, allTransactions);
-                }
-                //else input was "back", returns to main menu
-                return user;
-            } else if (a.equals("7")) { //request to add new item
-                Object temp = system1.AddItem(user, allUsers);
-                while (temp == null) {
-                    temp = system1.AddItem(user, allUsers);
-                }
-                return user;
-            } else if (a.equals("8")) { //View most recent trades
-                MostRecentTrades(user, allUsers);
-            } else if (a.equals("9")) { //View most frequent trading partners
-                return Top3TradingPartners(user);
-            } else if (a.equals("10")) {
-                return system1.ViewItemHistory(user, allUsers);
-            } else if (a.equals("11")) {
-                Object temp = system1.addToWishlist(user, allUsers);
-                while (temp == null) {
-                    temp = system1.addToWishlist(user, allUsers);
-                }
-                return user;
-            } else if (a.equals("12")) {
-                return system1.PendingTransactionProcess(user, allItems, allUsers, allMeetings, allTransactions, allAdmins);
-            } else if (a.equals("13")) { //confirm that the meeting went through
-                //first print all the meeting that are pending for this user
-                Object temp = system1.confirmMeetings(user, allItems, system1, allTradeRequests,
-                        allUsers, allMeetings, allTransactions,
-                        admininputgetter, allAdmins);
-                while (temp == null) {
-                    temp = system1.confirmMeetings(user, allItems, system1, allTradeRequests,
-                            allUsers, allMeetings, allTransactions,
-                            admininputgetter, allAdmins);
-                }
-                return user;
-            } else if (a.equals("14")) {
-                return PrintOutboundRequest(user);
-            } else if (a.equals("15")) {
-                //change account settings
-                Object temp = system1.accountSettings(user, allUsers);
-                while (temp == null) {
-                    temp = system1.accountSettings(user, allUsers);
-                }
-                return user;
-            } else if (a.equals("16")) {
-                //logout
-                return null;
             }
-        } else {//input is "exit"
-            return a;
+            return input;
+        } catch (IOException e) {
+            System.out.println("Something went wrong.");
         }
         return user;
     }
@@ -228,21 +186,19 @@ public class InputGetter {
      *
      * @param user             the user that is currently logged in to the system
      * @param allItems         ItemManager that stores the system's inventory
-     * @param system1          InputGetter which contains all the methods that are in charge of each option in the main menu
      * @param allTradeRequests TradeRequestManager that stores all the Trade Requests in the system
      * @param allUsers         UserManager that stores all the Users in the system
      * @param allMeetings      MeetingManager that deals with the creation of meetings
      * @param allTransactions  TransactionManager that stores all the Transactions in the system
-     * @param admininputgetter AdminInputGetter which contains all the methods for tasks that Admins can do
      * @return depending on what the User inputs it will return different objects:
      * returns User to TradeSystem() to either remain logged into the system and prompt mainMenu
      * returns null to log out of the system and allow another User to log in
      * returns String "exit" to tell TradeSystem() to end the program and save all the data before
      * exiting the System
      */
-    public Object demoMainMenu(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests,
+    public Object demoMainMenu(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                                UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                               AdminInputGetter admininputgetter, AdminManager allAdmins) {
+                               AdminManager allAdmins) {
         System.out.print("-------------------------------------------------------\n\uD83E\uDD16 Hello Demo User \uD83E\uDD16\n");
         System.out.print("Please select number from the following:\n" +
                 "\uD83C\uDD94 Indicates that signup/login as user is required!\n1.View Wishlist\n2.View Inventory \uD83C\uDD94 \n" +
@@ -259,13 +215,13 @@ public class InputGetter {
             if (a.equals("1")) { //view wishlist
                 System.out.print("-------------------------------------------------------" +
                         "\n\uD83D\uDC81 Your wishlist are items that you want to have in the future!\n");
-                UserChosenOption option = new UserChosenOption();
+                ChosenOption option = new ChosenOption();
                 option.setChosenOption(new WishlistManager());
-                Object temp = option.executeOption(user, allItems, system1, allTradeRequests, allUsers, allMeetings, allTransactions,
-                        admininputgetter, allAdmins);
+                Object temp = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
+                        allTransactions, allAdmins, InputGetter.undoLogger);
                 while (temp == null) {
-                    temp = option.executeOption(user, allItems, system1, allTradeRequests, allUsers, allMeetings, allTransactions,
-                            admininputgetter, allAdmins);
+                    temp = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
+                            allTransactions, allAdmins, InputGetter.undoLogger);
                 }
                 return user;
             } else if (a.equals("2")) { //view inventory
@@ -277,9 +233,13 @@ public class InputGetter {
                 System.out.print("-------------------------------------------------------" +
                         "\n\uD83D\uDC81 As a user, you can see all items available in the system to trade. " +
                         "Each item is approved by an admin.\n");
-                Object temp = system1.Browse(user, allItems, allUsers);
+                ChosenOption option = new ChosenOption();
+                option.setChosenOption(new Browse());
+                Object temp = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
+                        allTransactions, allAdmins, InputGetter.undoLogger);
                 while (temp == null) {
-                    temp = system1.Browse(user, allItems, allUsers);
+                    temp = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
+                            allTransactions, allAdmins, InputGetter.undoLogger);
                 }
                 return user;
             } else if (a.equals("4")) { //choose the id?
@@ -364,21 +324,19 @@ public class InputGetter {
      *
      * @param user             the user that is currently logged in to the system
      * @param allItems         ItemManager that stores the system's inventory
-     * @param system1          InputGetter which contains all the methods that are in charge of each option in the main menu
      * @param allTradeRequests TradeRequestManager that stores all the Trade Requests in the system
      * @param allUsers         UserManager that stores all the Users in the system
      * @param allMeetings      MeetingManager that deals with the creation of meetings
      * @param allTransactions  TransactionManager that stores all the Transactions in the system
-     * @param admininputgetter AdminInputGetter which contains all the methods for tasks that Admins can do
      * @return depending on what the User inputs it will return different objects:
      * returns User to TradeSystem() to either remain logged into the system and prompt mainMenu
      * returns null to log out of the system and allow another User to log in
      * returns String "exit" to tell TradeSystem() to end the program and save all the data before
      * exiting the System
      */
-    public Object frozenMainMenu(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests,
+    public Object frozenMainMenu(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                                  UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                                 AdminInputGetter admininputgetter, AdminManager allAdmins) {
+                                 AdminManager allAdmins) {
         Scanner sc = new Scanner(System.in);
 
         System.out.print("----------------------------------------------------------------------------------------------" +
@@ -391,74 +349,53 @@ public class InputGetter {
                 " You are not able to do any trades until you are unfrozen by admin.\n" +
                 "\uD83C\uDFC1 Please ask Admin to unfreeze your account!\n\n");
 
-        System.out.print("Please select number from the following:\n1.View Wishlist\n2.View Inventory\n" +
+        System.out.print("Please select number from the following:\n1.View and edit Wishlist\n2.View Inventory\n" +
                 "3.Browse Items\n" +
                 "4.Add Item to inventory\n5.View most recent trades\n6.View most frequent trading partners\n" +
-                "7.View status of my items\n8.Add Item to wishlist" +
-                "\n9.Request unfreeze!\n10.Change Account Settings\n11.Logout" + "\nEnter 'exit' to exit the system at any time.\n");
+                "7.View status of my items" +
+                "\n8.Request unfreeze!\n9.Change Account Settings\n10.Logout" + "\nEnter 'exit' to exit the system at any time.\n");
 
-        String a = sc.nextLine();
-        if (a.equals("exit")) {
-            return a;
-        } else {
-            if (a.equals("1")) {//view wishlist
-                UserChosenOption option = new UserChosenOption();
-                option.setChosenOption(new WishlistManager());
-                Object temp = option.executeOption(user, allItems, system1, allTradeRequests, allUsers, allMeetings, allTransactions,
-                        admininputgetter, allAdmins);
-                while (temp == null) {
-                    temp = option.executeOption(user, allItems, system1, allTradeRequests, allUsers, allMeetings, allTransactions,
-                            admininputgetter, allAdmins);
-                }
-                return user;
-            } else if (a.equals("2")) { //view inventory
-                Object temp = system1.inventory(user, allUsers);
-                while (temp == null) {
-                    temp = system1.inventory(user, allUsers);
-                }
-                return user;
-            } else if (a.equals("3")) { //browse items
-                Object temp = system1.Browse(user, allItems, allUsers);
-                while (temp == null) {
-                    temp = system1.Browse(user, allItems, allUsers);
-                }
-                return user;
-            } else if (a.equals("4")) {
-                //request to add new item
-                Object temp = system1.AddItem(user, allUsers);
-                while (temp == null) {
-                    temp = system1.AddItem(user, allUsers);
-                }
-                return user;
-            } else if (a.equals("5")) { //View most recent trades
-                MostRecentTrades(user, allUsers);
-            } else if (a.equals("6")) { //View most frequent trading partners
-                return Top3TradingPartners(user);
-                //else input was "back", returns to main menu
-            } else if (a.equals("7")) {
-                return system1.ViewItemHistory(user, allUsers);
-            } else if (a.equals("8")) {
-                Object temp = system1.addToWishlist(user, allUsers);
-                while (temp == null) {
-                    temp = system1.addToWishlist(user, allUsers);
-                }
-                return user;
-            } else if (a.equals("9")) {
-                if (allAdmins.getFrozenRequests().contains(user)) {
-                    System.out.println("You have already requested to be unfrozen! Please be patient.");
+        ChosenOption option = new ChosenOption();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        try {
+            String input = br.readLine();
+            if (!input.equals("exit")) {
+                if (input.equals("1")) { //view and edit wishlist
+                    option.setChosenOption(new WishlistManager());
+                } else if (input.equals("2")) { //view inventory
+                    option.setChosenOption(new InventoryManager());
+                } else if (input.equals("3")) { //browse
+                    option.setChosenOption(new Browse());
+                } else if (input.equals("4")) { //add item to inventory
+                    option.setChosenOption(new AddItemToSystem());
+                } else if (input.equals("5")) { //view recent trades
+                    option.setChosenOption(new PrintMostRecentTrades());
+                } else if (input.equals("6")) { //view most freq trading partners
+                    option.setChosenOption(new PrintTop3TradingPartners());
+                } else if (input.equals("7")){  //view item status
+                    option.setChosenOption(new PrintItemHistory());
+                } else if (input.equals("8")) {
+                    option.setChosenOption(new NotifyAdminOfUnfreezeRequest());
+                } else if (input.equals("9")) { //change account settings
+                    option.setChosenOption(new AccountSettingsManager());
+                } else if (input.equals("10")) { //logout
+                    return null;
+                } else { //returns to main menu
+                    System.out.println("That is not a valid option. Please try again.");
                     return user;
                 }
-                NotifyAdmin(user, allAdmins);
-                return user;
-            } else if (a.equals("10")) {
-                Object temp = system1.accountSettings(user, allUsers);
-                while (temp == null) {
-                    temp = system1.accountSettings(user, allUsers);
+                Object result = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
+                        allTransactions, allAdmins, undoLogger);
+                while (result == null) {
+                    result = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
+                            allTransactions, allAdmins, undoLogger);
                 }
                 return user;
-            } else if (a.equals("11")) { //logout
-                return null;
             }
+            return input;
+        } catch (IOException e) {
+            System.out.println("Something went wrong.");
         }
         return user;
     }

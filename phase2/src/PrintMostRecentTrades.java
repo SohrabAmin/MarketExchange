@@ -11,9 +11,9 @@ public class PrintMostRecentTrades implements userMainMenuOptions{
      * @param allUsers UserManager which stores all Users in the system
      * @return returns a User so that user gets returned to the main menu
      */
-    public User execute(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests,
+    public User execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                         UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                        AdminInputGetter admininputgetter, AdminManager allAdmins, Logger undoLogger) {
+                        AdminManager allAdmins, Logger undoLogger) {
         List<Item> MostRecent = new ArrayList<>();
         MostRecent = allUsers.getRecentlyTradedItems(user);
         System.out.print("Here are your most recently traded-away items:\n");

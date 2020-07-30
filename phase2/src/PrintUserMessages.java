@@ -9,9 +9,9 @@ public class PrintUserMessages implements userMainMenuOptions {
      * @param allUsers UserManager which stores User user
      * @return returns the User user so that they can go back to the main menu after viewing their messages.
      */
-    public User execute(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests,
+    public User execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                         UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                        AdminInputGetter admininputgetter, AdminManager allAdmins, Logger undoLogger) {
+                        AdminManager allAdmins, Logger undoLogger) {
         //no error checking needed!
         System.out.print("\nHere are your pending Trades: \n");
         User Person = allUsers.getUser(user);

@@ -14,23 +14,33 @@ public class AddItemToSystem implements userMainMenuOptions {
      * returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
      * main menu option
      */
-    public Object execute(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests,
+    public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                          AdminInputGetter admininputgetter, AdminManager allAdmins, Logger undoLogger) {
-        System.out.print("Please enter the name of item you would like to add or 'back' to go back to the main menu.\n");
+                          AdminManager allAdmins, Logger undoLogger) {
+        System.out.println("Please enter the name of item you would like to add or 'back' to go back to the main menu.");
         Scanner sc = new Scanner(System.in);
         String itemName = sc.nextLine();
         if (itemName.equals("back")) {
             return "back";
         }
-        System.out.print("Please enter the description of item you would like to add or 'back' to go back to the main menu.\n");
+        System.out.println("Please enter the description of item you would like to add or 'back' to go back to the main menu.");
         String description = sc.nextLine();
         if (description.equals("back")) {
             return "back";
         }
 
-        System.out.print("Please enter '1' if you want to trade this item or enter '2' if you wish to sell this item.\n"
-                + "Enter 'back' to go back to the main menu.");
+        boolean digital = false;
+        System.out.println("If this item is digital, please enter '1'. Otherwise enter '2'. Enter 'back' to return to the main menu.");
+        String input = sc.nextLine();
+        if (input.equals("back")){
+            return "back";
+        } else if (input.equals(1)) {
+            digital = true;
+        }
+
+        System.out.println("Please enter '1' if you wish to trade this item, '2' if you wish to sell this item or\n" +
+                "'3' if you wish to rent this item.");
+        System.out.println("Enter 'back' to go back to the main menu.");
         String option = sc.nextLine();
         String tradeOrSell = "Undefined";
         if (option.equals("back")) {
@@ -41,15 +51,22 @@ public class AddItemToSystem implements userMainMenuOptions {
                 tradeOrSell = "trade";
             } else if (option.equals("2")) {
                 tradeOrSell = "sell";
-            } else {
+            } else if (option.equals("3")) {
+                tradeOrSell = "rent";
+            }else {
                 System.out.println("That is not a valid option! Please try again.");
             }
         }
         Double price = null;
-        if (tradeOrSell.equals("sell")) {
+        if (tradeOrSell.equals("sell") || tradeOrSell.equals("rent")) {
             while (price == null) {
-                System.out.println("Please enter the price you would like to sell this item for or 'back' " +
-                        "to return to the main menu.");
+                if (tradeOrSell.equals("sell")) {
+                    System.out.println("Please enter the price you would like to sell this item for or 'back' " +
+                            "to return to the main menu.");
+                } else { //tradeOrSell.equals("rent")
+                    System.out.println("Please enter the price you would like to rent this item for or 'back' " +
+                            "to return to the main menu.");
+                }
                 String priceInput = sc.nextLine();
                 if (priceInput.equals("back")) {
                     return "back";
@@ -105,13 +122,22 @@ public class AddItemToSystem implements userMainMenuOptions {
         }
         Item newItem;
         if (tradeOrSell.equals("sell")) {
-            newItem = new Item(itemName, user, description, category, price);
+            newItem = new Item(itemName, user, description, category, digital, false, true,
+                    false, price, null);
             System.out.println("The item you wish to add is the following: ");
             System.out.println("Item name: " + newItem.getName() + "\n" + "Item description: " +
-                    newItem.getDescription() + "\n" + "Price: " + newItem.getPrice() + "\n"
+                    newItem.getDescription() + "\n" + "Price: " + newItem.getSellPrice() + "\n"
                     + "Item Category:" + newItem.getCategory());
-        } else {
-            newItem = new Item(itemName, user, description, category);
+        } else if (tradeOrSell.equals("rent")) {
+            newItem = new Item(itemName, user, description, category, digital, false, true,
+                    false, null, price);
+            System.out.println("The item you wish to add is the following: ");
+            System.out.println("Item name: " + newItem.getName() + "\n" + "Item description: " +
+                    newItem.getDescription() + "\n" + "Price: " + newItem.getRentPrice() + "\n"
+                    + "Item Category:" + newItem.getCategory());
+        }else {
+            newItem = new Item(itemName, user, description, category, digital, true, false,
+                    false, null, null);
             System.out.println("The item you wish to add is the following: ");
             System.out.println("Item name: " + newItem.getName() + "\n" + "Item description: " +
                     newItem.getDescription() + "\n Item Category:" + newItem.getCategory());

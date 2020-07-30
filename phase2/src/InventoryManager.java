@@ -10,9 +10,9 @@ public class InventoryManager implements userMainMenuOptions {
      * @param allUsers the UserManager which stores the User user
      * @return returns a User which will prompt the main menu
      */
-    public Object execute(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests,
+    public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                          AdminInputGetter admininputgetter, AdminManager allAdmins, Logger undoLogger) {
+                          AdminManager allAdmins, Logger undoLogger) {
         User me = allUsers.getUser(user);
         List<Item> in = me.getInventory();
         //if the user's inventory is empty

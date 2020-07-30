@@ -448,7 +448,6 @@ public class UserManager implements Serializable {
         Integer old = user.getFrequentCategory().get(category);
         Integer score = old +1;
         user.getFrequentCategory().replace(category, score);
-        return;
     }
 
     public List<User> getAllFrozenUsers() {

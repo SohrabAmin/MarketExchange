@@ -19,9 +19,9 @@ public class PendingTransactionProcess implements userMainMenuOptions {
      * returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
      * main menu option
      */
-    public Object execute(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests,
+    public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                          AdminInputGetter admininputgetter, AdminManager allAdmins, Logger undoLogger) {
+                          AdminManager allAdmins, Logger undoLogger) {
 
         List<Transaction> pendingTransactions = user.getPendingTrades();
 

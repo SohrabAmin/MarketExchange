@@ -9,9 +9,13 @@ public class NotifyAdminOfUnfreezeRequest implements userMainMenuOptions {
      * @param allAdmins contains the method for adding frozen requests
      * @return returns User so that they can be redirected to the main menu
      */
-    public Object execute(User user, ItemManager allItems, InputGetter system1, TradeRequestManager allTradeRequests,
+    public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                          AdminInputGetter admininputgetter, AdminManager allAdmins, Logger undoLogger) {
+                          AdminManager allAdmins, Logger undoLogger) {
+        if (allAdmins.getFrozenRequests().contains(user)) {
+            System.out.println("You have already requested to be unfrozen! Please be patient.");
+            return user;
+        }
         allAdmins.addfrozenRequest(user);
         System.out.print("Your request is successfully submitted!\n");
         return user;
