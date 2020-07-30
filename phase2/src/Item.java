@@ -10,12 +10,12 @@ public class Item implements Serializable {
     private boolean tradable;
     private boolean sellable;
     private boolean rentable;
-    private double sellPrice;
-    private double rentPrice;
+    private Double sellPrice;
+    private Double rentPrice;
 
 
     public Item(String name, User owner, String description, String category, boolean virtual, boolean tradable, boolean sellable, boolean rentable,
-                double sellPrice, double rentPrice){
+                Double sellPrice, Double rentPrice){
         this.name = name;
         this.owner = owner;
         this.description = description;
