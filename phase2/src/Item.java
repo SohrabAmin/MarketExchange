@@ -86,7 +86,7 @@ public class Item implements Serializable {
         this.sellPrice = price;
     }
 
-    public void setRentPrice(double price){
+    public void setRentPrice(double price){ this.rentPrice = price;
     }
 
     public boolean getSellable(){return this.sellable;}
