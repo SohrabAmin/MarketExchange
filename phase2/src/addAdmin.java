@@ -20,7 +20,7 @@ public class addAdmin implements adminMainMenuOptions{
      * returns String "exit" to prompt TradeSystem to save all the information and exit the System
      */
     public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems) {
-        if (!admin.getIsInitialAdmin()) {
+        if (!admin.getIsSuperAdmin()) {
             System.out.println("Sorry but you do not have the authorization to add new admins!");
             return "back";
         }

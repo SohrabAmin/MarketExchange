@@ -16,7 +16,7 @@ public class NotifyAdminOfUnfreezeRequest implements userMainMenuOptions {
             System.out.println("You have already requested to be unfrozen! Please be patient.");
             return user;
         }
-        allAdmins.addfrozenRequest(user);
+        allAdmins.addFrozenRequest(user);
         System.out.print("Your request is successfully submitted!\n");
         return user;
     }

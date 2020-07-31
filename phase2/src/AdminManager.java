@@ -23,7 +23,7 @@ public class AdminManager implements Serializable {
      */
     public AdminManager(Admin initialAdmin) {
         allAdmins = new ArrayList<>();
-        initialAdmin.setIsInitialAdmin(true);
+        initialAdmin.setIsSuperAdmin(true);
         allAdmins.add(initialAdmin);
     }
 
@@ -139,7 +139,7 @@ public class AdminManager implements Serializable {
      *
      * @param user the User requesting to be unfrozen
      */
-    public void addfrozenRequest(User user) {
+    public void addFrozenRequest(User user) {
         frozenRequests.add(user);
     }
 
@@ -148,7 +148,7 @@ public class AdminManager implements Serializable {
      *
      * @param user the User that has been removed from the list of frozenRequests
      */
-    public void removeFromfrozenRequest(User user) {
+    public void removeFromFrozenRequest(User user) {
         frozenRequests.remove(user);
     }
 

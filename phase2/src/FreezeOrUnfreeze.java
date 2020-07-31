@@ -83,7 +83,7 @@ public class FreezeOrUnfreeze implements adminMainMenuOptions{
             allUsers.unPseudoFreeze(allAdmins.getFrozenRequests().get((Integer) line - 1));
             System.out.println("\u2705 Successfully unfrozen user: " +
                     allUsers.getUser(allAdmins.getFrozenRequests().get((Integer) line - 1)).getName());
-            allAdmins.removeFromfrozenRequest(allAdmins.getFrozenRequests().get((Integer) line - 1));
+            allAdmins.removeFromFrozenRequest(allAdmins.getFrozenRequests().get((Integer) line - 1));
             return null; //brings them back to the list of unfreeze requests
         }
     }
@@ -139,7 +139,7 @@ public class FreezeOrUnfreeze implements adminMainMenuOptions{
             //if they requested to be unfrozen, they will be removed from the frozen request list
             for (int i = 0; i < allAdmins.getFrozenRequests().size(); i++) {
                 if (allAdmins.getFrozenRequests().get(i).getName().equals(chosenUser.getName())) {
-                    allAdmins.removeFromfrozenRequest(chosenUser);
+                    allAdmins.removeFromFrozenRequest(chosenUser);
                 }
             }
             System.out.println("\n\u2705 Successfully unfrozen user: " +
@@ -204,7 +204,7 @@ public class FreezeOrUnfreeze implements adminMainMenuOptions{
             //users will need to re-request to be unfrozen if they go from pseudo-frozen to actually frozen
             for (int i = 0; i < allAdmins.getFrozenRequests().size(); i++) {
                 if (allAdmins.getFrozenRequests().get(i).getName().equals(chosenUser.getName())) {
-                    allAdmins.removeFromfrozenRequest(chosenUser);
+                    allAdmins.removeFromFrozenRequest(chosenUser);
                 }
             }
             System.out.println("\n\u2705 Successfully frozen user: " +

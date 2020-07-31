@@ -16,20 +16,20 @@ public class Admin extends Account {
     }
 
     /**
-     * getter for if the Admin is the initial admin as boolean
+     * Getter for if the Admin is a super admin as boolean. Only super admins can add Admins to the system
      *
      * @return the result of if this Admin is the initial admin as boolean
      */
-    public boolean getIsInitialAdmin() {
+    public boolean getIsSuperAdmin() {
         return isInitialAdmin;
     }
 
     /**
-     * setter for if the Admin is the initial admin as boolean
+     * Setter for if the Admin is a super admin admin as boolean. Only super admins can add Admins to the system
      *
      * @param isInitialAdmin of this Admin as boolean
      */
-    public void setIsInitialAdmin(boolean isInitialAdmin) {
+    public void setIsSuperAdmin(boolean isInitialAdmin) {
         this.isInitialAdmin = isInitialAdmin;
     }
 }

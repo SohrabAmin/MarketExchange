@@ -44,22 +44,24 @@ public class AdminInputGetter {
             System.out.println("\uD83D\uDCE9 You have " + allPendingItems.size() + " Pending Item Requests!");
         }
         System.out.println("Please select from the following by entering the number beside the option:" +
-                " \n1.Add new admin\n2.Change system threshold \n" +
-                "3.View items that need to be approved\n4.Freeze or unfreeze users\n5.Log out\n" +
+                " \n1. Add new admin\n2. Change system threshold\n3. View items that need to be approved\n" +
+                "4. Freeze or unfreeze users\n5. Promote an admin or demote a super admin\n6. Log out\n" +
                 "Enter 'exit' to exit at any time.");
         ChosenOption option = new ChosenOption();
         try {
             String input = br.readLine();
             if (!input.equals("exit")) {
-                if (input.equals("1")) {
+                if (input.equals("1")) { //add new admin
                     option.setChosenOption(new addAdmin());
-                } else if (input.equals("2")) {
+                } else if (input.equals("2")) { //change system threshold
                     option.setChosenOption(new changeThreshold());
-                } else if (input.equals("3")) {
+                } else if (input.equals("3")) { //view items that need to be approved
                     option.setChosenOption(new approvePendingItem());
                 } else if (input.equals("4")) { //freeze or unfreeze users
                     option.setChosenOption(new FreezeOrUnfreeze());
-                } else if (input.equals("5")) {
+                } else if (input.equals("5")) { //promote an admin or demote a super admin
+                    option.setChosenOption(new PromoteOrDemoteAdmin());
+                } else if (input.equals("6")) { //logout
                     return null;
                 } else { //returns to main menu
                     System.out.println("That is not a valid option. Please try again.");
@@ -77,6 +79,5 @@ public class AdminInputGetter {
         }
         return admin;
     }
-
 
 }
