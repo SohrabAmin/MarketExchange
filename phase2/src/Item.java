@@ -15,7 +15,7 @@ public class Item implements Serializable {
 
 
     public Item(String name, User owner, String description, String category, boolean virtual, boolean tradable, boolean sellable, boolean rentable,
-                Double sellPrice, Double rentPrice){
+                Double sellPrice, Double rentPrice) {
         this.name = name;
         this.owner = owner;
         this.description = description;
@@ -62,39 +62,59 @@ public class Item implements Serializable {
         return description;
     }
 
-    public String getCategory(){
-    return category;
-        }
+    public String getCategory() {
+        return category;
+    }
 
-    public boolean getVirtual(){
+    public boolean getVirtual() {
         return this.virtual;
     }
 
-    public void changeTradable(boolean tradable){
+    public void changeTradable(boolean tradable) {
         this.tradable = tradable;
     }
 
-    public void changeSellable(boolean sellable){
+    public void changeSellable(boolean sellable) {
         this.sellable = sellable;
     }
 
-    public void changeRentable(boolean rentable){
+    public void changeRentable(boolean rentable) {
         this.rentable = rentable;
     }
 
-    public void setSellPrice(double price){
+    public void setSellPrice(double price) {
         this.sellPrice = price;
     }
 
-    public void setRentPrice(double price){ this.rentPrice = price;
+    public void setRentPrice(double price) {
+        this.rentPrice = price;
     }
 
-    public boolean getSellable(){return this.sellable;}
-    public boolean getRentable(){return this.rentable;}
-    public boolean getTradable(){return this.tradable;}
-    public double getSellPrice(){return this.sellPrice;}
-    public double getRentPrice(){return this.rentPrice;}
+    public boolean getSellable() {
+        return this.sellable;
+    }
 
+    public boolean getRentable() {
+        return this.rentable;
+    }
+
+    public boolean getTradable() {
+        return this.tradable;
+    }
+
+    public double getSellPrice() {
+        return this.sellPrice;
+    }
+
+    public double getRentPrice() {
+        return this.rentPrice;
+    }
+
+    /**
+     * Returns a String representation of this Item, which includes name and description
+     *
+     * @return String representation of this Item
+     */
     public String toString() {
         return "item " + this.getName() + " with description \"" + this.getDescription() + "\"";
     }

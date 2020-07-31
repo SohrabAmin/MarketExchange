@@ -4,6 +4,19 @@ import java.util.Scanner;
 
 public class PromoteOrDemoteAdmin implements adminMainMenuOptions {
 
+    /**
+     * Allows a super admin to:
+     * promote an admin to super admin, or
+     * demote a super admin to admin.
+     * <p>
+     * Prevents a non-super admin from accessing this menu.
+     *
+     * @param admin     Admin logged in to the system
+     * @param allAdmins The instance of AdminManager
+     * @param allUsers  The instance of UserManager
+     * @param allItems  The instance of ItemManager
+     * @return null if the current menu is to be reprinted; Admin admin if the admin is to be redirected to the main menu.
+     */
     public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems) {
 
         if (!admin.getIsSuperAdmin()) {
@@ -12,7 +25,8 @@ public class PromoteOrDemoteAdmin implements adminMainMenuOptions {
         }
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Press 1 to promote an admin to super admin. Press 2 to demote a super admin to an admin.");
+        System.out.println("Press 1 to promote an admin to super admin. Press 2 to demote a super admin to an admin. " +
+                "Press 3 to cancel.");
         if (scanner.nextLine().equals("1")) {
             List<String> listOfAdminNames = new ArrayList<>();
             System.out.println("Type the name of the admin to promote to super admin.");
@@ -78,6 +92,8 @@ public class PromoteOrDemoteAdmin implements adminMainMenuOptions {
                         System.out.println("Super admin " + nameOfSuperAdminChosenForDemotion + " was demoted to admin!");
                     }
                 }
+                return admin;
+            } else if (scanner.nextLine().equals("3")) {
                 return admin;
             } else {
                 System.out.println("Invalid input. Please try again.");
