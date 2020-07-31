@@ -8,14 +8,11 @@ public class Browse implements userMainMenuOptions {
     /**
      * Allows User user to browse the System's inventory and add any of the items in the System's inventory to
      * their wishlist.
-     *
-     * @param user     the User that wishes to browse the inventory and add items to their wishlist
+     *  @param user     the User that wishes to browse the inventory and add items to their wishlist
      * @param allItems the ItemManager that stores the system's inventory
      * @param allUsers the UserManager that stores the User user
-     * @return depending on what the User inputs it will return different objects
-     * returns null to tell mainmenu() to call wishlist() again
-     * returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
-     * main menu option
+     * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
+     * String "exit" if the user is to be logged out.
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,

@@ -96,6 +96,6 @@ public class Item implements Serializable {
     public double getRentPrice(){return this.rentPrice;}
 
     public String toString() {
-        return "item " + this.getName() + "with description \"" + this.getDescription() + "\"";
+        return "item " + this.getName() + " with description \"" + this.getDescription() + "\"";
     }
 }

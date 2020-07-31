@@ -6,14 +6,14 @@ public class PrintItemHistory implements userMainMenuOptions {
     /**
      * Allows the User to view their item history and it's status. It will display whether it is
      * "Pending", "Approved", or "Rejected".
-     *
-     * @param user     the User who is requesting to see their item history
+     *  @param user     the User who is requesting to see their item history
      * @param allUsers UserManager that stores all the Users in the system
-     * @return returns a User so that user gets returned to the main menu
+     * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
+     * String "exit" if the user is to be logged out.
      */
-    public User execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
-                        UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                        AdminManager allAdmins, Logger undoLogger) {
+    public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
+                          UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
+                          AdminManager allAdmins, Logger undoLogger) {
         if (allUsers.getUser(user).getItemHistory().size() == 0) {
             System.out.println("\uD83D\uDE25 No items here! Please add an item to your inventory!");
             return user;

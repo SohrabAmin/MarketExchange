@@ -73,7 +73,7 @@ public class InputGetter {
         } else if (user.getIsOnVacation()) {// if they are on vacation
             menu.setCorrectMenu(new VacationUserMainMenu());
         } else {
-            menu.setCorrectMenu(new NormalUserMainmenu());
+            menu.setCorrectMenu(new NormalUserMainMenu());
         }
         return menu.runMenu(user, allItems, allTradeRequests, allUsers, allMeetings, allTransactions, allAdmins, undoLogger);
     }

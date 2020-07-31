@@ -20,10 +20,17 @@ public class WishlistManager implements userMainMenuOptions {
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
                           AdminManager allAdmins, Logger undoLogger) {
 
+        Scanner sc = new Scanner(System.in);
+
         List<Item> wishlist = user.getWishlist();
         //if wishlist is empty, returns "back" which will bring them back to main menu
         if (wishlist.size() == 0) {
             System.out.print("Your wishlist is empty!\n");
+            System.out.println("Enter '1' if you would like to add to your wishlist or 'back' to return to the main menu.");
+            String choice = sc.nextLine();
+            if (choice.equals("1")) {
+                return addToWishlist(user, allUsers, undoLogger);
+            }
             return "back";
         } else { //if wishlist is not empty, prints out all the items in the wishlist and the description of the item
             System.out.print("\uD83C\uDF20Your wishlist: \n");
@@ -37,7 +44,6 @@ public class WishlistManager implements userMainMenuOptions {
         System.out.println("Please enter '1' to remove an item, '2' to add a new item or 'back' to return to the" +
                 " main menu.");
 
-        Scanner sc = new Scanner(System.in);
         String input = sc.nextLine();
         if (input.equals("back")) {
             return "back";

@@ -8,12 +8,13 @@ public class PrintTop3TradingPartners implements userMainMenuOptions {
      * Prints out the User user's top 3 trading partners.
      *
      * @param user the User who is requesting to see their top 3 trading partners
-     * @return returns a User so that user gets returned to the main menu
+     * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
+     * String "exit" if the user is to be logged out.
      */
-    public User execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
-                        UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                        AdminManager allAdmins, Logger undoLogger) {
-        List<User> top3TP = new ArrayList<>();
+    public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
+                          UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
+                          AdminManager allAdmins, Logger undoLogger) {
+        List<User> top3TP;
         top3TP = user.getTopTradingPartners();
         System.out.print("Here are your top 3 most frequent trading partners:\n");
         if (top3TP.size() == 0) {

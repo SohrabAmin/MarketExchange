@@ -34,6 +34,7 @@ public class ChosenOption {
     public Object executeOption(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                                 UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
                                 AdminManager allAdmins, Logger undoLogger) {
+
         return ((userMainMenuOptions) chosenOption).execute(user, allItems, allTradeRequests, allUsers,
                 allMeetings, allTransactions, allAdmins, undoLogger);
     }

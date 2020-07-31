@@ -6,13 +6,10 @@ public class AccountSettingsManager implements userMainMenuOptions {
     /**
      * Deals with changing the account settings of User-- they are able to change their username,
      * password and/or location.
-     *
-     * @param user     the User who wants to change their account settings
+     *  @param user     the User who wants to change their account settings
      * @param allUsers UserManager which stores all the users in the system
-     * @return depending on what the User inputs it will return different objects:
-     * returns null to tell mainmenu() to call accountSettings() again
-     * returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
-     * main menu option
+     * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
+     * String "exit" if the user is to be logged out.
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,

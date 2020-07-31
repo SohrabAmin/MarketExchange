@@ -21,7 +21,7 @@ public interface userMainMenuOptions {
      * returns String "exit" to prompt TradeSystem to save all the information and exit the System
      */
 
-    public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
-                          UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                          AdminManager allAdmins, Logger undoLogger);
+    Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
+                   UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
+                   AdminManager allAdmins, Logger undoLogger);
 }

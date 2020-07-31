@@ -6,13 +6,10 @@ public class AddItemToSystem implements userMainMenuOptions {
      * Deals with requesting to add a new item to the system's inventory. Prompts user for details of the item
      * and sends a request to the Admin for approval. Adds the item to the User's item history so they can
      * view its current status.
-     *
-     * @param user     the User requesting to add a new item to the system
+     *  @param user     the User requesting to add a new item to the system
      * @param allUsers UserManager which stores all Users
-     * @return depending on what the User inputs it will return different objects:
-     * returns null to tell mainmenu() to call AddItem() again
-     * returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
-     * main menu option
+     * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
+     * String "exit" if the user is to be logged out.
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,

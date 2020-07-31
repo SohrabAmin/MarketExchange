@@ -5,10 +5,10 @@ import java.util.logging.Logger;
 public class InventoryManager implements userMainMenuOptions {
     /**
      * Prints out the User user's inventory; also calls UserManager to remove inventory Items upon user's request
-     *
-     * @param user     the User that wants to see their inventory
+     *  @param user     the User that wants to see their inventory
      * @param allUsers the UserManager which stores the User user
-     * @return returns a User which will prompt the main menu
+     * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
+     * String "exit" if the user is to be logged out.
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,

@@ -6,14 +6,13 @@ public class PrintMostRecentTrades implements userMainMenuOptions{
 
     /**
      * Prints out the User user's most recent trades.
-     *
-     * @param user     User that is requesting to see their most recent trades
+     *  @param user     User that is requesting to see their most recent trades
      * @param allUsers UserManager which stores all Users in the system
-     * @return returns a User so that user gets returned to the main menu
+     * @return
      */
-    public User execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
-                        UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                        AdminManager allAdmins, Logger undoLogger) {
+    public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
+                          UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
+                          AdminManager allAdmins, Logger undoLogger) {
         List<Item> MostRecent = new ArrayList<>();
         MostRecent = allUsers.getRecentlyTradedItems(user);
         System.out.print("Here are your most recently traded-away items:\n");

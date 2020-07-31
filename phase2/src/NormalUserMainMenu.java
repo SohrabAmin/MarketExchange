@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.logging.Logger;
 
-public class NormalUserMainmenu implements DifferentUserMainMenu {
+public class NormalUserMainMenu implements DifferentUserMainMenu {
     /**
      * Displays the main menu for a normal, unfrozen user and prompts user for input depending on what
      * they want to do.

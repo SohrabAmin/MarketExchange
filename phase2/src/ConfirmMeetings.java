@@ -9,16 +9,13 @@ public class ConfirmMeetings implements userMainMenuOptions {
     /**
      * Displays the pending transactions that the User user has. It will allow users to approve or edit the transactions
      * they currently have pending.
-     *
-     * @param user            the User that wants to view their pending transactions
+     *  @param user            the User that wants to view their pending transactions
      * @param allItems        ItemManager that stores the system's inventory
      * @param allUsers        UserManager that stores all the Users in the system
      * @param allMeetings     MeetingManager that deals with the creation of meetings
      * @param allTransactions TransactionManager that stores all the information of all system transactions
-     * @return depending on what the User inputs it will return different objects:
-     * returns null to tell mainmenu() to call PendingTransactionProcess() again
-     * returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
-     * main menu option
+     * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
+     * String "exit" if the user is to be logged out.
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,

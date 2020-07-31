@@ -6,15 +6,11 @@ public class TradeInitiator implements userMainMenuOptions {
 
     /**
      * Initiates a one-way or two-way trade between two Users. Prompts user for details of the trade.
-     *
-     * @param user             the User currently logged in and the user that is initiating the trade
+     *  @param user             the User currently logged in and the user that is initiating the trade
      * @param allItems         ItemManager which stores a system inventory containing all the items in the system
      * @param allTradeRequests TradeRequestManager which deals with sending Trade requests to users
      * @param allUsers         UserManager which stores all the Users in the system
-     * @return depending on what the User inputs it will return different objects:
-     * returns null to tell mainmenu() to call Trade() again
-     * returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
-     * main menu option
+     * @return
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
@@ -36,7 +32,8 @@ public class TradeInitiator implements userMainMenuOptions {
         }
 
         System.out.println("Here are the available items!:");
-        DisplayBrowse(user, allItems);
+        Browse browsing = new Browse();
+        browsing.DisplayBrowse(user, allItems);
 
         System.out.print("Please type in the ID of the item you would like to trade or 'back' to return to the main menu.\n");
         Object inum = sc.nextLine();
@@ -60,6 +57,10 @@ public class TradeInitiator implements userMainMenuOptions {
         //the item they have selected
         Item tradeItem = allItems.getSystemInventory().get((Integer) inum - 1);
 
+        Boolean monetized = false;
+        if (tradeItem.getSellable() || tradeItem.getRentable()) {
+            monetized = true;
+        }
         //block owner from making trades with themselves
         if (tradeItem.getOwner().getName().equals(user.getName())) {
             System.out.print("\uD83E\uDDD0 You are the owner so you cannot trade with yourself!\n");
@@ -94,23 +95,17 @@ public class TradeInitiator implements userMainMenuOptions {
         System.out.println("Please type '1' for temporary trade and '2' for permanent trade or 'back' to cancel the " +
                 "current trade and restart.");
         Object type = sc.nextLine();
-        //type is type of the trade temporary or permenant
+        //type is type of the trade temporary or permanent
         if (type.equals("back")) {
             return null;
         }
-        try {
-            type = Integer.parseInt((String) type);
-        } catch (NumberFormatException e) {
-            System.out.print("\uD83E\uDDD0 Invalid response. Please try again.\n");
-            return null;
-        }
-        boolean trade = false;
+        boolean temp = false;
 
-        if ((int) type == 1) { //we determine if it is a 1 way or 2 way trade
-            trade = true;
-        } else if ((int) type == 2) {
-            trade = false;
-        } else {
+        if (type.equals('1')) { //if its temporary or permanent, 1 means its temporary
+            temp = true;
+        } else if (type.equals("2")) {
+            temp = false;
+        } else{
             System.out.print("\uD83E\uDDD0 Invalid response. Please try again.\n");
             return null;
         }
@@ -122,7 +117,7 @@ public class TradeInitiator implements userMainMenuOptions {
             System.out.print("\nPlease enter '1' to confirm this trade or '2' to cancel the current trade and restart.\n");
             String confirmation = sc.nextLine();
             if (confirmation.equals("1")) {
-                TradeRequest trades = new TradeRequest(1, user, tradeItem.getOwner(), myList, message, trade, today);
+                TradeRequest trades = new typeOneRequest(user, tradeItem, message, temp, today, tradeItem.getVirtual(), monetized);
                 allUsers.addToWeeklyRequestLimit(user, trades);
                 allUsers.addToOutboundRequests(user, trades);
                 allTradeRequests.receiveTradeRequest(allUsers, trades);
@@ -215,7 +210,7 @@ public class TradeInitiator implements userMainMenuOptions {
             if (confirmation.equals("1")) {
                 myList.add(salam);
                 myList.add(tradeItem);
-                TradeRequest request = new TradeRequest(2, user, tradeItem.getOwner(), myList, message, trade, today);
+                TradeRequest request = new typeTwoRequest(tradeItem, salam, message, temp, today, tradeItem.getVirtual());;
                 allTradeRequests.receiveTradeRequest(allUsers, request);
                 allUsers.addToOutboundRequests(user, request);
                 allUsers.addToWeeklyRequestLimit(user, request);

@@ -9,14 +9,12 @@ public class ApproveTrade implements userMainMenuOptions {
     /**
      * Displays User user's pending requests and deals with approving and rejecting any pending Trade Requests.
      *
-     * @param user            User that wishes to view and approve or reject their pending Trade requests
+     *  @param user           User that wishes to view and approve or reject their pending Trade requests
      * @param allUsers        UserManager that stores all Users
      * @param allMeetings     MeetingManager that deals with creating meetings
      * @param allTransactions TransactionManager that deals with the System's Transactions
-     * @return depending on what the User inputs it will return different objects:
-     * returns null to tell mainmenu() to call ApproveTrade() again
-     * returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
-     * main menu option
+     * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
+     * String "exit" if the user is to be logged out.
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
@@ -28,15 +26,15 @@ public class ApproveTrade implements userMainMenuOptions {
             return "back";
         }
         System.out.print("Here are your pending trade requests: \n");
-        for (int i = 0; i < Trades.size(); i++) {
-            String ext = "";
-            if (Person.getPendingRequests().get(i).getRequesterItem() != null) {
-                ext = " With your item " + Person.getPendingRequests().get(i).getRequesterItem().getName();
-            }
-
-            System.out.print("\uD83E\uDD1D" + (i + 1) + ". " + Trades.get(i).getRequester().getName() +
-                    " Wants " + Trades.get(i).getReceiverItem().getName() + ext + "\n");
-        }
+//        for (int i = 0; i < Trades.size(); i++) {
+//            String ext = "";
+//            if (Person.getPendingRequests().get(i).getRequesterItem() != null) {
+//                ext = " With your item " + Person.getPendingRequests().get(i).getRequesterItem().getName();
+//            }
+//
+//            System.out.print("\uD83E\uDD1D" + (i + 1) + ". " + Trades.get(i).getRequester().getName() +
+//                    " Wants " + Trades.get(i).getReceiverItem().getName() + ext + "\n");
+//        }
 
         //printed all pending requests
         //select request
@@ -60,40 +58,41 @@ public class ApproveTrade implements userMainMenuOptions {
         System.out.print("You have selected the following pending trade: \n");
         String ext2 = "";
         String temp = "Permanent";
-        if (Person.getPendingRequests().get(pendingRequestIndex).getRequesterItem() != null) {
-            ext2 = " For your item " + Person.getPendingRequests().get(pendingRequestIndex).getRequesterItem().getName();
-        }
-
-        if (Person.getPendingRequests().get(pendingRequestIndex).getTemp()) { //if temporary
-            temp = "Temporary";
-        }
-        System.out.println("\uD83D\uDFE9 Requester: " + Trades.get(pendingRequestIndex).getRequester().getName() + "\n" +
-                "Wants item: " + Trades.get(pendingRequestIndex).getReceiverItem().getName() + ext2 +
-                "\n\uD83D\uDCACMessage:" + Trades.get(pendingRequestIndex).getMessage() +
-                "\n\nThis trade will be " + temp + ".\n");
-
-        TradeRequest request = Person.getPendingRequests().get(pendingRequestIndex);
-
-        System.out.println("\nPlease enter '1' to approve the trade or '2' to reject the trade. Enter 'back' to return to " +
-                "your pending trade requests.");
-
-        Object nextInput = sc.next();
-        if (nextInput.equals("back")) {
-            return null;
-        } else if (nextInput.equals("1")) { //if trade is approved
-            acceptTrade(user, allUsers, allMeetings, request, allTransactions);
-            allUsers.removeFromOutboundRequests(user, request);
-            return null;
-        } else if (nextInput.equals("2")) { //if item is rejected
-            rejectTrade(user, allUsers, request);
-            allUsers.removeFromOutboundRequests(user, request);
-            return null;
-        } else {
-            System.out.print("\uD83E\uDDD0 What was that? Please try again!\n");
-            return null;
-        }
+//        if (Person.getPendingRequests().get(pendingRequestIndex).getRequesterItem() != null) {
+//            ext2 = " For your item " + Person.getPendingRequests().get(pendingRequestIndex).getRequesterItem().getName();
+//        }
+//
+//        if (Person.getPendingRequests().get(pendingRequestIndex).getTemp()) { //if temporary
+//            temp = "Temporary";
+//        }
+//        System.out.println("\uD83D\uDFE9 Requester: " + Trades.get(pendingRequestIndex).getRequester().getName() + "\n" +
+//                "Wants item: " + Trades.get(pendingRequestIndex).getReceiverItem().getName() + ext2 +
+//                "\n\uD83D\uDCACMessage:" + Trades.get(pendingRequestIndex).getMessage() +
+//                "\n\nThis trade will be " + temp + ".\n");
+//
+//        TradeRequest request = Person.getPendingRequests().get(pendingRequestIndex);
+//
+//        System.out.println("\nPlease enter '1' to approve the trade or '2' to reject the trade. Enter 'back' to return to " +
+//                "your pending trade requests.");
+//
+//        Object nextInput = sc.next();
+//        if (nextInput.equals("back")) {
+//            return null;
+//        } else if (nextInput.equals("1")) { //if trade is approved
+//            acceptTrade(user, allUsers, allMeetings, request, allTransactions);
+//            allUsers.removeFromOutboundRequests(user, request);
+//            return null;
+//        } else if (nextInput.equals("2")) { //if item is rejected
+//            rejectTrade(user, allUsers, request);
+//            allUsers.removeFromOutboundRequests(user, request);
+//            return null;
+//        } else {
+//            System.out.print("\uD83E\uDDD0 What was that? Please try again!\n");
+//            return null;
+//        }
         //select if you want to approve or reject
         //method that handles approve or reject
+    return null;
     }
 
     /**
@@ -106,29 +105,29 @@ public class ApproveTrade implements userMainMenuOptions {
      * @param allTransactions TransactionManager which deals with all system Transactions
      */
     public void acceptTrade(User user, UserManager allUsers, MeetingManager allMeetings, TradeRequest request, TransactionManager allTransactions) {
-        System.out.print("\u2705 Approved!\n");
-        //if the trade request is approved, we should now start a trade and make a meeting
-        Meeting meeting = meetingInitiator(allMeetings);
-
-        User temp1 = request.getRequester();
-        User temp2 = request.getReceiver();
-
-        meeting.initialconfirm(temp1.getName(), temp2.getName()); //this line creates a meeting that hasnt been confirmed
-        meeting.initialHistory(temp1.getName(), 0);
-        meeting.initialHistory(temp2.getName(), 1);
-
-        allUsers.removeFromPendingRequests(allUsers.getUser(user), request);
-        if (request.getRequestType() == 1) { //1 way
-            OneWay on = new OneWay(temp1, request.getReceiverItem(), request.getTemp());
-            on.setInitialMeeting(meeting);
-            on.getInitialMeeting().changeLastEdit(user.getName());
-            allTransactions.addToPendingTransactions(on, allUsers);
-        } else if (request.getRequestType() == 2) { //2way
-            TwoWay on = new TwoWay(request.getRequesterItem(), request.getReceiverItem(), request.getTemp());
-            on.setInitialMeeting(meeting);
-            allTransactions.addToPendingTransactions(on, allUsers);
-            on.getInitialMeeting().changeLastEdit(user.getName());
-        }
+//        System.out.print("\u2705 Approved!\n");
+//        //if the trade request is approved, we should now start a trade and make a meeting
+//        Meeting meeting = meetingInitiator(allMeetings);
+//
+//        User temp1 = request.getRequester();
+//        User temp2 = request.getReceiver();
+//
+//        meeting.initialconfirm(temp1.getName(), temp2.getName()); //this line creates a meeting that hasnt been confirmed
+//        meeting.initialHistory(temp1.getName(), 0);
+//        meeting.initialHistory(temp2.getName(), 1);
+//
+//        allUsers.removeFromPendingRequests(allUsers.getUser(user), request);
+//        if (request.getRequestType() == 1) { //1 way
+//            OneWay on = new OneWay(temp1, request.getReceiverItem(), request.getTemp());
+//            on.setInitialMeeting(meeting);
+//            on.getInitialMeeting().changeLastEdit(user.getName());
+//            allTransactions.addToPendingTransactions(on, allUsers);
+//        } else if (request.getRequestType() == 2) { //2way
+//            TwoWay on = new TwoWay(request.getRequesterItem(), request.getReceiverItem(), request.getTemp());
+//            on.setInitialMeeting(meeting);
+//            allTransactions.addToPendingTransactions(on, allUsers);
+//            on.getInitialMeeting().changeLastEdit(user.getName());
+//        }
     }
 
     /**

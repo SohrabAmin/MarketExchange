@@ -8,16 +8,12 @@ public class PendingTransactionProcess implements userMainMenuOptions {
     /**
      * Displays the pending transactions that the User user has. It will allow users to approve or edit the transactions
      * they currently have pending.
-     *
-     * @param user            the User that wants to view their pending transactions
+     *  @param user            the User that wants to view their pending transactions
      * @param allItems        ItemManager that stores the system's inventory
      * @param allUsers        UserManager that stores all the Users in the system
      * @param allMeetings     MeetingManager that deals with the creation of meetings
      * @param allTransactions TransactionManager that stores all the information of all system transactions
-     * @return depending on what the User inputs it will return different objects:
-     * returns null to tell mainmenu() to call PendingTransactionProcess() again
-     * returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
-     * main menu option
+     * @return
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
@@ -36,19 +32,19 @@ public class PendingTransactionProcess implements userMainMenuOptions {
             String hey = "";
             if (pendingTransactions.get(i) instanceof OneWay) {
                 OneWay t = (OneWay) pendingTransactions.get(i);
-                User b = t.getUser2();
+                User b = t.getSecondTrader();
                 if (user.getName().equals(b.getName())) {
-                    b = t.getUser1();
+                    b = t.getFirstTrader();
                 }
-                System.out.print((i + 1) + " . Item " + t.getLenderItem().getName() + " with " + b.getName() + "\n");
-                System.out.print("[One Way] " + Integer.toString(i + 1) + " . Item " + t.getLenderItem().getName() +
+                System.out.print((i + 1) + " . Item " + t.getItem().getName() + " with " + b.getName() + "\n");
+                System.out.print("[One Way] " + Integer.toString(i + 1) + " . Item " + t.getItem().getName() +
                         " with " + b.getName() + "\n");
             }
             if (pendingTransactions.get(i) instanceof TwoWay) {
                 TwoWay t = (TwoWay) pendingTransactions.get(i);
-                User b = t.getUser1(); //user b is the other party of this trade
+                User b = t.getFirstTrader(); //user b is the other party of this trade
                 if (user.getName().equals(b.getName())) {
-                    b = t.getUser2();
+                    b = t.getSecondTrader();
                 }
                 System.out.print("[Two Way] " + Integer.toString(i + 1) + " . Item " + t.getFirstItem().getName() +
                         " with " + b.getName() + "\n");
@@ -68,9 +64,9 @@ public class PendingTransactionProcess implements userMainMenuOptions {
         if (selectedT instanceof OneWay) {
 
             OneWay tt = (OneWay) selectedT;
-            User b = tt.getUser2();
+            User b = tt.getSecondTrader();
             if (user.getName().equals(b.getName())) {
-                b = tt.getUser1();
+                b = tt.getFirstTrader();
             }
             if (tt.getInitialMeeting().geteditHistory(user.getName()) > tt.getInitialMeeting().geteditHistory(b.getName()) || tt.getInitialMeeting().viewLastEdit().equals(user.getName())) {
                 //if they have already made an edit and we are waiting on the other person to approve/suggest a new meeting
@@ -78,7 +74,7 @@ public class PendingTransactionProcess implements userMainMenuOptions {
             } else {
                 //the person can now approve or propose a new time
                 System.out.print("You have selected: ");
-                System.out.print(tt.getLenderItem().getName() + " with " + b.getName() + "\n");
+                System.out.print(tt.getItem().getName() + " with " + b.getName() + "\n");
                 System.out.print("Here is the proposed meeting: " + tt.getInitialMeeting() + "\n");
                 System.out.print("Press 1 to approve. Press 2 to propose a new meeting. Press 3 to cancel\n");
                 String input = sc1.nextLine();
@@ -133,9 +129,9 @@ public class PendingTransactionProcess implements userMainMenuOptions {
         }
         if (selectedT instanceof TwoWay) {
             TwoWay tt2 = (TwoWay) selectedT;
-            User b2 = tt2.getUser1(); //user b is the other party of this trade
+            User b2 = tt2.getFirstTrader(); //user b is the other party of this trade
             if (user.getName().equals(b2.getName())) {
-                b2 = tt2.getUser2();
+                b2 = tt2.getSecondTrader();
             }
             if (tt2.getInitialMeeting().geteditHistory(user.getName()) > tt2.getInitialMeeting().geteditHistory(b2.getName()) || tt2.getInitialMeeting().viewLastEdit().equals(user.getName())) {
                 //if they have already made an edit and we are waiting on the other person to approve/suggest a new meeting
