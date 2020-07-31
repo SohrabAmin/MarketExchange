@@ -21,10 +21,10 @@ public class typeOneRequest extends TradeRequest {
      * @param message A String representation of any message user1 may want to send user2.
      * @param temp A boolean representing if the TradeRequest will be temp or not.
      * @param date A Calender representing the date/time the TradeRequest was sent.
-     * @param noMeeting A boolean that determines the TradeRequest will have no meeting (true: This Transaction will not have a Meeting, false: This Transaction will have a Meeting.)
+     * @param virtual A boolean that determines the TradeRequest will have no meeting (true: This Transaction will not have a Meeting, false: This Transaction will have a Meeting.)
      */
-    public typeOneRequest(User user1, Item item, String message, boolean temp, Calendar date, boolean noMeeting, boolean monetized) {
-        super(message, temp, date, noMeeting);
+    public typeOneRequest(User user1, Item item, String message, boolean temp, Calendar date, boolean virtual, boolean monetized) {
+        super(message, temp, date, virtual);
         this.user1 = user1;
         this.user2 = item.getOwner();
         this.item = item;
@@ -45,6 +45,10 @@ public class typeOneRequest extends TradeRequest {
         return this.item;
     }
 
+    public boolean getMonetized(){
+        return this.monetized;
+    }
+
     /**
      * Returns a String representation of a TypeOneRequest, with nicely formatted attributes
      *
@@ -57,8 +61,7 @@ public class typeOneRequest extends TradeRequest {
                 "; \nStatus: " + this.getStatus() +
                 "; \nDate: " + this.getDate() +
                 "; \nIs for a temporary trade?: " + this.getTemp() +
-                "; \nIs meeting in-person?: " + !this.getNoMeeting() +
+                "; \nIs meeting in-person?: " + !this.getVirtual() +
                 "; \nMessage: " + this.getMessage() + "\n";
     }
-
 }

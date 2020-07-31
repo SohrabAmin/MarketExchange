@@ -36,9 +36,9 @@ public class PendingTransactionProcess implements userMainMenuOptions {
             String hey = "";
             if (pendingTransactions.get(i) instanceof OneWay) {
                 OneWay t = (OneWay) pendingTransactions.get(i);
-                User b = t.getLender();
+                User b = t.getUser2();
                 if (user.getName().equals(b.getName())) {
-                    b = t.getBorrower();
+                    b = t.getUser1();
                 }
                 System.out.print((i + 1) + " . Item " + t.getLenderItem().getName() + " with " + b.getName() + "\n");
                 System.out.print("[One Way] " + Integer.toString(i + 1) + " . Item " + t.getLenderItem().getName() +
@@ -46,9 +46,9 @@ public class PendingTransactionProcess implements userMainMenuOptions {
             }
             if (pendingTransactions.get(i) instanceof TwoWay) {
                 TwoWay t = (TwoWay) pendingTransactions.get(i);
-                User b = t.getFirstTrader(); //user b is the other party of this trade
+                User b = t.getUser1(); //user b is the other party of this trade
                 if (user.getName().equals(b.getName())) {
-                    b = t.getSecondTrader();
+                    b = t.getUser2();
                 }
                 System.out.print("[Two Way] " + Integer.toString(i + 1) + " . Item " + t.getFirstItem().getName() +
                         " with " + b.getName() + "\n");
@@ -68,9 +68,9 @@ public class PendingTransactionProcess implements userMainMenuOptions {
         if (selectedT instanceof OneWay) {
 
             OneWay tt = (OneWay) selectedT;
-            User b = tt.getLender();
+            User b = tt.getUser2();
             if (user.getName().equals(b.getName())) {
-                b = tt.getBorrower();
+                b = tt.getUser1();
             }
             if (tt.getInitialMeeting().geteditHistory(user.getName()) > tt.getInitialMeeting().geteditHistory(b.getName()) || tt.getInitialMeeting().viewLastEdit().equals(user.getName())) {
                 //if they have already made an edit and we are waiting on the other person to approve/suggest a new meeting
@@ -133,9 +133,9 @@ public class PendingTransactionProcess implements userMainMenuOptions {
         }
         if (selectedT instanceof TwoWay) {
             TwoWay tt2 = (TwoWay) selectedT;
-            User b2 = tt2.getFirstTrader(); //user b is the other party of this trade
+            User b2 = tt2.getUser1(); //user b is the other party of this trade
             if (user.getName().equals(b2.getName())) {
-                b2 = tt2.getSecondTrader();
+                b2 = tt2.getUser2();
             }
             if (tt2.getInitialMeeting().geteditHistory(user.getName()) > tt2.getInitialMeeting().geteditHistory(b2.getName()) || tt2.getInitialMeeting().viewLastEdit().equals(user.getName())) {
                 //if they have already made an edit and we are waiting on the other person to approve/suggest a new meeting

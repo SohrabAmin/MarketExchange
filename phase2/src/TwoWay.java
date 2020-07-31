@@ -7,8 +7,8 @@ import java.util.List;
  */
 
 public class TwoWay extends Transaction implements Serializable {
-    private User firstTrader;
-    private User secondTrader;
+    private User user1;
+    private User user2;
     private List<Item> items;
 
     /**
@@ -21,8 +21,8 @@ public class TwoWay extends Transaction implements Serializable {
     public TwoWay(Item item1, Item item2, boolean temp, boolean virtual) {
 
         super(temp, virtual);
-        this.firstTrader = item1.getOwner();
-        this.secondTrader = item2.getOwner();
+        this.user1 = item1.getOwner();
+        this.user2 = item2.getOwner();
         this.items = new ArrayList<>();
         this.items.add(item1);
         this.items.add(item2);
@@ -34,7 +34,7 @@ public class TwoWay extends Transaction implements Serializable {
      * @return The firstTrader; the User who initiates the TwoWay.
      */
     public User getFirstTrader() {
-        return this.firstTrader;
+        return this.user1;
     }
 
     /**
@@ -43,7 +43,7 @@ public class TwoWay extends Transaction implements Serializable {
      * @return The secondTrader; the User who accepts the TwoWay.
      */
     public User getSecondTrader() {
-        return this.secondTrader;
+        return this.user2;
     }
 
     /**

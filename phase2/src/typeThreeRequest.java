@@ -25,10 +25,10 @@ public class typeThreeRequest extends TradeRequest {
      * @param message A String representation of any message user1 may want to send user2.
      * @param temp A boolean representing if the TradeRequest will be temp or not.
      * @param date A Calender representing the date/time the TradeRequest was sent.
-     * @param noMeeting A boolean that determines the TradeRequest will have no meeting (true: This Transaction will not have a Meeting, false: This Transaction will have a Meeting.)
+     * @param virtual A boolean that determines the TradeRequest will have no meeting (true: This Transaction will not have a Meeting, false: This Transaction will have a Meeting.)
      */
-    public typeThreeRequest(Item item1, Item item2, Item item3,  String message, boolean temp, Calendar date, boolean noMeeting){
-        super(message, temp, date, noMeeting);
+    public typeThreeRequest(Item item1, Item item2, Item item3,  String message, boolean temp, Calendar date, boolean virtual){
+        super(message, temp, date, virtual);
         this.user1 = item1.getOwner();
         this.user2 = item2.getOwner();
         this.user3 = item3.getOwner();

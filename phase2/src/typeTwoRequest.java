@@ -22,10 +22,10 @@ public class typeTwoRequest extends TradeRequest {
      * @param message A String representation of any message user1 may want to send user2.
      * @param temp A boolean representing if the TradeRequest will be temp or not.
      * @param date A Calender representing the date/time the TradeRequest was sent.
-     * @param noMeeting A boolean that determines the TradeRequest will have no meeting (true: This Transaction will not have a Meeting, false: This Transaction will have a Meeting.)
+     * @param virtual A boolean that determines the TradeRequest will have no meeting (true: This Transaction will not have a Meeting, false: This Transaction will have a Meeting.)
      */
-    public typeTwoRequest(Item item1, Item item2, String message, boolean temp, Calendar date, boolean noMeeting) {
-        super(message, temp, date, noMeeting);
+    public typeTwoRequest(Item item1, Item item2, String message, boolean temp, Calendar date, boolean virtual) {
+        super(message, temp, date, virtual);
         this.user1 = item1.getOwner();
         this.user2 = item2.getOwner();
         this.item1 = item1;
@@ -65,7 +65,7 @@ public class typeTwoRequest extends TradeRequest {
                 ". \nStatus: " + this.getStatus() +
                 "; \nDate: " + this.getDate() +
                 "; \nIs for a temporary trade?: " + this.getTemp() +
-                "; \nIs meeting in-person?: " + !this.getNoMeeting() +
+                "; \nIs meeting in-person?: " + !this.getVirtual() +
                 "; \nMessage: " + this.getMessage() + "\n";
     }
 

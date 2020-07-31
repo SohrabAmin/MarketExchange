@@ -346,8 +346,8 @@ public class UserManager implements Serializable {
         // populate the hashmap
         for (Transaction transaction : tradeHistoryCopy) {
             if (transaction instanceof OneWay) {
-                User borrower = this.getUser(((OneWay) transaction).getBorrower());
-                User lender = this.getUser(((OneWay) transaction).getLender());
+                User borrower = this.getUser(((OneWay) transaction).getUser1());
+                User lender = this.getUser(((OneWay) transaction).getUser2());
                 if (user.equals(borrower)) {
                     Integer currentFrequency = partnerToFrequencyMap.get(lender);
                     partnerToFrequencyMap.put(lender, (currentFrequency == null) ? 1 : currentFrequency + 1);
@@ -358,8 +358,8 @@ public class UserManager implements Serializable {
                     partnerToFrequencyMap.put(borrower, (currentFrequency == null) ? 1 : currentFrequency + 1);
                 }
             } else if (transaction instanceof TwoWay) {
-                User firstTrader = this.getUser(((TwoWay) transaction).getFirstTrader());
-                User secondTrader = this.getUser(((TwoWay) transaction).getSecondTrader());
+                User firstTrader = this.getUser(((TwoWay) transaction).getUser1());
+                User secondTrader = this.getUser(((TwoWay) transaction).getUser2());
                 if (user.equals(firstTrader)) {
                     Integer currentFrequency = partnerToFrequencyMap.get(secondTrader);
                     partnerToFrequencyMap.put(secondTrader, (currentFrequency == null) ? 1 : currentFrequency + 1);
@@ -404,14 +404,14 @@ public class UserManager implements Serializable {
         for (int i = tradeHistoryCopy.size() - 1; i >= 0; i--) {
             if (itemsAddedToArrayList < 3) {
                 if (tradeHistoryCopy.get(i) instanceof OneWay) {
-                    User lender = this.getUser(((OneWay) tradeHistoryCopy.get(i)).getLender());
+                    User lender = this.getUser(((OneWay) tradeHistoryCopy.get(i)).getUser2());
                     if (user.equals(lender)) {
                         recentlyTradedItems.add(((OneWay) tradeHistoryCopy.get(i)).getLenderItem());
                         itemsAddedToArrayList++;
                     }
                 } else if (tradeHistoryCopy.get(i) instanceof TwoWay) {
-                    User firstTrader = this.getUser(((TwoWay) tradeHistoryCopy.get(i)).getFirstTrader());
-                    User secondTrader = this.getUser(((TwoWay) tradeHistoryCopy.get(i)).getSecondTrader());
+                    User firstTrader = this.getUser(((TwoWay) tradeHistoryCopy.get(i)).getUser1());
+                    User secondTrader = this.getUser(((TwoWay) tradeHistoryCopy.get(i)).getUser2());
                     if (user.equals(firstTrader)) {
                         recentlyTradedItems.add(((TwoWay) tradeHistoryCopy.get(i)).getFirstItem());
                         itemsAddedToArrayList++;

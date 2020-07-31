@@ -66,8 +66,8 @@ public class TransactionManager implements Serializable {
         } else if (tradeStatus == 1) {
             this.finalizedMeeting.add(transaction);
             if (transaction instanceof OneWay) {
-                user1 = userManager.getUser(((OneWay) transaction).getBorrower());
-                user2 = userManager.getUser(((OneWay) transaction).getLender());
+                user1 = userManager.getUser(((OneWay) transaction).getFirstTrader());
+                user2 = userManager.getUser(((OneWay) transaction).getSecondTrader());
                 user3 = null;
             } else if(transaction instanceof TwoWay) {
                 user1 = userManager.getUser(((TwoWay) transaction).getFirstTrader());
@@ -139,8 +139,8 @@ public class TransactionManager implements Serializable {
         User user2;
         User user3;
         if (transaction instanceof OneWay) {
-            user1 = userManager.getUser(((OneWay) transaction).getBorrower());
-            user2 = userManager.getUser(((OneWay) transaction).getLender());
+            user1 = userManager.getUser(((OneWay) transaction).getFirstTrader());
+            user2 = userManager.getUser(((OneWay) transaction).getSecondTrader());
             user3 = null;
 
         } else if(transaction instanceof TwoWay) {
@@ -175,8 +175,8 @@ public class TransactionManager implements Serializable {
         User user2;
         User user3;
         if (transaction instanceof OneWay) {
-            user1 = userManager.getUser(((OneWay) transaction).getBorrower());
-            user2 = userManager.getUser(((OneWay) transaction).getLender());
+            user1 = userManager.getUser(((OneWay) transaction).getFirstTrader());
+            user2 = userManager.getUser(((OneWay) transaction).getSecondTrader());
             user3 = null;
         } else if(transaction instanceof TwoWay){
             user1 = userManager.getUser(((TwoWay) transaction).getFirstTrader());
@@ -233,15 +233,15 @@ public class TransactionManager implements Serializable {
         User user3;
         Item item1;
         if (transaction instanceof OneWay) {
-            item1 = ((OneWay) transaction).getLenderItem();
-            user1 = userManager.getUser(((OneWay) transaction).getBorrower());
-            user2 = userManager.getUser(((OneWay) transaction).getLender());
+            item1 = ((OneWay) transaction).getItem();
+            user1 = userManager.getUser(((OneWay) transaction).getFirstTrader());
+            user2 = userManager.getUser(((OneWay) transaction).getSecondTrader());
             user3 = null;
             userManager.removeFromInventory(user1, item1);
             userManager.addToInventory(user2, item1);
             itemManager.setCurrentHolder(item1, user2);
 
-            //item 1 is for user 1, item 2 is for user 3 etc, probably called wrong items when creating transaction
+            //item 1 is for user 1, item 2 is for user 2 etc, probably called wrong items when creating transaction
             //aka requesterItem vs receiverItem
         } else if(transaction instanceof TwoWay) {
             user1 = userManager.getUser(((TwoWay) transaction).getFirstTrader());
@@ -296,9 +296,9 @@ public class TransactionManager implements Serializable {
         User user3;
         Item item1;
         if (transaction instanceof OneWay) {
-            item1 = ((OneWay) transaction).getLenderItem();
-            user1 = userManager.getUser(((OneWay) transaction).getBorrower());
-            user2 = userManager.getUser(((OneWay) transaction).getLender());
+            item1 = ((OneWay) transaction).getItem();
+            user1 = userManager.getUser(((OneWay) transaction).getFirstTrader());
+            user2 = userManager.getUser(((OneWay) transaction).getSecondTrader());
             user3 = null;
             userManager.removeFromInventory(user2, item1);
             userManager.addToInventory(user1, item1);
@@ -359,9 +359,9 @@ public class TransactionManager implements Serializable {
         User user3;
         Item item1;
         if (transaction instanceof OneWay) {
-            item1 = ((OneWay) transaction).getLenderItem();
-            user1 = userManager.getUser(((OneWay) transaction).getBorrower());
-            user2 = userManager.getUser(((OneWay) transaction).getLender());
+            item1 = ((OneWay) transaction).getItem();
+            user1 = userManager.getUser(((OneWay) transaction).getFirstTrader());
+            user2 = userManager.getUser(((OneWay) transaction).getSecondTrader());
             user3 = null;
             userManager.removeFromInventory(user2, item1);
             userManager.addToInventory(user1, item1);

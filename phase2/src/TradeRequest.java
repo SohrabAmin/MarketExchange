@@ -11,22 +11,22 @@ public class TradeRequest implements Serializable {
     private boolean temp;
     private int status;
     private Calendar date;
-    private boolean noMeeting;
+    private boolean virtual;
 
     /**
      * Constructs a TradeRequest instance. This class is instantiated by the User that attempts to initiate the Transaction, and should be stored within the receiving User's
      * pendingRequest. If the receiving User accepts the conditions of the Transaction, they may accept the TradeRequest, and an instance of Transaction is created.
      * @param date        A Calender representing the date/time the TradeRequest was initiated.
-     * @param noMeeting   A boolean representing if a meeting will be required or not.
+     * @param virtual   A boolean representing if a meeting will be required or not.
      * @param message     A string representation of any message the requester User may want to send to the receiver User.
      * @param temp        A boolean regarding if the User requesting a TradeRequest wants a temporary Transaction or not.
      */
-    public TradeRequest(String message, boolean temp, Calendar date, boolean noMeeting) {
+    public TradeRequest(String message, boolean temp, Calendar date, boolean virtual) {
         this.message = message;
         this.status = 0;
         this.temp = temp;
         this.date = date;
-        this.noMeeting = noMeeting;
+        this.virtual = virtual;
     }
 
     /**
@@ -70,7 +70,7 @@ public class TradeRequest implements Serializable {
         return this.date;
     }
 
-    public Boolean getNoMeeting() {
-        return this.noMeeting;
+    public Boolean getVirtual() {
+        return this.virtual;
     }
 }
