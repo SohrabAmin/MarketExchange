@@ -94,4 +94,8 @@ public class Item implements Serializable {
     public boolean getTradable(){return this.tradable;}
     public double getSellPrice(){return this.sellPrice;}
     public double getRentPrice(){return this.rentPrice;}
+
+    public String toString() {
+        return "item " + this.getName() + "with description \"" + this.getDescription() + "\"";
+    }
 }
