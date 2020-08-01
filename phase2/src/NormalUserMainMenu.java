@@ -99,7 +99,7 @@ public class NormalUserMainMenu implements DifferentUserMainMenu {
 
                 // this check is used to log user out when they confirm that they are going on vacation
                 if (result.equals("exit")) {
-                    return "exit";
+                    return "back";
                 }
 
                 return user;

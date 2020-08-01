@@ -1,4 +1,7 @@
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 // NOTE: This class is based off of StudentManager from logging in Week 6 Modules on Quercus.
@@ -123,6 +126,41 @@ public class ReadWrite implements Serializable {
         return tRM;
     }
 
+    /**
+     * Reads the log file and returns a List of log messages
+     *
+     * @param fileName the name of the Log file
+     * @return List of Strings where each String is a log
+     * @throws IOException throws exception if File doesn't exist
+     */
+    public List<String> readLog(String fileName) throws IOException {
+        //The following code is from https://www.geeksforgeeks.org/different-ways-reading-text-file-java/
+        String data = new String(Files.readAllBytes(Paths.get(fileName)));
+        return helperLogSplit(data);
+
+    }
+
+    /**
+     * Helper method for readLog()
+     * Formats the logs into a List containing a String. Each string is formatted to contain: "(Date) (Time): (Log Message)"
+     *
+     * @param logs String containing the entire log
+     * @return List of Strings where each String is a log
+     */
+    public List<String> helperLogSplit(String logs) {
+        List<String> listLogs = new ArrayList<>();
+        String[] individualLogs = logs.split("</log>");
+
+        for (String a : individualLogs) {
+            String[] findMsg = a.split("<message>|</message>");
+            if (findMsg.length > 1) {
+                String[] findDate = findMsg[0].split("<date>|</date>");
+                String[] dateTime = findDate[1].split("T");
+                listLogs.add(dateTime[0] + " " + dateTime[1] + ": " + findMsg[1]);
+            }
+        }
+        return listLogs;
+    }
     /**
      * Writes Object object to external file at filePath.
      *

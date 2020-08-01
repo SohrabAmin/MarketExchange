@@ -76,9 +76,6 @@ public class User extends Account {
         this.FrequentCategory.put("Movies, music and TV",0);
         this.FrequentCategory.put("Office Supplies",0);
         this.FrequentCategory.put("Gaming",0);
-
-
-
     }
 
 
@@ -304,5 +301,22 @@ public class User extends Account {
 
     public void setPoints(int newPoints) {
         this.points = newPoints;
+    }
+
+    /**
+     * Helper function to only be used by UndoAction.java. Returns the first Item that matches the name and description
+     * in the User's wishlist
+     *
+     * @param name name of the Item
+     * @param description description of the Item
+     * @return Item object if name and description match; returns null if it doesn't
+     */
+    public Item findInWishlist(String name, String description) {
+        for (Item item: wishlist) {
+            if (item.getName().equals(name) && item.getDescription().equals(description)) {
+                return item;
+            }
+        }
+        return null;
     }
 }

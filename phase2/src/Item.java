@@ -116,6 +116,6 @@ public class Item implements Serializable {
      * @return String representation of this Item
      */
     public String toString() {
-        return "item " + this.getName() + " with description \"" + this.getDescription() + "\"";
+        return "item \"" + this.getName() + "\" with description \"" + this.getDescription() + "\"";
     }
 }
