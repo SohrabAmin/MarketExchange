@@ -29,7 +29,7 @@ public class VacationUserMainMenu implements DifferentUserMainMenu {
         String confirmation = scanner.nextLine();
         if (confirmation.equals("1")) {
             System.out.println("Go enjoy your vacation!");
-            return "exit";
+            return null;
         } else if (confirmation.equals("2")) {
             System.out.println("We hope you enjoyed your vacation!");
             user.setIsOnVacation(false);

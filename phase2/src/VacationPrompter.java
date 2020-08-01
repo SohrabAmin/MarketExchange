@@ -32,15 +32,16 @@ public class VacationPrompter implements userMainMenuOptions {
         if (confirmation.equals("1")) {
             System.out.println("Enjoy your vacation!");
             user.setIsOnVacation(true);
-            for (Item indexedItem : user.getInventory()) {
-                user.getInventory().remove(indexedItem);
+            for (int i = 0; i < user.getInventory().size(); i++) {
+                Item item = user.getInventory().get(i);
                 undoLogger.log(Level.INFO, "User " + user.getName() + " went on vacation; " +
-                        "removed Item " + indexedItem.getName() +
+                        "removed " + item.toString() +
                         " from " + user.getName() + "'s inventory.\n");
+                allUsers.removeFromInventory(user, item);
             }
-            return "exit";
+            return "leave";
         } else if (confirmation.equals("2")) {
-            return user;
+            return null;
         } else {
             System.out.println("Invalid input. Please try again.");
             return null;
