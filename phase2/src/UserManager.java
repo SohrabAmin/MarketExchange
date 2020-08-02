@@ -327,12 +327,35 @@ public class UserManager implements Serializable {
         updateUserPoints(user, transaction);
     }
 
+    /**
+     * Gets called in updateTradeHistory so that as you make a transaction your
+     * points can be updated accordingly depending on what type of transaction it was
+     * and if you were the borrower or lender
+     *
+     * @param user        User whose points are to be updated
+     * @param transaction Most recent transaction of user
+     */
     private void updateUserPoints(User user, Transaction transaction) {
-        if (!(transaction instanceof OneWay && !(transaction instanceof OneWayMonetized))) {
-            OneWay oneway = (OneWay) transaction;
-            if (!(oneway.getFirstTrader() == user)) {
+        if (transaction instanceof OneWayMonetized) {
+            OneWayMonetized onewaymonetized = (OneWayMonetized) transaction;
+            if (onewaymonetized.getFirstTrader() == user) {
                 user.setPoints(user.getPoints() + 1);
             }
+        }
+        else if (transaction instanceof OneWay){
+            OneWay oneway = (OneWay) transaction;
+            if (oneway.getSecondTrader() == user) {
+                user.setPoints(user.getPoints() + 1);
+            }
+        }
+        else if (transaction instanceof TwoWay){
+            user.setPoints(user.getPoints() + 2);
+        }
+        else if (transaction instanceof ThreeWay){
+            user.setPoints(user.getPoints() + 3);
+        }
+        else {
+            user.setPoints(user.getPoints());
         }
     }
 
