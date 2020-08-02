@@ -328,7 +328,12 @@ public class UserManager implements Serializable {
     }
 
     private void updateUserPoints(User user, Transaction transaction) {
-        user.setPoints(user.getPoints() + 1);
+        if (!(transaction instanceof OneWay && !(transaction instanceof OneWayMonetized))) {
+            OneWay oneway = (OneWay) transaction;
+            if (!(oneway.getFirstTrader() == user)) {
+                user.setPoints(user.getPoints() + 1);
+            }
+        }
     }
 
     /**
