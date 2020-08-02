@@ -4,7 +4,20 @@ import java.util.Scanner;
 
 public class PromoteOrDemoteUser implements adminMainMenuOptions {
 
+    /**
+     * Allows an admin to:
+     * promote a user to VIP, or
+     * demote a VIP to user.
+     *
+     * @param admin     Admin logged in to the system
+     * @param allAdmins The instance of AdminManager
+     * @param allUsers  The instance of UserManager
+     * @param allItems  The instance of ItemManager
+     * @return null if the current menu is to be reprinted; Admin admin if the admin is to be redirected to the main menu.
+     */
     public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems) {
+
+        // the following four lines are commented out because currently any admin can promote users or demote VIPs
         //if (!admin.getIsSuperAdmin()) {
         //    System.out.println("Sorry, but only super admins can access this menu!");
         //    return admin;
