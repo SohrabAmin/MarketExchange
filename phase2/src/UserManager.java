@@ -480,4 +480,23 @@ public class UserManager implements Serializable {
         return possibleFrozenPeople;
     }
 
+    /**
+     * Adds Item item to User user's VacationStorage when they go on vacation.
+     *
+     * @param user the User that is going on vacation and needs to store their items.
+     * @param item the Item from their inventory that is going to be stored.
+     */
+    public void addToVacationStorage(User user, Item item) {
+        user.getVacationStorage().add(item);
+    }
+
+    /**
+     * Removes Item item from User user's VacationStorage when they return from vacation.
+     *
+     * @param user the User that has returned from vacation and needs to remove items from their VacationStorage
+     * @param item the Item that is to be removed.
+     */
+    public void removeFromVacationStorage(User user, Item item) {
+        user.getVacationStorage().remove(item);
+    }
 }

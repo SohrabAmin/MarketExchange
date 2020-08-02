@@ -29,6 +29,7 @@ public class User extends Account {
     private Integer points;
     private boolean isOnVacation;
     private boolean isVIP;
+    private List<Item> vacationStorage;
 
     //potential hash map for outbound requests to help admins undo
 
@@ -331,5 +332,13 @@ public class User extends Account {
             }
         }
         return null;
+    }
+
+    /**
+     * Helper function only to be used by VacationUserMainMenu. Returns a list of Items stored in VacationStorage
+     * @return List of Items that were stored in VacationStorage
+     */
+    public List<Item> getVacationStorage(){
+        return vacationStorage;
     }
 }

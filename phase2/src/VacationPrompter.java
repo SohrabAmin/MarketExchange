@@ -34,9 +34,10 @@ public class VacationPrompter implements userMainMenuOptions {
             user.setIsOnVacation(true);
             for (int i = 0; i < user.getInventory().size(); i++) {
                 Item item = user.getInventory().get(i);
-                undoLogger.log(Level.INFO, "User " + user.getName() + " went on vacation; " +
-                        "removed " + item.toString() +
-                        " from " + user.getName() + "'s inventory.\n");
+//                undoLogger.log(Level.INFO, "User " + user.getName() + " went on vacation; " +
+//                        "removed " + item.toString() +
+//                        " from " + user.getName() + "'s inventory.\n");
+                allUsers.addToVacationStorage(user, item);
                 allUsers.removeFromInventory(user, item);
             }
             return "leave";

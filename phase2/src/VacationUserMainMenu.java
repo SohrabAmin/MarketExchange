@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class VacationUserMainMenu implements DifferentUserMainMenu {
@@ -33,7 +34,11 @@ public class VacationUserMainMenu implements DifferentUserMainMenu {
         } else if (confirmation.equals("2")) {
             System.out.println("We hope you enjoyed your vacation!");
             user.setIsOnVacation(false);
-            //TODO: use undoLogger to add items back to user's inventory
+            for (int i = 0; i < user.getVacationStorage().size(); i++) {
+                Item item = user.getVacationStorage().get(i);
+                allUsers.addToInventory(user, item);
+                allUsers.removeFromVacationStorage(user, item);
+            }
             return user;
         } else {
             System.out.println("Invalid option. Please try again.");
