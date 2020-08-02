@@ -26,10 +26,15 @@ public class NormalUserMainMenu implements DifferentUserMainMenu {
      * exiting the System
      */
     public Object mainMenu(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
-                               UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                               AdminManager allAdmins, Logger undoLogger) {
-        System.out.print("----------------------------------------------------------------------------------------------" +
-                "\n\uD83D\uDC4B Welcome back, " + user.getName() + "!\n");
+                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
+                           AdminManager allAdmins, Logger undoLogger) {
+        if (user.getIsVIP()) {
+            System.out.print("----------------------------------------------------------------------------------------------" +
+                    "\n\uD83D\uDC4B Welcome back, \u2B50VIP\u2B50 " + user.getName() + "!\n");
+        } else {
+            System.out.print("----------------------------------------------------------------------------------------------" +
+                    "\n\uD83D\uDC4B Welcome back, " + user.getName() + "!\n");
+        }
         if (allUsers.getUser(user).getPendingRequests().size() > 0) {
             System.out.print("\uD83D\uDCE9 You have " + allUsers.getUser(user).getPendingRequests().size() +
                     " Pending Trade Requests!\n");
@@ -70,7 +75,7 @@ public class NormalUserMainMenu implements DifferentUserMainMenu {
                     option.setChosenOption(new PrintMostRecentTrades());
                 } else if (input.equals("9")) { //view most freq trading partners
                     option.setChosenOption(new PrintTop3TradingPartners());
-                } else if (input.equals("10")){  //view item status
+                } else if (input.equals("10")) {  //view item status
                     option.setChosenOption(new PrintItemHistory());
                 } else if (input.equals("11")) { //approve meeting
                     option.setChosenOption(new PendingTransactionProcess());
@@ -82,8 +87,7 @@ public class NormalUserMainMenu implements DifferentUserMainMenu {
                     option.setChosenOption(new AccountSettingsManager());
                 } else if (input.equals("15")) { //go on vacation
                     option.setChosenOption(new VacationPrompter());
-                }
-                else if (input.equals("16")) { //logout
+                } else if (input.equals("16")) { //logout
                     return null;
                 } else { //returns to main menu
                     System.out.println("That is not a valid option. Please try again.");

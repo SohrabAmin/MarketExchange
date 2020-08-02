@@ -1,8 +1,5 @@
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Scanner;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,8 +55,8 @@ public class InputGetter {
      * exiting the System
      */
     public Object callMainMenu(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
-                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                            AdminManager allAdmins) {
+                               UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
+                               AdminManager allAdmins) {
         //A frozen account is one where you can log in and look for items, but you cannot arrange any transactions.
         // A user who has been frozen can request that the administrative user unfreezes their account.
         boolean frozenAccount = user.getIsFrozen();
@@ -72,7 +69,12 @@ public class InputGetter {
             menu.setCorrectMenu(new DemoUserMainMenu());
         } else if (user.getIsOnVacation()) {// if they are on vacation
             menu.setCorrectMenu(new VacationUserMainMenu());
-        } else {
+        }
+        // the following three lines are commented out because VIP Users are currently shown the same menu as Users
+        //else if (user.getIsVIP()) {// if they are a VIP
+        //    menu.setCorrectMenu(new VIPUserMainMenu());
+        //}
+        else {
             menu.setCorrectMenu(new NormalUserMainMenu());
         }
         return menu.runMenu(user, allItems, allTradeRequests, allUsers, allMeetings, allTransactions, allAdmins, undoLogger);

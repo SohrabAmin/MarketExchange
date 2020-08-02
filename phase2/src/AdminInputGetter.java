@@ -45,30 +45,40 @@ public class AdminInputGetter {
         }
         System.out.println("Please select from the following by entering the number beside the option:" +
                 " \n1. Add new admin\n2. Change system threshold\n3. View items that need to be approved\n" +
-                "4. Freeze or unfreeze users\n5. Promote an admin or demote a super admin\n6. View and edit System Log\n" +
-                "7. Log out\n" +
+                "4. Freeze or unfreeze users\n5. Promote a user or demote a VIP user\n" +
+                "6. Promote an admin or demote a super admin\n7. View and edit System Log\n8. Log out\n" +
                 "Enter 'exit' to exit at any time.");
         ChosenOption option = new ChosenOption();
         try {
             String input = br.readLine();
             if (!input.equals("exit")) {
-                if (input.equals("1")) { //add new admin
-                    option.setChosenOption(new addAdmin());
-                } else if (input.equals("2")) { //change system threshold
-                    option.setChosenOption(new changeThreshold());
-                } else if (input.equals("3")) { //view items that need to be approved
-                    option.setChosenOption(new approvePendingItem());
-                } else if (input.equals("4")) { //freeze or unfreeze users
-                    option.setChosenOption(new FreezeOrUnfreeze());
-                } else if (input.equals("5")) { //promote an admin or demote a super admin
-                    option.setChosenOption(new PromoteOrDemoteAdmin());
-                } else if (input.equals("6")) { //view and/or edit system log
-                    option.setChosenOption(new UndoAction());
-                }else if (input.equals("7")) { //logout
-                    return null;
-                } else { //returns to main menu
-                    System.out.println("That is not a valid option. Please try again.");
-                    return admin;
+                switch (input) {
+                    case "1":  //add new admin
+                        option.setChosenOption(new addAdmin());
+                        break;
+                    case "2":  //change system threshold
+                        option.setChosenOption(new changeThreshold());
+                        break;
+                    case "3":  //view items that need to be approved
+                        option.setChosenOption(new approvePendingItem());
+                        break;
+                    case "4":  //freeze or unfreeze users
+                        option.setChosenOption(new FreezeOrUnfreeze());
+                        break;
+                    case "5": //promote a user or demote a VIP user
+                        option.setChosenOption(new PromoteOrDemoteUser());
+                        break;
+                    case "6":  //promote an admin or demote a super admin
+                        option.setChosenOption(new PromoteOrDemoteAdmin());
+                        break;
+                    case "7":  //view and/or edit system log
+                        option.setChosenOption(new UndoAction());
+                        break;
+                    case "8":  //logout
+                        return null;
+                    default:  //returns to main menu
+                        System.out.println("That is not a valid option. Please try again.");
+                        return admin;
                 }
                 Object result = option.executeOption(admin, allAdmins, allUsers, allItems);
                 while (result == null) {

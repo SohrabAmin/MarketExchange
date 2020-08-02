@@ -32,8 +32,7 @@ public class PromoteOrDemoteAdmin implements adminMainMenuOptions {
                 List<String> listOfAdminNames = new ArrayList<>();
                 System.out.println("Type the name of the admin to promote to super admin.");
 
-                for (int i = 0; i < allAdmins.getAllAdmins().size(); i++) {
-                    Admin indexedAdmin = allAdmins.getAllAdmins().get(i);
+                for (Admin indexedAdmin : allAdmins.getAllAdmins()) {
 
                     // the list of admins that will be displayed to the logged in super admin
                     if (!indexedAdmin.getIsSuperAdmin()) {
@@ -45,8 +44,8 @@ public class PromoteOrDemoteAdmin implements adminMainMenuOptions {
                     System.out.println("No non-super admins found!");
                     return null;
                 } else {
-                    for (String AdminName : listOfAdminNames) {
-                        System.out.println(AdminName);
+                    for (String adminName : listOfAdminNames) {
+                        System.out.println(adminName);
                     }
 
                     String nameOfAdminChosenForPromotion = scanner.nextLine();
@@ -55,9 +54,9 @@ public class PromoteOrDemoteAdmin implements adminMainMenuOptions {
                     if (listOfAdminNames.contains(nameOfAdminChosenForPromotion)) {
 
                         // loop through the list of admins to find the admin to promote
-                        for (int i = 0; i < allAdmins.getAllAdmins().size(); i++) {
-                            if (allAdmins.getAllAdmins().get(i).getName().equals(nameOfAdminChosenForPromotion)) {
-                                allAdmins.getAllAdmins().get(i).setIsSuperAdmin(true);
+                        for (Admin indexedAdmin : allAdmins.getAllAdmins()) {
+                            if (indexedAdmin.getName().equals(nameOfAdminChosenForPromotion)) {
+                                indexedAdmin.setIsSuperAdmin(true);
                                 System.out.println("Admin " + nameOfAdminChosenForPromotion + " was promoted to super admin!");
                             }
                         }
@@ -72,8 +71,7 @@ public class PromoteOrDemoteAdmin implements adminMainMenuOptions {
                 List<String> listOfSuperAdminNames = new ArrayList<>();
                 System.out.println("Type the name of the super admin to demote to admin.");
 
-                for (int i = 0; i < allAdmins.getAllAdmins().size(); i++) {
-                    Admin indexedAdmin = allAdmins.getAllAdmins().get(i);
+                for (Admin indexedAdmin : allAdmins.getAllAdmins()) {
 
                     // the list of super admins that will be displayed to the logged in super admin
                     // add super admins to the list of super admins, but do not add the logged in super admin
@@ -90,16 +88,15 @@ public class PromoteOrDemoteAdmin implements adminMainMenuOptions {
                         System.out.println(superAdminName);
                     }
 
-
                     String nameOfSuperAdminChosenForDemotion = scanner.nextLine();
 
                     // first check whether the super admin typed in an actual super admin name
                     if (listOfSuperAdminNames.contains(nameOfSuperAdminChosenForDemotion)) {
 
-                        // loop through the list of super admins to find the super admin to demote
-                        for (int i = 0; i < allAdmins.getAllAdmins().size(); i++) {
-                            if (allAdmins.getAllAdmins().get(i).getName().equals(nameOfSuperAdminChosenForDemotion)) {
-                                allAdmins.getAllAdmins().get(i).setIsSuperAdmin(false);
+                        // loop through the list of admins to find the super admin to demote
+                        for (Admin indexedAdmin : allAdmins.getAllAdmins()) {
+                            if (indexedAdmin.getName().equals(nameOfSuperAdminChosenForDemotion)) {
+                                indexedAdmin.setIsSuperAdmin(false);
                                 System.out.println("Super admin " + nameOfSuperAdminChosenForDemotion + " was demoted to admin!");
                             }
                         }

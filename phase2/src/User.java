@@ -24,10 +24,11 @@ public class User extends Account {
     private List<Transaction> agreedUponMeetings;
     private List<Transaction> secondAgreedUponMeetings;
     private Map<Integer, List<TradeRequest>> weeklyRequestLimit;
-    private Map <String, Integer> FrequentCategory;
+    private Map<String, Integer> FrequentCategory;
     private String location;
     private Integer points;
     private boolean isOnVacation;
+    private boolean isVIP;
 
     //potential hash map for outbound requests to help admins undo
 
@@ -66,20 +67,20 @@ public class User extends Account {
         }
 
         //initializing the frequentCategories
-        this.FrequentCategory.put ("Electronics", 0);
-        this.FrequentCategory.put("Automotive and car accessories",0);
+        this.FrequentCategory.put("Electronics", 0);
+        this.FrequentCategory.put("Automotive and car accessories", 0);
         this.FrequentCategory.put("Baby", 0);
-        this.FrequentCategory.put("Beauty, Health and Personal Care",0);
-        this.FrequentCategory.put("Books",0);
+        this.FrequentCategory.put("Beauty, Health and Personal Care", 0);
+        this.FrequentCategory.put("Books", 0);
         this.FrequentCategory.put("Home and Kitchen Supplies", 0);
-        this.FrequentCategory.put("Clothing",0);
-        this.FrequentCategory.put("Movies, music and TV",0);
-        this.FrequentCategory.put("Office Supplies",0);
-        this.FrequentCategory.put("Gaming",0);
+        this.FrequentCategory.put("Clothing", 0);
+        this.FrequentCategory.put("Movies, music and TV", 0);
+        this.FrequentCategory.put("Office Supplies", 0);
+        this.FrequentCategory.put("Gaming", 0);
     }
 
 
-    public Map<String, Integer> getFrequentCategory(){
+    public Map<String, Integer> getFrequentCategory() {
         return FrequentCategory;
     }
 
@@ -240,12 +241,20 @@ public class User extends Account {
         this.isPseudoFrozen = isPseudoFrozen;
     }
 
-    public boolean getIsOnVacation () {
+    public boolean getIsOnVacation() {
         return this.isOnVacation;
     }
 
-    public void setIsOnVacation (boolean isOnVacation) {
+    public void setIsOnVacation(boolean isOnVacation) {
         this.isOnVacation = isOnVacation;
+    }
+
+    public boolean getIsVIP() {
+        return this.isVIP;
+    }
+
+    public void setIsVIP(boolean isVIP) {
+        this.isVIP = isVIP;
     }
 
     /**
@@ -291,9 +300,13 @@ public class User extends Account {
 
     //TODO: consider overriding the equals method inherited from Object
 
-    public void setLocation(String location) {this.location = location;}
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
-    public String getLocation() {return this.location;}
+    public String getLocation() {
+        return this.location;
+    }
 
     public Integer getPoints() {
         return this.points;
@@ -307,12 +320,12 @@ public class User extends Account {
      * Helper function to only be used by UndoAction.java. Returns the first Item that matches the name and description
      * in the User's wishlist
      *
-     * @param name name of the Item
+     * @param name        name of the Item
      * @param description description of the Item
      * @return Item object if name and description match; returns null if it doesn't
      */
     public Item findInWishlist(String name, String description) {
-        for (Item item: wishlist) {
+        for (Item item : wishlist) {
             if (item.getName().equals(name) && item.getDescription().equals(description)) {
                 return item;
             }
