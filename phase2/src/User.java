@@ -277,17 +277,15 @@ public class User extends Account {
      * @param isVIP whether this User should be a VIP
      */
     public void setIsVIP(boolean isVIP) {
-        this.isVIP = isVIP;
-
         // new VIP privilege: increase lent - borrowed ratio
-        if (isVIP) {
+        if (!this.isVIP && isVIP) {
             for (int i = 0; i < 10; i++) {
                 this.increaseEligibility();
             }
         }
 
         // undo VIP privilege
-        if (!isVIP) {
+        if (this.isVIP && !isVIP) {
             for (int i = 0; i < 10; i++) {
                 // do not set lent - borrowed ratio below 0
                 if (this.getEligibility() == 0) {
@@ -297,6 +295,7 @@ public class User extends Account {
             }
         }
 
+        this.isVIP = isVIP;
     }
 
     /**
