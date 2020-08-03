@@ -385,7 +385,6 @@ public class User extends Account {
         return vacationStorage;
     }
 
-    public void setUndoWishListAction(UndoAction undowishlist)(undoWishListAction.add();)
 
     public List<String> getUndoWishListAction(){return this.undoWishListAction;}
 

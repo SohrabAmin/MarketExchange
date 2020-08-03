@@ -531,4 +531,7 @@ public class UserManager implements Serializable {
     public void removeFromVacationStorage(User user, Item item) {
         user.getVacationStorage().remove(item);
     }
+
+    public void setUndoWishListAction(User user,String itemname){user.getUndoWishListAction().add(itemname);}
+
 }
