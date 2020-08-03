@@ -57,12 +57,6 @@ public class PromoteOrDemoteUser implements adminMainMenuOptions {
                             if (indexedUser.getName().equals(nameOfUserChosenForPromotion)) {
                                 indexedUser.setIsVIP(true);
                                 System.out.println("User " + nameOfUserChosenForPromotion + " was promoted to VIP!");
-
-                                // VIP privilege: increase lent - borrowed ratio
-                                for (int i = 0; i < 10; i++) {
-                                    indexedUser.increaseEligibility();
-                                }
-
                             }
                         }
                         return admin;
@@ -102,17 +96,6 @@ public class PromoteOrDemoteUser implements adminMainMenuOptions {
                             if (indexedUser.getName().equals(nameOfVIPChosenForDemotion)) {
                                 indexedUser.setIsVIP(false);
                                 System.out.println("VIP " + nameOfVIPChosenForDemotion + " was demoted to user!");
-
-                                // undo VIP privilege
-
-                                for (int i = 0; i < 10; i++) {
-                                    // do not set lent - borrowed ratio below 0
-                                    if (indexedUser.getEligibility() == 0) {
-                                        break;
-                                    }
-                                    indexedUser.decreaseEligibility();
-                                }
-
                             }
                         }
                         return admin;

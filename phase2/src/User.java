@@ -242,20 +242,61 @@ public class User extends Account {
         this.isPseudoFrozen = isPseudoFrozen;
     }
 
+    /**
+     * Getter for whether this User is on vacation. A User on vacation cannot participate in the trade system, and will
+     * not have their items listed in the system, until they return from vacation.
+     *
+     * @return whether this User is on vacation
+     */
     public boolean getIsOnVacation() {
         return this.isOnVacation;
     }
 
+    /**
+     * Setter for whether this User in on vacation. A User on vacation cannot participate in the trade system, and will
+     * not have their items listed in the system, until they return from vacation.
+     *
+     * @param isOnVacation whether this User should be on vacation
+     */
     public void setIsOnVacation(boolean isOnVacation) {
         this.isOnVacation = isOnVacation;
     }
 
+    /**
+     * Getter for whether this User is a VIP
+     *
+     * @return whether this User is a VIP
+     */
     public boolean getIsVIP() {
         return this.isVIP;
     }
 
+    /**
+     * Setter for whether this User is a VIP
+     *
+     * @param isVIP whether this User should be a VIP
+     */
     public void setIsVIP(boolean isVIP) {
         this.isVIP = isVIP;
+
+        // new VIP privilege: increase lent - borrowed ratio
+        if (isVIP) {
+            for (int i = 0; i < 10; i++) {
+                this.increaseEligibility();
+            }
+        }
+
+        // undo VIP privilege
+        if (!isVIP) {
+            for (int i = 0; i < 10; i++) {
+                // do not set lent - borrowed ratio below 0
+                if (this.getEligibility() == 0) {
+                    break;
+                }
+                this.decreaseEligibility();
+            }
+        }
+
     }
 
     /**
@@ -336,9 +377,10 @@ public class User extends Account {
 
     /**
      * Helper function only to be used by VacationUserMainMenu. Returns a list of Items stored in VacationStorage
+     *
      * @return List of Items that were stored in VacationStorage
      */
-    public List<Item> getVacationStorage(){
+    public List<Item> getVacationStorage() {
         return vacationStorage;
     }
 }
