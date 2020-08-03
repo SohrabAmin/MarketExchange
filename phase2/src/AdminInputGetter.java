@@ -73,6 +73,7 @@ public class AdminInputGetter {
                         break;
                     case "7":
                         option.setChosenOption(new ViewUserMessages());
+                        break;
                     case "8":  //view and/or edit system log
                         option.setChosenOption(new UndoAction());
                         break;
