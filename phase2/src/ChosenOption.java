@@ -33,10 +33,10 @@ public class ChosenOption {
      */
     public Object executeOption(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                                 UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                                AdminManager allAdmins, Logger undoLogger) {
+                                AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages) {
 
         return ((userMainMenuOptions) chosenOption).execute(user, allItems, allTradeRequests, allUsers,
-                allMeetings, allTransactions, allAdmins, undoLogger);
+                allMeetings, allTransactions, allAdmins, undoLogger, allUserMessages);
     }
 
     /**
@@ -52,7 +52,7 @@ public class ChosenOption {
      * main menu option
      * returns String "exit" to prompt TradeSystem to save all the information and exit the System
      */
-    public Object executeOption(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems) {
-        return ((adminMainMenuOptions) chosenOption).execute(admin, allAdmins, allUsers, allItems);
+    public Object executeOption(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems, UserMessageManager allUserMessages) {
+        return ((adminMainMenuOptions) chosenOption).execute(admin, allAdmins, allUsers, allItems, allUserMessages);
     }
 }

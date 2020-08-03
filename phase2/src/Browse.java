@@ -16,7 +16,7 @@ public class Browse implements userMainMenuOptions {
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                          AdminManager allAdmins, Logger undoLogger) {
+                          AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages) {
         List<Item> allItems2 = allItems.getSystemInventory();
         //if there are no items in the system inventory
         if (allItems2.size() == 0) {

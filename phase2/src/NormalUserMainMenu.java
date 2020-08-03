@@ -19,6 +19,7 @@ public class NormalUserMainMenu implements DifferentUserMainMenu {
      * @param allUsers         UserManager that stores all the Users in the system
      * @param allMeetings      MeetingManager that deals with the creation of meetings
      * @param allTransactions  TransactionManager that stores all the Transactions in the system
+     * @param allUserMessages  UserMessageManager which stores all the Users messages to Admin
      * @return depending on what the User inputs it will return different objects:
      * returns User to TradeSystem() to either remain logged into the system and prompt mainMenu
      * returns null to log out of the system and allow another User to log in
@@ -27,7 +28,7 @@ public class NormalUserMainMenu implements DifferentUserMainMenu {
      */
     public Object mainMenu(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                            UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                           AdminManager allAdmins, Logger undoLogger) {
+                           AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages) {
         if (user.getIsVIP()) {
             System.out.print("----------------------------------------------------------------------------------------------" +
                     "\n\uD83D\uDC4B Welcome back, \u2B50VIP\u2B50 " + user.getName() + "!\n");
@@ -43,13 +44,29 @@ public class NormalUserMainMenu implements DifferentUserMainMenu {
             System.out.print("\u23F3 You have " + allUsers.getUser(user).getPendingTrades().size() +
                     " Pending Transactions!\n");
         }
-        System.out.print("Please select number from the following:\n1. View and edit Wishlist\n2. View Inventory\n" +
-                "3. Browse Items\n4. Initiate Trade\n5. View Pending Trade Requests\n6. Approve Pending Trade Requests\n" +
-                "7. Add Item to inventory\n8. View most recent trades\n9. View most frequent trading partners\n" +
+
+        NotifyUserOfAdminUndo notifyActions = new NotifyUserOfAdminUndo();
+        notifyActions.notify(user, allUsers);
+
+        System.out.print("Please select number from the following:\n" +
+                "1. View and edit Wishlist\n" +
+                "2. View Inventory\n" +
+                "3. Browse Items\n" +
+                "4. Initiate Trade\n" +
+                "5. View Pending Trade Requests\n" +
+                "6. Approve Pending Trade Requests\n" +
+                "7. Add Item to inventory\n" +
+                "8. View most recent trades\n" +
+                "9. View most frequent trading partners\n" +
                 "10. View status of my items\n" +
-                "11. Approve Meeting\n12. Confirm Meetings for Approved Trades\n13. View status of outbound requests\n" +
-                "14. Change Account Settings\n15. Go on vacation\n16. Logout" +
-                "\nEnter 'exit' to exit the system at any time.\n");
+                "11. Approve Meeting\n" +
+                "12. Confirm Meetings for Approved Trades\n" +
+                "13. View status of outbound requests\n" +
+                "14. Message Admin and view replies\n" +
+                "15. Change Account Settings\n" +
+                "16. Go on vacation\n" +
+                "17. Logout\n" +
+                "Enter 'exit' to exit the system at any time.\n");
 
         ChosenOption option = new ChosenOption();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -83,22 +100,24 @@ public class NormalUserMainMenu implements DifferentUserMainMenu {
                     option.setChosenOption(new ConfirmMeetings());
                 } else if (input.equals("13")) { //view outbound req status
                     option.setChosenOption(new PrintOutboundRequests());
-                } else if (input.equals("14")) { //change account settings
+                } else if (input.equals("14")) { //message admin
+                    option.setChosenOption(new UserMessage());
+                } else if (input.equals("15")) { //change account settings
                     option.setChosenOption(new AccountSettingsManager());
-                } else if (input.equals("15")) { //go on vacation
+                } else if (input.equals("16")) { //go on vacation
                     option.setChosenOption(new VacationPrompter());
-                } else if (input.equals("16")) { //logout
+                } else if (input.equals("17")) { //logout
                     return null;
                 } else { //returns to main menu
                     System.out.println("That is not a valid option. Please try again.");
                     return user;
                 }
                 Object result = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
-                        allTransactions, allAdmins, undoLogger);
+                        allTransactions, allAdmins, undoLogger, allUserMessages);
 
                 while (result == null) {
                     result = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
-                            allTransactions, allAdmins, undoLogger);
+                            allTransactions, allAdmins, undoLogger, allUserMessages);
                 }
 
                 // this check is used to log user out when they confirm that they are going on vacation

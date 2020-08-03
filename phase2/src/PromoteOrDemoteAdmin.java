@@ -17,7 +17,8 @@ public class PromoteOrDemoteAdmin implements adminMainMenuOptions {
      * @param allItems  The instance of ItemManager
      * @return null if the current menu is to be reprinted; Admin admin if the admin is to be redirected to the main menu.
      */
-    public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems) {
+    public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,
+                          UserMessageManager allUserMessages) {
 
         if (!admin.getIsSuperAdmin()) {
             System.out.println("Sorry, but only super admins can access this menu!");

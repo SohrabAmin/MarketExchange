@@ -13,7 +13,7 @@ public class PrintItemHistory implements userMainMenuOptions {
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                          AdminManager allAdmins, Logger undoLogger) {
+                          AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages) {
         if (allUsers.getUser(user).getItemHistory().size() == 0) {
             System.out.println("\uD83D\uDE25 No items here! Please add an item to your inventory!");
             return user;

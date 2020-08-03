@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class VacationUserMainMenu implements DifferentUserMainMenu {
@@ -17,12 +16,13 @@ public class VacationUserMainMenu implements DifferentUserMainMenu {
      * @param allTransactions  The instance of TransactionManager
      * @param allAdmins        The instance of AdminManager
      * @param undoLogger       Logger that logs actions in the system
+     * @param allUserMessages  The instance of UserMessageManager
      * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
      * String "exit" if the user is to be logged out.
      */
     public Object mainMenu(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                            UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                           AdminManager allAdmins, Logger undoLogger) {
+                           AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages) {
         Scanner scanner = new Scanner(System.in);
         System.out.print("----------------------------------------------------------------------------------------------" +
                 "\n\uD83D\uDC4B Welcome back, " + user.getName() + "!\n");

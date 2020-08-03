@@ -10,7 +10,7 @@ public class PrintUserMessages implements userMainMenuOptions {
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                          AdminManager allAdmins, Logger undoLogger) {
+                          AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages) {
         //no error checking needed!
         System.out.print("\nHere are your pending Trades: \n");
         User Person = allUsers.getUser(user);

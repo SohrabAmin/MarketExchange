@@ -20,7 +20,7 @@ public class AdminInputGetter {
      * returns String "exit" to tell TradeSystem() to end the program and save all the data before
      * exiting the System
      */
-    public Object mainMenu(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems) {
+    public Object mainMenu(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems, UserMessageManager allUserMessages) {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         System.out.println("----------------------------------------------------------------------------------------------" +
@@ -46,7 +46,7 @@ public class AdminInputGetter {
         System.out.println("Please select from the following by entering the number beside the option:" +
                 " \n1. Add new admin\n2. Change system threshold\n3. View items that need to be approved\n" +
                 "4. Freeze or unfreeze users\n5. Promote a user or demote a VIP user\n" +
-                "6. Promote an admin or demote a super admin\n7. View and edit System Log\n8. Log out\n" +
+                "6. Promote an admin or demote a super admin\n7. View Messages from Users\n8. View and edit System Log\n9. Log out\n" +
                 "Enter 'exit' to exit at any time.");
         ChosenOption option = new ChosenOption();
         try {
@@ -71,18 +71,20 @@ public class AdminInputGetter {
                     case "6":  //promote an admin or demote a super admin
                         option.setChosenOption(new PromoteOrDemoteAdmin());
                         break;
-                    case "7":  //view and/or edit system log
+                    case "7":
+                        option.setChosenOption(new ViewUserMessages());
+                    case "8":  //view and/or edit system log
                         option.setChosenOption(new UndoAction());
                         break;
-                    case "8":  //logout
+                    case "9":  //logout
                         return null;
                     default:  //returns to main menu
                         System.out.println("That is not a valid option. Please try again.");
                         return admin;
                 }
-                Object result = option.executeOption(admin, allAdmins, allUsers, allItems);
+                Object result = option.executeOption(admin, allAdmins, allUsers, allItems, allUserMessages);
                 while (result == null) {
-                    result = option.executeOption(admin, allAdmins, allUsers, allItems);
+                    result = option.executeOption(admin, allAdmins, allUsers, allItems, allUserMessages);
                 }
                 return admin;
             }

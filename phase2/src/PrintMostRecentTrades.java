@@ -12,7 +12,7 @@ public class PrintMostRecentTrades implements userMainMenuOptions{
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                          AdminManager allAdmins, Logger undoLogger) {
+                          AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages) {
         List<Item> MostRecent = new ArrayList<>();
         MostRecent = allUsers.getRecentlyTradedItems(user);
         System.out.print("Here are your most recently traded-away items:\n");

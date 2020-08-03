@@ -24,6 +24,7 @@ public class CorrespondingMainMenu {
      * @param allTransactions TransactionManager which stores and edits all Transactions in the system
      * @param allUsers UserManager which stores all the Users in the system
      * @param undoLogger Logger that logs actions in the system
+     * @param allUserMessages stores all the User messages to Admin
      * @return depending on what the User inputs it will return different objects:
      * returns User to TradeSystem() to either remain logged into the system and prompt mainMenu
      * returns null to log out of the system and allow another User to log in
@@ -32,7 +33,7 @@ public class CorrespondingMainMenu {
      */
     public Object runMenu(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                          AdminManager allAdmins, Logger undoLogger) {
-        return correctMenu.mainMenu(user, allItems, allTradeRequests, allUsers, allMeetings, allTransactions, allAdmins, undoLogger);
+                          AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages) {
+        return correctMenu.mainMenu(user, allItems, allTradeRequests, allUsers, allMeetings, allTransactions, allAdmins, undoLogger, allUserMessages);
     }
 }

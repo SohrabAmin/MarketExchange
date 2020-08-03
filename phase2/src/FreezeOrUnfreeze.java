@@ -11,12 +11,14 @@ public class FreezeOrUnfreeze implements adminMainMenuOptions{
      * @param admin the current Admin logged into the system
      * @param allAdmins AdminManager which holds all the Admins, FrozenRequests and Thresholds in the system
      * @param allItems ItemManager which holds the system inventory
+     * @param allUserMessages UserMessageManager which stores all the Users messages to Admin
      * @return depending on what the Admin inputs it will return different objects:
      * returns null to tell mainmenu() to call execute() again
      * returns String "back" to tell mainmenu() to prompt main menu again so Admin can choose another
      * main menu option
      */
-    public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems) {
+    public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,
+                          UserMessageManager allUserMessages) {
         System.out.println("What would you like to do? Please select the number beside the option or enter " +
                 "'back' to return to the main menu.");
         System.out.println("1.View unfreeze requests\n2.Unfreeze frozen users\n3.Freeze users");

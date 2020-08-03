@@ -13,17 +13,26 @@ public class AccountSettingsManager implements userMainMenuOptions {
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                          AdminManager allAdmins, Logger undoLogger) {
-        System.out.println("Please select the number beside the option you would like to change or 'back'" +
+                          AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages) {
+        System.out.println("Please select the number beside the option you would like or 'back'" +
                 "to return to the main menu.");
-        System.out.println("1.Change username");
-        System.out.println("2.Change password");
-        System.out.println("3.Change location");
+        System.out.println("1. View Admin Change log");
+        System.out.println("2. Change username");
+        System.out.println("3. Change password");
+        System.out.println("4. Change location");
         Scanner sc = new Scanner(System.in);
         String input = sc.nextLine();
         if (input.equals("back")) {
             return "back";
-        } else if (input.equals("1")) {
+        } else if (input.equals("1")){
+            if (user.getAdminActionHistory().size() == 0) {
+                System.out.println("Admin has not taken actions against your account! :)");
+            } for (int i = 0; i < user.getAdminActionHistory().size(); i++) {
+                System.out.println(user.getAdminActionHistory().get(i));
+            }
+            return null;
+        }
+        else if (input.equals("2")) {
             Object temp = userNameChange(user, allUsers);
             while (temp == null) {
                 temp = userNameChange(user, allUsers);
@@ -32,7 +41,7 @@ public class AccountSettingsManager implements userMainMenuOptions {
                 return "back";
             }
             return null;
-        } else if (input.equals("2")) {
+        } else if (input.equals("3")) {
             Object temp = passwordChange(user);
             while (temp == null) {
                 temp = passwordChange(user);
@@ -41,7 +50,7 @@ public class AccountSettingsManager implements userMainMenuOptions {
                 return "back";
             }
             return null;
-        } else if (input.equals("3")) {
+        } else if (input.equals("4")) {
             Object temp = locationChange(user);
             while (temp == null) {
                 temp = locationChange(user);

@@ -1,16 +1,19 @@
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class UserMessageManager {
-    private ArrayList<List<String>> allUserMessage;
-}
-    public UserMessageManager(){
-        this.allUserMessage.add(UserMessage.getUserMessage());
+    private ArrayList<ArrayList<String>> allUserMessage;
+
+    public void addUserMessage(ArrayList<String> userMessage) {
+        allUserMessage.add(userMessage);
     }
 
-    public static ArrayList<UserMessage> getAllUserMessage(){return this.allUserMessage;}
-    public void removeFromAllUserMessage(UserMessage usermessage){this.allUserMessage.remove(usermessage);}
+    public ArrayList<ArrayList<String>> getAllUserMessage(){
+        return allUserMessage;
+    }
+
+    public void removeFromAllUserMessage(ArrayList<String> usermessage){
+        this.allUserMessage.remove(usermessage);
+    }
 }
 
-}

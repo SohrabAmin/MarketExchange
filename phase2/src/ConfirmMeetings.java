@@ -19,7 +19,7 @@ public class ConfirmMeetings implements userMainMenuOptions {
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                          AdminManager allAdmins, Logger undoLogger) {
+                          AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages) {
         System.out.print("Please select 1 for all your initial pending meetings and 2 for all return meetings\n");
         Scanner sc4 = new Scanner(System.in);    //System.in is a standard input stream
         String selection = sc4.nextLine();

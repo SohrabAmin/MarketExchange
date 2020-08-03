@@ -7,12 +7,12 @@ public interface userMainMenuOptions {
      * menu option is.
      *
      * @param user The User currently logged into the system
-     * @param allAdmins AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
      * @param allItems ItemManager which stores the system's inventory
-     * @param allMeetings MeetingManager which deals with creating and editing meetings
      * @param allTradeRequests TradeRequestManager which stores and edits all the TradeRequests in the system
-     * @param allTransactions TransactionManager which stores and edits all Transactions in the system
      * @param allUsers UserManager which stores all the Users in the system
+     * @param allMeetings MeetingManager which deals with creating and editing meetings
+     * @param allTransactions TransactionManager which stores and edits all Transactions in the system
+     * @param allAdmins AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
      * @param undoLogger Logger that logs actions in the system
      * @return depending on what the User inputs it will return different objects:
      * returns null to tell mainmenu() to call execute() again
@@ -23,5 +23,5 @@ public interface userMainMenuOptions {
 
     Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                    UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                   AdminManager allAdmins, Logger undoLogger);
+                   AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages);
 }

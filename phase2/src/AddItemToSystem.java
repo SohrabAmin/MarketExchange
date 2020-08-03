@@ -13,7 +13,7 @@ public class AddItemToSystem implements userMainMenuOptions {
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                          AdminManager allAdmins, Logger undoLogger) {
+                          AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages) {
         System.out.println("Please enter the name of item you would like to add or 'back' to go back to the main menu.");
         Scanner sc = new Scanner(System.in);
         String itemName = sc.nextLine();
@@ -31,7 +31,7 @@ public class AddItemToSystem implements userMainMenuOptions {
         String input = sc.nextLine();
         if (input.equals("back")){
             return "back";
-        } else if (input.equals(1)) {
+        } else if (input.equals("1")) {
             digital = true;
         }
 

@@ -19,6 +19,7 @@ public class DemoUserMainMenu implements DifferentUserMainMenu{
      * @param allUsers         UserManager that stores all the Users in the system
      * @param allMeetings      MeetingManager that deals with the creation of meetings
      * @param allTransactions  TransactionManager that stores all the Transactions in the system
+     * @param allUserMessages  UserMessageManager which stores all the User messages to Admin
      * @return depending on what the User inputs it will return different objects:
      * returns User to TradeSystem() to either remain logged into the system and prompt mainMenu
      * returns null to log out of the system and allow another User to log in
@@ -26,31 +27,46 @@ public class DemoUserMainMenu implements DifferentUserMainMenu{
      * exiting the System
      */
     public Object mainMenu(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
-                               UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                               AdminManager allAdmins, Logger undoLogger) {
+                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
+                           AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages) {
         System.out.print("-------------------------------------------------------\n\uD83E\uDD16 Hello Demo User \uD83E\uDD16\n");
-        System.out.print("Please select number from the following:\n" +
-                "\uD83C\uDD94 Indicates that signup/login as user is required!\n1.View Wishlist\n2.View Inventory \uD83C\uDD94 \n" +
-                "3.Browse Items\n4.Initiate Trade \uD83C\uDD94 \n5.View Pending Trade Requests \uD83C\uDD94\n6.Approve Pending Trade Requests \uD83C\uDD94\n" +
-                "7.Add Item to inventory \uD83C\uDD94\n8.View most recent trades \uD83C\uDD94\n9.View most frequent trading partners \uD83C\uDD94\n" +
-                "10.View status of my items \uD83C\uDD94\n11.Add Item to wishlist\n" +
-                "12.Approve Meeting \uD83C\uDD94\n13.Confirm Meetings for Approved Trades \uD83C\uDD94\n" +
-                "14.View status of outbound requests \uD83C\uDD94\n" + "15.Change Account Settings \uD83C\uDD94\n" +
-                "16.Logout" + "\nEnter 'exit' to exit the system at any time.\n");
+
+        System.out.println("Please select number from the following: ");
+        System.out.println("\uD83C\uDD94 Indicates that signup/login as user is required!");
+        System.out.println("\n1. View and edit Wishlist\n" +
+                "2. View Inventory\uD83C\uDD94\n" +
+                "3. Browse Items\n" +
+                "4. Initiate Trade\uD83C\uDD94\n" +
+                "5. View Pending Trade Requests\uD83C\uDD94\n" +
+                "6. Approve Pending Trade Requests\uD83C\uDD94\n" +
+                "7. Add Item to inventory\uD83C\uDD94\n" +
+                "8. View most recent trades\uD83C\uDD94\n" +
+                "9. View most frequent trading partners\uD83C\uDD94\n" +
+                "10. View status of my items\uD83C\uDD94\n" +
+                "11. Approve Meeting\uD83C\uDD94\n" +
+                "12. Confirm Meetings for Approved Trades\uD83C\uDD94\n" +
+                "13. View status of outbound requests\uD83C\uDD94\n" +
+                "14. Message Admin and view replies\uD83C\uDD94\n" +
+                "15. Change Account Settings\uD83C\uDD94\n" +
+                "16. Go on vacation\uD83C\uDD94\n" +
+                "17. Logout\n" +
+                "Enter 'exit' to exit the system at any time.\n");
+
 
         Scanner sc = new Scanner(System.in);
         String a = sc.nextLine();
         if (!a.equals("exit")) {
             if (a.equals("1")) { //view wishlist
                 System.out.print("-------------------------------------------------------" +
-                        "\n\uD83D\uDC81 Your wishlist are items that you want to have in the future!\n");
+                        "\n\uD83D\uDC81 Your wishlist are items that you want to have in the future! You can add or remove items from" +
+                        " it as you please.\n");
                 ChosenOption option = new ChosenOption();
                 option.setChosenOption(new WishlistManager());
                 Object temp = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
-                        allTransactions, allAdmins, undoLogger);
+                        allTransactions, allAdmins, undoLogger, allUserMessages);
                 while (temp == null) {
                     temp = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
-                            allTransactions, allAdmins, undoLogger);
+                            allTransactions, allAdmins, undoLogger, allUserMessages);
                 }
                 return user;
             } else if (a.equals("2")) { //view inventory
@@ -65,10 +81,10 @@ public class DemoUserMainMenu implements DifferentUserMainMenu{
                 ChosenOption option = new ChosenOption();
                 option.setChosenOption(new Browse());
                 Object temp = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
-                        allTransactions, allAdmins, undoLogger);
+                        allTransactions, allAdmins, undoLogger, allUserMessages);
                 while (temp == null) {
                     temp = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
-                            allTransactions, allAdmins, undoLogger);
+                            allTransactions, allAdmins, undoLogger, allUserMessages);
                 }
                 return user;
             } else if (a.equals("4")) { //choose the id?
@@ -77,11 +93,11 @@ public class DemoUserMainMenu implements DifferentUserMainMenu{
                         "permanent/temporary trade.\n");
                 //else input was "back", returns to main menu
                 return user;
-            } else if (a.equals("5")) {
+            } else if (a.equals("5")) { //pending trade requests
                 System.out.print("-------------------------------------------------------" +
                         "\n\uD83D\uDC81 As a user, you can see any pending trade requests.\n");
                 return user;
-            } else if (a.equals("6")) {
+            } else if (a.equals("6")) { //approve pending trade requests
                 System.out.print("-------------------------------------------------------\n" +
                         "\uD83D\uDC81 As a user, you can look through all trade requests and their details and " +
                         "decide if you want to confirm or reject the trade.\n");
@@ -100,36 +116,45 @@ public class DemoUserMainMenu implements DifferentUserMainMenu{
             } else if (a.equals("9")) { //View most frequent trading partners
                 System.out.print("-------------------------------------------------------" +
                         "\n\uD83D\uDC81 As a user, you can see who your most frequently trading partners are.\n");
-            } else if (a.equals("10")) {
+            } else if (a.equals("10")) { //view item status
                 System.out.print("-------------------------------------------------------" +
                         "\n\uD83D\uDC81 As a user, you can see a list of all items you have ever submitted to the " +
                         "system and whether they were approved/rejected by admin or still pending on admin's approval.\n");
                 return user;
-            } else if (a.equals("11")) {
-                System.out.print("-------------------------------------------------------" +
-                        "\n\uD83D\uDC81 As a user, you can add items to your wishlist that you would " +
-                        "like to purchase.\n");
-                return user;
-            } else if (a.equals("12")) {
+            } else if (a.equals("11")) { //approve meeting
                 System.out.print("-------------------------------------------------------" +
                         "\n\uD83D\uDC81 As a user, once a trade is accepted by the other party, " +
                         "you can see the suggested meeting, approve meeting or suggest an alternative " +
                         "meeting here.\n");
                 return user;
-            } else if (a.equals("13")) {
+            } else if (a.equals("12")) { //confirm meetings
                 System.out.print("-------------------------------------------------------" +
                         "\n\uD83D\uDC81 As a user, here you can confirm a meeting happened or if it did " +
                         "not happen. If the meeting did not happen, both parties may be penalized.\n");
                 return user;
-            } else if (a.equals("14")) {
+            } else if (a.equals("13")) { //view outbound reqs
                 System.out.print("-------------------------------------------------------" +
                         "\n\uD83D\uDC81 As a user, you can see the status of the outbound trade requests " +
                         "you have sent.\n");
-            } else if (a.equals("15")) {
+                return user;
+            } else if (a.equals("14")) { //message admin
+                System.out.print("-------------------------------------------------------" +
+                        "\n\uD83D\uDC81 As a user, you message the Admin about general inquiries, questions, etc!\n" +
+                        "You will also be able to view any replies from admin.");
+                return user;
+            } else if (a.equals("15")) { //change account settings
                 System.out.print("-------------------------------------------------------" +
                         "\n\uD83D\uDC81 As a user, you can change your account settings; this includes changing" +
-                        " your username, password and set location.\n");
+                        " your username, password and set location.\nYou can view a log of all actions" +
+                        " taken against your account by the Admin!\n");
+                return user;
             } else if (a.equals("16")) {
+                System.out.print("-------------------------------------------------------" +
+                        "\n\uD83D\uDC81 By 'going on vacation', all your current items will be stored and not" +
+                        "shown in the system inventory \nuntil you return! This prevents attempts to trade while you" +
+                        "are out of town.");
+                return user;
+            } else if (a.equals("17")) {
                 System.out.print("-------------------------------------------------------" +
                         "\n\uD83D\uDC81 Logging out as Demo!\n");
                 //logout

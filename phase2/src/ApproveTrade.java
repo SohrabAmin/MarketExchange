@@ -18,7 +18,7 @@ public class ApproveTrade implements userMainMenuOptions {
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                          AdminManager allAdmins, Logger undoLogger) {
+                          AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages) {
         User Person = allUsers.getUser(user);
         List<TradeRequest> Trades = Person.getPendingRequests();
         if (Trades.size() == 0) {

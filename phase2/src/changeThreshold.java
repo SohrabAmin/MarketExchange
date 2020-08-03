@@ -17,7 +17,8 @@ public class changeThreshold implements adminMainMenuOptions{
      * returns String "back" to tell mainmenu() to prompt main menu again so Admin can choose another
      * main menu option
      */
-    public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems) {
+    public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,
+                          UserMessageManager allUserMessages) {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         //prints the current thresholds of the system
         System.out.println("\nHere are the current thresholds:");

@@ -79,7 +79,7 @@ public class ReadWrite implements Serializable {
 
     /**
      * Deals with reading from the external file fileName and if it is not empty, it will populate the list
-     * of items in Itemmanager im with the list of saved items from the file. It will not do anything if it is empty.
+     * of items in ItemManager im with the list of saved items from the file. It will not do anything if it is empty.
      *
      * @param fileName the name of the file the method is reading from
      * @throws IOException
@@ -124,6 +124,23 @@ public class ReadWrite implements Serializable {
             return new TradeRequestManager();
         }
         return tRM;
+    }
+
+    /**
+     * Deals with reading from the external file fileName and if it is not empty, it will return the UserMessageManager
+     * object stored in fileName; if it is empty, it will return a new UserMessageManager.
+     *
+     * @param fileName the name of the file the method is reading from
+     * @return returns an UserMessageManager object
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    public UserMessageManager userMessagePopulate(String fileName) throws IOException, ClassNotFoundException {
+        UserMessageManager uMM = (UserMessageManager) readFromFile(fileName);
+        if (uMM == null) {
+            return new UserMessageManager();
+        }
+        return uMM;
     }
 
     /**

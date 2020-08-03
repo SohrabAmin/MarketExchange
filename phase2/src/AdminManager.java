@@ -151,5 +151,6 @@ public class AdminManager implements Serializable {
     public void removeFromFrozenRequest(User user) {
         frozenRequests.remove(user);
     }
+}
 
 

@@ -18,7 +18,8 @@ public class approvePendingItem implements adminMainMenuOptions{
      * returns String "back" to tell mainmenu() to prompt main menu again so Admin can choose another
      * main menu option
      */
-    public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems) {
+    public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,
+                          UserMessageManager allUserMessages) {
         //Creates a list of all pending items in the system
         List<Item> allPendingItems = new ArrayList<>();
         for (int i = 0; i < allUsers.getAllUsers().size(); i++) {

@@ -13,7 +13,7 @@ public class PrintTop3TradingPartners implements userMainMenuOptions {
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                          AdminManager allAdmins, Logger undoLogger) {
+                          AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages) {
         List<User> top3TP;
         top3TP = user.getTopTradingPartners();
         System.out.print("Here are your top 3 most frequent trading partners:\n");

@@ -4,8 +4,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class UndoAction implements adminMainMenuOptions {
-    @Override
-    public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems) {
+
+    public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,
+                          UserMessageManager allUserMessages) {
         ReadWrite readFile = new ReadWrite();
         List<String> logList;
         try{
@@ -71,11 +72,8 @@ public class UndoAction implements adminMainMenuOptions {
         }
         allUsers.removeFromWishlist(user,item);
         System.out.println("You have successfully removed " + itemName + " from User " + user.getName() + "'s wishlist!");
+        allUsers.addToUndoWishListAction(user, itemName);
         return null;
-        //Angel temporary modification.
-        this.undoWishListAction.add(itemName);
-        this.undoWishListAction.add(user.getName());
-        return undoWishListAction;//end
     }
 
 

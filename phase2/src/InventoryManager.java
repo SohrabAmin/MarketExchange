@@ -12,7 +12,7 @@ public class InventoryManager implements userMainMenuOptions {
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                          AdminManager allAdmins, Logger undoLogger) {
+                          AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages) {
         User me = allUsers.getUser(user);
         List<Item> in = me.getInventory();
         //if the user's inventory is empty

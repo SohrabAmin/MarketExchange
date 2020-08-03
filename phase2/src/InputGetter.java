@@ -48,6 +48,8 @@ public class InputGetter {
      * @param allUsers         UserManager that stores all the Users in the system
      * @param allMeetings      MeetingManager that deals with the creation of meetings
      * @param allTransactions  TransactionManager that stores all the Transactions in the system
+     * @param allUserMessages  UserMessageManager which stores all the Users messages to Admin
+     * @param allAdmins        AdminManager which stores all the admins in the system
      * @return depending on what the User inputs it will return different objects:
      * returns User to TradeSystem() to either remain logged into the system and prompt mainMenu
      * returns null to log out of the system and allow another User to log in
@@ -56,7 +58,7 @@ public class InputGetter {
      */
     public Object callMainMenu(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                                UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                               AdminManager allAdmins) {
+                               AdminManager allAdmins, UserMessageManager allUserMessages) {
         //A frozen account is one where you can log in and look for items, but you cannot arrange any transactions.
         // A user who has been frozen can request that the administrative user unfreezes their account.
         boolean frozenAccount = user.getIsFrozen();
@@ -77,7 +79,7 @@ public class InputGetter {
         else {
             menu.setCorrectMenu(new NormalUserMainMenu());
         }
-        return menu.runMenu(user, allItems, allTradeRequests, allUsers, allMeetings, allTransactions, allAdmins, undoLogger);
+        return menu.runMenu(user, allItems, allTradeRequests, allUsers, allMeetings, allTransactions, allAdmins, undoLogger, allUserMessages);
     }
 
 }

@@ -12,7 +12,7 @@ public class PrintOutboundRequests implements userMainMenuOptions {
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                          AdminManager allAdmins, Logger undoLogger) {
+                          AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages) {
         System.out.print("Here is the status of your pending outbound requests:\n");
         List<TradeRequest> outbound = user.getOutboundRequests();
 

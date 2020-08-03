@@ -18,6 +18,7 @@ public class FrozenUserMainMenu implements  DifferentUserMainMenu{
      * @param allUsers         UserManager that stores all the Users in the system
      * @param allMeetings      MeetingManager that deals with the creation of meetings
      * @param allTransactions  TransactionManager that stores all the Transactions in the system
+     * @param allUserMessages  UserMessageManager which stores all the Users messages to Admin
      * @return depending on what the User inputs it will return different objects:
      * returns User to TradeSystem() to either remain logged into the system and prompt mainMenu
      * returns null to log out of the system and allow another User to log in
@@ -25,9 +26,8 @@ public class FrozenUserMainMenu implements  DifferentUserMainMenu{
      * exiting the System
      */
     public Object mainMenu(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
-                                 UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                                 AdminManager allAdmins, Logger undoLogger) {
-        Scanner sc = new Scanner(System.in);
+                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
+                           AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages) {
 
         System.out.print("----------------------------------------------------------------------------------------------" +
                 "\n\uD83D\uDC4B Welcome back, " + user.getName() + "!\n");
@@ -39,11 +39,13 @@ public class FrozenUserMainMenu implements  DifferentUserMainMenu{
                 " You are not able to do any trades until you are unfrozen by admin.\n" +
                 "\uD83C\uDFC1 Please ask Admin to unfreeze your account!\n\n");
 
-        System.out.print("Please select number from the following:\n1.View and edit Wishlist\n2.View Inventory\n" +
-                "3.Browse Items\n" +
-                "4.Add Item to inventory\n5.View most recent trades\n6.View most frequent trading partners\n" +
-                "7.View status of my items" +
-                "\n8.Request unfreeze!\n9.Change Account Settings\n10.Logout" + "\nEnter 'exit' to exit the system at any time.\n");
+        NotifyUserOfAdminUndo notifyActions = new NotifyUserOfAdminUndo();
+        notifyActions.notify(user, allUsers);
+
+        System.out.print("Please select number from the following:\n1. View and edit Wishlist\n2. View Inventory\n" +
+                "3. Browse Items\n4. Add Item to inventory\n5. View most recent trades\n6. View most frequent trading partners\n" +
+                "7. View status of my items\n8. Request unfreeze!\n9. Message Admin\n10. Change Account Settings\n11. Logout" +
+                "\nEnter 'exit' to exit the system at any time.\n");
 
         ChosenOption option = new ChosenOption();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -65,21 +67,23 @@ public class FrozenUserMainMenu implements  DifferentUserMainMenu{
                     option.setChosenOption(new PrintTop3TradingPartners());
                 } else if (input.equals("7")){  //view item status
                     option.setChosenOption(new PrintItemHistory());
-                } else if (input.equals("8")) {
+                } else if (input.equals("8")) { //request to be unfrozen
                     option.setChosenOption(new NotifyAdminOfUnfreezeRequest());
-                } else if (input.equals("9")) { //change account settings
+                } else if (input.equals("9")) { //message admin
+                    option.setChosenOption(new UserMessage());
+                } else if (input.equals("10")) { //change account settings
                     option.setChosenOption(new AccountSettingsManager());
-                } else if (input.equals("10")) { //logout
+                } else if (input.equals("11")) { //logout
                     return null;
                 } else { //returns to main menu
                     System.out.println("That is not a valid option. Please try again.");
                     return user;
                 }
                 Object result = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
-                        allTransactions, allAdmins, undoLogger);
+                        allTransactions, allAdmins, undoLogger, allUserMessages);
                 while (result == null) {
                     result = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
-                            allTransactions, allAdmins, undoLogger);
+                            allTransactions, allAdmins, undoLogger, allUserMessages);
                 }
                 return user;
             }

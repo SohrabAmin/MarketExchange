@@ -31,6 +31,8 @@ public class User extends Account {
     private boolean isVIP;
     private List<Item> vacationStorage;
     private ArrayList<String> undoWishListAction;
+    private ArrayList<String> adminActionHistory;
+    private ArrayList<String> AdminMessages;
 
     //potential hash map for outbound requests to help admins undo
 
@@ -388,5 +390,7 @@ public class User extends Account {
 
     public List<String> getUndoWishListAction(){return this.undoWishListAction;}
 
-    public void removeFromUndoWishListAction(UndoAction undowishlist){undoWishListAction.remove(undowishlist);}
+    public ArrayList<String> getAdminActionHistory() {return adminActionHistory;}
+
+    public ArrayList<String> getAdminMessages() {return AdminMessages;}
 }

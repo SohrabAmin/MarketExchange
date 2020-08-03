@@ -14,6 +14,7 @@ public class TradeSystem {
     public TradeRequestManager allTradeRequests;
     public ReadWrite readwrite = new ReadWrite();
     public Object currentUser;
+    public UserMessageManager allUserMessages;
 
     /**
      * Run calls multiple gateways in order to populate the System with saved information pertaining Transactions,
@@ -40,6 +41,9 @@ public class TradeSystem {
         readwrite.itemPopulate(allItems, "ItemList.ser");
         //reads the file and populates UserManager allUsers with the Users stored in UserList.ser
         readwrite.userPopulate(allUsers, "UserList.ser");
+        //either returns the saved UserMessageManager object with all the stored user messages
+        //or creates a new UserMessageManager object if file UserMessages.ser is empty
+        allUserMessages = readwrite.userMessagePopulate("UserMessages.ser");
 
 
         //If there is no current User, prompts log in and prompts the correct menu depending on the type of Account
@@ -55,9 +59,9 @@ public class TradeSystem {
             while (loggedIn != null) {
                 if (loggedIn instanceof User) {
                     loggedIn = inputgetter.callMainMenu((User) loggedIn, allItems, allTradeRequests,
-                            allUsers, allMeetings, allTransactions, allAdmins);
+                            allUsers, allMeetings, allTransactions, allAdmins, allUserMessages);
                 } else if (loggedIn instanceof Admin) {
-                    loggedIn = admininputgetter.mainMenu((Admin) loggedIn, allAdmins, allUsers, allItems);
+                    loggedIn = admininputgetter.mainMenu((Admin) loggedIn, allAdmins, allUsers, allItems, allUserMessages);
                 } else if (loggedIn.equals("exit")) {
                     //loop will break if user decides to exit at any point while they are logged in
                     break;
@@ -85,5 +89,7 @@ public class TradeSystem {
         readwrite.saveToFile("ItemList.ser", allItems);
         //saves current TradeRequest object allTradeRequests to an external file
         readwrite.saveToFile("TradeRequestList.ser", allTradeRequests);
+        //saves current UserMessageManager object allTradeRequests to an external file
+        readwrite.saveToFile("UserMessages.ser", allUserMessages);
     }
 }
