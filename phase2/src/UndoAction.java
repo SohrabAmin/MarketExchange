@@ -53,15 +53,6 @@ public class UndoAction implements adminMainMenuOptions {
 
         return "back";
     }
-    /**
-     * Angel need a list of the undo actions so that user can be notified when Admin
-     * undo something. This may be incorrect,I temporarily write these code here, will discuss with you.
-     */
-    private ArrayList<String> undoWishListAction;
-    public UndoAction(){
-        this.undoWishListAction = new ArrayList<String>(); //Angel temporary modification ends here.
-    }
-
 
     public Object undoWishlist(UserManager allUsers, String chosenLog) {
         System.out.println(chosenLog.split(" ")[2]);
@@ -86,9 +77,7 @@ public class UndoAction implements adminMainMenuOptions {
         this.undoWishListAction.add(user.getName());
         return undoWishListAction;//end
     }
-    /** getter for UndoWishListAction
-     *  Angel Temporary modification
-     */
-    public List<String> getUndoWishListAction(){return this.undoWishListAction;}
+
+
 
 }

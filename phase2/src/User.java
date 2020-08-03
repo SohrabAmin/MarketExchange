@@ -30,6 +30,7 @@ public class User extends Account {
     private boolean isOnVacation;
     private boolean isVIP;
     private List<Item> vacationStorage;
+    private ArrayList<String> undoWishListAction;
 
     //potential hash map for outbound requests to help admins undo
 
@@ -61,6 +62,7 @@ public class User extends Account {
         secondAgreedUponMeetings = new ArrayList<>();
         this.weeklyRequestLimit = new HashMap<>();
         this.FrequentCategory = new HashMap<>();
+        undoWishListAction = new ArrayList<>();
 
         for (int i = 1; i < 53; i++) {
             List<TradeRequest> temp = new ArrayList<>();
@@ -382,4 +384,10 @@ public class User extends Account {
     public List<Item> getVacationStorage() {
         return vacationStorage;
     }
+
+    public void setUndoWishListAction(UndoAction undowishlist)(undoWishListAction.add();)
+
+    public List<String> getUndoWishListAction(){return this.undoWishListAction;}
+
+    public void removeFromUndoWishListAction(UndoAction undowishlist){undoWishListAction.remove(undowishlist);}
 }
