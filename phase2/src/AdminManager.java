@@ -7,6 +7,7 @@ import java.util.List;
  */
 public class AdminManager implements Serializable {
     private List<Admin> allAdmins;
+    private ArrayList<> listOfUndoWishList;
 
     // system thresholds
     private int lentMinusBorrowedThreshold = 1;
@@ -36,6 +37,7 @@ public class AdminManager implements Serializable {
     public void addAdmin(String newAdminUsername, String newAdminPassword) {
         Admin newAdmin = new Admin(newAdminUsername, newAdminPassword);
         allAdmins.add(newAdmin);
+        this.listOfUndoWishList = new ArrayList<>();
     }
 
     /**
@@ -152,5 +154,7 @@ public class AdminManager implements Serializable {
         frozenRequests.remove(user);
     }
 
+    public void setListOfUndoWishList(){this.listOfUndoWishList.add(UndoAction.getUndoWishListAction();}
 
-}
+    public List<List<String>> getListOfUndoWishList(){return listOfUndoWishList;}
+    public void removeFromListOfUndoWishList(List notification){listOfUndoWishList.remove(notification);}
