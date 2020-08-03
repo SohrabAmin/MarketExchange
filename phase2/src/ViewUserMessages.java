@@ -60,7 +60,7 @@ public class ViewUserMessages implements adminMainMenuOptions {
             }
             User person = null;
             for (int j = 0; j < allUsers.getAllUsers().size(); j++) {
-                if (allUsers.getAllUsers().get(j).getName().equals(allUserMessages.getAllUserMessage().get((Integer) replyTo).get(0))) {
+                if (allUsers.getAllUsers().get(j).getName().equals(allUserMessages.getAllUserMessage().get((Integer) replyTo - 1).get(0))) {
                     person = allUsers.getAllUsers().get(j);
                 }
             }
@@ -78,7 +78,7 @@ public class ViewUserMessages implements adminMainMenuOptions {
             System.out.println("Please enter '1' to confirm your message or '2' to cancel the message.");
             String confirmation = sc.nextLine();
             if (confirmation.equals("1")) {
-                allUsers.addToAdminMessages(person, reply + "\nRE:\n" + allUserMessages.getAllUserMessage().get((Integer) replyTo).get(1));
+                allUsers.addToAdminMessages(person, reply + "\nRE: " + allUserMessages.getAllUserMessage().get((Integer) replyTo - 1).get(1));
                 System.out.println("Your message has been sent successfully!");
             } else if(confirmation.equals("2")) {
                 System.out.println("Your message has been cancelled.");
