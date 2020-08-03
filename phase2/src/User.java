@@ -65,6 +65,8 @@ public class User extends Account {
         this.weeklyRequestLimit = new HashMap<>();
         this.FrequentCategory = new HashMap<>();
         undoWishListAction = new ArrayList<>();
+        adminActionHistory = new ArrayList<>();
+        AdminMessages = new ArrayList<>();
 
         for (int i = 1; i < 53; i++) {
             List<TradeRequest> temp = new ArrayList<>();
