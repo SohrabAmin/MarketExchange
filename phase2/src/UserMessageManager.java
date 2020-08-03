@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 
 public class UserMessageManager {
-    private ArrayList<ArrayList<String>> allUserMessage;
+    private ArrayList<ArrayList<String>> allUserMessage = new ArrayList<>();
 
     public void addUserMessage(ArrayList<String> userMessage) {
         allUserMessage.add(userMessage);
