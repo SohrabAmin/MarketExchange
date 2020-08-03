@@ -24,7 +24,7 @@ public class VacationPrompter implements userMainMenuOptions {
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests, UserManager allUsers,
                           MeetingManager allMeetings, TransactionManager allTransactions, AdminManager allAdmins,
-                          Logger undoLogger) {
+                          Logger undoLogger, UserMessageManager allUserMessages) {
         System.out.println("Your account will be taken down for the duration of your vacation. \n" +
                 "You will not be able to trade until you return from your vacation. \n" +
                 "Press 1 to confirm or 2 to cancel.");
