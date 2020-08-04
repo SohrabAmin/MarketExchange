@@ -67,6 +67,7 @@ public class User extends Account {
         undoWishListAction = new ArrayList<>();
         adminActionHistory = new ArrayList<>();
         AdminMessages = new ArrayList<>();
+        vacationStorage = new ArrayList<>();
 
         for (int i = 1; i < 53; i++) {
             List<TradeRequest> temp = new ArrayList<>();

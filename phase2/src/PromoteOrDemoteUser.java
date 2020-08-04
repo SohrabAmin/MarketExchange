@@ -44,7 +44,7 @@ public class PromoteOrDemoteUser implements adminMainMenuOptions {
                     return admin;
                 } else {
                     for (int i = 0; i < listOfUserNames.size(); i++) {
-                        System.out.println( (i+1) + listOfUserNames.get(i));
+                        System.out.println( (i+1) + ". " + listOfUserNames.get(i));
                     }
 
                     Object idOfUserChosenForPromotion = scanner.nextLine();
@@ -91,7 +91,7 @@ public class PromoteOrDemoteUser implements adminMainMenuOptions {
                     return admin;
                 } else {
                     for (int j = 0; j < listOfVIPNames.size(); j++) {
-                        System.out.println((j+1) + listOfVIPNames.get(j));
+                        System.out.println((j+1) + ". " + listOfVIPNames.get(j));
                     }
 
                     Object idOfVIPChosenForDemotion = scanner.nextLine();
