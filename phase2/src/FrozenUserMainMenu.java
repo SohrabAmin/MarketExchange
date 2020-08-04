@@ -39,6 +39,10 @@ public class FrozenUserMainMenu implements  DifferentUserMainMenu{
                 " You are not able to do any trades until you are unfrozen by admin.\n" +
                 "\uD83C\uDFC1 Please ask Admin to unfreeze your account!\n\n");
 
+        if (allUsers.getUser(user).getAdminMessages().size() > 0) {
+            System.out.println("You have " + allUsers.getUser(user).getAdminMessages().size() + " messages from Admin!");
+        }
+
         NotifyUserOfAdminUndo notifyActions = new NotifyUserOfAdminUndo();
         notifyActions.notify(user, allUsers);
 

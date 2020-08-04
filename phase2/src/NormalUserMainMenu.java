@@ -35,14 +35,14 @@ public class NormalUserMainMenu implements DifferentUserMainMenu {
         } else {
             System.out.print("----------------------------------------------------------------------------------------------" +
                     "\n\uD83D\uDC4B Welcome back, " + user.getName() + "!\n");
-        }
-        if (allUsers.getUser(user).getPendingRequests().size() > 0) {
+        } if (allUsers.getUser(user).getPendingRequests().size() > 0) {
             System.out.print("\uD83D\uDCE9 You have " + allUsers.getUser(user).getPendingRequests().size() +
                     " Pending Trade Requests!\n");
-        }
-        if (allUsers.getUser(user).getPendingTrades().size() > 0) {
+        } if (allUsers.getUser(user).getPendingTrades().size() > 0) {
             System.out.print("\u23F3 You have " + allUsers.getUser(user).getPendingTrades().size() +
                     " Pending Transactions!\n");
+        } if (allUsers.getUser(user).getAdminMessages().size() > 0) {
+            System.out.println("You have " + allUsers.getUser(user).getAdminMessages().size() + " messages from Admin!");
         }
 
         NotifyUserOfAdminUndo notifyActions = new NotifyUserOfAdminUndo();
