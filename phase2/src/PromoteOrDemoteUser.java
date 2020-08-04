@@ -30,10 +30,9 @@ public class PromoteOrDemoteUser implements adminMainMenuOptions {
         switch (scanner.nextLine()) {
             case "1":
                 List<String> listOfUserNames = new ArrayList<>();
-                System.out.println("Type the name of the user to promote to VIP user.");
+                System.out.println("Type the number beside the name of the user to promote to VIP user.");
 
                 for (User indexedUser : allUsers.getAllUsers()) {
-
                     // the list of users that will be displayed to the logged in admin
                     if (!indexedUser.getIsVIP()) {
                         listOfUserNames.add(indexedUser.getName());
@@ -42,22 +41,30 @@ public class PromoteOrDemoteUser implements adminMainMenuOptions {
 
                 if (listOfUserNames.isEmpty()) {
                     System.out.println("No non-VIP users found!");
-                    return null;
+                    return admin;
                 } else {
-                    for (String userName : listOfUserNames) {
-                        System.out.println(userName);
+                    for (int i = 0; i < listOfUserNames.size(); i++) {
+                        System.out.println( (i+1) + listOfUserNames.get(i));
                     }
 
-                    String nameOfUserChosenForPromotion = scanner.nextLine();
+                    Object idOfUserChosenForPromotion = scanner.nextLine();
 
-                    // first check whether the admin typed in an actual user name
-                    if (listOfUserNames.contains(nameOfUserChosenForPromotion)) {
+                    try {
+                        //will try to turn the input into an integer
+                        //if input is not an integer, returns null and recalls execute()
+                        idOfUserChosenForPromotion = Integer.parseInt((String) idOfUserChosenForPromotion);
+                    } catch (NumberFormatException e) {
+                        System.out.println("That is not a valid option, please try again!");
+                        return null;
+                    }
+                    // first check whether the admin typed in an valid number
+                    if (listOfUserNames.size() >= (int) idOfUserChosenForPromotion - 1) {
 
                         // loop through the list of users to find the user to promote
                         for (User indexedUser : allUsers.getAllUsers()) {
-                            if (indexedUser.getName().equals(nameOfUserChosenForPromotion)) {
+                            if (indexedUser.getName().equals(listOfUserNames.get((int)idOfUserChosenForPromotion - 1))) {
                                 indexedUser.setIsVIP(true);
-                                System.out.println("User " + nameOfUserChosenForPromotion + " was promoted to VIP!");
+                                System.out.println("User " + (listOfUserNames.get((int)idOfUserChosenForPromotion - 1)) + " was promoted to VIP!");
                             }
                         }
                         return admin;
@@ -69,7 +76,7 @@ public class PromoteOrDemoteUser implements adminMainMenuOptions {
 
             case "2":
                 List<String> listOfVIPNames = new ArrayList<>();
-                System.out.println("Type the name of the VIP to demote to user.");
+                System.out.println("Type the number beside the name of the VIP to demote to user.");
 
                 for (User indexedUser : allUsers.getAllUsers()) {
 
@@ -83,20 +90,29 @@ public class PromoteOrDemoteUser implements adminMainMenuOptions {
                     System.out.println("No VIPs found!");
                     return null;
                 } else {
-                    for (String VIPName : listOfVIPNames) {
-                        System.out.println(VIPName);
+                    for (int j = 0; j < listOfVIPNames.size(); j++) {
+                        System.out.println((j+1) + listOfVIPNames.get(j));
                     }
 
-                    String nameOfVIPChosenForDemotion = scanner.nextLine();
+                    Object idOfVIPChosenForDemotion = scanner.nextLine();
+
+                    try {
+                        //will try to turn the input into an integer
+                        //if input is not an integer, returns null and recalls execute()
+                        idOfVIPChosenForDemotion = Integer.parseInt((String) idOfVIPChosenForDemotion);
+                    } catch (NumberFormatException e) {
+                        System.out.println("That is not a valid option, please try again!");
+                        return null;
+                    }
 
                     // first check whether the admin typed in an actual user name
-                    if (listOfVIPNames.contains(nameOfVIPChosenForDemotion)) {
+                    if (listOfVIPNames.size() >= ((int) idOfVIPChosenForDemotion - 1)) {
 
                         // loop through the list of users to find the VIP user to demote
                         for (User indexedUser : allUsers.getAllUsers()) {
-                            if (indexedUser.getName().equals(nameOfVIPChosenForDemotion)) {
+                            if (indexedUser.getName().equals(listOfVIPNames.get((int)idOfVIPChosenForDemotion - 1))) {
                                 indexedUser.setIsVIP(false);
-                                System.out.println("VIP " + nameOfVIPChosenForDemotion + " was demoted to user!");
+                                System.out.println("VIP " + listOfVIPNames.get((int)idOfVIPChosenForDemotion - 1) + " was demoted to user!");
                             }
                         }
                         return admin;

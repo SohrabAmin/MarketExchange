@@ -45,6 +45,7 @@ public class NormalUserMainMenu implements DifferentUserMainMenu {
             System.out.println("You have " + allUsers.getUser(user).getAdminMessages().size() + " messages from Admin!");
         }
 
+        //if admin has undone any actions on user's account, a string will be printed when they log in
         NotifyUserOfAdminUndo notifyActions = new NotifyUserOfAdminUndo();
         notifyActions.notify(user, allUsers);
 
@@ -68,12 +69,13 @@ public class NormalUserMainMenu implements DifferentUserMainMenu {
                 "17. Logout\n" +
                 "Enter 'exit' to exit the system at any time.\n");
 
-        ChosenOption option = new ChosenOption();
+        ChosenOption option = new ChosenOption(); //stores, sets and runs the menu option that the user has chosen
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         try {
             String input = br.readLine();
             if (!input.equals("exit")) {
+                //depending on their input, the correct "strategy" will be created and stored in the ChosenOption class
                 if (input.equals("1")) { //view and edit wishlist
                     option.setChosenOption(new WishlistManager());
                 } else if (input.equals("2")) { //view inventory
@@ -112,9 +114,11 @@ public class NormalUserMainMenu implements DifferentUserMainMenu {
                     System.out.println("That is not a valid option. Please try again.");
                     return user;
                 }
+                //the option that is chosen by the user will be run
                 Object result = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
                         allTransactions, allAdmins, undoLogger, allUserMessages);
-
+                //if the execute() method of the option returns null, the option will be run again until the user
+                //specifies that they want to return to the main menu
                 while (result == null) {
                     result = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
                             allTransactions, allAdmins, undoLogger, allUserMessages);
@@ -124,14 +128,15 @@ public class NormalUserMainMenu implements DifferentUserMainMenu {
                 if (result.equals("leave")) {
                     return null;
                 }
-
+                //tells TradeSystem() to stay logged in to this user's account; helps with looping the main menu
                 return user;
             }
+            //tells TradeSystem() to log out and bring the user back to the login screen
             return input;
         } catch (IOException e) {
             System.out.println("Something went wrong.");
+            return user;
         }
-        return user;
     }
 
 }

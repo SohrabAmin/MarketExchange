@@ -53,6 +53,7 @@ public class AdminInputGetter {
             String input = br.readLine();
             if (!input.equals("exit")) {
                 switch (input) {
+                    //depending on their input, the correct "strategy" will be created and stored in the ChosenOption class
                     case "1":  //add new admin
                         option.setChosenOption(new addAdmin());
                         break;
@@ -83,7 +84,10 @@ public class AdminInputGetter {
                         System.out.println("That is not a valid option. Please try again.");
                         return admin;
                 }
+                //the option that is chosen by the Admin will be run
                 Object result = option.executeOption(admin, allAdmins, allUsers, allItems, allUserMessages);
+                //if the execute() method of the option returns null, the option will be run again until the Admin
+                //specifies that they want to return to the main menu
                 while (result == null) {
                     result = option.executeOption(admin, allAdmins, allUsers, allItems, allUserMessages);
                 }
