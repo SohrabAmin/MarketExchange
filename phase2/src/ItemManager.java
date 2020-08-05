@@ -30,17 +30,7 @@ public class ItemManager implements Serializable {
 
     public void addItem(Item item) {
         systemInventory.add(item);
-        this.categorizeItem(item);
-    }
-
-    public void categorizeItem(Item item){
-        if(item.getTradable()){
-            this.tradableItem.add(item);
-        }else if(item.getRentable()){
-            this.rentableItem.add(item);
-        }else{
-            this.sellableItem.add(item);
-        }
+        this.sortItem(item);
     }
 
     public void setOwner(Item item, User user) {
@@ -63,6 +53,17 @@ public class ItemManager implements Serializable {
     }
     public void changeRentable(Item item, boolean rentable){
         item.changeRentable(rentable);
+    }
+
+
+    public void sortItem(Item item){
+        if(item.getTradable()){
+            this.tradableItem.add(item);
+        }else if(item.getRentable()){
+            this.rentableItem.add(item);
+        }else{
+            this.sellableItem.add(item);
+        }
     }
 
 }

@@ -69,7 +69,7 @@ public class TradeRequestManager implements Serializable {
      * @param request            The given TradeRequest that the receiving User intends to act upon.
      * @param status             The status the system intends to give to this TradeRequest.
      */
-    public void updateRequestStatus(TransactionManager transactionManager, UserManager userManager, TradeRequest request, int status) {
+    public void updateRequestStatus(UserManager userManager, TradeRequest request, int status) {
         if (request.getStatus() == 0) {
             this.pending.remove(request);
         } else if (request.getStatus() == 1) {
@@ -82,10 +82,10 @@ public class TradeRequestManager implements Serializable {
             this.pending.add(request);
         } else if (status == 1) {
             this.confirmed.add(request);
-            this.handleRequestResponse(transactionManager, userManager, request);
+            this.handleRequestResponse(userManager, request);
         } else {
             this.denied.add(request);
-            this.handleRequestResponse(transactionManager, userManager, request);
+            this.handleRequestResponse(userManager, request);
         }
 
         request.setStatus(status);
@@ -95,11 +95,10 @@ public class TradeRequestManager implements Serializable {
     /**
      * Accepts the TradeRequest within a User's pendingList, creates an instance of Transaction.
      *
-     * @param transactionManager The instance of TransactionManager.
      * @param userManager        The instance of UserManager.
      * @param request            The status the system intends to give to this TradeRequest.
      */
-    public void handleRequestResponse(TransactionManager transactionManager, UserManager userManager, TradeRequest request) {
+    public void handleRequestResponse( UserManager userManager, TradeRequest request) {
         User user1;
         User user2;
 

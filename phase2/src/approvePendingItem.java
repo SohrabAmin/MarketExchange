@@ -66,6 +66,7 @@ public class approvePendingItem implements adminMainMenuOptions{
         }
         if ((Integer) nextInput == 1) { //if item is approved
             allUsers.approveDraftInventoryItem(allUsers.getUser(chosenItem.getOwner()), chosenItem, allItems);
+
             System.out.println("\u2705 Approved!");
 
             return null;

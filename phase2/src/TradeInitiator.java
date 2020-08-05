@@ -342,7 +342,7 @@ public class TradeInitiator implements userMainMenuOptions {
             if (confirmation.equals("1")) {
                 myList.add(salam);
                 myList.add(tradeItem);
-                TradeRequest request = new typeTwoRequest(tradeItem, salam, message, temp, today, tradeItem.getVirtual());;
+                TradeRequest request = new typeTwoRequest(salam, tradeItem, message, temp, today, tradeItem.getVirtual());;
                 allTradeRequests.receiveTradeRequest(allUsers, request);
                 allUsers.addToOutboundRequests(user, request);
                 allUsers.addToWeeklyRequestLimit(user, request);

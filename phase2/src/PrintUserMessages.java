@@ -18,19 +18,10 @@ public class PrintUserMessages implements userMainMenuOptions {
             System.out.print("\nYou have no pending requests.\n");
             return user;
         } else {
-//            for (int i = 0; i < Person.getPendingRequests().size(); i++) {
-//                String ext = "";
-//                //RequesterItem : Item of the requester
-//                //ReceiverItem: Item of the receiver
-//
-//                if (Person.getPendingRequests().get(i).getRequesterItem() != null) {
-//                    ext = " With your item " + Person.getPendingRequests().get(i).getRequesterItem().getName();
-//                }
-//                System.out.print("\uD83E\uDD1D" + Person.getPendingRequests().get(i).getRequester().getName() +
-//                        " is requesting a trade for item: "
-//                        + Person.getPendingRequests().get(i).getReceiverItem().getName() + " With Message: " +
-//                        Person.getPendingRequests().get(i).getMessage() + ext + "\n");
-//            }
+
+
+
+
         }
         return user;
     }

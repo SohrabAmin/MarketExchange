@@ -1,11 +1,12 @@
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
-public class ApproveTrade implements userMainMenuOptions {
 
+public class ApproveTrade implements userMainMenuOptions {
     /**
      * Displays User user's pending requests and deals with approving and rejecting any pending Trade Requests.
      *
@@ -26,15 +27,49 @@ public class ApproveTrade implements userMainMenuOptions {
             return "back";
         }
         System.out.print("Here are your pending trade requests: \n");
-//        for (int i = 0; i < Trades.size(); i++) {
+        for (int i = 0; i < Trades.size(); i++) {
+            String ext = "";
+            if (Trades.get(i) instanceof typeOneRequest){
+                typeOneRequest t = (typeOneRequest) Trades.get(i);
+                //monitized or not
+                String ext1 = "";
+                //the person is looking to buy
+                if (t.getMonetized()){
+                    //its either buy or rent
+                    if (t.getTemp()) { //renting over here
+                        System.out.print("\uD83E\uDD1D" + (i + 1) + ". " + t.getFirstUser().getName() +
+                                " Wants to rent " + t.getItem().getName()  + "\n");
+                    }
+                    else {
+                        System.out.print("\uD83E\uDD1D" + (i + 1) + ". " + t.getFirstUser().getName() +
+                                " Wants to buy " + t.getItem().getName()  + "\n");
+                    }
+                }
+
+
+            }
+            if (Trades.get(i) instanceof typeTwoRequest){
+                typeTwoRequest t = (typeTwoRequest) Trades.get(i);
+                //monitized or not
+                System.out.print(t.getFirstUser().getName() + " wants item: " + t.getSecondItem().getName() + " in return for " + t.getFirstItem().getName() +
+                        "\n");
+            }
+
+            //still need to print type 3 request
+
+
+
+
+
+
 //            String ext = "";
-//            if (Person.getPendingRequests().get(i).getRequesterItem() != null) {
+//            if (Person.getPendingRequests().get(i).get() != null) {
 //                ext = " With your item " + Person.getPendingRequests().get(i).getRequesterItem().getName();
 //            }
 //
 //            System.out.print("\uD83E\uDD1D" + (i + 1) + ". " + Trades.get(i).getRequester().getName() +
 //                    " Wants " + Trades.get(i).getReceiverItem().getName() + ext + "\n");
-//        }
+        }
 
         //printed all pending requests
         //select request
@@ -58,6 +93,168 @@ public class ApproveTrade implements userMainMenuOptions {
         System.out.print("You have selected the following pending trade: \n");
         String ext2 = "";
         String temp = "Permanent";
+        TradeRequest cTrade =  Trades.get(pendingRequestIndex);
+
+        if (cTrade instanceof typeOneRequest) {
+            //print the trade
+            //then acccept or deny
+            typeOneRequest t = (typeOneRequest) cTrade;
+            boolean money = t.getMonetized();
+            //if monetized
+            System.out.print("Here is the trade you selected: " + t.getItem() + "\n");
+            System.out.print("Press 1 to approve and press 2 to deny!\n");
+            input = sc.next();
+            if (input.equals("1")){ //approved
+                allTradeRequests.updateRequestStatus(allUsers, cTrade, 1);
+                //check if it is monetized
+                //check if it is temporary
+                OneWay final1;
+                if (money){
+                    if (t.getTemp()){//if temporary
+                        final1 = new OneWayMonetized(user, t.getItem(), true, t.getVirtual());
+
+                    }else { //sellin
+                        final1 = new OneWayMonetized(user, t.getItem(), false, t.getVirtual());
+                    }
+                }
+                else { //if not mon
+                    if (t.getTemp()){//if temporary
+                        final1 = new OneWay(user, t.getItem(), true, t.getVirtual());
+
+                    }else { //selling
+                        final1 = new OneWay(user, t.getItem(), false, t.getVirtual());
+                    }
+                }
+                allTransactions.addToPendingTransactions(final1, allUsers);
+
+                Meeting meeting = meetingInitiator(allMeetings);
+                User temp1 = t.getFirstUser(); //initiating the trade
+                User temp2 = t.getSecondUser(); //owns the item
+                meeting.initialconfirm(temp1.getName(), temp2.getName()); //this line creates a meeting that hasnt been confirmed
+                meeting.initialHistory(temp1.getName(), 0);
+                meeting.initialHistory(temp2.getName(), 1);
+                final1.setInitialMeeting(meeting);
+                final1.getInitialMeeting().changeLastEdit(user.getName());
+                System.out.print("Approved by you!\n");
+                return null;
+            }
+            else if (input.equals("2")){//denied
+                //pending 0
+                //denied 2
+                //approved 1
+                allTradeRequests.updateRequestStatus(allUsers,cTrade, 2);
+                System.out.print("Denied!\n");
+                return null;
+            }
+        }
+        if (cTrade instanceof typeTwoRequest){
+            typeTwoRequest t = (typeTwoRequest) cTrade;
+            System.out.print("Here is the trade you selected: " + "They want: " + t.getSecondItem() + "\n");
+            System.out.print("Press 1 to approve and press 2 to deny and 3 to extend to a threeway\n");
+            input = sc.next();
+            if (input.equals("1")) { //approved
+                allTradeRequests.updateRequestStatus(allUsers, cTrade, 1);
+                TwoWay final1;
+                if (t.getTemp()) {//if temporary
+                    final1 = new TwoWay(t.getFirstItem(), t.getSecondItem(), true, t.getVirtual());
+
+                } else { //selling
+                    final1 = new TwoWay(t.getFirstItem(), t.getSecondItem(), false, t.getVirtual());
+                }
+                allTransactions.addToPendingTransactions(final1, allUsers);
+
+                Meeting meeting = meetingInitiator(allMeetings);
+                User temp1 = t.getFirstUser(); //initiating the trade
+                User temp2 = t.getSecondUser(); //owns the item
+                meeting.initialconfirm(temp1.getName(), temp2.getName()); //this line creates a meeting that hasnt been confirmed
+                meeting.initialHistory(temp1.getName(), 0);
+                meeting.initialHistory(temp2.getName(), 1);
+                final1.setInitialMeeting(meeting);
+                final1.getInitialMeeting().changeLastEdit(user.getName());
+
+                System.out.print("Approved by you!\n");
+                return null;
+
+            }
+            else if (input.equals("2")){//denied
+                //pending 0
+                //denied 2
+                //approved 1
+                allTradeRequests.updateRequestStatus(allUsers,cTrade, 2);
+                System.out.print("Denied!\n");
+                return null;
+            }
+            else { //briging in a 3rd person
+                int index = 0;
+                ArrayList <Item> theItems = new ArrayList<>();
+                System.out.print("Here are other items you can choose from: \n");
+                for (int i=0; i < allItems.getSystemInventory().size(); i++){
+                    Item chosen = allItems.getSystemInventory().get(i);
+                    if (chosen.getTradable()){//if item is tradable
+                        if (chosen.getName().equals(((typeTwoRequest) cTrade).getFirstItem().getName()) || chosen.getName().equals(((typeTwoRequest) cTrade).getSecondItem().getName())){
+                            continue;
+                        }
+                        else {
+                            System.out.print( (index + 1) + " . " + chosen.getName() + "\n");
+                            theItems.add(chosen);
+                            index++;
+                        }
+                    }
+
+                }
+                        //so by now i have printed all items
+                        System.out.print("Please choose which item you want to initiate the 3 way trade with!\n");
+                        Object input2 = sc.next();
+                        Integer index3way = Integer.parseInt((String) input2);
+                        index3way = index3way -1;
+                        System.out.print("Item you chose is: " + theItems.get(index3way).getName() + " and the owner: " + theItems.get(index3way).getOwner().getName() + " will be engaged\n");
+                        System.out.print("Please choose another one of your items to trade!\n");
+                        ArrayList <Item> userinventory = new ArrayList<>();
+                        for (int i = 0; i < user.getInventory().size(); i++){
+                            if (!user.getInventory().get(i).getName().equals(((typeTwoRequest) cTrade).getFirstItem().getName()) && !user.getInventory().get(i).getName().equals(((typeTwoRequest) cTrade).getSecondItem().getName()))
+                            {
+                               userinventory.add(user.getInventory().get(i));
+                            }
+                        }
+
+                        for (int j=0; j < userinventory.size(); j++){
+                            System.out.print((j+1) + " . " + userinventory.get(j).getName() + "\n");
+                        }
+
+                        if (userinventory.size()==0){
+                            System.out.print("Sorry but you don't have enough items to engage in a 3 way trade! please add more items first!\n");
+                            return user;
+                        }
+                        Object input3 = sc.next();
+                        Integer item3way = Integer.parseInt((String) input3);
+
+                        Item secondItem = userinventory.get(item3way-1);
+                        System.out.print("Item you chose is: " + theItems.get(index3way).getName() + "\n");
+
+
+
+
+
+
+
+
+                return user;
+
+
+
+
+
+
+
+            }
+
+
+
+        }
+
+
+
+
 //        if (Person.getPendingRequests().get(pendingRequestIndex).getRequesterItem() != null) {
 //            ext2 = " For your item " + Person.getPendingRequests().get(pendingRequestIndex).getRequesterItem().getName();
 //        }
@@ -92,44 +289,8 @@ public class ApproveTrade implements userMainMenuOptions {
 //        }
         //select if you want to approve or reject
         //method that handles approve or reject
-    return null;
+        return null;
     }
-
-    /**
-     * Helper function. If User approves of the trade, it will proceed to create a Transaction and Meeting.
-     *
-     * @param user            User that approves of the trade
-     * @param allUsers        UserManager that stores all Users
-     * @param allMeetings     MeetingManager that deals with creating meetings
-     * @param request         the Trade Request that is approved
-     * @param allTransactions TransactionManager which deals with all system Transactions
-     */
-    public void acceptTrade(User user, UserManager allUsers, MeetingManager allMeetings, TradeRequest request, TransactionManager allTransactions) {
-//        System.out.print("\u2705 Approved!\n");
-//        //if the trade request is approved, we should now start a trade and make a meeting
-//        Meeting meeting = meetingInitiator(allMeetings);
-//
-//        User temp1 = request.getRequester();
-//        User temp2 = request.getReceiver();
-//
-//        meeting.initialconfirm(temp1.getName(), temp2.getName()); //this line creates a meeting that hasnt been confirmed
-//        meeting.initialHistory(temp1.getName(), 0);
-//        meeting.initialHistory(temp2.getName(), 1);
-//
-//        allUsers.removeFromPendingRequests(allUsers.getUser(user), request);
-//        if (request.getRequestType() == 1) { //1 way
-//            OneWay on = new OneWay(temp1, request.getReceiverItem(), request.getTemp());
-//            on.setInitialMeeting(meeting);
-//            on.getInitialMeeting().changeLastEdit(user.getName());
-//            allTransactions.addToPendingTransactions(on, allUsers);
-//        } else if (request.getRequestType() == 2) { //2way
-//            TwoWay on = new TwoWay(request.getRequesterItem(), request.getReceiverItem(), request.getTemp());
-//            on.setInitialMeeting(meeting);
-//            allTransactions.addToPendingTransactions(on, allUsers);
-//            on.getInitialMeeting().changeLastEdit(user.getName());
-//        }
-    }
-
     /**
      * Helper function. If User user rejects the trade, it will remove the Trade Request from the user's pending
      * request list.
@@ -142,7 +303,6 @@ public class ApproveTrade implements userMainMenuOptions {
         allUsers.removeFromPendingRequests(user, request);
         System.out.print("\u274E Rejected!\n");
     }
-
     /**
      * Initiates a Meeting by asking the User for a proposed date, time and location for the meeting.
      *
@@ -162,7 +322,6 @@ public class ApproveTrade implements userMainMenuOptions {
         System.out.print("\uD83D\uDCCD Please enter your proposed location for this trade\n");
         String location = sc.nextLine();
         Meeting meeting = allMeetings.createMeeting(date, time, location);
-
         System.out.println("\nThis is your proposed date for this trade:");
         System.out.println(meeting.toString());
         System.out.println("\nIf this is correct, please enter '1'. If you would like to change the proposed date, " +
@@ -176,7 +335,6 @@ public class ApproveTrade implements userMainMenuOptions {
         }
         return meeting;
     }
-
     /**
      * Checks to see if the String date is a valid date in the calendar.
      * <p>
@@ -198,5 +356,4 @@ public class ApproveTrade implements userMainMenuOptions {
         }
         return true;
     }
-
 }
