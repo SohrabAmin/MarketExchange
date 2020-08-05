@@ -155,7 +155,7 @@ public class WishlistManager implements userMainMenuOptions {
         }
 
         Item wishlistItem = new Item(name, null, description, category, false, false, false,
-                false, 0.0, 0.0);
+                false, 0.0, 0.0, null);
         System.out.println("The item you wish to add to your wishlist is the following: ");
         System.out.println("Item name: " + wishlistItem.getName() + "\n" + "Item description: " + wishlistItem.getDescription() +
                 "\nItem category: " + wishlistItem.getCategory());

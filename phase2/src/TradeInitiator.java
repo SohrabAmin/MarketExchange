@@ -51,8 +51,6 @@ public class TradeInitiator implements userMainMenuOptions {
             return null;
         }
 
-        System.out.print(inum);
-
 
         //the item they have selected
         Item tradeItem = allItems.getSystemInventory().get((Integer) inum - 1);
@@ -66,12 +64,152 @@ public class TradeInitiator implements userMainMenuOptions {
             System.out.print("\uD83E\uDDD0 You are the owner so you cannot trade with yourself!\n");
             return null;
         }
+
+
         //myList is the list of items used to feed into the 1way or 2 way trades
         List<Item> myList = new ArrayList<>();
         myList.add(tradeItem);
 
+
+
+        if (tradeItem.getSellable() && !tradeItem.getTradable() && !tradeItem.getRentable()){ //if sellable and tradable but not rentable
+
+            String mssge = "";
+
+            System.out.print("Please enter message for the owner of the item\n");
+            mssge =  sc.nextLine();
+
+            typeOneRequest trade = new typeOneRequest(user, tradeItem, mssge, false, today, tradeItem.getVirtual(), true);
+            allTradeRequests.receiveTradeRequest(allUsers, trade);
+            System.out.print("Your request is sent!\n");
+            return user;
+        }
+        else if (tradeItem.getRentable() && !tradeItem.getTradable() && !tradeItem.getTradable()){ //if only rentable
+
+            String mssge = "";
+
+            System.out.print("Please enter message for the owner of the item\n");
+            mssge =  sc.nextLine();
+
+            typeOneRequest trade = new typeOneRequest(user, tradeItem, mssge, true, today, tradeItem.getVirtual(), true);
+            allTradeRequests.receiveTradeRequest(allUsers, trade);
+            System.out.print("Your request is sent!\n");
+            return user;
+        }
+        if (tradeItem.getRentable() && tradeItem.getSellable() && !tradeItem.getTradable()){ //rentable and sellable but not tradable
+            System.out.print("Please enter 1 if you want to rent the item. Enter 2 if you want to buy the item.\n");
+            Object in = sc.nextLine();
+            String mssge = "";
+
+            System.out.print("Please enter message for the owner of the item\n");
+            mssge =  sc.nextLine();
+
+            if (in.equals("1")){ //rent the item
+                typeOneRequest trade = new typeOneRequest(user, tradeItem, mssge, true, today, tradeItem.getVirtual(), true);
+                allTradeRequests.receiveTradeRequest(allUsers, trade);
+                System.out.print("Your request is sent!\n");
+                return user;
+
+            }
+            else if (in.equals("2")){ //sell the item
+                typeOneRequest trade = new typeOneRequest(user, tradeItem, mssge, false, today, tradeItem.getVirtual(), true);
+                allTradeRequests.receiveTradeRequest(allUsers, trade);
+                System.out.print("Your request is sent!\n");
+                return user;
+            }
+        }
+//so by here, we covered all 1 way stuff (minus 1 way trade)
+        else if (!tradeItem.getRentable() && tradeItem.getSellable() && tradeItem.getTradable()){ //if it is sellable or tradable
+            System.out.print("Please enter 1 if you want to buy the item. Enter 2 if you want to trade the item.\n");
+            Object in = sc.nextLine();
+            String mssge = "";
+            System.out.print("Please enter message for the owner of the item\n");
+            mssge =  sc.nextLine();
+
+            if (in.equals("1")){ //if sellable and tradable and the person wants to buy
+                typeOneRequest trade = new typeOneRequest(user, tradeItem, mssge, false, today, tradeItem.getVirtual(), true);
+                allTradeRequests.receiveTradeRequest(allUsers, trade);
+                System.out.print("Your request is sent!\n");
+                return user;
+            }
+            else if (in.equals("2")) {
+                return tradableDealer( user,  allItems,  allTradeRequests,
+                         allUsers,  allMeetings,  allTransactions,
+                         allAdmins,  undoLogger,  allUserMessages, tradeItem, monetized, myList);
+             //   System.out.print("Your request is sent!\n");
+
+            }
+        }
+        else if (tradeItem.getRentable() && !tradeItem.getSellable() && tradeItem.getTradable()) { //if it is rentable or tradable
+
+            System.out.print("Please enter 1 if you want to rent the item. Enter 2 if you want to trade the item.\n");
+            Object in = sc.nextLine();
+            String mssge = "";
+            System.out.print("Please enter message for the owner of the item\n");
+            mssge =  sc.nextLine();
+
+            if (in.equals("1")){   //if they want  to rent
+
+                typeOneRequest trade = new typeOneRequest(user, tradeItem, mssge, true, today, tradeItem.getVirtual(), true);
+                allTradeRequests.receiveTradeRequest(allUsers, trade);
+                System.out.print("Your request is sent!\n");
+                return user;
+            }
+            else if (in.equals("2")) { //if they want to trade
+                return tradableDealer( user,  allItems,  allTradeRequests,
+                        allUsers,  allMeetings,  allTransactions,
+                        allAdmins,  undoLogger,  allUserMessages, tradeItem, monetized, myList);
+
+            }
+        }
+        else if (!tradeItem.getRentable() && !tradeItem.getSellable() && tradeItem.getTradable()){ //if only tradable
+            return tradableDealer( user,  allItems,  allTradeRequests,
+                    allUsers,  allMeetings,  allTransactions,
+                    allAdmins,  undoLogger,  allUserMessages, tradeItem, monetized, myList);
+
+        }
+        else {//all three options
+            System.out.print("Please enter 1 if you want to rent the item. Enter 2 if you want to buy the item. Enter 3 if you want to trade the item\n");
+            Object in = sc.nextLine();
+            if (in.equals("1")){//they wanna rent
+                String mssge = "";
+                System.out.print("Please enter message for the owner of the item\n");
+                mssge =  sc.nextLine();
+                typeOneRequest trade = new typeOneRequest(user, tradeItem, mssge, true, today, tradeItem.getVirtual(), true);
+                allTradeRequests.receiveTradeRequest(allUsers, trade);
+                System.out.print("Your request is sent!\n");
+                return user;
+
+            }
+            else if (in.equals("2")){
+                String mssge = "";
+                System.out.print("Please enter message for the owner of the item\n");
+                mssge =  sc.nextLine();
+                typeOneRequest trade = new typeOneRequest(user, tradeItem, mssge, false, today, tradeItem.getVirtual(), true);
+                allTradeRequests.receiveTradeRequest(allUsers, trade);
+                System.out.print("Your request is sent!\n");
+                return user;
+            }
+            else if (in.equals("3")){ //if they wanna trade
+                return tradableDealer( user,  allItems,  allTradeRequests,
+                        allUsers,  allMeetings,  allTransactions,
+                        allAdmins,  undoLogger,  allUserMessages, tradeItem, monetized, myList);
+            }
+            //error check here!
+        }
+
+      return user;
+    }
+
+
+
+    public Object tradableDealer (User user, ItemManager allItems, TradeRequestManager allTradeRequests,
+                                  UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
+                                  AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages, Item tradeItem, boolean monetized,  List<Item> myList){
         System.out.println("Please type '1' for one way trade and '2' for two way trade or 'back' to cancel the " +
                 "current trade and restart.");
+        Scanner sc = new Scanner(System.in);    //System.in is a standard input stream
+        Calendar today = Calendar.getInstance(); //get today's date
 
         //trade type
         Object tType = sc.nextLine();
@@ -101,7 +239,7 @@ public class TradeInitiator implements userMainMenuOptions {
         }
         boolean temp = false;
 
-        if (type.equals('1')) { //if its temporary or permanent, 1 means its temporary
+        if (type.equals("1")) { //if its temporary or permanent, 1 means its temporary
             temp = true;
         } else if (type.equals("2")) {
             temp = false;
@@ -155,13 +293,7 @@ public class TradeInitiator implements userMainMenuOptions {
             otherPersonWL = allUsers.getUser(tradeItem.getOwner()).getWishlist();
             for (int i = 0; i < in.size(); i++) {
                 String recom = "\n";
-//                for (int j = 0; j < otherPersonWL.size(); j++){
-//                    if (in.get(i).getName().equals(otherPersonWL.get(j).getName())){
-//                        recom = " <- [RECOMMENDED] item is in item owner's wishlist!\n";
-//                        suggested = true;
-//                    }
-//
-//                }
+
                 System.out.println(i + 1 + ". " + in.get(i).getName() + recom);
             }
 
@@ -230,7 +362,12 @@ public class TradeInitiator implements userMainMenuOptions {
             System.out.println("Invalid response. Please try again.Request cancelled.\n");
             return null;
         }
+
+
+
     }
+
+
 
     //taken from https://www.geeksforgeeks.org/how-to-find-the-entry-with-largest-value-in-a-java-map/
     // Find the entry with highest value

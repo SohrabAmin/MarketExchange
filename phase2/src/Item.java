@@ -12,10 +12,11 @@ public class Item implements Serializable {
     private boolean rentable;
     private Double sellPrice;
     private Double rentPrice;
+    private Integer rentDuration;
 
 
     public Item(String name, User owner, String description, String category, boolean virtual, boolean tradable, boolean sellable, boolean rentable,
-                Double sellPrice, Double rentPrice) {
+                Double sellPrice, Double rentPrice, Integer rentDuration) {
         this.name = name;
         this.owner = owner;
         this.description = description;
@@ -27,6 +28,7 @@ public class Item implements Serializable {
         this.sellable = sellable;
         this.tradable = tradable;
         this.virtual = virtual;
+        this.rentDuration = rentDuration;
     }
 
 
@@ -108,6 +110,10 @@ public class Item implements Serializable {
 
     public double getRentPrice() {
         return this.rentPrice;
+    }
+
+    public int getRentDuration(){
+        return rentDuration;
     }
 
     /**

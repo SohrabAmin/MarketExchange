@@ -75,7 +75,7 @@ public class Browse implements userMainMenuOptions {
             System.out.println("Please enter '1' to view only items from users in the same location as you or "
                     + "'2' to view all items in the system.");
             String input = sc.nextLine();
-            if (input.equals("1")) {
+            if (input.equals('1')) {
                 List<Item> temp = new ArrayList<>();
                 for (int i = 0; i < allItems.getSystemInventory().size(); i++) {
                     if (allItems.getSystemInventory().get(i).getOwner().getLocation().equals(user.getLocation())) {
@@ -88,29 +88,35 @@ public class Browse implements userMainMenuOptions {
                 } else { //temp.size() != 0
                     allItems2 = temp;
                 }
-            } else if (!input.equals("2")) {
+            } else if (!input.equals('2')) {
                 System.out.println("That is not a valid option, please try again!");
                 DisplayBrowse(user, allItems);
             }
         }
-
         //Display every item we have. Make sure if the item is owned by the user, show that it is owned by user
         //shows the price if it is for sale
         for (int i = 0; i < allItems2.size(); i++) {
             String selfowned = "";
-            String tradeOrSell = "  [TRADE]";
+            String sell = "";
+            String rent = "";
+            String trade = "";
+
+
+            if (allItems2.get(i).getSellable()) sell = " [SELLABLE] price: " + allItems2.get(i).getSellPrice() + " ";
+            if (allItems2.get(i).getRentable()) rent = " [RENTABLE] price: " + allItems2.get(i).getRentPrice() + " per " + allItems2.get(i).getRentDuration() + " days ";
+            if (allItems2.get(i).getTradable()) trade = " [TRADABLE] ";
+
+
+
             String emoji = "\uD83D\uDCE6 ";
             if (allItems2.get(i).getOwner().getName().equals(user.getName())) { //change the emoji and add OWNED BY YOU if the user is the owner of the item
                 selfowned = "  [OWNED BY YOU] ";
                 emoji = "\u2714 ";
             }
-            if (!allItems2.get(i).getSellable()) {
-                tradeOrSell = "  [SELLING for " + allItems2.get(i).getSellable() + "]";
-            }
+
             System.out.println(emoji + (i + 1) + ". " + allItems2.get(i).getName() + ": "
-                    + allItems2.get(i).getDescription() + tradeOrSell + selfowned + "\n");
+                    + allItems2.get(i).getDescription() + selfowned + sell + rent + trade + "\n");
         }
         return allItems2;
     }
-
 }

@@ -31,51 +31,100 @@ public class AddItemToSystem implements userMainMenuOptions {
         String input = sc.nextLine();
         if (input.equals("back")){
             return "back";
-        } else if (input.equals("1")) {
+        } else if (input.equals(1)) {
             digital = true;
         }
 
         System.out.println("Please enter '1' if you wish to trade this item, '2' if you wish to sell this item or\n" +
-                "'3' if you wish to rent this item.");
+                "'3' if you wish make item rentable. If you wish to choose more than 1 option, please put the numbers together without space.\n For example 12 would be tradable and sellable.\n");
         System.out.println("Enter 'back' to go back to the main menu.");
         String option = sc.nextLine();
         String tradeOrSell = "Undefined";
         if (option.equals("back")) {
             return "back";
         }
+        boolean t = false;
+        boolean s = false;
+        boolean r = false;
         while (tradeOrSell.equals("Undefined")) {
             if (option.equals("1")) {
-                tradeOrSell = "trade";
+                t = true;
+                break;
             } else if (option.equals("2")) {
-                tradeOrSell = "sell";
+                s = true;
+                break;
             } else if (option.equals("3")) {
-                tradeOrSell = "rent";
-            }else {
+                r = true;
+                break;
+            }else if (option.equals("12")) {
+                t = true;
+                s = true;
+                break;
+            }else if (option.equals("13")) {
+                r = true;
+                t = true;
+                break;
+            }else if (option.equals("23")) {
+                s = true;
+                r = true;
+                break;
+            }else if (option.equals("123")) {
+                s = true;
+                r = true;
+                t= true;
+                break;
+            }
+            else {
                 System.out.println("That is not a valid option! Please try again.");
             }
         }
-        Double price = null;
-        if (tradeOrSell.equals("sell") || tradeOrSell.equals("rent")) {
-            while (price == null) {
-                if (tradeOrSell.equals("sell")) {
-                    System.out.println("Please enter the price you would like to sell this item for or 'back' " +
-                            "to return to the main menu.");
-                } else { //tradeOrSell.equals("rent")
-                    System.out.println("Please enter the price you would like to rent this item for or 'back' " +
-                            "to return to the main menu.");
-                }
-                String priceInput = sc.nextLine();
-                if (priceInput.equals("back")) {
-                    return "back";
-                }
-                try {
-                    Double temp = Double.parseDouble(priceInput);
-                    price = (double) Math.round(temp * 100) / 100;
-                } catch (NumberFormatException e) {
-                    System.out.println("Invalid price! Please try again.");
-                }
+        Double rprice = null;
+        Double sprice = null;
+
+
+        if (s){ //if just sellable
+            System.out.println("Please enter the price you would like to sell this item for \n");
+            String priceInput = sc.nextLine();
+            if (priceInput.equals("back")) {
+                return "back";
+            }
+            try {
+                Double temp = Double.parseDouble(priceInput);
+                sprice = (double) Math.round(temp * 100) / 100;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid price! Please try again.");
             }
         }
+
+        Integer days = null;
+        if (r){ //if just sellable
+            System.out.println("Please enter the price you would like to rent this item for \n");
+            String priceInput = sc.nextLine();
+            if (priceInput.equals("back")) {
+                return "back";
+            }
+            try {
+                Double temp = Double.parseDouble(priceInput);
+                rprice = (double) Math.round(temp * 100) / 100;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid price! Please try again.");
+            }
+
+            System.out.println("Please enter number of days you would like to have this item be rented\n");
+            String input2 = sc.nextLine();
+            if (input2.equals("back")) {
+                return "back";
+            }
+            try {
+                days  = Integer.parseInt(input2);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid price! Please try again.");
+            }
+
+        }
+
+
+
 
         System.out.print("Please choose the category of item you would like to add " +
                 "by typing the number or 'back' to go back to the main menu.\n");
@@ -118,27 +167,14 @@ public class AddItemToSystem implements userMainMenuOptions {
             }
         }
         Item newItem;
-        if (tradeOrSell.equals("sell")) {
-            newItem = new Item(itemName, user, description, category, digital, false, true,
-                    false, price, null);
-            System.out.println("The item you wish to add is the following: ");
-            System.out.println("Item name: " + newItem.getName() + "\n" + "Item description: " +
-                    newItem.getDescription() + "\n" + "Price: " + newItem.getSellPrice() + "\n"
-                    + "Item Category:" + newItem.getCategory());
-        } else if (tradeOrSell.equals("rent")) {
-            newItem = new Item(itemName, user, description, category, digital, false, true,
-                    false, null, price);
-            System.out.println("The item you wish to add is the following: ");
-            System.out.println("Item name: " + newItem.getName() + "\n" + "Item description: " +
-                    newItem.getDescription() + "\n" + "Price: " + newItem.getRentPrice() + "\n"
-                    + "Item Category:" + newItem.getCategory());
-        }else {
-            newItem = new Item(itemName, user, description, category, digital, true, false,
-                    false, null, null);
-            System.out.println("The item you wish to add is the following: ");
-            System.out.println("Item name: " + newItem.getName() + "\n" + "Item description: " +
-                    newItem.getDescription() + "\n Item Category:" + newItem.getCategory());
-        }
+
+        newItem = new Item(itemName, user, description, category, digital, t, s,
+                r, sprice, rprice, days);
+        System.out.println("\nThe item you wish to add is the following: ");
+        System.out.println("Item name: " + newItem.getName() + "\n" + "Item description: " +
+                newItem.getDescription() + "\n"
+                + "Item Category:" + newItem.getCategory());
+
         System.out.println("\nIf this is correct, please enter '1'. If you would like to change the item, " +
                 "please enter '2'.");
         String confirmation = sc.nextLine();
@@ -151,7 +187,7 @@ public class AddItemToSystem implements userMainMenuOptions {
         }
 
         allUsers.addToDraftInventory(user, newItem);
-        System.out.print("\n \u2705 Your request is sent to admin for approval!\n");
+        System.out.print("\n\u2705 Your request is sent to admin for approval!\n");
         allUsers.addToItemHistory(user, newItem);
         return null;
     }
