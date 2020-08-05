@@ -28,7 +28,7 @@ public class DemoUserMainMenu implements DifferentUserMainMenu{
      */
     public Object mainMenu(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                            UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                           AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages) {
+                           AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages, CurrencyManager currencyManager) {
         System.out.print("-------------------------------------------------------\n\uD83E\uDD16 Hello Demo User \uD83E\uDD16\n");
 
         System.out.println("Please select number from the following: ");
@@ -63,10 +63,10 @@ public class DemoUserMainMenu implements DifferentUserMainMenu{
                 ChosenOption option = new ChosenOption();
                 option.setChosenOption(new WishlistManager());
                 Object temp = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
-                        allTransactions, allAdmins, undoLogger, allUserMessages);
+                        allTransactions, allAdmins, undoLogger, allUserMessages, currencyManager);
                 while (temp == null) {
                     temp = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
-                            allTransactions, allAdmins, undoLogger, allUserMessages);
+                            allTransactions, allAdmins, undoLogger, allUserMessages, currencyManager);
                 }
                 return user;
             } else if (a.equals("2")) { //view inventory
@@ -81,10 +81,10 @@ public class DemoUserMainMenu implements DifferentUserMainMenu{
                 ChosenOption option = new ChosenOption();
                 option.setChosenOption(new Browse());
                 Object temp = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
-                        allTransactions, allAdmins, undoLogger, allUserMessages);
+                        allTransactions, allAdmins, undoLogger, allUserMessages, currencyManager);
                 while (temp == null) {
                     temp = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
-                            allTransactions, allAdmins, undoLogger, allUserMessages);
+                            allTransactions, allAdmins, undoLogger, allUserMessages, currencyManager);
                 }
                 return user;
             } else if (a.equals("4")) { //choose the id?

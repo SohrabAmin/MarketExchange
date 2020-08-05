@@ -126,7 +126,7 @@ public class ApproveTrade implements userMainMenuOptions {
                         final1 = new OneWay(user, t.getItem(), false, t.getVirtual());
                     }
                 }
-                allTransactions.addToPendingTransactions(final1, allUsers);
+                allTransactions.addToPendingTransactions(final1, allUsers, currencyManager);
 
                 Meeting meeting = meetingInitiator(allMeetings);
                 User temp1 = t.getFirstUser(); //initiating the trade
@@ -162,7 +162,7 @@ public class ApproveTrade implements userMainMenuOptions {
                 } else { //selling
                     final1 = new TwoWay(t.getFirstItem(), t.getSecondItem(), false, t.getVirtual());
                 }
-                allTransactions.addToPendingTransactions(final1, allUsers);
+                allTransactions.addToPendingTransactions(final1, allUsers, currencyManager);
 
                 Meeting meeting = meetingInitiator(allMeetings);
                 User temp1 = t.getFirstUser(); //initiating the trade
@@ -231,12 +231,10 @@ public class ApproveTrade implements userMainMenuOptions {
 
                         Item secondItem = userinventory.get(item3way-1);
                         System.out.print("Item you chose is: " + theItems.get(index3way).getName() + "\n");
-
-
-
-
-
-
+                        ThreeWay transfinal = new ThreeWay(((typeTwoRequest) cTrade).getFirstItem(),
+                                ((typeTwoRequest) cTrade).getSecondItem(), secondItem, cTrade.getTemp(), cTrade.getVirtual());
+                         allTransactions.addToPendingTransactions(transfinal, allUsers, currencyManager);
+                         System.out.print("Your request is now sent to the third manager!\n");
 
 
                 return user;

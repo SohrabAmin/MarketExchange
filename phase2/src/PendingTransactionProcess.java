@@ -82,7 +82,7 @@ public class PendingTransactionProcess implements userMainMenuOptions {
                 if (input.equals("1")) { //if they approve
                     //need another method for usermanager so that transactions in progress but meeting is set
                     System.out.print("Your meeting has been set!\n");
-                    allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 1);
+                    allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 1, currencyManager);
 
                     undoLogger.log(Level.INFO, selectedT.toString());
 
@@ -97,8 +97,8 @@ public class PendingTransactionProcess implements userMainMenuOptions {
                     //here is where the transaction gets cancelled because they couldnt make up their mind
                     if (tt.getInitialMeeting().geteditHistory(user.getName()) == allAdmins.getMeetingEditThreshold()) {
                         //one person reached 3 edits, its time to delete this transaction
-                        allTransactions.handleCancelledTrade(allAdmins, allUsers, selectedT);
-                        allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 4);
+                        allTransactions.handleCancelledTrade(allAdmins, allUsers, selectedT, currencyManager);
+                        allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 4, currencyManager);
 
                         undoLogger.log(Level.INFO, selectedT.toString());
 
@@ -122,7 +122,7 @@ public class PendingTransactionProcess implements userMainMenuOptions {
                 } else if (input.equals("3")) {
                     //need another method for usermanager so that transactions in progress but meeting is set
                     System.out.print("Your meeting has been cancelled!\n");
-                    allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 4);
+                    allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 4, currencyManager);
 
                     undoLogger.log(Level.INFO, selectedT.toString());
                 }
@@ -147,7 +147,7 @@ public class PendingTransactionProcess implements userMainMenuOptions {
                 String input = sc1.nextLine();
                 if (input.equals("1")) { //if they approve
                     //need another method for usermanager so that transactions in progress but meeting is set
-                    allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 1);
+                    allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 1, currencyManager);
 
                     undoLogger.log(Level.INFO, selectedT.toString());
 
@@ -159,8 +159,8 @@ public class PendingTransactionProcess implements userMainMenuOptions {
                     //here is where the transaction gets cancelled because they couldnt make up their mind
                     if (tt2.getInitialMeeting().geteditHistory(user.getName()) == 3) {
                         //one person reached 3 edits, its time to delete this transaction
-                        allTransactions.handleCancelledTrade(allAdmins, allUsers, selectedT);
-                        allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 4);
+                        allTransactions.handleCancelledTrade(allAdmins, allUsers, selectedT, currencyManager);
+                        allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 4, currencyManager);
 
                         undoLogger.log(Level.INFO, selectedT.toString());
 

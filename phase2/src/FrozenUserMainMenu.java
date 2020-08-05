@@ -27,7 +27,7 @@ public class FrozenUserMainMenu implements  DifferentUserMainMenu{
      */
     public Object mainMenu(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                            UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                           AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages) {
+                           AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages, CurrencyManager currencyManager) {
 
         System.out.print("----------------------------------------------------------------------------------------------" +
                 "\n\uD83D\uDC4B Welcome back, " + user.getName() + "!\n");
@@ -84,10 +84,10 @@ public class FrozenUserMainMenu implements  DifferentUserMainMenu{
                     return user;
                 }
                 Object result = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
-                        allTransactions, allAdmins, undoLogger, allUserMessages);
+                        allTransactions, allAdmins, undoLogger, allUserMessages , currencyManager);
                 while (result == null) {
                     result = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
-                            allTransactions, allAdmins, undoLogger, allUserMessages);
+                            allTransactions, allAdmins, undoLogger, allUserMessages,  currencyManager);
                 }
                 return user;
             }

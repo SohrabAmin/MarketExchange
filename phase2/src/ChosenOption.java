@@ -33,10 +33,10 @@ public class ChosenOption {
      */
     public Object executeOption(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                                 UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                                AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages) {
+                                AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages, CurrencyManager allcurrency ) {
 
         return ((userMainMenuOptions) chosenOption).execute(user, allItems, allTradeRequests, allUsers,
-                allMeetings, allTransactions, allAdmins, undoLogger, allUserMessages, );
+                allMeetings, allTransactions, allAdmins, undoLogger, allUserMessages, allcurrency );
     }
 
     /**

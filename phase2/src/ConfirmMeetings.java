@@ -70,11 +70,11 @@ public class ConfirmMeetings implements userMainMenuOptions {
                     System.out.print("\uD83E\uDD29 Looks like the meeting was confirmed by both sides!\n ");
 
                     if (!selectedTransaction.getTemp()) { //if it was a permenant transaction
-                        allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 3);
+                        allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 3, currencyManager);
 
                     } else if (selectedTransaction.getTemp()) {
                         //if it was a temporary meeting, then I need to set up a second meeting
-                        allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 2);
+                        allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 2, currencyManager);
                         //by now, the second agreed upon meeting is set for both users
                         Calendar date = selectedTransaction.getInitialMeeting().getDate();
                         date.add(Calendar.MONTH, 1);
@@ -88,7 +88,7 @@ public class ConfirmMeetings implements userMainMenuOptions {
                 }
             } else if (selection.equals("2") || selection.equals("3")) { //cancelling
                 System.out.print("\u2639 We are sorry to hear that! Better luck next time!\n");
-                allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 4);
+                allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 4, currencyManager);
             }
         } else if (selection.equals("2")) {
             System.out.print("Here are your meetings to return items:\n");
@@ -130,7 +130,7 @@ public class ConfirmMeetings implements userMainMenuOptions {
                 if (selectedTransaction.getReturnMeeting().confirmedByBothSides()) {
                     //looks like the meeting was confirmed by both parties!
                     System.out.print("\uD83E\uDD29 Looks like the meeting was confirmed by both sides!\n ");
-                    allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 3);
+                    allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 3, currencyManager);
                 }
             }
         }

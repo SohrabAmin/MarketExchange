@@ -28,7 +28,7 @@ public class NormalUserMainMenu implements DifferentUserMainMenu {
      */
     public Object mainMenu(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                            UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                           AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages) {
+                           AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages, CurrencyManager currencyManager) {
         if (user.getIsVIP()) {
             System.out.print("----------------------------------------------------------------------------------------------" +
                     "\n\uD83D\uDC4B Welcome back, \u2B50VIP\u2B50 " + user.getName() + "!\n");
@@ -116,12 +116,12 @@ public class NormalUserMainMenu implements DifferentUserMainMenu {
                 }
                 //the option that is chosen by the user will be run
                 Object result = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
-                        allTransactions, allAdmins, undoLogger, allUserMessages);
+                        allTransactions, allAdmins, undoLogger, allUserMessages, currencyManager);
                 //if the execute() method of the option returns null, the option will be run again until the user
                 //specifies that they want to return to the main menu
                 while (result == null) {
                     result = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
-                            allTransactions, allAdmins, undoLogger, allUserMessages);
+                            allTransactions, allAdmins, undoLogger, allUserMessages, currencyManager);
                 }
 
                 // this check is used to log user out when they confirm that they are going on vacation
