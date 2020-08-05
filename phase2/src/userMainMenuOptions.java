@@ -14,6 +14,7 @@ public interface userMainMenuOptions {
      * @param allTransactions TransactionManager which stores and edits all Transactions in the system
      * @param allAdmins AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
      * @param undoLogger Logger that logs actions in the system
+     * @param currencyManager
      * @return depending on what the User inputs it will return different objects:
      * returns null to tell mainmenu() to call execute() again
      * returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
@@ -23,5 +24,5 @@ public interface userMainMenuOptions {
 
     Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                    UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                   AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages);
+                   AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages, CurrencyManager currencyManager);
 }

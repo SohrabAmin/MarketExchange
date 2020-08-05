@@ -10,11 +10,12 @@ public class TradeInitiator implements userMainMenuOptions {
      * @param allItems         ItemManager which stores a system inventory containing all the items in the system
      * @param allTradeRequests TradeRequestManager which deals with sending Trade requests to users
      * @param allUsers         UserManager which stores all the Users in the system
+     * @param currencyManager
      * @return
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                          AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages) {
+                          AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages, CurrencyManager currencyManager) {
         Scanner sc = new Scanner(System.in);    //System.in is a standard input stream
 
         if (user.getEligibility() >= allAdmins.getLentMinusBorrowedThreshold()) {

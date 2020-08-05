@@ -14,12 +14,13 @@ public class ConfirmMeetings implements userMainMenuOptions {
      * @param allUsers        UserManager that stores all the Users in the system
      * @param allMeetings     MeetingManager that deals with the creation of meetings
      * @param allTransactions TransactionManager that stores all the information of all system transactions
+     * @param currencyManager
      * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
      * String "exit" if the user is to be logged out.
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                          AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages) {
+                          AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages, CurrencyManager currencyManager) {
         System.out.print("Please select 1 for all your initial pending meetings and 2 for all return meetings\n");
         Scanner sc4 = new Scanner(System.in);    //System.in is a standard input stream
         String selection = sc4.nextLine();

@@ -36,7 +36,7 @@ public class ChosenOption {
                                 AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages) {
 
         return ((userMainMenuOptions) chosenOption).execute(user, allItems, allTradeRequests, allUsers,
-                allMeetings, allTransactions, allAdmins, undoLogger, allUserMessages);
+                allMeetings, allTransactions, allAdmins, undoLogger, allUserMessages, );
     }
 
     /**

@@ -8,12 +8,13 @@ public class AddItemToSystem implements userMainMenuOptions {
      * view its current status.
      *  @param user     the User requesting to add a new item to the system
      * @param allUsers UserManager which stores all Users
+     * @param currencyManager
      * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
      * String "exit" if the user is to be logged out.
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                          AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages) {
+                          AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages, CurrencyManager currencyManager) {
         System.out.println("Please enter the name of item you would like to add or 'back' to go back to the main menu.");
         Scanner sc = new Scanner(System.in);
         String itemName = sc.nextLine();

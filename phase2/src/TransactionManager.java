@@ -1,3 +1,4 @@
+import javax.swing.plaf.ColorUIResource;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +46,8 @@ public class TransactionManager implements Serializable {
      * @param transaction The given Transaction.
      * @param tradeStatus The current status of a given Transaction.
      */
-    public void updateTransactionStatus(ItemManager itemManager, UserManager userManager, AdminManager adminManager, Transaction transaction, int tradeStatus) {
+    public void updateTransactionStatus(ItemManager itemManager, UserManager userManager, AdminManager adminManager,
+                                        Transaction transaction, int tradeStatus, CurrencyManager currencyManager) {
         User user1;
         User user2;
         User user3;
@@ -88,17 +90,17 @@ public class TransactionManager implements Serializable {
             }
         } else if (tradeStatus == 2) {
             this.pendingSecondExchange.add(transaction);
-            handleFirstExchange(userManager, transaction, itemManager);
+            handleFirstExchange(userManager, transaction, itemManager, currencyManager);
         } else if (tradeStatus == 3) {
             this.completedTransaction.add(transaction);
             if (transaction.getTemp()) {
                 handleSecondExchange(userManager, itemManager, transaction);
             } else {
-                handleCompletedPerm(userManager, itemManager, transaction);
+                handleCompletedPerm(userManager, itemManager, transaction, currencyManager);
             }
         } else {
             this.cancelledTransaction.add(transaction);
-            handleCancelledTrade(adminManager, userManager, transaction);
+            handleCancelledTrade(adminManager, userManager, transaction, currencyManager);
         }
 
         transaction.setTradeStatus(tradeStatus);
@@ -134,7 +136,8 @@ public class TransactionManager implements Serializable {
      * @param transaction The specified Transaction that has been created.
      * @param userManager The instance of UserManager.
      */
-    public void addToPendingTransactions(Transaction transaction, UserManager userManager) {
+    public void addToPendingTransactions(Transaction transaction, UserManager userManager,
+                                         CurrencyManager currencyManager) {
         User user1;
         User user2;
         User user3;
@@ -142,6 +145,9 @@ public class TransactionManager implements Serializable {
             user1 = userManager.getUser(((OneWay) transaction).getFirstTrader());
             user2 = userManager.getUser(((OneWay) transaction).getSecondTrader());
             user3 = null;
+            if(transaction instanceof OneWayMonetized){
+                currencyManager.holdFunds((OneWayMonetized) transaction, userManager);
+            }
 
         } else if(transaction instanceof TwoWay) {
             user1 = userManager.getUser(((TwoWay) transaction).getFirstTrader());
@@ -170,7 +176,8 @@ public class TransactionManager implements Serializable {
      * @param userManager The instance of UserManager.
      * @param transaction The given instance of Transaction.
      */
-    public void handleCancelledTrade(AdminManager adminManager, UserManager userManager, Transaction transaction) {
+    public void handleCancelledTrade(AdminManager adminManager, UserManager userManager, Transaction transaction,
+                                     CurrencyManager currencyManager) {
         User user1;
         User user2;
         User user3;
@@ -178,6 +185,9 @@ public class TransactionManager implements Serializable {
             user1 = userManager.getUser(((OneWay) transaction).getFirstTrader());
             user2 = userManager.getUser(((OneWay) transaction).getSecondTrader());
             user3 = null;
+            if(transaction instanceof OneWayMonetized){
+                currencyManager.reverseHold((OneWayMonetized) transaction, userManager);
+            }
         } else if(transaction instanceof TwoWay){
             user1 = userManager.getUser(((TwoWay) transaction).getFirstTrader());
             user2 = userManager.getUser(((TwoWay) transaction).getSecondTrader());
@@ -290,7 +300,7 @@ public class TransactionManager implements Serializable {
      * @param transaction The given temporary Transaction.
      * @param itemManager The instance of ItemManager.
      */
-    public void handleFirstExchange(UserManager userManager, Transaction transaction, ItemManager itemManager) {
+    public void handleFirstExchange(UserManager userManager, Transaction transaction, ItemManager itemManager, CurrencyManager currencyManger) {
         User user1;
         User user2;
         User user3;
@@ -305,6 +315,9 @@ public class TransactionManager implements Serializable {
             itemManager.setCurrentHolder(item1, user1);
             user1.increaseEligibility();
             user2.decreaseEligibility();
+            if(transaction instanceof OneWayMonetized){
+                currencyManger.completeSale((OneWayMonetized) transaction, userManager);
+            }
         } else if(transaction instanceof TwoWay){
             user1 = userManager.getUser(((TwoWay) transaction).getFirstTrader());
             user2 = userManager.getUser(((TwoWay) transaction).getSecondTrader());
@@ -353,7 +366,7 @@ public class TransactionManager implements Serializable {
      * @param itemManager The instance of ItemManager.
      * @param transaction The given temporary Transaction.
      */
-    public void handleCompletedPerm(UserManager userManager, ItemManager itemManager, Transaction transaction) {
+    public void handleCompletedPerm(UserManager userManager, ItemManager itemManager, Transaction transaction, CurrencyManager currencyManager) {
         User user1;
         User user2;
         User user3;
@@ -369,7 +382,9 @@ public class TransactionManager implements Serializable {
             itemManager.setOwner(item1, user1);
             user1.decreaseEligibility();
             user2.increaseEligibility();
-
+            if(transaction instanceof OneWayMonetized){
+                currencyManager.completeSale((OneWayMonetized) transaction, userManager);
+            }
         } else if(transaction instanceof TwoWay) {
             user1 = userManager.getUser(((TwoWay) transaction).getFirstTrader());
             user2 = userManager.getUser(((TwoWay) transaction).getSecondTrader());

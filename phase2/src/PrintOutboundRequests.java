@@ -7,12 +7,13 @@ public class PrintOutboundRequests implements userMainMenuOptions {
      * Prints a User's outbound TradeRequests
      *
      * @param user User whose outbound TradeRequests are to be printed
+     * @param currencyManager
      * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
      * String "exit" if the user is to be logged out.
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                          AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages) {
+                          AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages, CurrencyManager currencyManager) {
         System.out.print("Here is the status of your pending outbound requests:\n");
         List<TradeRequest> outbound = user.getOutboundRequests();
 

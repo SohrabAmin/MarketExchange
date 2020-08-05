@@ -11,6 +11,7 @@ public class WishlistManager implements userMainMenuOptions {
      *
      * @param user     the User that is requesting to see/edit their wishlist.
      * @param allUsers UserManager which stores the User user.
+     * @param currencyManager
      * @return depending on what the User inputs it will return different objects
      * returns null to tell mainmenu() to call wishlist() again
      * returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
@@ -18,7 +19,7 @@ public class WishlistManager implements userMainMenuOptions {
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                          AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages) {
+                          AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages, CurrencyManager currencyManager) {
 
         Scanner sc = new Scanner(System.in);
 

@@ -1,13 +1,12 @@
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 
 public class UserMessage implements userMainMenuOptions{
 
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                          AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages){
+                          AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages, CurrencyManager currencyManager){
 
         Scanner sc = new Scanner(System.in);
         System.out.println("Please enter '1' to view message replies or '2' to send Admin a message. Enter 'back' to return to the main menu.");

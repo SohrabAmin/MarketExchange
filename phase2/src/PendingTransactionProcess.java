@@ -13,11 +13,12 @@ public class PendingTransactionProcess implements userMainMenuOptions {
      * @param allUsers        UserManager that stores all the Users in the system
      * @param allMeetings     MeetingManager that deals with the creation of meetings
      * @param allTransactions TransactionManager that stores all the information of all system transactions
+     * @param currencyManager
      * @return
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                          AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages) {
+                          AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages, CurrencyManager currencyManager) {
 
         List<Transaction> pendingTransactions = user.getPendingTrades();
 

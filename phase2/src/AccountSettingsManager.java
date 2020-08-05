@@ -8,12 +8,13 @@ public class AccountSettingsManager implements userMainMenuOptions {
      * password and/or location.
      *  @param user     the User who wants to change their account settings
      * @param allUsers UserManager which stores all the users in the system
+     * @param currencyManager
      * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
      * String "exit" if the user is to be logged out.
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                          AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages) {
+                          AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages, CurrencyManager currencyManager) {
         System.out.println("Please select the number beside the option you would like or 'back'" +
                 "to return to the main menu.");
         System.out.println("1. View Admin Change log");

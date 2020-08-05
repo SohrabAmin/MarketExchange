@@ -4,7 +4,6 @@ public class CreditCard {
     private int cardNumber;
     private String cardName;
     private Calendar expiration;
-    private String currency; //expect 3 letter acronym associated with currency
     private User cardHolder;
     private int CVV;
 
@@ -13,7 +12,6 @@ public class CreditCard {
         this.cardNumber = cardNumber;
         this.cardName = cardName;
         this.expiration = expiration;
-        this.currency = currency;
         this.cardHolder = cardHolder;
         this.CVV = CVV;
     }

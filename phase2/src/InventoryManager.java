@@ -7,12 +7,13 @@ public class InventoryManager implements userMainMenuOptions {
      * Prints out the User user's inventory; also calls UserManager to remove inventory Items upon user's request
      *  @param user     the User that wants to see their inventory
      * @param allUsers the UserManager which stores the User user
+     * @param currencyManager
      * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
      * String "exit" if the user is to be logged out.
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                          AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages) {
+                          AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages, CurrencyManager currencyManager) {
         User me = allUsers.getUser(user);
         List<Item> in = me.getInventory();
         //if the user's inventory is empty

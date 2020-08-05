@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class VacationPrompter implements userMainMenuOptions {
@@ -19,12 +18,13 @@ public class VacationPrompter implements userMainMenuOptions {
      * @param allTransactions  The instance of TransactionManager
      * @param allAdmins        The instance of AdminManager
      * @param undoLogger       Logger that logs actions in the system
+     * @param currencyManager
      * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
      * String "exit" if the user is to be logged out.
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests, UserManager allUsers,
                           MeetingManager allMeetings, TransactionManager allTransactions, AdminManager allAdmins,
-                          Logger undoLogger, UserMessageManager allUserMessages) {
+                          Logger undoLogger, UserMessageManager allUserMessages, CurrencyManager currencyManager) {
         System.out.println("Your account will be taken down for the duration of your vacation. \n" +
                 "You will not be able to trade until you return from your vacation. \n" +
                 "Press 1 to confirm or 2 to cancel.");

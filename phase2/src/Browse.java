@@ -11,12 +11,13 @@ public class Browse implements userMainMenuOptions {
      *  @param user     the User that wishes to browse the inventory and add items to their wishlist
      * @param allItems the ItemManager that stores the system's inventory
      * @param allUsers the UserManager that stores the User user
+     * @param currencyManager
      * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
      * String "exit" if the user is to be logged out.
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                          AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages) {
+                          AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages, CurrencyManager currencyManager) {
         List<Item> allItems2 = allItems.getSystemInventory();
         //if there are no items in the system inventory
         if (allItems2.size() == 0) {
