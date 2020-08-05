@@ -33,6 +33,9 @@ public class User extends Account {
     private ArrayList<String> undoWishListAction;
     private ArrayList<String> adminActionHistory;
     private ArrayList<String> AdminMessages;
+    private double capital = 0; //US dollars
+    private List<CreditCard> creditCards;
+    private CreditCard defaultCreditCard;
 
     //potential hash map for outbound requests to help admins undo
 
@@ -396,4 +399,17 @@ public class User extends Account {
     public ArrayList<String> getAdminActionHistory() {return adminActionHistory;}
 
     public ArrayList<String> getAdminMessages() {return AdminMessages;}
+
+    public void updateCapital(double x){
+        this.capital += x;
+    }
+
+    public void addCreditCard(CreditCard card){
+        this.creditCards.add(card);
+    }
+
+    public void setDefaultCreditCard(CreditCard card){
+        this.defaultCreditCard = card;
+    }
+
 }
