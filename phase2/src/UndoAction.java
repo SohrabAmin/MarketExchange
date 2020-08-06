@@ -60,9 +60,9 @@ public class UndoAction implements adminMainMenuOptions {
 
     public Object undoTradeRequest(UserManager allUsers, TradeRequestManager allRequests, String chosenLog) {
         String[] brokenUp = chosenLog.split(" ");
-        if (brokenUp[2].equals("Two-way")) {
+        if (brokenUp[2].equals("Two-way")) { //if the trade request is two-way
             return undoTwoWay(allUsers, allRequests, chosenLog);
-        } else if (brokenUp[2].equals("One-way")) {
+        } else if (brokenUp[2].equals("One-way")) { //if the trade request is three way
             return undoOneWay(allUsers, allRequests, chosenLog);
         }
         return null;
@@ -85,7 +85,7 @@ public class UndoAction implements adminMainMenuOptions {
         if (categories[4].split(": ")[1].equals("true; ")) {
             virtual = false;
         }
-
+        //finds the users by comparing the name in the log to the Usernames in allUsers
         for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
             if (allUsers.getAllUsers().get(i).getName().equals(parseNames[1])) {
                 user1 = allUsers.getAllUsers().get(i);
@@ -102,8 +102,11 @@ public class UndoAction implements adminMainMenuOptions {
             return null;
         }
 
+        //parses through all outbound requests in user1's list
+        //user1 is the user that initiated the trade
         for (int j = 0; j < user1.getOutboundRequests().size(); j++) {
             if (user1.getOutboundRequests().get(j) instanceof typeOneRequest) {
+                //if all the variables match, the request will be saved in variable request
                 if (((typeOneRequest) user1.getOutboundRequests().get(j)).getFirstUser().equals(user1) &&
                         ((typeOneRequest) user1.getOutboundRequests().get(j)).getSecondUser().getName().equals(user2.getName()) &&
                         ((typeOneRequest) user1.getOutboundRequests().get(j)).getItem().getName().equals(itemName) &&
@@ -113,10 +116,11 @@ public class UndoAction implements adminMainMenuOptions {
                     request = user1.getOutboundRequests().get(j);
                 }
             }
-        } if (request == null) {
+        } if (request == null) { //if the trade request is not found in the user's outbound request list, prints error msg
             System.out.println("Trade request cannot be found. No actions can be undone.");
             return null;
         }
+        //otherwise, cancels the trade request and notifies the users involved
         allRequests.updateRequestStatus(allUsers, request, 1);
         String string = "Your one-way trade request for <" + user2.getName() + ">'s item <" + itemName + "> has been cancelled by Admin!";
         String string2 = "A one-way trade request for your item <" + itemName + "> from User <" + user1.getName() + "> has been cancelled by Admin!";
@@ -138,13 +142,13 @@ public class UndoAction implements adminMainMenuOptions {
         TradeRequest request = null;
 
         String msg = categories[5].split(": ")[1];
-        //Two-Way trade request:
         if (categories[3].split(": ")[1].equals("true; ")) {
             temp = true;
         }
         if (categories[4].split(": ")[1].equals("true; ")) {
             virtual = false;
         }
+
         for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
             if (allUsers.getAllUsers().get(i).getName().equals(parseNames[1])) {
                 user1 = allUsers.getAllUsers().get(i);
@@ -152,6 +156,7 @@ public class UndoAction implements adminMainMenuOptions {
                 user2 = allUsers.getAllUsers().get(i);
             }
         }
+        //if user doesn't exist in allUsers, prints error message
         if (user1 == null) {
             System.out.println("User no longer exists or has changed their name. No actions can be undone.");
             return null;
@@ -160,8 +165,11 @@ public class UndoAction implements adminMainMenuOptions {
             return null;
         }
 
+        //parses through all outbound requests in user1's list
+        //user1 is the user that initiated the trade
         for (int j = 0; j < user1.getOutboundRequests().size(); j++) {
             if (user1.getOutboundRequests().get(j) instanceof typeTwoRequest) {
+                //if all the variables match, the request will be saved in variable request
                 if (((typeTwoRequest) user1.getOutboundRequests().get(j)).getFirstUser().equals(user1) &&
                         ((typeTwoRequest) user1.getOutboundRequests().get(j)).getSecondUser().getName().equals(user2.getName()) &&
                         ((typeTwoRequest) user1.getOutboundRequests().get(j)).getFirstItem().getName().equals(itemName1) &&
@@ -172,10 +180,11 @@ public class UndoAction implements adminMainMenuOptions {
                     request = user1.getOutboundRequests().get(j);
                 }
             }
-        } if (request == null) {
+        } if (request == null) { //if the trade request is not found in the user's outbound request list, prints error msg
             System.out.println("Trade request cannot be found. No actions can be undone.");
             return null;
         }
+        //otherwise, cancels the trade request and notifies the users involved
         allRequests.updateRequestStatus(allUsers, request, 1);
         String string = "Your two-way trade request for <" + user2.getName() + ">'s item <" + itemName2 + "> has been cancelled by Admin!";
         String string2 = "A two-way trade request for your item <" + itemName2 + "> from User <" + user1.getName() + "> has been cancelled by Admin!";
