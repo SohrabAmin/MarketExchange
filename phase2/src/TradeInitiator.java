@@ -134,6 +134,7 @@ public class TradeInitiator implements userMainMenuOptions {
                 return user;
             }
             else if (in.equals("2")) {
+                monetized = false;
                 return tradableDealer( user,  allItems,  allTradeRequests,
                          allUsers,  allMeetings,  allTransactions,
                          allAdmins,  undoLogger,  allUserMessages, tradeItem, monetized, myList);
@@ -157,6 +158,7 @@ public class TradeInitiator implements userMainMenuOptions {
                 return user;
             }
             else if (in.equals("2")) { //if they want to trade
+                monetized = false;
                 return tradableDealer( user,  allItems,  allTradeRequests,
                         allUsers,  allMeetings,  allTransactions,
                         allAdmins,  undoLogger,  allUserMessages, tradeItem, monetized, myList);
@@ -164,6 +166,7 @@ public class TradeInitiator implements userMainMenuOptions {
             }
         }
         else if (!tradeItem.getRentable() && !tradeItem.getSellable() && tradeItem.getTradable()){ //if only tradable
+            monetized = false;
             return tradableDealer( user,  allItems,  allTradeRequests,
                     allUsers,  allMeetings,  allTransactions,
                     allAdmins,  undoLogger,  allUserMessages, tradeItem, monetized, myList);
@@ -192,6 +195,7 @@ public class TradeInitiator implements userMainMenuOptions {
                 return user;
             }
             else if (in.equals("3")){ //if they wanna trade
+                monetized = false;
                 return tradableDealer( user,  allItems,  allTradeRequests,
                         allUsers,  allMeetings,  allTransactions,
                         allAdmins,  undoLogger,  allUserMessages, tradeItem, monetized, myList);

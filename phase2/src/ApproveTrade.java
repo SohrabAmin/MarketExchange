@@ -230,6 +230,7 @@ public class ApproveTrade implements userMainMenuOptions {
                 }
 
                 //ok sure so replacement right now is the recommended item that doesnt exist in either person's inventory
+                allTradeRequests.updateRequestStatus(allUsers, cTrade, 2);
                 typeThreeRequest finalReq = new typeThreeRequest(((typeTwoRequest) cTrade).getFirstItem(), ((typeTwoRequest) cTrade).getSecondItem(), replacement, "Kill me please",
                         cTrade.getTemp(), Calendar.getInstance(), cTrade.getVirtual());
                 //well one person approved!
