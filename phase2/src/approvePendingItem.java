@@ -19,7 +19,8 @@ public class approvePendingItem implements adminMainMenuOptions{
      * main menu option
      */
     public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,
-                          UserMessageManager allUserMessages) {
+                          UserMessageManager allUserMessages, TransactionManager allTransactions,
+                          TradeRequestManager allRequests, CurrencyManager allCurrency) {
         //Creates a list of all pending items in the system
         List<Item> allPendingItems = new ArrayList<>();
         for (int i = 0; i < allUsers.getAllUsers().size(); i++) {

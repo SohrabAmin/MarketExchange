@@ -20,7 +20,8 @@ public class addAdmin implements adminMainMenuOptions{
      * returns String "exit" to prompt TradeSystem to save all the information and exit the System
      */
     public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,
-                          UserMessageManager allUserMessages) {
+                          UserMessageManager allUserMessages, TransactionManager allTransactions,
+                          TradeRequestManager allRequests, CurrencyManager allCurrency) {
         if (!admin.getIsSuperAdmin()) {
             System.out.println("Sorry but you do not have the authorization to add new admins!");
             return "back";
@@ -56,7 +57,7 @@ public class addAdmin implements adminMainMenuOptions{
                     //checks if the entered username already exists
                     if (temp.get(0).equals(allAdmins.getAllAdmins().get(i).getName())) {
                         System.out.print("Username already exists. Please choose a new username\n");
-                        return execute(admin, allAdmins, allUsers, allItems, allUserMessages);
+                        return execute(admin, allAdmins, allUsers, allItems, allUserMessages, allTransactions, allRequests, allCurrency);
                     }
                 }
                 allAdmins.addAdmin(temp.get(0), temp.get(1));

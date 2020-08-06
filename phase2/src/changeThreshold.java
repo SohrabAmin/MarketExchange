@@ -18,7 +18,8 @@ public class changeThreshold implements adminMainMenuOptions{
      * main menu option
      */
     public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,
-                          UserMessageManager allUserMessages) {
+                          UserMessageManager allUserMessages, TransactionManager allTransactions,
+                          TradeRequestManager allRequests, CurrencyManager allCurrency) {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         //prints the current thresholds of the system
         System.out.println("\nHere are the current thresholds:");

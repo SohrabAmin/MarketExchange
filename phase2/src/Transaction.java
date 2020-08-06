@@ -105,7 +105,7 @@ public class Transaction {
      * @return String representation of this Transaction
      */
     public String toString() {
-        return "Transaction" +
+        return "Transaction " +
                 "; \nStatus: " + this.tradeStatus +
                 "; \nIs temporary?: " + this.temp +
                 "; \nIs in-person?: " + !this.virtual +

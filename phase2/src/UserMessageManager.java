@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class UserMessageManager {
+public class UserMessageManager implements Serializable {
     private ArrayList<ArrayList<String>> allUserMessage = new ArrayList<>();
 
     public void addUserMessage(ArrayList<String> userMessage) {

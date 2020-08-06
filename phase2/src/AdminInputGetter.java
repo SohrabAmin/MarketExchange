@@ -20,7 +20,9 @@ public class AdminInputGetter {
      * returns String "exit" to tell TradeSystem() to end the program and save all the data before
      * exiting the System
      */
-    public Object mainMenu(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems, UserMessageManager allUserMessages) {
+    public Object mainMenu(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,
+                           UserMessageManager allUserMessages, TransactionManager allTransactions,
+                           TradeRequestManager allRequests, CurrencyManager allCurrency) {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         System.out.println("----------------------------------------------------------------------------------------------" +
@@ -85,11 +87,11 @@ public class AdminInputGetter {
                         return admin;
                 }
                 //the option that is chosen by the Admin will be run
-                Object result = option.executeOption(admin, allAdmins, allUsers, allItems, allUserMessages);
+                Object result = option.executeOption(admin, allAdmins, allUsers, allItems, allUserMessages, allTransactions, allRequests, allCurrency);
                 //if the execute() method of the option returns null, the option will be run again until the Admin
                 //specifies that they want to return to the main menu
                 while (result == null) {
-                    result = option.executeOption(admin, allAdmins, allUsers, allItems, allUserMessages);
+                    result = option.executeOption(admin, allAdmins, allUsers, allItems, allUserMessages, allTransactions, allRequests, allCurrency);
                 }
                 return admin;
             }

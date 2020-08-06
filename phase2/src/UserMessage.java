@@ -1,8 +1,9 @@
+import java.io.Serializable;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-public class UserMessage implements userMainMenuOptions{
+public class UserMessage implements userMainMenuOptions, Serializable {
 
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,

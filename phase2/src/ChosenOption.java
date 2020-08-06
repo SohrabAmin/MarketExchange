@@ -33,10 +33,10 @@ public class ChosenOption {
      */
     public Object executeOption(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                                 UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                                AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages, CurrencyManager allcurrency ) {
+                                AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages, CurrencyManager allCurrency ) {
 
         return ((userMainMenuOptions) chosenOption).execute(user, allItems, allTradeRequests, allUsers,
-                allMeetings, allTransactions, allAdmins, undoLogger, allUserMessages, allcurrency );
+                allMeetings, allTransactions, allAdmins, undoLogger, allUserMessages, allCurrency );
     }
 
     /**
@@ -52,7 +52,10 @@ public class ChosenOption {
      * main menu option
      * returns String "exit" to prompt TradeSystem to save all the information and exit the System
      */
-    public Object executeOption(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems, UserMessageManager allUserMessages) {
-        return ((adminMainMenuOptions) chosenOption).execute(admin, allAdmins, allUsers, allItems, allUserMessages);
+    public Object executeOption(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,
+                                                     UserMessageManager allUserMessages, TransactionManager allTransactions,
+                                                     TradeRequestManager allRequests, CurrencyManager allCurrency) {
+        return ((adminMainMenuOptions) chosenOption).execute(admin, allAdmins, allUsers, allItems, allUserMessages, allTransactions,
+                allRequests, allCurrency);
     }
 }

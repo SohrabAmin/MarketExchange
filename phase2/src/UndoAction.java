@@ -6,7 +6,8 @@ import java.util.Scanner;
 public class UndoAction implements adminMainMenuOptions {
 
     public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,
-                          UserMessageManager allUserMessages) {
+                          UserMessageManager allUserMessages, TransactionManager allTransactions,
+                          TradeRequestManager allRequests, CurrencyManager allCurrency) {
         ReadWrite readFile = new ReadWrite();
         List<String> logList;
         try{
@@ -50,9 +51,22 @@ public class UndoAction implements adminMainMenuOptions {
 
         if (brokenUp[brokenUp.length - 1].equals("wishlist.\n")) {
             return undoWishlist(allUsers, chosenLog);
-        }
-
+        } else if (brokenUp[0].equals("Transaction"))
+            return undoTransaction(allUsers, allTransactions, allCurrency, chosenLog);
         return "back";
+    }
+
+    public Object undoTransaction(UserManager allUsers, TransactionManager allTransactions,
+                                  CurrencyManager allCurrency, String chosenLog) {
+    String[] stringSplit = chosenLog.split("; \n");
+    List<String> attributes = new ArrayList<>();
+    for (int i = 0; i < stringSplit.length; i++) {
+        String[] temp = stringSplit[i].split(" ");
+        attributes.add(temp[1]);
+    }
+    //attributes is now list formatted as follows:
+        // [Status, is temporary?, is in-person?, initial meeting, return meeting]
+        return null;
     }
 
     public Object undoWishlist(UserManager allUsers, String chosenLog) {

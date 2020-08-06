@@ -16,7 +16,8 @@ public class PromoteOrDemoteUser implements adminMainMenuOptions {
      * @return null if the current menu is to be reprinted; Admin admin if the admin is to be redirected to the main menu.
      */
     public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,
-                          UserMessageManager allUserMessages) {
+                          UserMessageManager allUserMessages, TransactionManager allTransactions,
+                          TradeRequestManager allRequests, CurrencyManager allCurrency) {
 
         // the following four lines are commented out because currently any admin can promote users or demote VIPs
         //if (!admin.getIsSuperAdmin()) {

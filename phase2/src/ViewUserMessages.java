@@ -5,7 +5,8 @@ import java.util.Scanner;
 
 public class ViewUserMessages implements adminMainMenuOptions {
     public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,
-                          UserMessageManager allUserMessages) {
+                          UserMessageManager allUserMessages, TransactionManager allTransactions,
+                          TradeRequestManager allRequests, CurrencyManager allCurrency) {
 
         if (allUserMessages.getAllUserMessage().size() == 0) {
             System.out.println("You have no messages.");

@@ -18,7 +18,8 @@ public class FreezeOrUnfreeze implements adminMainMenuOptions{
      * main menu option
      */
     public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,
-                          UserMessageManager allUserMessages) {
+                          UserMessageManager allUserMessages, TransactionManager allTransactions,
+                          TradeRequestManager allRequests, CurrencyManager allCurrency) {
         System.out.println("What would you like to do? Please select the number beside the option or enter " +
                 "'back' to return to the main menu.");
         System.out.println("1.View unfreeze requests\n2.Unfreeze frozen users\n3.Freeze users");
