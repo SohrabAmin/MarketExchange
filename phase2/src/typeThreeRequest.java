@@ -69,4 +69,7 @@ public class typeThreeRequest extends TradeRequest {
     public void userApproves(){
         this.approved += 1;
     }
+    public int getApproved(){
+        return approved;
+    }
 }

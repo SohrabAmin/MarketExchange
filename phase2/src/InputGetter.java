@@ -58,7 +58,7 @@ public class InputGetter {
      */
     public Object callMainMenu(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                                UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                               AdminManager allAdmins, UserMessageManager allUserMessages) {
+                               AdminManager allAdmins, UserMessageManager allUserMessages, CurrencyManager currencyManager) {
         //A frozen account is one where you can log in and look for items, but you cannot arrange any transactions.
         // A user who has been frozen can request that the administrative user unfreezes their account.
         boolean frozenAccount = user.getIsFrozen();
@@ -79,7 +79,7 @@ public class InputGetter {
         else {
             menu.setCorrectMenu(new NormalUserMainMenu());
         }
-        return menu.runMenu(user, allItems, allTradeRequests, allUsers, allMeetings, allTransactions, allAdmins, undoLogger, allUserMessages);
+        return menu.runMenu(user, allItems, allTradeRequests, allUsers, allMeetings, allTransactions, allAdmins, undoLogger, allUserMessages, currencyManager);
     }
 
 }

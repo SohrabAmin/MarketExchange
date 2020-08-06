@@ -15,6 +15,7 @@ public class TradeSystem {
     public ReadWrite readwrite = new ReadWrite();
     public Object currentUser;
     public UserMessageManager allUserMessages;
+    public CurrencyManager currencyManager = new CurrencyManager();
 
     /**
      * Run calls multiple gateways in order to populate the System with saved information pertaining Transactions,
@@ -59,7 +60,7 @@ public class TradeSystem {
             while (loggedIn != null) {
                 if (loggedIn instanceof User) {
                     loggedIn = inputgetter.callMainMenu((User) loggedIn, allItems, allTradeRequests,
-                            allUsers, allMeetings, allTransactions, allAdmins, allUserMessages);
+                            allUsers, allMeetings, allTransactions, allAdmins, allUserMessages, currencyManager);
                 } else if (loggedIn instanceof Admin) {
                     loggedIn = admininputgetter.mainMenu((Admin) loggedIn, allAdmins, allUsers, allItems, allUserMessages);
                 } else if (loggedIn.equals("exit")) {
