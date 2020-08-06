@@ -17,6 +17,7 @@ public class User extends Account {
     private List<Transaction> tradeHistory;
     private List<User> topTradingPartners;
     private List<TradeRequest> pendingRequests;
+    private List<typeThreeRequest> approvedThreeWay;
     private List<TradeRequest> outboundRequests;
     private List<Transaction> pendingTrades;
     private boolean isPseudoFrozen;
@@ -59,6 +60,7 @@ public class User extends Account {
         this.tradeHistory = new ArrayList<>();
         this.topTradingPartners = new ArrayList<>();
         this.pendingRequests = new ArrayList<>();
+        this.approvedThreeWay = new ArrayList<>();
         this.ItemHistory = new HashMap<>();//Creating HashMap
         outboundRequests = new ArrayList<>();
         pendingTrades = new ArrayList<>();
@@ -419,5 +421,10 @@ public class User extends Account {
     public CreditCard getDefaultCreditCard(){
         return this.defaultCreditCard;
     }
+
+    public List<typeThreeRequest> getApprovedThreeWay(){
+        return this.approvedThreeWay;
+    }
+
 
 }

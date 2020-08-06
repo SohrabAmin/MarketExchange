@@ -541,4 +541,11 @@ public class UserManager implements Serializable {
     public void addToAdminMessages(User user, String message) {user.getAdminMessages().add(message);}
 
     public void removeFromAdminMessages(User user, String message) {user.getAdminMessages().remove(message);}
+
+    public void addToApprovedThreeWay(User user, typeThreeRequest request){
+        user.getApprovedThreeWay().add(request);
+    }
+    public void removeFromApprovedThreeway(User user, typeThreeRequest request){
+        user.getApprovedThreeWay().remove(request);
+    }
 }

@@ -15,6 +15,7 @@ public class typeThreeRequest extends TradeRequest {
     private Item item2;
     private Item item3;
     private int approved = 0;
+    private User firstApproved = null;
 
     /**
      * Constructs a ThreeWay TradeRequest instance. This class is instantiated by the User that attempts to initiate the Transaction, and should be stored within the receiving User's
@@ -71,5 +72,13 @@ public class typeThreeRequest extends TradeRequest {
     }
     public int getApproved(){
         return approved;
+    }
+
+    public void setFirstApproved(User user){
+        this.firstApproved = user;
+    }
+
+    public User getFirstApproved(){
+        return this.firstApproved;
     }
 }
