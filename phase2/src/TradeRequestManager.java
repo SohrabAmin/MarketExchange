@@ -64,7 +64,6 @@ public class TradeRequestManager implements Serializable {
     /**
      * Updates attribute list(s) (pending/denied/confirmed) depending on the wishes of the User receiving the TradeRequest.
      *
-     * @param transactionManager The instance of transactionManager, required for accessing handleConfirmedRequest.
      * @param userManager        The instance of userManager, required for accessing handleConfirmedRequest.
      * @param request            The given TradeRequest that the receiving User intends to act upon.
      * @param status             The status the system intends to give to this TradeRequest.
