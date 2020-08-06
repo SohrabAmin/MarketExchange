@@ -56,10 +56,10 @@ public class typeOneRequest extends TradeRequest {
      */
     public String toString() {
         return "One-way trade request " +
-                "from " + this.user1.getName() + " to " + this.user2.getName() +
-                " for item " + this.item.getName() +
-                "; \nStatus: " + this.getStatus() +
-                "; \nDate: " + this.getDate() +
+                "from '" + this.user1.getName() + "' to '" + this.user2.getName() +
+                "' for item '" + this.item.getName() +
+                "'; \nStatus: " + this.getStatus() +
+                "; \nDate: " + this.dateToString() +
                 "; \nIs for a temporary trade?: " + this.getTemp() +
                 "; \nIs meeting in-person?: " + !this.getVirtual() +
                 "; \nMessage: " + this.getMessage() + "\n";

@@ -21,13 +21,18 @@ public class PrintOutboundRequests implements userMainMenuOptions {
             System.out.print("You do not have any pending outbound requests!\n");
             return user;
         }
-//        for (int i = 0; i < outbound.size(); i++) {
-//            String extension = " ";
-//            if (outbound.get(i).getRequestType() == 2) {
-//                extension = " in exchange for: " + outbound.get(i).getRequesterItem().getName();
-//            }
-//            System.out.print((i + 1) + " . You requested for : " + outbound.get(i).getReceiverItem().getName() + extension + "\n");
-//        }
+        for (int i = 0; i < outbound.size(); i++) {
+            System.out.println( (i+1) + ". " + outbound.get(i).toString());
+            int status = outbound.get(i).getStatus();
+            //0: In progress, 1: Declined, 2: Accepted
+            if (status == 0) {
+                System.out.println("Status: In progress\n");
+            } else if (status == 1) {
+                System.out.println("Status: Declined\n");
+            } else if (status == 2) {
+                System.out.println("Status: Accepted\n");
+            }
+        }
         return user;
     }
 

@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
@@ -72,5 +73,11 @@ public class TradeRequest implements Serializable {
 
     public Boolean getVirtual() {
         return this.virtual;
+    }
+
+    public String dateToString() {
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy MM dd");
+        String formatted = format1.format(this.date.getTime());
+        return formatted;
     }
 }

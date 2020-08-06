@@ -59,11 +59,11 @@ public class typeTwoRequest extends TradeRequest {
      * @return String representation of this TypeTwoRequest
      */
     public String toString() {
-        return "Two-way trade request: " +
-                this.user1.getName() + " offers " + this.item1.getName() +
-                " for " + this.user2.getName() + "'s " + this.item2.getName() +
-                ". \nStatus: " + this.getStatus() +
-                "; \nDate: " + this.getDate() +
+        return "Two-way trade request: '" +
+                this.user1.getName() + "' offers '" + this.item1.getName() +
+                "' for '" + this.user2.getName() + "''s '" + this.item2.getName() +
+                "'. \nStatus: " + this.getStatus() +
+                "; \nDate: " + this.dateToString() +
                 "; \nIs for a temporary trade?: " + this.getTemp() +
                 "; \nIs meeting in-person?: " + !this.getVirtual() +
                 "; \nMessage: " + this.getMessage() + "\n";

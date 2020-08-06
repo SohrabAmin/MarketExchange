@@ -24,8 +24,11 @@ public class Browse implements userMainMenuOptions {
             System.out.println("There are no items to browse!");
             return "back";
         }
-        System.out.println("\nHere are the current items in the system's inventory:\n");
+
         allItems2 = DisplayBrowse(user, allItems);
+        while (allItems2 == null) {
+            allItems2 = DisplayBrowse(user, allItems);
+        }
         //asks the user if they want to add an item to their wishlist
         System.out.println("Enter ID of the item you would like to add to your wishlist or type 'back' to get to main menu.");
 
@@ -91,9 +94,12 @@ public class Browse implements userMainMenuOptions {
                 }
             } else if (!input.equals('2')) {
                 System.out.println("That is not a valid option, please try again!");
-                DisplayBrowse(user, allItems);
+                return null;
             }
         }
+
+        System.out.println("\nHere are the current items in the system's inventory:\n");
+
         //Display every item we have. Make sure if the item is owned by the user, show that it is owned by user
         //shows the price if it is for sale
         for (int i = 0; i < allItems2.size(); i++) {

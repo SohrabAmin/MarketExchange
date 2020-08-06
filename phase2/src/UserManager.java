@@ -532,11 +532,11 @@ public class UserManager implements Serializable {
         user.getVacationStorage().remove(item);
     }
 
-    public void addToUndoWishListAction(User user,String itemName){user.getUndoWishListAction().add(itemName);}
+    public void addToNotifyUndo(User user, String action){user.getNotifyUndo().add(action);}
 
     public void addToAdminActionHistory(User user, String action) {user.getAdminActionHistory().add(action);}
 
-    public void removeFromUndoWishListAction(User user, String undoWishList){user.getUndoWishListAction().remove(undoWishList);}
+    public void removeFromNotifyUndo(User user, String undone){user.getNotifyUndo().remove(undone);}
 
     public void addToAdminMessages(User user, String message) {user.getAdminMessages().add(message);}
 

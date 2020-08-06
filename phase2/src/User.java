@@ -30,7 +30,7 @@ public class User extends Account {
     private boolean isOnVacation;
     private boolean isVIP;
     private List<Item> vacationStorage;
-    private ArrayList<String> undoWishListAction;
+    private ArrayList<String> notifyUndo;
     private ArrayList<String> adminActionHistory;
     private ArrayList<String> AdminMessages;
     private double capital = 0; //US dollars
@@ -67,7 +67,7 @@ public class User extends Account {
         secondAgreedUponMeetings = new ArrayList<>();
         this.weeklyRequestLimit = new HashMap<>();
         this.FrequentCategory = new HashMap<>();
-        undoWishListAction = new ArrayList<>();
+        notifyUndo = new ArrayList<>();
         adminActionHistory = new ArrayList<>();
         AdminMessages = new ArrayList<>();
         vacationStorage = new ArrayList<>();
@@ -394,7 +394,7 @@ public class User extends Account {
     }
 
 
-    public List<String> getUndoWishListAction(){return this.undoWishListAction;}
+    public List<String> getNotifyUndo(){return this.notifyUndo;}
 
     public ArrayList<String> getAdminActionHistory() {return adminActionHistory;}
 
