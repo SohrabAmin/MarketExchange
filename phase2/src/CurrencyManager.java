@@ -1,3 +1,4 @@
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,5 +35,13 @@ public class CurrencyManager {
         user2.updateCapital(trade.getCost());
         this.inProgressSale.remove(trade);
 
+    }
+
+
+    public Calendar getDate(String date) {
+        Calendar cal = Calendar.getInstance();
+        String[] temp = date.split("-");
+        cal.set(Integer.parseInt(temp[1]), Integer.parseInt(temp[0]), 30);
+        return cal;
     }
 }

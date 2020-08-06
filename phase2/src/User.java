@@ -412,4 +412,12 @@ public class User extends Account {
         this.defaultCreditCard = card;
     }
 
+    public double getCapital(){
+        return this.capital;
+    }
+
+    public CreditCard getDefaultCreditCard(){
+        return this.defaultCreditCard;
+    }
+
 }

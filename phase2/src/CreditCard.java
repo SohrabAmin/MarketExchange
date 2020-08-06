@@ -1,14 +1,14 @@
 import java.util.Calendar;
 public class CreditCard {
 
-    private int cardNumber;
+    private Integer cardNumber;
     private String cardName;
     private Calendar expiration;
     private User cardHolder;
     private int CVV;
 
 
-    public CreditCard(int cardNumber, String cardName, Calendar expiration, String currency, User cardHolder, int CVV ){
+    public CreditCard(int cardNumber, String cardName, Calendar expiration, User cardHolder, int CVV ){
         this.cardNumber = cardNumber;
         this.cardName = cardName;
         this.expiration = expiration;
@@ -20,5 +20,18 @@ public class CreditCard {
         Calendar today = Calendar.getInstance();
         return expiration.after(today);
     }
+
+    public String returnEndNumbers(){
+        StringBuilder end = new StringBuilder();
+        String all = this.cardNumber.toString();
+
+        for(int i = all.length() - 5; i < all.length(); i++){
+            end.append(all.charAt(i));
+
+        }
+
+        return end.toString();
+    }
+
 
 }
