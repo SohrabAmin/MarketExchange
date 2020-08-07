@@ -100,14 +100,11 @@ public class TradeRequestManager implements Serializable {
     public void handleRequestResponse( UserManager userManager, TradeRequest request) {
         User user1;
         User user2;
-
-
         if(request instanceof typeOneRequest){
             user1 = userManager.getUser(((typeOneRequest) request).getFirstUser());
             user2 = userManager.getUser(((typeOneRequest) request).getSecondUser());
             userManager.removeFromOutboundRequests(user1, request);
             userManager.removeFromPendingRequests(user2, request);
-
         }else if(request instanceof typeTwoRequest){
             user1 = userManager.getUser(((typeTwoRequest) request).getFirstUser());
             user2 = userManager.getUser(((typeTwoRequest) request).getSecondUser());
@@ -118,9 +115,24 @@ public class TradeRequestManager implements Serializable {
             user2 = userManager.getUser(((typeThreeRequest) request).getSecondUser());
             User user3 = userManager.getUser(((typeThreeRequest) request).getThirdUser());
             userManager.removeFromOutboundRequests(user2, request);
-            userManager.removeFromPendingRequests(user1, request);
-            userManager.removeFromPendingRequests(user3, request);
+            if(((typeThreeRequest) request).getFirstApproved().getName().equals(user1.getName())){
+                userManager.removeFromApprovedThreeway(user1, (typeThreeRequest) request);
+                userManager.removeFromPendingRequests(user3, request);
+            }else if(((typeThreeRequest) request).getFirstApproved().getName().equals(user3.getName())){
+                userManager.removeFromApprovedThreeway(user3, (typeThreeRequest) request);
+                userManager.removeFromPendingRequests(user1, request);
+            }
         }
-
+    }
+    public void handleSingleApproved(UserManager userManager, typeThreeRequest request, User user){
+        if(user.getName().equals(request.getFirstUser().getName())){
+            User user1 = userManager.getUser(user);
+            userManager.removeFromPendingRequests(user1, request);
+            userManager.addToApprovedThreeWay(user1, request);
+        }else if(user.getName().equals(request.getThirdUser().getName())){
+            User user3 = userManager.getUser(user);
+            userManager.removeFromPendingRequests(user3, request);
+            userManager.addToApprovedThreeWay(user3, request);
+        }
     }
 }
