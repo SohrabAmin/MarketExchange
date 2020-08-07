@@ -63,17 +63,58 @@ public class ApproveTrade implements userMainMenuOptions {
                 System.out.print(t.getFirstUser().getName() + " wants item: " + t.getSecondItem().getName() + " in return for " + t.getFirstItem().getName() +
                         "\n");
             }
-
             if (Trades.get(i) instanceof typeThreeRequest) {
                 typeThreeRequest t = (typeThreeRequest) Trades.get(i);
+                //--------------------------just displaying the message for the 3 way request
                 if (t.getApproved() == 1 ){
-                System.out.print("You are asked to join 3 way trade with " + t.getFirstUser().getName() + " and " + t.getSecondUser().getName() +
-                        " and you will get item " +
-                        t.getSecondItem().getName() + " for your item " + t.getThirdItem().getName() + "\n");
+                   String firstPerson = t.getFirstUser().getName();
+                   String secondPerson = t.getSecondUser().getName();
+                   String thirdPerson = t.getThirdUser().getName();
+                   Item youget;
+                   Item foryouritem;
+                   String one, two;
+                   if (user.getName().equals(firstPerson)) {
+                       one = secondPerson;
+                       two = thirdPerson;
+                       youget = t.getThirdItem();
+                       foryouritem = t.getFirstItem();
+                   }
+                   else { //user.getName().equals(thirdperson)
+                       one = firstPerson;
+                       two = secondPerson;
+                       youget = t.getFirstItem();
+                       foryouritem = t.getThirdItem();
 
-            } else if (t.getApproved() == 2){
-                    System.out.print("User 2 decided to extend the 3 way trade! You will now get " + t.getThirdItem().getName() + " in exchange " +
-                            "for " + t.getFirstItem().getName() + "\n" );
+                   }
+ System.out.print("You are asked to join 3 way trade with " + one + " and " + two +
+                        " and you will get item " +
+                        youget.getName() + " for your item " + foryouritem.getName() + "\n");
+
+            }
+                //now here both people approve
+                else if (t.getApproved() == 2){
+                    String firstPerson = t.getFirstUser().getName();
+                    String secondPerson = t.getSecondUser().getName();
+                    String thirdPerson = t.getThirdUser().getName();
+                    Item youget;
+                    Item foryouritem;
+                    String one, two;
+                    if (user.getName().equals(firstPerson)) {
+                        one = secondPerson;
+                        two = thirdPerson;
+                        youget = t.getThirdItem();
+                        foryouritem = t.getFirstItem();
+                    }
+                    else { //user.getName().equals(thirdperson)
+                        one = firstPerson;
+                        two = secondPerson;
+                        youget = t.getFirstItem();
+                        foryouritem = t.getThirdItem();
+
+                    }
+
+                    System.out.print(t.getSecondUser().getName() + " decided to extend the 3 way trade! You will now get " + youget.getName() + " in exchange " +
+                            "for " + foryouritem.getName() + "\n" );
 
                 }
 
@@ -283,11 +324,37 @@ public class ApproveTrade implements userMainMenuOptions {
 
         }
         if (cTrade instanceof typeThreeRequest){
-            //i think i only get here if im about to confirm or reject the 3 way trade
             typeThreeRequest t = (typeThreeRequest) cTrade;
-            if (t.getApproved() == 1) { //its time for the third person person to approve
-                //make sure we are at user 3
-                if (user.getName().equals(((typeThreeRequest) cTrade).getThirdUser().getName())) {
+            String firstPerson = t.getFirstUser().getName();
+            String secondPerson = t.getSecondUser().getName();
+            String thirdPerson = t.getThirdUser().getName();
+            Item youget;
+            Item foryouritem;
+            String one, two;
+            if (user.getName().equals(firstPerson)) {
+                one = secondPerson;
+                two = thirdPerson;
+                youget = t.getThirdItem();
+                foryouritem = t.getFirstItem();
+            }
+            else { //user.getName().equals(thirdperson)
+                one = firstPerson;
+                two = secondPerson;
+                youget = t.getFirstItem();
+                foryouritem = t.getThirdItem();
+
+            }
+            System.out.print("You have selected 3 way trade with " +  one + " and " + two + " where you get item " + youget.getName() + "for" +
+                    " item " + foryouritem.getName() + "\n");
+
+
+
+
+
+            //i think i only get here if im about to confirm or reject the 3 way trade
+            //awaitiung 2 people to approve
+            if (t.getApproved() == 1) { //its time for the two other people to approve
+
                     System.out.print("Please press 1 to approve this three way trade request and 2 for rejecting this request.\n");
                     input = sc.next();
 
@@ -297,7 +364,9 @@ public class ApproveTrade implements userMainMenuOptions {
 //                        System.out.print("Approved and Transaction is made!\n");
 //                        return user;
                         //if they approve, now user 2 has to approve of this too right?
-                        t.getApproved();
+                        t.userApproves();
+                        t.setFirstApproved(user);
+                        allTradeRequests.handleSingleApproved(allUsers, t, user);
                         System.out.print("Approved! Now let us wait on our third user to approve of this trade!\n");
 
                     }
@@ -308,15 +377,38 @@ public class ApproveTrade implements userMainMenuOptions {
                     }
 
 
-                }
-            }
-                else  if (t.getApproved() == 2)  //we are at user 1 approving this trade so we can move onto transaction finally
-                {
 
+            }
+            //only one freakin person left to approve!!!!!!!!!!!!!!!
+                else if (t.getApproved() == 2)  //we are at user 1 approving this trade so we can move onto transaction finally
+            {
                     System.out.print("Please press 1 to approve this three way trade request and 2 for rejecting this request.\n");
                     input = sc.next();
 
-                }
+                    if (input.equals("1")) { //user 1 is also okay with the new item being given to them everyone is happy
+                        //everyone is okay with this 3 way trade yay
+                        ThreeWay final3 = new ThreeWay(t.getFirstItem(), t.getSecondItem(), t.getThirdItem(), t.getTemp(), t.getVirtual());
+                        allTransactions.addToPendingTransactions(final3, allUsers, currencyManager);
+                        allTradeRequests.updateRequestStatus(allUsers, cTrade, 1);
+                        System.out.print("Approved and Transaction is made!\n");
+                        //
+                        return user;
+}
+                    else if (input.equals("2")){
+                        allTradeRequests.updateRequestStatus(allUsers, cTrade, 2);
+                        System.out.print("Denied!\n");
+
+
+                        return null;
+
+                    }
+
+
+
+
+
+
+            }
 
 
 

@@ -47,6 +47,54 @@ public class TradeSystem {
         allUserMessages = readwrite.userMessagePopulate("UserMessages.ser");
 
 
+        //jsut for testing broo
+        allUsers.createUser ("Tina", "123");
+        allUsers.createUser("Mo", "123");
+        allUsers.createUser("A", "123");
+
+
+        User Tina = new User("Tina", "123");
+        User Mo = new User ("Mo", "123");
+        User A = new User ("A", "123");
+
+
+
+        Item sock = new Item("sock", allUsers.getUser(Tina), "hi", "Electronics", false, true, true, true,
+                2.0, 2.0, 2);
+        allUsers.addToInventory(allUsers.getUser(Tina), sock);
+        allItems.addItem(sock);
+
+
+
+        Item book = new Item("book", allUsers.getUser(Tina), "hi", "Electronics", false, true, true, true,
+                2.0, 2.0, 2);
+        allUsers.addToInventory(allUsers.getUser(Tina), book);
+        allItems.addItem(book);
+
+        Item pen = new Item("pen", allUsers.getUser(Mo), "hi", "Electronics", false, true, true, true,
+                2.0, 2.0, 2);
+        allUsers.addToInventory(allUsers.getUser(Mo), pen);
+        allItems.addItem(pen);
+
+        Item phone = new Item("phone", allUsers.getUser(A), "hi", "Electronics", false, true, true, true,
+                2.0, 2.0, 2);
+        allUsers.addToInventory(allUsers.getUser(A), phone);
+        allItems.addItem(phone);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         //If there is no current User, prompts log in and prompts the correct menu depending on the type of Account
         while (currentUser == null) {
             LogInSystem system1 = new LogInSystem(allUsers, allAdmins);
