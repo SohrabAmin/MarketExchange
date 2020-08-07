@@ -1,4 +1,5 @@
 import java.util.Calendar;
+import java.util.HashMap;
 
 /**
  * Constructs a ThreeWay TradeRequest, that a User can send to another User if the want to initiated a Transaction. Notice this difference from a Transaction, as
@@ -16,6 +17,10 @@ public class typeThreeRequest extends TradeRequest {
     private Item item3;
     private int approved = 0;
     private User firstApproved = null;
+    private AvailabilityChart user1Availability;
+    private AvailabilityChart user2Availability;
+    private AvailabilityChart user3Availability;
+
 
     /**
      * Constructs a ThreeWay TradeRequest instance. This class is instantiated by the User that attempts to initiate the Transaction, and should be stored within the receiving User's
@@ -37,6 +42,10 @@ public class typeThreeRequest extends TradeRequest {
         this.item1 = item1;
         this.item2 = item2;
         this.item3 = item3;
+        user1Availability = new AvailabilityChart();
+        user2Availability = new AvailabilityChart();
+        user3Availability = new AvailabilityChart();
+
     }
 
     public User getFirstUser(){
@@ -80,5 +89,15 @@ public class typeThreeRequest extends TradeRequest {
 
     public User getFirstApproved(){
         return this.firstApproved;
+    }
+
+    public AvailabilityChart getUser1Availability() {
+        return user1Availability;
+    }
+    public AvailabilityChart getUser2Availability(){
+        return user2Availability;
+    }
+    public AvailabilityChart getUser3Availability(){
+        return user3Availability;
     }
 }

@@ -1,9 +1,13 @@
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class PendingTransactionProcess implements userMainMenuOptions {
+
+
 
     /**
      * Displays the pending transactions that the User user has. It will allow users to approve or edit the transactions
@@ -16,6 +20,7 @@ public class PendingTransactionProcess implements userMainMenuOptions {
      * @param currencyManager
      * @return
      */
+
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
                           AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages, CurrencyManager currencyManager) {
@@ -90,7 +95,7 @@ public class PendingTransactionProcess implements userMainMenuOptions {
                     //they want to propose a new time
                     //provide warning if the is at their 3rd strike
 
-                    //Daniel EDIT MEEEEEEE
+
                     if (tt.getInitialMeeting().geteditHistory(user.getName()) + 1 == allAdmins.getMeetingEditThreshold()) {
                         System.out.print("\u2622 This is the last time you can propose a meeting.\nIf rejected, this transaction will be cancelled\n");
                     }

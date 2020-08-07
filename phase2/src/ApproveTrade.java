@@ -1,13 +1,27 @@
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.logging.Logger;
-
+import java.util.HashMap;
 
 public class ApproveTrade implements userMainMenuOptions {
+
+
+
+    //this is taken from
+// https://stackoverflow.com/questions/22195093/android-how-to-get-tomorrows-date
+    public static class DateUtil
+    {
+        public static Date addDays(Date date, int days)
+        {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            cal.add(Calendar.DATE, days); //minus number would decrement the days
+            return cal.getTime();
+        }
+    }
+
+
     /**
      * Displays User user's pending requests and deals with approving and rejecting any pending Trade Requests.
      *
@@ -226,10 +240,9 @@ public class ApproveTrade implements userMainMenuOptions {
                 System.out.print("Approved by you!\n");
                 return null;
 
-            } else if (input.equals("2")) {//denied
-                //pending 0
-                //denied 2
-                //approved 1
+            }
+            else if (input.equals("2")) {//denied
+                //pending 0-denied 2-approved 1
                 allTradeRequests.updateRequestStatus(allUsers, cTrade, 2);
                 System.out.print("Denied!\n");
                 return null;
@@ -316,7 +329,35 @@ public class ApproveTrade implements userMainMenuOptions {
 
                 System.out.println("Awesome! We have found an item to continue the trade." +
                         " We are notifying " + replacement.getOwner().getName() +
-                        " as he is the owner of item: " + replacement.getName() +"\n");
+                        " as he is the owner of item: " + replacement.getName());
+
+                Date now = new Date();
+                SimpleDateFormat simpleDateformat = new SimpleDateFormat("EEEE");
+                System.out.println("--------------------------------------------\n" +
+                        "Today is: " + simpleDateformat.format(now));
+                System.out.print("Please put 1 for available and 2 for unavailable for the following days. " +
+                        "\nBased on all 3 user's availabilities, we will provide set up earliest meeting for 11am and will notify you.\n" +
+                        "If the system cannot find any common days between the three users for the next week, the trade request will be automatically cancelled, so put in as many days available as possible!\n");
+
+                for (int q = 1; q < 8; q++){
+                    Date nextday = DateUtil.addDays(now, q);
+                    System.out.print(simpleDateformat.format(nextday) + " : ");
+                    Object able = sc.next();
+                    if (able.equals("1")){
+                        finalReq.getUser1Availability().editChart(q,true);
+                    }
+                    else if (able.equals("2")){
+                        finalReq.getUser1Availability().editChart(q,false);
+                    }
+
+                }
+
+
+
+
+
+
+
 
                 return user;
             }
@@ -347,10 +388,6 @@ public class ApproveTrade implements userMainMenuOptions {
             System.out.print("You have selected 3 way trade with " +  one + " and " + two + " where you get item " + youget.getName() + "for" +
                     " item " + foryouritem.getName() + "\n");
 
-
-
-
-
             //i think i only get here if im about to confirm or reject the 3 way trade
             //awaitiung 2 people to approve
             if (t.getApproved() == 1) { //its time for the two other people to approve
@@ -367,6 +404,28 @@ public class ApproveTrade implements userMainMenuOptions {
                         t.userApproves();
                         t.setFirstApproved(user);
                         allTradeRequests.handleSingleApproved(allUsers, t, user);
+
+                        //getting the person's availability
+                        Date now = new Date();
+                        SimpleDateFormat simpleDateformat = new SimpleDateFormat("EEEE");
+                        System.out.println("--------------------------------------------\n" +
+                                "Today is: " + simpleDateformat.format(now));
+                        System.out.print("Please put 1 for available and 2 for unavailable for the following days. " +
+                                "\nBased on all 3 user's availabilities, we will provide set up earliest meeting for 11am and will notify you.\n" +
+                                "If the system cannot find any common days between the three users for the next week, the trade request will be automatically cancelled, so put in as many days available as possible!\n");
+
+                        for (int q = 1; q < 8; q++){
+                            Date nextday = DateUtil.addDays(now, q);
+                            System.out.print(simpleDateformat.format(nextday) + " : ");
+                            Object able = sc.next();
+                            if (able.equals("1")){
+                                t.getUser2Availability().editChart(q,true);
+                            }
+                            else if (able.equals("2")){
+                                t.getUser2Availability().editChart(q,false);
+                            }
+
+                        }
                         System.out.print("Approved! Now let us wait on our third user to approve of this trade!\n");
 
                     }
@@ -387,11 +446,94 @@ public class ApproveTrade implements userMainMenuOptions {
 
                     if (input.equals("1")) { //user 1 is also okay with the new item being given to them everyone is happy
                         //everyone is okay with this 3 way trade yay
+                        Date now = new Date();
+                        SimpleDateFormat simpleDateformat = new SimpleDateFormat("EEEE");
+                        System.out.println("--------------------------------------------\n" +
+                                "Today is: " + simpleDateformat.format(now));
+                        System.out.print("Please put 1 for available and 2 for unavailable for the following days. " +
+                                "\nBased on all 3 user's availabilities, we will provide set up earliest meeting for 11am and will notify you.\n" +
+                                "If the system cannot find any common days between the three users for the next week, the trade request will be automatically cancelled, so put in as many days available as possible!\n");
+
+                        for (int q = 1; q < 8; q++){
+                            Date nextday = DateUtil.addDays(now, q);
+                            System.out.print(simpleDateformat.format(nextday) + " : ");
+                            Object able = sc.next();
+                            if (able.equals("1")){
+                                t.getUser3Availability().editChart(q,true);
+                            }
+                            else if (able.equals("2")){
+                                t.getUser3Availability().editChart(q,false);
+                            }
+
+                        }
+
+                        //now i have to find a day that is common between all 3 people
+
+                        //used https://stackoverflow.com/questions/51039668/how-to-retrieve-common-key-value-pairs-from-two-hashmaps
+                        //as reference to find the commonality
+                        Map<Integer, Boolean> commonMapbetweenU1andU2 = new HashMap<Integer, Boolean>();
+                        for(Integer key : t.getUser1Availability().getChart().keySet()) {
+                            if(t.getUser2Availability().getChart().get(key) !=null) {
+                                if(t.getUser1Availability().getChart().get(key).equals(t.getUser2Availability().getChart().get(key))) {
+                                    //so i found the common but it must also be avaialble
+                                    if (t.getUser1Availability().getChart().get(key).equals(true))
+                                    commonMapbetweenU1andU2.put(key, t.getUser1Availability().getChart().get(key));
+                                }
+                            }
+                        }
+                        //so far, hopefully I've found a time common between the first two people
+
+                        //if I can't find a time common between all 3 people, we gotta cancel sorry
+                        if (commonMapbetweenU1andU2.isEmpty()){
+                            allTradeRequests.updateRequestStatus(allUsers, cTrade, 2);
+                            System.out.print("Sorry but users don't seem to be avaiable to meet in the next week. " +
+                                    "Cancelling this trade request.\n");
+                            return user;
+                        }
+
+                        Map<Integer, Boolean> commonMapbetweenothertwoandU3 = new HashMap<Integer, Boolean>();
+                        for(Integer key : t.getUser3Availability().getChart().keySet()) {
+                            if(commonMapbetweenU1andU2.get(key) !=null) {
+                                if(t.getUser3Availability().getChart().get(key).equals(commonMapbetweenU1andU2.get(key))) {
+                                    if (t.getUser3Availability().getChart().get(key).equals(true))
+                                    commonMapbetweenothertwoandU3.put(key, t.getUser1Availability().getChart().get(key));
+                                }
+                            }
+                        }
+
+                        if (commonMapbetweenothertwoandU3.isEmpty()){
+                            allTradeRequests.updateRequestStatus(allUsers, cTrade, 2);
+                            System.out.print("Sorry but users don't seem to be avaiable to meet in the next week. " +
+                                    "Cancelling this trade request.\n");
+                            return user;
+                        }
+
+//getting one entry from the commonality, gotten with reference https://stackoverflow.com/questions/1509391/how-to-get-the-one-entry-from-hashmap-without-iterating/1509418
+
+                        Map.Entry<Integer, Boolean> commonEntry = commonMapbetweenothertwoandU3.entrySet().iterator().next();
+                        Integer commonDayIncrement = commonEntry.getKey();
+
+
+                        Date meetingday =  DateUtil.addDays(now, commonDayIncrement);
+                        System.out.print("We found a common day between all 3 users and that is: " + simpleDateformat.format(meetingday) + "\n");
+
+
+
+
+
+
+
+
+
+
+
+
                         ThreeWay final3 = new ThreeWay(t.getFirstItem(), t.getSecondItem(), t.getThirdItem(), t.getTemp(), t.getVirtual());
                         allTransactions.addToPendingTransactions(final3, allUsers, currencyManager);
                         allTradeRequests.updateRequestStatus(allUsers, cTrade, 1);
-                        System.out.print("Approved and Transaction is made!\n");
-                        //
+
+                        //FINALLY EVERYONE IS HAPPY LETS PROPOSE A MEETING
+
                         return user;
 }
                     else if (input.equals("2")){
@@ -436,6 +578,9 @@ public class ApproveTrade implements userMainMenuOptions {
         allUsers.removeFromPendingRequests(user, request);
         System.out.print("\u274E Rejected!\n");
     }
+
+
+
 
     /**
      * Initiates a Meeting by asking the User for a proposed date, time and location for the meeting.
