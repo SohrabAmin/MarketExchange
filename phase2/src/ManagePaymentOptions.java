@@ -95,7 +95,7 @@ public class ManagePaymentOptions implements userMainMenuOptions {
 
         Scanner sc = new Scanner(System.in);
 
-        int temp1 = 0;
+        long temp1 = 0;
         String temp2;
         Calendar temp3;
         int temp4;
@@ -107,8 +107,8 @@ public class ManagePaymentOptions implements userMainMenuOptions {
             if(((String) inum).length() != 16){
                 System.out.println("Incorrect input, please try again! \n");
             } else{
-                inum = Integer.parseInt((String) inum);
-                temp1 = (int) inum;
+                inum = Long.parseLong((String) inum);
+                temp1 = (Long) inum;
                 check = false;
             }
         }
