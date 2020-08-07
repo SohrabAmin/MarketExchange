@@ -604,7 +604,9 @@ public class ApproveTrade implements userMainMenuOptions {
                     int meetingDay = currentdate.getDayOfMonth() + commonDayIncrement;
                     String meetingDayString = String.valueOf(meetingDay);
 
-                    int meetingMonth = Calendar.getInstance().get(Calendar.MONTH);
+                    int meetingMonth = Calendar.getInstance().get(Calendar.MONTH) + 1 ;
+                    //adding 1 cuz months in java are 0 indexed
+
                     String meetingMonthString = String.valueOf(meetingMonth);
 
                     int meetingYear = currentdate.getYear();
@@ -616,10 +618,6 @@ public class ApproveTrade implements userMainMenuOptions {
 
                     //the finalized meeting for the transaction is now created
                     Meeting finalizedmeeting = allMeetings.createMeeting(meetingDate, meetingTime, t.getthirdUserLocation());
-
-
-
-
                     ThreeWay final3 = new ThreeWay(t.getFirstItem(), t.getSecondItem(), t.getThirdItem(), t.getTemp(), t.getVirtual());
                         allTransactions.addToPendingTransactions(final3, allUsers, currencyManager);
                         allTradeRequests.updateRequestStatus(allUsers, cTrade, 1);
