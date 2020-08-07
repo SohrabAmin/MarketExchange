@@ -11,10 +11,12 @@ public class CurrencyManager {
         this.inProgressSale = new HashMap<>();
     }
 
-    public void addFunds(User user, CreditCard card, double amount){
+    public boolean addFunds(User user, CreditCard card, double amount){
         if(!card.checkExpiration()){
             user.updateCapital(amount);
+            return true;
         }
+        return false;
     }
     public void holdFunds(OneWayMonetized trade, UserManager userManager){
         this.inProgressSale.put(trade, trade.getCost());

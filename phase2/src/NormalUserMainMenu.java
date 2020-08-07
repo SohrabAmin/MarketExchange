@@ -59,7 +59,7 @@ public class NormalUserMainMenu implements DifferentUserMainMenu {
                 "2. View Inventory\n" +
                 "3. Browse Items\n" +
                 "4. Initiate Trade\n" +
-                "5. View Pending Trade Requests\n" +
+                "5. Manage Payment Options\n" +
                 "6. Approve Pending Trade Requests\n" +
                 "7. Add Item to inventory\n" +
                 "8. View most recent trades\n" +
@@ -97,7 +97,7 @@ public class NormalUserMainMenu implements DifferentUserMainMenu {
                 } else if (input.equals("4")) { //initiate trade
                     option.setChosenOption(new TradeInitiator());
                 } else if (input.equals("5")) { //view pending trade requests
-                    option.setChosenOption(new PrintUserMessages());
+                    option.setChosenOption(new ManagePaymentOptions());
                 } else if (input.equals("6")) { //approve trade reqs
                     option.setChosenOption(new ApproveTrade());
                 } else if (input.equals("7")) { //add item to inventory

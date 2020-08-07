@@ -73,6 +73,7 @@ public class User extends Account {
         adminActionHistory = new ArrayList<>();
         AdminMessages = new ArrayList<>();
         vacationStorage = new ArrayList<>();
+        this.creditCards = new ArrayList<>();
 
         for (int i = 1; i < 53; i++) {
             List<TradeRequest> temp = new ArrayList<>();
