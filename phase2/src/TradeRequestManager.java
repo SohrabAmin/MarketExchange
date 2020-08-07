@@ -1,12 +1,11 @@
+mport java.io.Serializable;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  * Manages all TradeRequests. Changes values in TradeRequest by accessing getters/setters. Should only be instantiated once.
  */
 public class TradeRequestManager implements Serializable {
-
     private List<TradeRequest> pending;
     private List<TradeRequest> denied;
     private List<TradeRequest> confirmed;
@@ -19,7 +18,6 @@ public class TradeRequestManager implements Serializable {
         this.denied = new ArrayList<TradeRequest>();
         this.confirmed = new ArrayList<TradeRequest>();
     }
-
     /**
      * Adds an instance of TradeRequest to one of three attributes in TradeRequestManager: pending, confirmed or cancelled, depending on
      * the User receiving the Trade Request's response. Also, adds to User's pendingRequests if request is not yet acted upon by receiving User.
@@ -28,18 +26,14 @@ public class TradeRequestManager implements Serializable {
      * @param request     The given instance of TradeRequest.
      */
     public void receiveTradeRequest(UserManager userManager, TradeRequest request) {
-
         User user1;
         User user2;
-
-
         if(request instanceof typeOneRequest){
             user1 = userManager.getUser(((typeOneRequest) request).getFirstUser());
             user2 = userManager.getUser(((typeOneRequest) request).getSecondUser());
             userManager.addToOutboundRequests(user1, request);
             userManager.addToWeeklyRequestLimit(user1, request);
             userManager.addToPendingRequests(user2, request);
-
         }else if(request instanceof typeTwoRequest){
             user1 = userManager.getUser(((typeTwoRequest) request).getFirstUser());
             user2 = userManager.getUser(((typeTwoRequest) request).getSecondUser());
@@ -55,12 +49,8 @@ public class TradeRequestManager implements Serializable {
             userManager.addToPendingRequests(user1, request);
             userManager.addToPendingRequests(user3, request);
         }
-
         this.pending.add(request);
-
     }
-
-
     /**
      * Updates attribute list(s) (pending/denied/confirmed) depending on the wishes of the User receiving the TradeRequest.
      *
@@ -76,7 +66,6 @@ public class TradeRequestManager implements Serializable {
         } else {
             this.denied.remove(request);
         }
-
         if (status == 0) {
             this.pending.add(request);
         } else if (status == 1) {
@@ -86,11 +75,8 @@ public class TradeRequestManager implements Serializable {
             this.denied.add(request);
             this.handleRequestResponse(userManager, request);
         }
-
         request.setStatus(status);
-
     }
-
     /**
      * Accepts the TradeRequest within a User's pendingList, creates an instance of Transaction.
      *
