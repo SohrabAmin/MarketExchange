@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -20,6 +21,12 @@ public class typeThreeRequest extends TradeRequest {
     private AvailabilityChart user1Availability;
     private AvailabilityChart user2Availability;
     private AvailabilityChart user3Availability;
+    private ArrayList<String> firstUserLocation;
+    private ArrayList<String> secondUserLocation;
+    private String thirdUserLocation;
+
+
+
 
 
     /**
@@ -45,9 +52,32 @@ public class typeThreeRequest extends TradeRequest {
         user1Availability = new AvailabilityChart();
         user2Availability = new AvailabilityChart();
         user3Availability = new AvailabilityChart();
+        firstUserLocation = new ArrayList<>();
+        secondUserLocation = new ArrayList<>();
+        thirdUserLocation = "";
+
 
     }
 
+    public ArrayList<String> getFirstUserLocation(){
+        return firstUserLocation;
+    }
+    public void addtoFirstUserLocation (String location){
+        firstUserLocation.add(location);
+    }
+
+    public ArrayList<String> getSecondUserLocation(){
+        return secondUserLocation;
+    }
+    public void addtoSecondUserLocation (String location){
+        secondUserLocation.add(location);
+    }
+    public String getthirdUserLocation(){
+        return thirdUserLocation;
+    }
+    public void setThirdUserLocation (String location){
+        thirdUserLocation = location;
+    }
     public User getFirstUser(){
         return this.user1;
     }
