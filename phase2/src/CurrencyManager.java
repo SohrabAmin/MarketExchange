@@ -16,19 +16,15 @@ public class CurrencyManager {
             user.updateCapital(amount);
         }
     }
-
-
     public void holdFunds(OneWayMonetized trade, UserManager userManager){
         this.inProgressSale.put(trade, trade.getCost());
         User user1 = userManager.getUser(trade.getFirstTrader());
         user1.updateCapital(-trade.getCost());
     }
-
     public void reverseHold(OneWayMonetized trade, UserManager userManager){
         User user1 = userManager.getUser(trade.getFirstTrader());
         user1.updateCapital(trade.getCost());
         this.inProgressSale.remove(trade);
-
     }
     public void completeSale(OneWayMonetized trade, UserManager userManager){
         User user2 = userManager.getUser(trade.getSecondTrader());
@@ -36,8 +32,6 @@ public class CurrencyManager {
         this.inProgressSale.remove(trade);
 
     }
-
-
     public Calendar getDate(String date) {
         Calendar cal = Calendar.getInstance();
         String[] temp = date.split("-");

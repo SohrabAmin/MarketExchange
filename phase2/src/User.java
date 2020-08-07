@@ -409,6 +409,9 @@ public class User extends Account {
     public void addCreditCard(CreditCard card){
         this.creditCards.add(card);
     }
+    public List<CreditCard> getCreditCards(){
+        return this.creditCards;
+    }
 
     public void setDefaultCreditCard(CreditCard card){
         this.defaultCreditCard = card;

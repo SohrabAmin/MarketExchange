@@ -33,5 +33,12 @@ public class CreditCard {
         return end.toString();
     }
 
+    public String getExpiration(){
+        return this.expiration.toString();
+    }
+
+    public Integer getCardNumber(){
+        return this.cardNumber;
+    }
 
 }
