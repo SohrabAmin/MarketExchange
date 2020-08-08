@@ -107,7 +107,8 @@ public class ConfirmMeetings implements userMainMenuOptions {
                                 Calendar date = selectedTransaction.getInitialMeeting().getDate();
                                 date.add(Calendar.MONTH, 1);
                                 Meeting returnMeeting = new Meeting(date, selectedTransaction.getInitialMeeting().getPlace());
-                                returnMeeting.initialconfirm(user.getName(), selectedTransaction.getInitialMeeting().getOtherSide(user.getName()));
+                                returnMeeting.initial3confirm(((ThreeWay) selectedTransaction).getFirstTrader().getName(), ((ThreeWay) selectedTransaction).getSecondTrader().getName(), ((ThreeWay) selectedTransaction).getThirdTrader().getName());
+
                                 System.out.print("REMINDER: You need to return the borrowed item(s) back by " + returnMeeting.toString() + "\n");
                                 //need to add return meeting to transactions
                                 allTransactions.setFinalMeeting(selectedTransaction, returnMeeting);
@@ -132,7 +133,8 @@ public class ConfirmMeetings implements userMainMenuOptions {
                 System.out.print("\u2639 We are sorry to hear that! Better luck next time!\n");
                 allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 4, currencyManager);
             }
-        } else if (selection.equals("2")) {
+        }
+        else if (selection.equals("2")) {
             System.out.print("Here are your meetings to return items:\n");
             List<Transaction> userTransactions = new ArrayList<>();
             userTransactions = user.getSecondAgreedUponMeeting();
@@ -158,7 +160,7 @@ public class ConfirmMeetings implements userMainMenuOptions {
             Transaction selectedTransaction = userTransactions.get(meetingIndex);
             System.out.print("You have selected:\n");
             Integer confirmed = selectedTransaction.getInitialMeeting().userconfirmed(user.getName());
-//
+//printing the confirmed transaction and its meeting and stuff
             System.out.print(selectedTransaction.getInitialMeeting() + " With: " + selectedTransaction.getInitialMeeting().getOtherSide(user.getName()) + "\n");
             System.out.print("Press 1 to confirm that the meeting is done!\n");
             String action = sc11.nextLine();
@@ -171,8 +173,24 @@ public class ConfirmMeetings implements userMainMenuOptions {
                 //lets check if both people have confirmed meeting
                 if (selectedTransaction.getReturnMeeting().confirmedByBothSides()) {
                     //looks like the meeting was confirmed by both parties!
+                    if (selectedTransaction instanceof TwoWay){
                     System.out.print("\uD83E\uDD29 Looks like the meeting was confirmed by both sides!\n ");
                     allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 3, currencyManager);
+                    }
+                    else if (selectedTransaction instanceof ThreeWay){
+                        selectedTransaction.getInitialMeeting().meetingConfirmed(user.getName());
+System.out.print("Confirmed!\n");
+                        if (selectedTransaction.getReturnMeeting().confirmByThreeSides()){
+                            //if everyone confirmed
+                            System.out.print("Looks like everyone confirmed!\n");
+                            allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 3, currencyManager);
+                        }
+
+
+
+
+
+                    }
                 }
             }
         }
