@@ -106,56 +106,104 @@ public class typeThreeRequest extends TradeRequest {
     public void setThirdUserLocation (String location){
         thirdUserLocation = location;
     }
-
+    /**
+     * Gets the User who initially sent the typeTwoRequest to user2
+     * @return User that initially sent the typeTwoRequest
+     */
     public User getFirstUser(){
         return this.user1;
     }
 
-
+    /**
+     * Gets the User who initiated the typeThreeRequest
+     * @return User that initiated the typeThreeRequest
+     */
     public User getSecondUser(){
         return this.user2;
     }
 
-
+    /**
+     * Gets the User who user2 wanted to bring in for the typeThreeRequest
+     * @return User that user2 wanted to bring in for the typeThreeRequest
+     */
     public User getThirdUser(){
         return this.user3;
     }
 
+    /**
+     * Gets the Item that user1 would be giving to user2.
+     * @return Item that user1 would be giving to user2.
+     */
     public Item getFirstItem(){
         return this.item1;
     }
 
-
+    /**
+     * Gets the Item that user2 would be giving to user3.
+     * @return Item that user2 would be giving to user3.
+     */
     public Item getSecondItem(){
         return this.item2;
     }
-
+    /**
+     * Gets the Item that user3 would be giving to user1.
+     * @return Item that user2 would be giving to user1.
+     */
 
     public Item getThirdItem(){
         return this.item3;
     }
 
+    /**
+     * Increments the approve attribute by 1 if one of the remaining two Users has confirmed
+     */
     public void userApproves(){
         this.approved += 1;
     }
+
+    /**
+     * Gets the number of people that have currently approved. Notice: 0: user1 & user3 have not approved yet. 1: One of user1 or user3 has approved. 2: All three
+     * Users have approved. (we are assuming user2 approves, as they sent the request)
+     * @return An int of the number of people that have approved this TradeRequest.
+     */
     public int getApproved(){
         return approved;
     }
 
+    /**
+     * Sets the first User to approve the ThreeWayRequest (either user1 or user3)
+     * @param user The User who first approved the TradeRequest
+     */
     public void setFirstApproved(User user){
         this.firstApproved = user;
     }
 
+    /**
+     * Gets the first User to approve the ThreeWayRequest (either user1 or user3)
+     * @return The User who first approved the TradeRequest
+     */
     public User getFirstApproved(){
         return this.firstApproved;
     }
 
+    /**
+     * Gets User1's availability for the next 7 days. This aids in planning the Meeting.
+     * @return HashMap of user1 availability for the next 7 days.
+     */
     public AvailabilityChart getUser1Availability() {
         return user1Availability;
     }
+    /**
+     * Gets User2's availability for the next 7 days. This aids in planning the Meeting.
+     * @return HashMap of user2 availability for the next 7 days.
+     */
     public AvailabilityChart getUser2Availability(){
         return user2Availability;
     }
+    /**
+     * Gets User3s availability for the next 7 days. This aids in planning the Meeting.
+     * @return HasMap of user3 availability for the next 7 days.
+     */
     public AvailabilityChart getUser3Availability(){
         return user3Availability;
     }
