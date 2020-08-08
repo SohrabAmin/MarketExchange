@@ -10,6 +10,9 @@ public class AvailabilityChart {
 
   public AvailabilityChart (){
         chart = new HashMap<>();
+
+
+
         //initializing the chart so that the person is completely unavailable
         for (int i = 1; i < 8; i++)
         chart.put((Integer) i,false);

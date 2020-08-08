@@ -15,7 +15,7 @@ public class TradeSystem {
     public ReadWrite readwrite = new ReadWrite();
     public Object currentUser;
     public UserMessageManager allUserMessages;
-    public CurrencyManager allCurrency;
+    public CurrencyManager allCurrency = new CurrencyManager();
 
 
     /**
@@ -58,7 +58,9 @@ public class TradeSystem {
         User Mo = new User ("Mo", "123");
         User A = new User ("A", "123");
 
-
+        Item  shoe = new Item("shoe", allUsers.getUser(Tina) , "hi" , "Electronics" , false, false, true, false, 2.0, null, null);
+        allUsers.addToInventory(allUsers.getUser(Tina), shoe);
+        allItems.addItem(shoe);
 
         Item sock = new Item("sock", allUsers.getUser(Tina), "hi", "Electronics", false, true, true, true,
                 2.0, 2.0, 2);

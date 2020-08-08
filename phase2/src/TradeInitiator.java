@@ -36,6 +36,9 @@ public class TradeInitiator implements userMainMenuOptions {
         Browse browsing = new Browse();
         browsing.DisplayBrowse(user, allItems);
 
+
+        //----------- SO FAR IVE DISPLAYED THE ITEMS, NOW I NEED THE PERSON TO SELECT THE ITEM THEY WANT
+
         System.out.print("Please type in the ID of the item you would like to trade or 'back' to return to the main menu.\n");
         Object inum = sc.nextLine();
         if (inum.equals("back")) {
@@ -56,6 +59,8 @@ public class TradeInitiator implements userMainMenuOptions {
         //the item they have selected
         Item tradeItem = allItems.getSystemInventory().get((Integer) inum - 1);
 
+
+
         Boolean monetized = false;
         if (tradeItem.getSellable() || tradeItem.getRentable()) {
             monetized = true;
@@ -72,31 +77,40 @@ public class TradeInitiator implements userMainMenuOptions {
         myList.add(tradeItem);
 
 
+    //if only sellable
+        if (tradeItem.getSellable() && !tradeItem.getTradable() && !tradeItem.getRentable()){ //if only sellable
 
-        if (tradeItem.getSellable() && !tradeItem.getTradable() && !tradeItem.getRentable()){ //if sellable and tradable but not rentable
+            if (user.getCapital() < tradeItem.getSellPrice()){
+                System.out.print("\uD83D\uDE14Sorry! You have $" + user.getCapital() + " but this item is priced at $" + tradeItem.getSellPrice());
+                System.out.print("\nYou do not have enough money to buy this");
+                return user;
+            }
 
             String mssge = "";
-
             System.out.print("Please enter message for the owner of the item\n");
             mssge =  sc.nextLine();
-
             typeOneRequest trade = new typeOneRequest(user, tradeItem, mssge, false, today, tradeItem.getVirtual(), true);
             allTradeRequests.receiveTradeRequest(allUsers, trade);
             System.out.print("Your request is sent!\n");
             return user;
         }
-        else if (tradeItem.getRentable() && !tradeItem.getTradable() && !tradeItem.getTradable()){ //if only rentable
+
+
+
+        //if only rentable
+        else if (tradeItem.getRentable() && !tradeItem.getSellable() && !tradeItem.getTradable()){ //if only rentable
 
             String mssge = "";
-
             System.out.print("Please enter message for the owner of the item\n");
             mssge =  sc.nextLine();
-
             typeOneRequest trade = new typeOneRequest(user, tradeItem, mssge, true, today, tradeItem.getVirtual(), true);
             allTradeRequests.receiveTradeRequest(allUsers, trade);
             System.out.print("Your request is sent!\n");
             return user;
         }
+
+
+        //if rentable and sellable
         if (tradeItem.getRentable() && tradeItem.getSellable() && !tradeItem.getTradable()){ //rentable and sellable but not tradable
             System.out.print("Please enter 1 if you want to rent the item. Enter 2 if you want to buy the item.\n");
             Object in = sc.nextLine();
@@ -119,7 +133,13 @@ public class TradeInitiator implements userMainMenuOptions {
                 return user;
             }
         }
-//so by here, we covered all 1 way stuff (minus 1 way trade)
+
+
+
+
+
+
+        //sellable and tradable
         else if (!tradeItem.getRentable() && tradeItem.getSellable() && tradeItem.getTradable()){ //if it is sellable or tradable
             System.out.print("Please enter 1 if you want to buy the item. Enter 2 if you want to trade the item.\n");
             Object in = sc.nextLine();
@@ -185,7 +205,7 @@ public class TradeInitiator implements userMainMenuOptions {
                 return user;
 
             }
-            else if (in.equals("2")){
+            else if (in.equals("2")){  //if they want to buy the item
                 String mssge = "";
                 System.out.print("Please enter message for the owner of the item\n");
                 mssge =  sc.nextLine();
