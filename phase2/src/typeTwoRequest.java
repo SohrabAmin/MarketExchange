@@ -32,22 +32,34 @@ public class typeTwoRequest extends TradeRequest {
         this.item2 = item2;
     }
 
-
+    /**
+     * Gets the User who initiates the typeTwoRequest
+     * @return User that initiated the typeTwoRequest
+     */
     public User getFirstUser() {
         return this.user1;
     }
 
-
+    /**
+     * Gets the User who receives the typeTwoRequest
+     * @return User that received typeTwoRequest
+     */
     public User getSecondUser() {
         return this.user2;
     }
 
-
+    /**
+     * Gets the Item that the firstUser is offering.
+     * @return The Item the firstUser is offering.
+     */
     public Item getFirstItem() {
         return this.item1;
     }
 
-
+    /**
+     * Get the Item that the FirstUser wants from the secondUser.
+     * @return The Item the firstUser wants.
+     */
     public Item getSecondItem() {
         return this.item2;
     }

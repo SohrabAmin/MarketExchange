@@ -16,7 +16,7 @@ public class typeOneRequest extends TradeRequest {
     /**
      * Constructs a OneWay TradeRequest instance. This class is instantiated by the User that attempts to initiate the Transaction, and should be stored within the receiving User's
      * pendingRequest. If the receiving User accepts the conditions of the Transaction, they may accept the TradeRequest, and an instance of Transaction is created.
-     * @param user1 The User initiated the TradeRequest
+     * @param user1 The User who initiated the TradeRequest
      * @param item The Item User1 currently wants.
      * @param message A String representation of any message user1 may want to send user2.
      * @param temp A boolean representing if the TradeRequest will be temp or not.
@@ -30,21 +30,34 @@ public class typeOneRequest extends TradeRequest {
         this.item = item;
         this.monetized = monetized;
     }
-
+    /**
+     * Gets the User who initiates the typeOneRequest
+     * @return User that initiated the typeOneRequest
+     */
     public User getFirstUser() {
         return this.user1;
     }
 
-
+    /**
+     * Gets the User who receives the typeTwoRequest
+     * @return User that received typeTwoRequest
+     */
     public User getSecondUser() {
         return this.user2;
     }
 
-
+    /**
+     * Gets the Item that the User initiating the TradeRequest (user1) wants from another User (user2).
+     * @return Item that user1 wants from user2
+     */
     public Item getItem() {
         return this.item;
     }
 
+    /**
+     * Returns a boolean if a OneWayRequest is monetized or not.
+     * @return A boolean if the given OneWayRequest is monetized or not.
+     */
     public boolean getMonetized(){
         return this.monetized;
     }

@@ -67,14 +67,28 @@ public class TradeRequest implements Serializable {
         return this.temp;
     }
 
+    /**
+     * Gets the date for which the TradeRequest was initiated.
+     * @return A Calender that represents the date for which the TradeRequest was sent.
+     */
     public Calendar getDate() {
         return this.date;
     }
 
+    /**
+     * Gets whether the User would like the potential Transaction to be "online" or not. Notice: Only certain Items
+     * will be eligible to be involved in a Virtual trade. These Transactions also do not require any meeting, and
+     * is always a permanent Transaction.
+     * @return Boolean of whether the potential Transaction will be virtual or not.
+     */
     public Boolean getVirtual() {
         return this.virtual;
     }
 
+    /**
+     * Gets a String representation of this TradeRequest's date (which is of type Calender). It is of format yyyy-mm-dd.
+     * @return A String representation of the date.
+     */
     public String dateToString() {
         SimpleDateFormat format1 = new SimpleDateFormat("yyyy MM dd");
         String formatted = format1.format(this.date.getTime());

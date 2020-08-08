@@ -59,25 +59,54 @@ public class typeThreeRequest extends TradeRequest {
 
     }
 
+    /**
+     * Gets a String representation of the firstUser's location. This is for ensuring participants in a Transaction
+     * are within the same city.
+     * @return String representation of the firstUser's location.
+     */
     public ArrayList<String> getFirstUserLocation(){
         return firstUserLocation;
     }
+
+    /**
+     * Sets the location of the firstUser. This is for ensuring participants in a potential Transaction are within the same city.
+     * @param location A String of the User's location.
+     */
     public void addtoFirstUserLocation (String location){
         firstUserLocation.add(location);
     }
 
+    /**
+     * Gets a String representation of the secondUser's location. This is for ensuring participants in a Transaction
+     * are within the same city.
+     * @return String representation of the secondUser's location.
+     */
     public ArrayList<String> getSecondUserLocation(){
         return secondUserLocation;
     }
+    /**
+     * Sets the location of the secondUser. This is for ensuring participants in a potential Transaction are within the same city.
+     * @param location A String of the User's location.
+     */
     public void addtoSecondUserLocation (String location){
         secondUserLocation.add(location);
     }
+    /**
+     * Gets a String representation of the thirdUser's location. This is for ensuring participants in a Transaction
+     * are within the same city.
+     * @return String representation of the thirdUser's location.
+     */
     public String getthirdUserLocation(){
         return thirdUserLocation;
     }
+    /**
+     * Sets the location of the thirdUser. This is for ensuring participants in a potential Transaction are within the same city.
+     * @param location A String of the User's location.
+     */
     public void setThirdUserLocation (String location){
         thirdUserLocation = location;
     }
+
     public User getFirstUser(){
         return this.user1;
     }
