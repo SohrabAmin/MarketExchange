@@ -17,6 +17,7 @@ public class TradeSystem {
     public UserMessageManager allUserMessages;
     public CurrencyManager allCurrency;
 
+
     /**
      * Run calls multiple gateways in order to populate the System with saved information pertaining Transactions,
      * Admins, Users, Meetings, Items and TradeRequests. It will call methods that allow Users and Admins to log in

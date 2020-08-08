@@ -38,7 +38,22 @@ public class Meeting {
                 counter++;
             }
         }
-        return counter == 2;
+        return counter == 2 || counter == 3;
+    }
+
+    public boolean confirmByThreeSides(){
+
+        //Used https://stackoverflow.com/questions/27254302/counting-duplicate-values-in-hashmap as reference
+        int counter = 0;
+        Integer countingFor = 1;
+        for (String key : confirm.keySet()) {            // iterate through all the keys in this HashMap
+            if (confirm.get(key).equals(countingFor)) {  // if a key maps to the string you need, increment the counter
+                counter++;
+            }
+        }
+        return counter == 3;
+
+
     }
 
     /**
@@ -52,6 +67,13 @@ public class Meeting {
         confirm.put(side2, 0);
     }
 
+
+    public void initial3confirm(String side1, String side2, String side3) {
+        confirm.put(side1, 0);
+        confirm.put(side2, 0);
+        confirm.put(side3, 0);
+    }
+
     /**
      * Confirms users confirmation value of a Meeting
      *
@@ -60,6 +82,8 @@ public class Meeting {
     public void meetingConfirmed(String name) {
         confirm.replace(name, 1);
     }
+
+
 
     /**
      * Gets users confirmation value of a Meeting

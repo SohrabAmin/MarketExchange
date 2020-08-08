@@ -324,7 +324,7 @@ public class UserManager implements Serializable {
     public void updateTradeHistory(User user, Transaction transaction) {
         user.getTradeHistory().add(transaction);
         this.updateTopTradingPartners(user);
-        updateUserPoints(user, transaction);
+        //updateUserPoints(user, transaction);
     }
 
     /**

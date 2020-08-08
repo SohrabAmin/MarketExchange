@@ -598,7 +598,6 @@ public class ApproveTrade implements userMainMenuOptions {
                     System.out.print("Setting up the meeting for upcoming " + simpleDateformat.format(meetingday) + " at 11 am local time at " + t.getthirdUserLocation() + "\n");
 
 
-
                     //source: https://www.tutorialspoint.com/how-to-get-current-day-month-and-year-in-java-8
                     LocalDate currentdate = LocalDate.now();
                     int meetingDay = currentdate.getDayOfMonth() + commonDayIncrement;
@@ -618,10 +617,22 @@ public class ApproveTrade implements userMainMenuOptions {
 
                     //the finalized meeting for the transaction is now created
                     Meeting finalizedmeeting = allMeetings.createMeeting(meetingDate, meetingTime, t.getthirdUserLocation());
+                    finalizedmeeting.setConfirmedTrue();
+                    finalizedmeeting.initial3confirm(t.getFirstUser().getName(), t.getSecondUser().getName(), t.getThirdUser().getName());
                     ThreeWay final3 = new ThreeWay(t.getFirstItem(), t.getSecondItem(), t.getThirdItem(), t.getTemp(), t.getVirtual());
                         allTransactions.addToPendingTransactions(final3, allUsers, currencyManager);
+
+
+                         final3.setInitialMeeting(finalizedmeeting);
                         allTradeRequests.updateRequestStatus(allUsers, cTrade, 1);
-                        final3.setInitialMeeting(finalizedmeeting);
+
+                        allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, final3, 1, currencyManager);
+
+
+
+
+
+
 
                         //FINALLY EVERYONE IS HAPPY LETS PROPOSE A MEETING
 

@@ -75,12 +75,6 @@ public class NormalUserMainMenu implements DifferentUserMainMenu {
                 "Enter 'exit' to exit the system at any time.\n");
 
 
-
-
-
-
-
-
         ChosenOption option = new ChosenOption(); //stores, sets and runs the menu option that the user has chosen
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 

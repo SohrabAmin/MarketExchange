@@ -42,7 +42,8 @@ public class ChosenOption {
     /**
      * Calls the method stored in chosenOption and returns an Object.
      *
-     * @param admin the current Admin logged into the system
+     * @param
+     * admin the current Admin logged into the system
      * @param allAdmins AdminManager which holds all the Admins, FrozenRequests and Thresholds in the system
      * @param allUsers UserManager which holds all the Users in the system
      * @param allItems ItemManager which holds the system inventory
