@@ -35,8 +35,14 @@ public class ManagePaymentOptions implements userMainMenuOptions {
         } else if(inum.equals("2")){
             List<CreditCard> cards = user.getCreditCards();
             for(int i = 0; i < cards.size(); i++){
-                System.out.println((i + 1) + ". Card ending in "+ cards.get(i).returnEndNumbers() + ". " +
-                        "This cards expires on " + cards.get(i).getExpiration());
+                if(user.getDefaultCreditCard().getCardNumber().equals(cards.get(i).getCardNumber())){
+                    System.out.println((i + 1) + ". Card ending in "+ cards.get(i).returnEndNumbers() + ". " +
+                            "This cards expires on " + cards.get(i).getExpiration() + " [DEFAULT] \n");
+                }else{
+                    System.out.println((i + 1) + ". Card ending in "+ cards.get(i).returnEndNumbers() + ". " +
+                            "This cards expires on " + cards.get(i).getExpiration());
+                }
+
             }
             System.out.println("Here are your existing cards, select the associated list number to remove a card.\n");
             inum = sc.nextLine();
@@ -85,6 +91,31 @@ public class ManagePaymentOptions implements userMainMenuOptions {
                     }
                     return user;
                 }
+            }
+        }else if(inum.equals("4")){
+            List<CreditCard> cards = user.getCreditCards();
+            for(int i = 0; i < cards.size(); i++){
+                String date;
+                if(user.getDefaultCreditCard().getCardNumber().equals(cards.get(i).getCardNumber())){
+                    // = cards.get(i).getExpiration();
+                    System.out.println((i + 1) + ". Card ending in "+ cards.get(i).returnEndNumbers() + ". " +
+                            "This cards expires on " + cards.get(i).getExpiration() + " [DEFAULT] \n");
+                }else{
+                    System.out.println((i + 1) + ". Card ending in "+ cards.get(i).returnEndNumbers() + ". " +
+                            "This cards expires on " + cards.get(i).getExpiration());
+                }
+
+            }
+            System.out.println("Here are your existing cards, select the associated list number for a new default card.\n");
+            inum = sc.nextLine();
+            int index = Integer.parseInt(inum) - 1;
+            CreditCard newDefault = user.getCreditCards().get(index);
+
+            if(newDefault.getCardNumber().equals(user.getDefaultCreditCard().getCardNumber())){
+                System.out.println("This card is already set as your default. \n");
+            }else{
+                System.out.println("Your new default card is set.");
+                user.setDefaultCreditCard(newDefault);
             }
         }
         return user;
