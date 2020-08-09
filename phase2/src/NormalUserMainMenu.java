@@ -66,7 +66,7 @@ public class NormalUserMainMenu implements DifferentUserMainMenu {
                 "9. View most frequent trading partners\n" +
                 "10. View status of my items\n" +
                 "11. Approve Meeting\n" +
-                "12. Confirm Meetings for Approved Trades\n" +
+                "12. Confirm Trade is done from your side\n" +
                 "13. View status of outbound requests\n" +
                 "14. Message Admin and view replies\n" +
                 "15. Change Account Settings\n" +

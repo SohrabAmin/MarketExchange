@@ -25,6 +25,10 @@ public class Transaction {
         this.returnMeeting = null;
     }
 
+    public boolean getVirtual(){
+        return virtual;
+    }
+
     /**
      * Getter for a given Transaction's tradeStatus. 0: In progress. 1: Finalized Meeting (the initialMeeting has been set) 2: Pending Second Exchange (only for temporary Transaction). 3: Completed 4: Cancelled.
      *

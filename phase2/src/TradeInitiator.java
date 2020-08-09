@@ -39,7 +39,8 @@ public class TradeInitiator implements userMainMenuOptions {
 
         //----------- SO FAR IVE DISPLAYED THE ITEMS, NOW I NEED THE PERSON TO SELECT THE ITEM THEY WANT
 
-        System.out.print("Please type in the ID of the item you would like to trade or 'back' to return to the main menu.\n");
+        System.out.print("Please type in the ID of the item you would like or 'back' to return to the main menu.\n Reminder that if the item is virtual," +
+                "you will only be able to buy the item!\n");
         Object inum = sc.nextLine();
         if (inum.equals("back")) {
             return "back";
@@ -59,6 +60,51 @@ public class TradeInitiator implements userMainMenuOptions {
         //the item they have selected
         Item tradeItem = allItems.getSystemInventory().get((Integer) inum - 1);
 
+
+        if (tradeItem.getVirtual()){
+
+            if (user.getCapital() < tradeItem.getSellPrice()){
+                System.out.print("\uD83D\uDE14Sorry! You have $" + user.getCapital() + " but this item is priced at $" + tradeItem.getSellPrice());
+                System.out.print("\nYou do not have enough money to buy this\n");
+                return user;
+            }
+
+
+
+            System.out.print("This item is virtual and it is priced at $" + tradeItem.getSellPrice() + ". Please enter the email address you would like to receive the item in or \n" +
+                "type 'back' to go to previous menu.\n");
+        String email = sc.nextLine();
+
+
+        if (email.equals("back")){
+            return null;
+        }
+
+        //making sure the email is in the right format.
+            boolean goodEmail = false;
+        while (!goodEmail){
+            if (email.contains("@"))
+            goodEmail = true;
+            else
+            {
+                System.out.print("Please include an @ in the email address. '" + email + "' is missing an '@'\n");
+                email = sc.nextLine();
+            }
+
+        }
+
+            typeOneRequest trade = new typeOneRequest(user, tradeItem, email, false, today, tradeItem.getVirtual(), true);
+            allTradeRequests.receiveTradeRequest(allUsers, trade);
+
+            System.out.print("Your request is sent.\n");
+            return user;
+
+
+
+
+
+
+        }
 
 
         Boolean monetized = false;
@@ -82,7 +128,7 @@ public class TradeInitiator implements userMainMenuOptions {
 
             if (user.getCapital() < tradeItem.getSellPrice()){
                 System.out.print("\uD83D\uDE14Sorry! You have $" + user.getCapital() + " but this item is priced at $" + tradeItem.getSellPrice());
-                System.out.print("\nYou do not have enough money to buy this");
+                System.out.print("\nYou do not have enough money to buy this\n");
                 return user;
             }
 
@@ -100,13 +146,22 @@ public class TradeInitiator implements userMainMenuOptions {
         //if only rentable
         else if (tradeItem.getRentable() && !tradeItem.getSellable() && !tradeItem.getTradable()){ //if only rentable
 
+            if (user.getCapital() < tradeItem.getRentPrice()){
+                System.out.print("\uD83D\uDE14Sorry! You have $" + user.getCapital() + " but this item is put for rent at $" + tradeItem.getRentPrice());
+                System.out.print("\nYou do not have enough money to buy this\n");
+                return user;
+            }
+
             String mssge = "";
             System.out.print("Please enter message for the owner of the item\n");
             mssge =  sc.nextLine();
             typeOneRequest trade = new typeOneRequest(user, tradeItem, mssge, true, today, tradeItem.getVirtual(), true);
             allTradeRequests.receiveTradeRequest(allUsers, trade);
-            System.out.print("Your request is sent!\n");
+            System.out.print("Your request to rent item for " + tradeItem.getRentDuration() + " days is sent!\n");
             return user;
+
+
+
         }
 
 
@@ -120,22 +175,34 @@ public class TradeInitiator implements userMainMenuOptions {
             mssge =  sc.nextLine();
 
             if (in.equals("1")){ //rent the item
+
+                if (user.getCapital() < tradeItem.getRentPrice()){
+                    System.out.print("\uD83D\uDE14Sorry! You have $" + user.getCapital() + " but this item is put for rent at $" + tradeItem.getRentPrice());
+                    System.out.print("\nYou do not have enough money to buy this\n");
+                    return user;
+                }
+
+
                 typeOneRequest trade = new typeOneRequest(user, tradeItem, mssge, true, today, tradeItem.getVirtual(), true);
                 allTradeRequests.receiveTradeRequest(allUsers, trade);
-                System.out.print("Your request is sent!\n");
+                System.out.print("Your request to rent item for " + tradeItem.getRentDuration() + " days is sent!\n");
                 return user;
 
             }
             else if (in.equals("2")){ //sell the item
+                if (user.getCapital() < tradeItem.getSellPrice()){
+                    System.out.print("\uD83D\uDE14Sorry! You have $" + user.getCapital() + " but this item is priced at $" + tradeItem.getSellPrice());
+                    System.out.print("\nYou do not have enough money to buy this\n");
+                    return user;
+                }
+
                 typeOneRequest trade = new typeOneRequest(user, tradeItem, mssge, false, today, tradeItem.getVirtual(), true);
                 allTradeRequests.receiveTradeRequest(allUsers, trade);
                 System.out.print("Your request is sent!\n");
                 return user;
+
             }
         }
-
-
-
 
 
 
@@ -147,7 +214,13 @@ public class TradeInitiator implements userMainMenuOptions {
             System.out.print("Please enter message for the owner of the item\n");
             mssge =  sc.nextLine();
 
-            if (in.equals("1")){ //if sellable and tradable and the person wants to buy
+            //they want to buy
+            if (in.equals("1")){
+                if (user.getCapital() < tradeItem.getSellPrice()){
+                    System.out.print("\uD83D\uDE14Sorry! You have $" + user.getCapital() + " but this item is priced at $" + tradeItem.getSellPrice());
+                    System.out.print("\nYou do not have enough money to buy this\n");
+                    return user;
+                }
                 typeOneRequest trade = new typeOneRequest(user, tradeItem, mssge, false, today, tradeItem.getVirtual(), true);
                 allTradeRequests.receiveTradeRequest(allUsers, trade);
                 System.out.print("Your request is sent!\n");
@@ -158,10 +231,13 @@ public class TradeInitiator implements userMainMenuOptions {
                 return tradableDealer( user,  allItems,  allTradeRequests,
                          allUsers,  allMeetings,  allTransactions,
                          allAdmins,  undoLogger,  allUserMessages, tradeItem, monetized, myList);
-             //   System.out.print("Your request is sent!\n");
+
 
             }
         }
+
+
+        //rentable and tradable
         else if (tradeItem.getRentable() && !tradeItem.getSellable() && tradeItem.getTradable()) { //if it is rentable or tradable
 
             System.out.print("Please enter 1 if you want to rent the item. Enter 2 if you want to trade the item.\n");
@@ -172,9 +248,15 @@ public class TradeInitiator implements userMainMenuOptions {
 
             if (in.equals("1")){   //if they want  to rent
 
+                if (user.getCapital() < tradeItem.getRentPrice()){
+                    System.out.print("\uD83D\uDE14Sorry! You have $" + user.getCapital() + " but this item is put for rent at $" + tradeItem.getRentPrice());
+                    System.out.print("\nYou do not have enough money to buy this\n");
+                    return user;
+                }
+
                 typeOneRequest trade = new typeOneRequest(user, tradeItem, mssge, true, today, tradeItem.getVirtual(), true);
                 allTradeRequests.receiveTradeRequest(allUsers, trade);
-                System.out.print("Your request is sent!\n");
+                System.out.print("Your request to rent item for " + tradeItem.getRentDuration() + " days is sent!\n");
                 return user;
             }
             else if (in.equals("2")) { //if they want to trade
@@ -195,17 +277,33 @@ public class TradeInitiator implements userMainMenuOptions {
         else {//all three options
             System.out.print("Please enter 1 if you want to rent the item. Enter 2 if you want to buy the item. Enter 3 if you want to trade the item\n");
             Object in = sc.nextLine();
+            //rent
             if (in.equals("1")){//they wanna rent
                 String mssge = "";
                 System.out.print("Please enter message for the owner of the item\n");
                 mssge =  sc.nextLine();
+
+                if (user.getCapital() < tradeItem.getRentPrice()){
+                    System.out.print("\uD83D\uDE14Sorry! You have $" + user.getCapital() + " but this item is put for rent at $" + tradeItem.getRentPrice());
+                    System.out.print("\nYou do not have enough money to buy this\n");
+                    return user;
+                }
+
+
                 typeOneRequest trade = new typeOneRequest(user, tradeItem, mssge, true, today, tradeItem.getVirtual(), true);
                 allTradeRequests.receiveTradeRequest(allUsers, trade);
-                System.out.print("Your request is sent!\n");
+                System.out.print("Your request to rent item for " + tradeItem.getRentDuration() + " days is sent!\n");
                 return user;
 
             }
+            //buy
             else if (in.equals("2")){  //if they want to buy the item
+                if (user.getCapital() < tradeItem.getSellPrice()){
+                    System.out.print("\uD83D\uDE14Sorry! You have $" + user.getCapital() + " but this item is priced at $" + tradeItem.getSellPrice());
+                    System.out.print("\nYou do not have enough money to buy this\n");
+                    return user;
+                }
+
                 String mssge = "";
                 System.out.print("Please enter message for the owner of the item\n");
                 mssge =  sc.nextLine();

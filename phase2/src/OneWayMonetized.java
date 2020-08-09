@@ -11,6 +11,10 @@ public class OneWayMonetized extends OneWay {
 
     private final double cost;
     private int rentDuration;
+    private boolean person1EmailSent ;
+    private boolean person2EmailSent ;
+    private String email;
+
 
     /**
      * Constructs a OneWayMonetized object. This is the subclass of OneWayRequest, as it contains all attributes,
@@ -21,13 +25,37 @@ public class OneWayMonetized extends OneWay {
      * @param temp A boolean representing if the TradeRequest will be temp or not.
      * @param virtual A boolean that determines the TradeRequest will have no meeting (true: This Transaction will not have a Meeting, false: This Transaction will have a Meeting.)
      */
-    public OneWayMonetized(User user1, Item item, boolean temp, boolean virtual){
+    public OneWayMonetized(User user1, Item item, boolean temp, boolean virtual, String email){
         super(user1, item, temp, virtual);
+        person1EmailSent = false;
+        person2EmailSent = false;
+        this.email = email;
         if(this.getTemp()){
             this.cost = item.getRentPrice();
         }else{
             this.cost = item.getSellPrice();
         }
+    }
+
+    public  String getEmail(){
+        return email;
+
+    }
+
+    public void Person1Confirmed(){
+        person1EmailSent = true;
+    }
+
+   public boolean getPerson1Confirmed(){
+        return person1EmailSent;
+   }
+
+   public void Person2Confirmed(){
+        person2EmailSent = true;
+   }
+
+    public boolean getPerson2Confirmed(){
+        return person2EmailSent;
     }
 
     /**

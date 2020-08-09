@@ -104,6 +104,7 @@ public class TransactionManager implements Serializable {
         }
 
         transaction.setTradeStatus(tradeStatus);
+        if (!(transaction instanceof OneWayMonetized))
         transaction.getInitialMeeting().setConfirmedTrue(); /////////WHY
 
     }

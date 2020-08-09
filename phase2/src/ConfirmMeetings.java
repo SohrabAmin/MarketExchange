@@ -21,7 +21,7 @@ public class ConfirmMeetings implements userMainMenuOptions {
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
                           AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages, CurrencyManager currencyManager) {
-        System.out.print("Please select 1 for all your initial pending meetings and 2 for all return meetings\n");
+        System.out.print("Please select 1 for all your initial pending meetings+virtual meetings and 2 for all return meetings\n");
         Scanner sc4 = new Scanner(System.in);    //System.in is a standard input stream
         String selection = sc4.nextLine();
 
@@ -35,6 +35,25 @@ public class ConfirmMeetings implements userMainMenuOptions {
             System.out.print("Here are your pending meetings ready to be confirmed!\n");
             //prints the pending meetings
             for (int i = 0; i < userTransactions.size(); i++) {
+
+                if (userTransactions.get(i).getVirtual()){
+                    //if virtual, do these
+                    OneWayMonetized t = (OneWayMonetized) userTransactions.get(i);
+                    String otherSide = t.getFirstTrader().getName();
+                    //finding the other side of this transaction
+
+                    if (otherSide.equals(user.getName())){
+                        otherSide = t.getSecondTrader().getName();
+
+                    }
+
+
+                    System.out.print((i + 1) + " . " + "Virtual trade with: " + otherSide + " - email: (" + t.getEmail() + ")" +  "\n");
+
+                }
+                else {
+
+
                 String otherSide = "";
                 Integer confirmed = userTransactions.get(i).getInitialMeeting().userconfirmed(user.getName());
                 String status = "";
@@ -42,12 +61,80 @@ public class ConfirmMeetings implements userMainMenuOptions {
                     status = " [CONFIRMED BY YOU] ";
                 }
                 //SAMPLE : 1 . Sat, Aug 8, 2020 11:00AM at 1 With: Mo
+
+
+
+
+
+
                 System.out.print((i + 1) + " . " + userTransactions.get(i).getInitialMeeting() + " With: " + userTransactions.get(i).getInitialMeeting().getOtherSide(user.getName()) + status + "\n");
             }
-            System.out.print("Please enter the ID of the meeting you would like to confirm.\n");
+            }
+
+            System.out.print("Please enter the ID of the transaction you would like to confirm.\n");
             Scanner sc11 = new Scanner(System.in);
             int meetingIndex = (Integer.parseInt(sc11.nextLine())) - 1;
             Transaction selectedTransaction = userTransactions.get(meetingIndex);
+
+            //VIRTUAL
+            if (selectedTransaction.getVirtual()){
+                OneWayMonetized t = (OneWayMonetized) selectedTransaction;
+                System.out.print("You have selected:\n");
+
+                System.out.print("Virtual trade - sending file to email: " +  t.getEmail()  +  "\n");
+                System.out.print("Press 1 to confirm that email has been sent from you! Press 2 to cancel\n");
+
+                String action = sc11.nextLine();
+                if (action.equals("1")) {
+
+                    String otherSide = t.getFirstTrader().getName();
+                    //finding the other side of this transaction
+
+                    if (otherSide.equals(user.getName())){
+                        otherSide = t.getSecondTrader().getName();
+
+                    }
+
+                    if (!t.getPerson1Confirmed() && !t.getPerson2Confirmed()){ //if they both have not confirmed
+                        t.Person1Confirmed();
+                        System.out.print("Confirmed by you! Waiting on " + otherSide + " to confirm!\n");
+                        return user;
+
+                    }
+
+                    else if (t.getPerson1Confirmed()){
+                        //if one person has confirmed
+                        t.Person2Confirmed();
+                        allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 3, currencyManager);
+                        //i probably should deal with money here or moe/aidan should idk
+                        System.out.print("Confirmed by you! Looks like both sides have confirmed!\n");
+                        return user;
+
+                    }
+
+
+                }
+
+                else if (action.equals("2")){
+                    System.out.print("\u2639 Cancelling this transaction! We are sorry to hear that! Better luck next time!\n");
+                    allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 4, currencyManager);
+
+
+
+
+                }
+
+            }
+
+
+
+
+
+
+
+
+
+
             System.out.print("You have selected:\n");
             Integer confirmed = selectedTransaction.getInitialMeeting().userconfirmed(user.getName());
 
@@ -56,14 +143,16 @@ public class ConfirmMeetings implements userMainMenuOptions {
                 return user;
             }
             System.out.print(selectedTransaction.getInitialMeeting() + " With: " + selectedTransaction.getInitialMeeting().getOtherSide(user.getName()) + "\n");
-            System.out.print("Press 1 to confirm that the meeting is done! Press 2 to cancel the meeting and press 3 if you got stood up\n");
+            System.out.print("Press 1 to confirm that the meeting is done. Press 2 to cancel the meeting and press 3 if you got stood up\n");
 
 
             String action = sc11.nextLine();
             if (action.equals("1")) {
                 //confirm meeting by the user
-                selectedTransaction.getInitialMeeting().meetingConfirmed(user.getName());
 
+
+
+                selectedTransaction.getInitialMeeting().meetingConfirmed(user.getName());
                 System.out.print("Confirmed that the meeting occurred on " + selectedTransaction.getInitialMeeting() + "\n");
 
                 //lets check if both people have confirmed meeting
@@ -73,7 +162,34 @@ public class ConfirmMeetings implements userMainMenuOptions {
 
 
                     //now i have to check if it was 2 way or 3 way
-                    if (selectedTransaction instanceof TwoWay){
+                    if (selectedTransaction instanceof OneWay){
+
+                        System.out.print("\uD83E\uDD29 Looks like the meeting was confirmed by both sides!\n ");
+
+                        if (!selectedTransaction.getTemp()){
+                        allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 3, currencyManager);
+                        return user;}
+                        else if (selectedTransaction.getTemp()){
+                            //if it was a temporary meeting, then I need to set up a second meeting
+                            allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 2, currencyManager);
+                            //by now, the second agreed upon meeting is set for both users
+                            Calendar date = selectedTransaction.getInitialMeeting().getDate();
+                            date.add(Calendar.MONTH, 1);
+                            Meeting returnMeeting = new Meeting(date, selectedTransaction.getInitialMeeting().getPlace());
+                            returnMeeting.initialconfirm(user.getName(), selectedTransaction.getInitialMeeting().getOtherSide(user.getName()));
+                            System.out.print("REMINDER: You need to return the borrowed item(s) back by " + returnMeeting.toString() + "\n");
+                            //need to add return meeting to transactions
+                            allTransactions.setFinalMeeting(selectedTransaction, returnMeeting);
+
+                        }
+
+                    }
+
+                    else if (selectedTransaction instanceof OneWayMonetized){
+
+
+                    }
+                    else if (selectedTransaction instanceof TwoWay){
                         System.out.print("\uD83E\uDD29 Looks like the meeting was confirmed by both sides!\n ");
                     if (!selectedTransaction.getTemp()) { //if it was a permenant transaction
                         allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 3, currencyManager);
@@ -173,13 +289,20 @@ public class ConfirmMeetings implements userMainMenuOptions {
                 //lets check if both people have confirmed meeting
                 if (selectedTransaction.getReturnMeeting().confirmedByBothSides()) {
                     //looks like the meeting was confirmed by both parties!
+
+                    if (selectedTransaction instanceof OneWay){
+                        System.out.print("\uD83E\uDD29 Looks like the meeting was confirmed by both sides!\n ");
+                        allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 3, currencyManager);
+                    }
+
+
                     if (selectedTransaction instanceof TwoWay){
                     System.out.print("\uD83E\uDD29 Looks like the meeting was confirmed by both sides!\n ");
                     allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 3, currencyManager);
                     }
                     else if (selectedTransaction instanceof ThreeWay){
                         selectedTransaction.getInitialMeeting().meetingConfirmed(user.getName());
-System.out.print("Confirmed!\n");
+                        System.out.print("Confirmed!\n");
                         if (selectedTransaction.getReturnMeeting().confirmByThreeSides()){
                             //if everyone confirmed
                             System.out.print("Looks like everyone confirmed!\n");

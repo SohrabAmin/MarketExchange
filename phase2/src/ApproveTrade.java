@@ -59,8 +59,13 @@ public class ApproveTrade implements userMainMenuOptions {
                         System.out.print("\uD83E\uDD1D" + (i + 1) + ". " + t.getFirstUser().getName() +
                                 " Wants to rent " + t.getItem().getName() + "\n");
                     } else {
+                        String virtually = "";
+                        if (t.getVirtual()){
+                            virtually = " virtually via email " + t.getMessage();
+                        }
+
                         System.out.print("\uD83E\uDD1D" + (i + 1) + ". " + t.getFirstUser().getName() +
-                                " Wants to buy " + t.getItem().getName() + "\n");
+                                " Wants to buy " + t.getItem().getName() + virtually +  "\n");
                     }
                 } else { //then they are one way trades
                     if (t.getTemp()) { //trading temporary over here
@@ -168,26 +173,55 @@ public class ApproveTrade implements userMainMenuOptions {
             boolean money = t.getMonetized();
             //if monetized
             System.out.print("Here is the trade you selected: " + t.getItem() + "\n");
+            if (t.getVirtual()){
+                System.out.print("This is a virtual trade.\n");
+            }
+
             System.out.print("Press 1 to approve and press 2 to deny!\n");
             input = sc.next();
             if (input.equals("1")) { //approved
                 allTradeRequests.updateRequestStatus(allUsers, cTrade, 1);
+                //if it is virtual
+
+
+                if (t.getVirtual())
+                {
+                    OneWayMonetized final1 = new OneWayMonetized(t.getFirstUser(), t.getItem(), false, t.getVirtual(), t.getMessage());
+                    //no one has approved yet.
+
+                                        System.out.print("Funds are now held until you confirm that you have sent the email and " + t.getFirstUser().getName() +
+                            " confirms that they have recieved the email.\n");
+                    allTransactions.addToPendingTransactions(final1, allUsers, currencyManager);
+                    allTradeRequests.updateRequestStatus(allUsers, cTrade, 1);
+
+                    allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, final1, 1, currencyManager);
+                    return user;
+
+                }
+
+
+
+
+
+
+
+
                 //check if it is monetized
                 //check if it is temporary
                 OneWay final1;
                 if (money) {
                     if (t.getTemp()) {//if temporary
-                        final1 = new OneWayMonetized(user, t.getItem(), true, t.getVirtual());
+                        final1 = new OneWayMonetized(user, t.getItem(), true, t.getVirtual(), null);
 
                     } else { //sellin
-                        final1 = new OneWayMonetized(user, t.getItem(), false, t.getVirtual());
+                        final1 = new OneWayMonetized(user, t.getItem(), false, t.getVirtual(), null);
                     }
                 } else { //if not mon
                     if (t.getTemp()) {//if temporary
-                        final1 = new OneWay(user, t.getItem(), true, t.getVirtual());
+                        final1 = new OneWay(t.getFirstUser(), t.getItem(), true, t.getVirtual());
 
                     } else { //selling
-                        final1 = new OneWay(user, t.getItem(), false, t.getVirtual());
+                        final1 = new OneWay(t.getFirstUser(), t.getItem(), false, t.getVirtual());
                     }
                 }
                 allTransactions.addToPendingTransactions(final1, allUsers, currencyManager);
