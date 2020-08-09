@@ -211,10 +211,10 @@ public class ApproveTrade implements userMainMenuOptions {
                 OneWay final1;
                 if (money) {
                     if (t.getTemp()) {//if temporary
-                        final1 = new OneWayMonetized(user, t.getItem(), true, t.getVirtual(), null);
+                        final1 = new OneWayMonetized(t.getFirstUser(), t.getItem(), true, t.getVirtual(), null);
 
                     } else { //sellin
-                        final1 = new OneWayMonetized(user, t.getItem(), false, t.getVirtual(), null);
+                        final1 = new OneWayMonetized(t.getFirstUser(), t.getItem(), false, t.getVirtual(), null);
                     }
                 } else { //if not mon
                     if (t.getTemp()) {//if temporary
