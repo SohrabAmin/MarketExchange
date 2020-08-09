@@ -324,7 +324,7 @@ public class UserManager implements Serializable {
     public void updateTradeHistory(User user, Transaction transaction) {
         user.getTradeHistory().add(transaction);
         this.updateTopTradingPartners(user);
-        //updateUserPoints(user, transaction);
+        updateUserPoints(user, transaction);
     }
 
     /**
@@ -359,11 +359,9 @@ public class UserManager implements Serializable {
         }
     }
 
-    public void pointsForVIP(User user){
-        if (user.getPoints() > 20){
+    public void setUserVIP(User user){
             user.setIsVIP(true);
             user.setPoints(user.getPoints() - 20);
-        }
     }
 
     /**

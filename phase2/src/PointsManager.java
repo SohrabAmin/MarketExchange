@@ -9,14 +9,14 @@ public class PointsManager implements userMainMenuOptions{
                           MeetingManager allMeetings, TransactionManager allTransactions, AdminManager allAdmins,
                           Logger undoLogger, UserMessageManager allUserMessages, CurrencyManager currencyManager) {
         System.out.println("Your points: " + user.getPoints());
-        if (user.getPoints() >= 0) {
+        if (!(user.getIsVIP()) && user.getPoints() >= 20) {
             System.out.println("Hey " + user.getName() + ", you're eligible to become a \u2B50 VIP \u2B50 \npress 1 " +
                     "to use 20 of your " + user.getPoints() + " points to upgrade to VIP status");
         }
         System.out.println("Press 2 to go back to main menu");
         String chosenOption = scanner.nextLine();
         if (chosenOption.equals("1")) {
-            allUsers.pointsForVIP(user);
+            allUsers.setUserVIP(user);
             System.out.println("Congrats, you're a \u2B50 VIP \u2B50");
             return null;
         }
