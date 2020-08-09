@@ -1,6 +1,9 @@
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Calendar;
 
 /**
  * A class that manages the in-app currency of a User.
@@ -26,7 +29,7 @@ public class CurrencyManager {
      * @return a boolean. True: The funds were successfully added. False: The card is expired)
      */
     public boolean addFunds(User user, CreditCard card, double amount){
-        if(!card.checkExpiration()){
+        if(card.checkExpiration()){
             user.updateCapital(amount);
             return true;
         }
@@ -78,5 +81,11 @@ public class CurrencyManager {
         String[] temp = date.split("-");
         cal.set(Integer.parseInt(temp[1]), Integer.parseInt(temp[0]), 30);
         return cal;
+    }
+
+    public String dateString(Calendar date) {
+
+        DateFormat dateFormat = new SimpleDateFormat("EEE, MMM d, yyyy");
+        return dateFormat.format(date.getTime());
     }
 }

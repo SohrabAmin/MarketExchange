@@ -35,12 +35,13 @@ public class ManagePaymentOptions implements userMainMenuOptions {
         } else if(inum.equals("2")){
             List<CreditCard> cards = user.getCreditCards();
             for(int i = 0; i < cards.size(); i++){
+                String exp = currencyManager.dateString(cards.get(i).getExpiration());
                 if(user.getDefaultCreditCard().getCardNumber().equals(cards.get(i).getCardNumber())){
                     System.out.println((i + 1) + ". Card ending in "+ cards.get(i).returnEndNumbers() + ". " +
-                            "This cards expires on " + cards.get(i).getExpiration() + " [DEFAULT] \n");
+                            "This cards expires on " + exp + " [DEFAULT] \n");
                 }else{
                     System.out.println((i + 1) + ". Card ending in "+ cards.get(i).returnEndNumbers() + ". " +
-                            "This cards expires on " + cards.get(i).getExpiration());
+                            "This cards expires on " + exp);
                 }
 
             }
@@ -95,14 +96,13 @@ public class ManagePaymentOptions implements userMainMenuOptions {
         }else if(inum.equals("4")){
             List<CreditCard> cards = user.getCreditCards();
             for(int i = 0; i < cards.size(); i++){
-                String date;
+                String exp = currencyManager.dateString(cards.get(i).getExpiration());
                 if(user.getDefaultCreditCard().getCardNumber().equals(cards.get(i).getCardNumber())){
-                    // = cards.get(i).getExpiration();
                     System.out.println((i + 1) + ". Card ending in "+ cards.get(i).returnEndNumbers() + ". " +
-                            "This cards expires on " + cards.get(i).getExpiration() + " [DEFAULT] \n");
+                            "This cards expires on " + exp + " [DEFAULT] \n");
                 }else{
                     System.out.println((i + 1) + ". Card ending in "+ cards.get(i).returnEndNumbers() + ". " +
-                            "This cards expires on " + cards.get(i).getExpiration());
+                            "This cards expires on " + exp);
                 }
 
             }
@@ -132,6 +132,7 @@ public class ManagePaymentOptions implements userMainMenuOptions {
         int temp4;
         boolean check = true;
         Object inum;
+        List<CreditCard> cards = user.getCreditCards();
         while(check){
             System.out.println("Please enter your 16 digit credit card number. \n");
             inum = sc.nextLine();
@@ -140,13 +141,24 @@ public class ManagePaymentOptions implements userMainMenuOptions {
             } else{
                 inum = Long.parseLong((String) inum);
                 temp1 = (Long) inum;
-                check = false;
+                int check2 = 0;
+                for(int i = 0; i < cards.size(); i++){
+                    if(temp1 == cards.get(i).getCardNumber()){
+                        check2 ++;
+                    }
+                }
+                if(check2>0){
+                    System.out.println("This card is already on your account.");
+                }else{
+                    check = false;
+                }
+
             }
         }
-        System.out.println("Please enter the name of the card holder \n");
+        System.out.println("Please enter the name of the card holder. \n");
         inum = sc.nextLine();
         temp2 = (String) inum;
-        System.out.println("Please enter the expiration date of your card in the format mm-yy. \n");
+        System.out.println("Please enter the expiration date of your card in the format mm-yyyy. \n");
         inum = sc.nextLine();
         temp3 = currencyManager.getDate((String) inum);
         System.out.println("Please enter the 3 digit CVV on the back of your card. \n");

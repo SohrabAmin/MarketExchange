@@ -57,8 +57,8 @@ public class CreditCard {
      * Gets the expiration date of the given CreditCard.
      * @return String of the expiration date
      */
-    public String getExpiration(){
-        return this.expiration.toString();
+    public Calendar getExpiration(){
+        return this.expiration;
     }
 
     /**
