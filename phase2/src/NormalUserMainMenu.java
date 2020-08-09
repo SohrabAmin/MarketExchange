@@ -71,7 +71,8 @@ public class NormalUserMainMenu implements DifferentUserMainMenu {
                 "14. Message Admin and view replies\n" +
                 "15. Change Account Settings\n" +
                 "16. Go on vacation\n" +
-                "17. Logout\n" +
+                "17. Check my points\n" +
+                "18. Logout\n" +
                 "Enter 'exit' to exit the system at any time.\n");
 
 
@@ -114,7 +115,9 @@ public class NormalUserMainMenu implements DifferentUserMainMenu {
                     option.setChosenOption(new AccountSettingsManager());
                 } else if (input.equals("16")) { //go on vacation
                     option.setChosenOption(new VacationPrompter());
-                } else if (input.equals("17")) { //logout
+                } else if (input.equals("17")) { //points
+                    option.setChosenOption(new PointsManager());
+                } else if (input.equals("18")) { //logout
                     return null;
                 } else { //returns to main menu
                     System.out.println("That is not a valid option. Please try again.");
