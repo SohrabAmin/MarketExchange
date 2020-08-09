@@ -360,7 +360,7 @@ public class UserManager implements Serializable {
     }
 
     public void pointsForVIP(User user){
-        if ((user.getIsVIP() == false) && (user.getPoints() > 20)){
+        if (user.getPoints() > 20){
             user.setIsVIP(true);
             user.setPoints(user.getPoints() - 20);
         }

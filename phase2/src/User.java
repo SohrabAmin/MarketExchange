@@ -27,7 +27,7 @@ public class User extends Account {
     private Map<Integer, List<TradeRequest>> weeklyRequestLimit;
     private Map<String, Integer> FrequentCategory;
     private String location;
-    private Integer points;
+    private Integer points = 0;
     private boolean isOnVacation;
     private boolean isVIP;
     private List<Item> vacationStorage;
