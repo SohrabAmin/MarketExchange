@@ -1,10 +1,10 @@
 package system;
 
+import accounts.admins.Admin;
+import accounts.admins.AdminManager;
 import accounts.users.User;
 import accounts.users.UserIterator;
 import accounts.users.UserManager;
-import accounts.admins.Admin;
-import accounts.admins.AdminManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,34 +26,37 @@ public class LogInSystem {
 
     public Object LogIn() {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("\uD83D\uDECD Welcome To Trade Market! \uD83D\uDECD\nIf you are an admin, please enter 'admin'. If otherwise, please enter 'user'. " +
-                "Enter 'demo' to enter demo mode. \nEnter 'exit' to exit the system.");
+        System.out.println("\uD83D\uDECD Welcome To Trade Market! \uD83D\uDECD\nIf you are a user, please press 1. " +
+                "If you are an admin, please press 2. To enter demo mode, please press 3. " +
+                "\nEnter 'exit' to exit the system.");
         try {
             String input = br.readLine();
             {
                 //if the user wants to exit the program, it will return "exit"
                 //so system.TradeSystem knows to exit the system
-                if (input.equals("exit")) {
-                    return new String("exit");
-                }
-                else if (input.equals("Demo") || input.equals("demo")){
-                    User Demo = new User("Demo", "123");
-                    return Demo;
-                }
-                //if they are a user, it will call the authenticator() method in system.InputGetter
-                else if (input.equals("user")) {
-                    return userAuthenticator(usermanager);
-                }
-                //if they are admin, it will prompt admin authenticator() method in system.AdminInputGetter
-                else if (input.equals("admin")) {
-                    Admin temp = adminAuthenticator(adminmanager);
-                    //authenticator() returns null when user wants to go back to main welcome screen
-                    if (temp == null) {
+                switch (input) {
+                    case "exit":
+                        return "exit";
+
+                    //if they are a user, it will call the authenticator() method in system.InputGetter
+                    case "1":
+                        return userAuthenticator(usermanager);
+
+                    //if they are admin, it will prompt admin authenticator() method in system.AdminInputGetter
+                    case "2":
+                        Admin temp = adminAuthenticator(adminmanager);
+                        //authenticator() returns null when user wants to go back to main welcome screen
+                        if (temp == null) {
+                            return LogIn();
+                        }
+                        return temp;
+
+                    case "3":
+                        return new User("Demo", "123");
+
+                    default:
+                        System.out.println("Invalid input. Please try again.");
                         return LogIn();
-                    }
-                    return temp;
-                } else {
-                    return LogIn();
                 }
             }
 
@@ -85,79 +88,79 @@ public class LogInSystem {
 
         ArrayList<String> temp = new ArrayList<>();
 
-        System.out.println("Type 'signup' to create an account or 'login' to access your account or 'exit' to " +
-                "exit at anytime.");
+        System.out.println("Please press 1 to login to your account, or press 2 to create an account. " +
+                "Enter 'exit' to exit at any time.");
         try {
             String input = br.readLine().toLowerCase(); //make sure that Login and login are both used
             //user wants to signup for an account
-            if (input.equals("exit")) {
-                return input;
-            }
-            if (input.equals("signup")) {
-                //as long as they don't say 'exit', it will prompt them to enter user name
-                while (!input.equals("exit") && !prompts.usergot/*&& curr < 2*/) {
-                    if (prompts.hasNext()) {
-                        System.out.println(prompts.next());
+            switch (input) {
+                case "exit":
+                    return input;
+                case "1":
+                    //as long as they don't say 'exit', it will ask for their login credentials
+                    while (!input.equals("exit") && curr < 2) {
+                        if (prompts.hasNext()) {
+                            System.out.println(prompts.next());
+                        }
+                        input = br.readLine();
+                        if (!input.equals("exit")) {
+                            temp.add(input);
+                            curr++;
+                        }
                     }
-                    input = br.readLine();
-                    if (!input.equals("exit")) {
-                        temp.add(input);
-                        curr++;
-                        if (curr == 3)
-                            prompts.usergot = true;
+                    if (input.equals("exit")) {
+                        return input;
                     }
-                }
-                if (input.equals("exit")) {
-                    return "exit";
-                }
-                //loops through the list of allUsers in the system
-                //checks if the entered username already exists
-                for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
-                    if (temp.get(0).equals(allUsers.getAllUsers().get(i).getName())) {
-                        System.out.print("Username Already exists. Please choose a new username\n");
-                        return userAuthenticator(allUsers);
+                    //checks to see if the accounts.users.User exists in the System by checking it against
+                    //the list of accounts.users in accounts.users.UserManager allUsers by comparing username and passwords against
+                    //the inputted username and password
+                    //if credentials check out, it will return the accounts.users.User
+                    for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
+                        if (allUsers.getAllUsers().get(i).getName().equals(temp.get(0)))
+                            if (allUsers.getAllUsers().get(i).getPassword().equals(temp.get(1))) {
+                                System.out.println("Successful Login");
+                                return (allUsers.getAllUsers().get(i));
+                            }
                     }
-                }
-                //if username doesn't already exist, it will create a user and returns it
-                allUsers.createUser(temp.get(0), temp.get(1));
-                if (!temp.get(2).equals("1")) {
-                    allUsers.getAllUsers().get(allUsers.getAllUsers().size() - 1).setLocation(temp.get(2));
-                }
-                return allUsers.getAllUsers().get(allUsers.getAllUsers().size() - 1);
+                    //if user doesn't exist, prompts them to try to login again
+                    System.out.println("Wrong username or password. Please try Again");
+                    return userAuthenticator(allUsers);
+                case "2":
+                    //as long as they don't say 'exit', it will prompt them to enter user name
+                    while (!input.equals("exit") && !prompts.usergot/*&& curr < 2*/) {
+                        if (prompts.hasNext()) {
+                            System.out.println(prompts.next());
+                        }
+                        input = br.readLine();
+                        if (!input.equals("exit")) {
+                            temp.add(input);
+                            curr++;
+                            if (curr == 3)
+                                prompts.usergot = true;
+                        }
+                    }
+                    if (input.equals("exit")) {
+                        return "exit";
+                    }
+                    //loops through the list of allUsers in the system
+                    //checks if the entered username already exists
+                    for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
+                        if (temp.get(0).equals(allUsers.getAllUsers().get(i).getName())) {
+                            System.out.print("Username Already exists. Please choose a new username\n");
+                            return userAuthenticator(allUsers);
+                        }
+                    }
+                    //if username doesn't already exist, it will create a user and returns it
+                    allUsers.createUser(temp.get(0), temp.get(1));
+                    if (!temp.get(2).equals("1")) {
+                        allUsers.getAllUsers().get(allUsers.getAllUsers().size() - 1).setLocation(temp.get(2));
+                    }
+                    return allUsers.getAllUsers().get(allUsers.getAllUsers().size() - 1);
 
                 //user wants to login to their account
-            } else if (input.equals("login")) {
-                //as long as they don't say 'exit', it will ask for their login credentials
-                while (!input.equals("exit") && curr < 2) {
-                    if (prompts.hasNext()) {
-                        System.out.println(prompts.next());
-                    }
-                    input = br.readLine();
-                    if (!input.equals("exit")) {
-                        temp.add(input);
-                        curr++;
-                    }
-                }
-                if (input.equals("exit")) {
-                    return input;
-                }
-                //checks to see if the accounts.users.User exists in the System by checking it against
-                //the list of accounts.users in accounts.users.UserManager allUsers by comparing username and passwords against
-                //the inputted username and password
-                //if credentials check out, it will return the accounts.users.User
-                for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
-                    if (allUsers.getAllUsers().get(i).getName().equals(temp.get(0)))
-                        if (allUsers.getAllUsers().get(i).getPassword().equals(temp.get(1))) {
-                            System.out.println("Successful Login");
-                            return (allUsers.getAllUsers().get(i));
-                        }
-                }
-                //if user doesn't exist, prompts them to try to login again
-                System.out.println("Wrong username or password. Please try Again");
-                return userAuthenticator(allUsers);
-            } else {
-                System.out.print("Invalid Command! Try again!\n");
-                return userAuthenticator(allUsers);
+                default:
+                    System.out.print("Invalid command! Try again!\n");
+                    return userAuthenticator(allUsers);
 
             }
         } catch (IOException e) {
@@ -181,36 +184,37 @@ public class LogInSystem {
 
         ArrayList<String> temp = new ArrayList<>();
 
-        System.out.println("Hello accounts.admins.Admin. Please enter 'login' to log in, 'back' to return to the main page or " +
-                "'exit' to exit at anytime.");
+        System.out.println("Hello, admin! Please press 1 to login, or press 2 to return to the main page. " +
+                "Enter 'exit' to exit at anytime.");
         try {
             String input = br.readLine();
-            if (input.equals("login")) {
-                while (!input.equals("exit") && curr < 2) {
-                    if (prompts.hasNext()) {
-                        System.out.println(prompts.next());
-                    }
-                    input = br.readLine();
-                    if (!input.equals("exit")) {
-                        temp.add(input);
-                        curr++;
-                    }
-                }
-                for (int i = 0; i < allAdmins.getAllAdmins().size(); i++) {
-                    if (allAdmins.getAllAdmins().get(i).getName().equals(temp.get(0)))
-                        if (allAdmins.getAllAdmins().get(i).getPassword().equals(temp.get(1))) {
-                            System.out.println("Successful Login");
-                            return (allAdmins.getAllAdmins().get(i));
+            switch (input) {
+                case "1":
+                    while (!input.equals("exit") && curr < 2) {
+                        if (prompts.hasNext()) {
+                            System.out.println(prompts.next());
                         }
-                }
-                //if accounts.admins.Admin doesn't exist
-                System.out.println("Wrong username or password. Please try Again");
-                return adminAuthenticator(allAdmins);
-            }
-            if (input.equals("back")) {
-                return null;
-            } else {
-                return adminAuthenticator(allAdmins);
+                        input = br.readLine();
+                        if (!input.equals("exit")) {
+                            temp.add(input);
+                            curr++;
+                        }
+                    }
+                    for (int i = 0; i < allAdmins.getAllAdmins().size(); i++) {
+                        if (allAdmins.getAllAdmins().get(i).getName().equals(temp.get(0)))
+                            if (allAdmins.getAllAdmins().get(i).getPassword().equals(temp.get(1))) {
+                                System.out.println("Successful Login");
+                                return (allAdmins.getAllAdmins().get(i));
+                            }
+                    }
+                    //if accounts.admins.Admin doesn't exist
+                    System.out.println("Wrong username or password. Please try Again");
+                    return adminAuthenticator(allAdmins);
+                case "2":
+                    return null;
+                default:
+                    System.out.println("Invalid input. Please try again.");
+                    return adminAuthenticator(allAdmins);
             }
         } catch (IOException e) {
             System.out.println("Something went wrong");
