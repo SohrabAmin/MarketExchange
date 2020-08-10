@@ -7,6 +7,15 @@ import accounts.admins.AdminManager;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import transactions.*;
+import meetings.*;
+import items.*;
+import accounts.users.*;
+import accounts.admins.*;
+import requests.*;
+import currency.*;
+import system_menus.admin_main_menus.options.*;
+import system_menus.user_main_menus.options.*;
 
 /**
  * Manages all Transactions. Changing their values by accessing their setters/getters. Stores all instances of Transactions. Should only be instantiated once.

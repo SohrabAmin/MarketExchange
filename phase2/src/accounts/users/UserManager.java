@@ -48,7 +48,7 @@ public class UserManager implements Serializable {
      *
      * @param userList new list of all Users
      */
-    void setAllUsers(List<User> userList) {
+    public void setAllUsers(List<User> userList) {
         this.userList = userList;
     }
 

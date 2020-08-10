@@ -2,6 +2,15 @@ package transactions;
 
 import accounts.users.User;
 import transactions.Transaction;
+import transactions.*;
+import meetings.*;
+import items.*;
+import accounts.users.*;
+import accounts.admins.*;
+import requests.*;
+import currency.*;
+import system_menus.admin_main_menus.options.*;
+import system_menus.user_main_menus.options.*;
 
 import java.io.Serializable;
 

@@ -1,6 +1,15 @@
 package transactions;
 
 import accounts.users.User;
+import transactions.*;
+import meetings.*;
+import items.*;
+import accounts.users.*;
+import accounts.admins.*;
+import requests.*;
+import currency.*;
+import system_menus.admin_main_menus.options.*;
+import system_menus.user_main_menus.options.*;
 
 /** Constructs a transactions.OneWayMonetized requests.TradeRequest, that a accounts.users.User can send to another accounts.users.User if they want to initiate a transactions.Transaction. Notice this difference from a transactions.Transaction, as
  * the system does not create an instance of transactions.Transaction unless the corresponding requests.TradeRequest has been approved by the accounts.users.User receiving the requests.TradeRequest. Also
