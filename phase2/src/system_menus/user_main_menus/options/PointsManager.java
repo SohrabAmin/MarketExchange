@@ -37,25 +37,80 @@ public class PointsManager implements UserMainMenuOptions {
         System.out.println("Your points: " + user.getPoints());
         if (!(user.getIsVIP()) && user.getPoints() >= 20) {
             System.out.println("Hey " + user.getName() + ", you're eligible to become a \u2B50VIP\u2B50 \nPress 1 " +
-                    "to use 20 of your " + user.getPoints() + " points to upgrade to VIP status.");
-            System.out.println("Press 2 to go back to main menu.");
+                    "to use 20 of your " + user.getPoints() + " points to upgrade to VIP status. You can also " +
+                    "exchange each point for 1 dollar of currency. Press 2 to exchange points.");
+            System.out.println("Press 3 to go back to main menu.");
             String chosenOption = scanner.nextLine();
             if (chosenOption.equals("1")) {
                 user.setPoints(user.getPoints() - 20);
                 user.setIsVIP(true);
                 System.out.println("Congrats, you're now a \u2B50VIP\u2B50");
                 return null;
-            } else if (chosenOption.equals("2")) {
+            }
+            else if (chosenOption.equals("2")) {
+                System.out.println("How many of your " + user.getPoints() + " would you like to exchange?");
+                String chosenAmount = scanner.nextLine();
+                if (Integer.parseInt(chosenAmount) > user.getPoints()){
+                    System.out.println("Sorry! You have chosen a value greater than the amount of points you have!");
+                    return null;
+                }
+                else if (Integer.parseInt(chosenAmount) <= user.getPoints()){
+                    user.updateCapital(Double.parseDouble(chosenAmount));
+                    user.setPoints(user.getPoints() - Integer.parseInt(chosenAmount));
+                    System.out.println("Congrats! You have successfully added to your capital. " +
+                            "Points remaining: " + user.getPoints());
+                    return null;
+                }
+                else{
+                    System.out.println("Invalid input. Please try again.");
+                    return null;
+                }
+            }
+            else if (chosenOption.equals("3")){
                 return user;
-            } else {
+            }
+            else {
                 System.out.println("Invalid input. Please try again.");
                 return null;
             }
-        } else {
+        }
+        else if (user.getPoints() > 0){
+            System.out.println("You can exchange 1 point for 1 dollar of currency. Press 1 to exchange. Press 2 to " +
+                    "go back to main menu");
+            String otherChosen = scanner.nextLine();
+            if (otherChosen.equals("1")){
+                System.out.println("How many of your " + user.getPoints() + " would you like to exchange?");
+                String amount = scanner.nextLine();
+                if (Integer.parseInt(amount) > user.getPoints()){
+                    System.out.println("Sorry! You have chosen a value greater than the amount of points you have!");
+                    return null;
+                }
+                else if (Integer.parseInt(amount) <= user.getPoints()){
+                    user.updateCapital(Double.parseDouble(amount));
+                    user.setPoints(user.getPoints() - Integer.parseInt(amount));
+                    System.out.println("Congrats! You have successfully added to your capital. " +
+                            "Points remaining: " + user.getPoints());
+                    return null;
+                }
+                else {
+                    System.out.println("Invalid input. Please try again.");
+                    return null;
+                }
+            }
+            else if (otherChosen.equals("2")){
+                return user;
+            }
+            else {
+                System.out.println("Invalid input. Please try again.");
+                return null;
+            }
+        }
+        else {
             System.out.println("Press 1 to go back to main menu.");
             if (scanner.nextLine().equals("1")) {
                 return user;
-            } else {
+            }
+            else {
                 System.out.println("Invalid input. Please try again.");
                 return null;
             }
