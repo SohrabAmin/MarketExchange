@@ -177,7 +177,7 @@ public class ReadWrite implements Serializable {
      */
     public List<String> helperLogSplit(String logs) {
         List<String> listLogs = new ArrayList<>();
-        String[] individualLogs = logs.split("</log>");
+        String[] individualLogs = logs.split("</record>");
 
         for (String a : individualLogs) {
             String[] findMsg = a.split("<message>|</message>");

@@ -53,7 +53,6 @@ public class WishlistManager implements UserMainMenuOptions {
 
         System.out.println("Please enter '1' to remove an item, '2' to add a new item or 'back' to return to the" +
                 " main menu.");
-
         String input = sc.nextLine();
         if (input.equals("back")) {
             return "back";
@@ -82,7 +81,7 @@ public class WishlistManager implements UserMainMenuOptions {
         Scanner sc = new Scanner(System.in);
         //asks if the accounts.users.User wants to remove an item from their wishlist
         System.out.print("If you would like to remove an item, please enter the ID of the item you would like to remove " +
-                "or type 'back' to return.\n");
+                "or type 'back' to return to the main menu.\n");
         Object input = sc.nextLine();
         //returns them to the main menu if they wish to go "back"
         if (input.equals("back")) {
@@ -97,7 +96,7 @@ public class WishlistManager implements UserMainMenuOptions {
         }
         //remove the item they requested from wishlist
         allUsers.removeFromWishlist(allUsers.getUser(user), user.getWishlist().get((Integer) input - 1));
-        System.out.println("items.Item has been removed successfully!");
+        System.out.println("Item has been removed successfully!");
         return null;
     }
 
@@ -167,15 +166,15 @@ public class WishlistManager implements UserMainMenuOptions {
         Item wishlistItem = new Item(name, null, description, category, false, false, false,
                 false, 0.0, 0.0, null);
         System.out.println("The item you wish to add to your wishlist is the following: ");
-        System.out.println("items.Item name: " + wishlistItem.getName() + "\n" + "items.Item description: " + wishlistItem.getDescription() +
-                "\nitems.Item category: " + wishlistItem.getCategory());
+        System.out.println("Item name: " + wishlistItem.getName() + "\n" + "Item description: " + wishlistItem.getDescription() +
+                "\nItem category: " + wishlistItem.getCategory());
         System.out.println("\nIf this is correct, please enter '1'. If you would like to change the item, " +
                 "please enter '2'.");
 
         String confirmation = sc.nextLine();
         if (!confirmation.equals("1")) {
             if (!confirmation.equals("2")) {
-                System.out.println("Invalid input. Please try adding the item again.");
+                System.out.println("\nInvalid input. Please try adding the item again.\n");
                 return null;
             }
             return null;
@@ -207,7 +206,7 @@ public class WishlistManager implements UserMainMenuOptions {
         } else {//ID.equals("10"))
             allUsers.addToFC("Gaming", user);
         }
-        System.out.print("items.Item has been added to your wishlist \uD83C\uDF20\n");
+        System.out.print("\nItem has been added to your wishlist \uD83C\uDF20\n");
 
         return null;
     }
