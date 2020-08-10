@@ -92,10 +92,10 @@ public class UserManager implements Serializable {
     }
 
     /**
-     * Adds an items.Item to a User's draft inventory
+     * Adds an Item to a User's draft inventory
      *
      * @param user User whose draft inventory will be added to
-     * @param item items.Item to be added to this User's draft inventory
+     * @param item Item to be added to this User's draft inventory
      */
     public void addToDraftInventory(User user, Item item) {
         user.getDraftInventory().add(item);
@@ -105,47 +105,47 @@ public class UserManager implements Serializable {
      * Adds an item to a User's inventory
      *
      * @param user User whose inventory will be added to
-     * @param item items.Item to be added to this User's inventory
+     * @param item Item to be added to this User's inventory
      */
     public void addToInventory(User user, Item item) {
         user.getInventory().add(item);
     }
 
     /**
-     * Removes an items.Item from a User's inventory
+     * Removes an Item from a User's inventory
      *
-     * @param user User whose inventory will have an items.Item removed from it
-     * @param item items.Item to be removed from this User's inventory
+     * @param user User whose inventory will have an Item removed from it
+     * @param item Item to be removed from this User's inventory
      */
     public void removeFromInventory(User user, Item item) {
         user.getInventory().remove(item);
     }
 
     /**
-     * Adds an items.Item to a User's wishlist
+     * Adds an Item to a User's wishlist
      *
      * @param user User whose wishlist will be added to
-     * @param item items.Item to be added to this User's wishlist
+     * @param item Item to be added to this User's wishlist
      */
     public void addToWishlist(User user, Item item) {
         user.getWishlist().add(item);
     }
 
     /**
-     * Removes an items.Item from a User's wishlist
+     * Removes an Item from a User's wishlist
      *
-     * @param user User whose wishlist will have an items.Item removed from it
-     * @param item items.Item to be removed from this User's wishlist
+     * @param user User whose wishlist will have an Item removed from it
+     * @param item Item to be removed from this User's wishlist
      */
     public void removeFromWishlist(User user, Item item) {
         user.getWishlist().remove(item);
     }
 
     /**
-     * Moves an items.Item from a User's draft inventory to their inventory (after an Admin approves this items.Item)
+     * Moves an Item from a User's draft inventory to their inventory (after an Admin approves this Item)
      *
-     * @param user User who will have a draft inventory items.Item approved
-     * @param item items.Item approved by an Admin
+     * @param user User who will have a draft inventory Item approved
+     * @param item Item approved by an Admin
      */
     public void approveDraftInventoryItem(User user, Item item, ItemManager allItems) {
         user.getDraftInventory().remove(item);
@@ -155,10 +155,10 @@ public class UserManager implements Serializable {
     }
 
     /**
-     * Removes an items.Item from a User's draft inventory (after an Admin rejects this items.Item)
+     * Removes an Item from a User's draft inventory (after an Admin rejects this Item)
      *
-     * @param user User who will have a draft inventory items.Item rejected
-     * @param item items.Item rejected by an Admin
+     * @param user User who will have a draft inventory Item rejected
+     * @param item Item rejected by an Admin
      */
     public void rejectDraftInventoryItem(User user, Item item) {
         user.getDraftInventory().remove(item);
@@ -166,22 +166,22 @@ public class UserManager implements Serializable {
     }
 
     /**
-     * Adds an items.Item to a User's itemHistory (list of items that have been submitted to the system)
+     * Adds an Item to a User's itemHistory (list of items that have been submitted to the system)
      *
      * @param user User whose itemHistory will be added to
-     * @param item items.Item to add to this User's itemHistory
+     * @param item Item to add to this User's itemHistory
      */
     public void addToItemHistory(User user, Item item) {
         user.getItemHistory().put(item, "Pending");
     }
 
     /**
-     * Changes an items.Item's status (either "Pending", "Approved", or "Rejected") in a User's itemHistory (list of items
-     * that have been submitted to the system). Only an Admin should change an items.Item's status
+     * Changes an Item's status (either "Pending", "Approved", or "Rejected") in a User's itemHistory (list of items
+     * that have been submitted to the system). Only an Admin should change an Item's status
      *
-     * @param user   User whose items.Item will have its status changed
-     * @param item   items.Item whose status is to be changed
-     * @param status this items.Item's new status
+     * @param user   User whose Item will have its status changed
+     * @param item   Item whose status is to be changed
+     * @param status this Item's new status
      */
     public void changeItemStatus(User user, Item item, String status) {
         user.getItemHistory().replace(item, status);
@@ -555,20 +555,20 @@ public class UserManager implements Serializable {
     }
 
     /**
-     * Adds items.Item item to User user's VacationStorage when they go on vacation.
+     * Adds Item item to User user's VacationStorage when they go on vacation.
      *
      * @param user the User that is going on vacation and needs to store their items.
-     * @param item the items.Item from their inventory that is going to be stored.
+     * @param item the Item from their inventory that is going to be stored.
      */
     public void addToVacationStorage(User user, Item item) {
         user.getVacationStorage().add(item);
     }
 
     /**
-     * Removes items.Item item from User user's VacationStorage when they return from vacation.
+     * Removes Item item from User user's VacationStorage when they return from vacation.
      *
      * @param user the User that has returned from vacation and needs to remove items from their VacationStorage
-     * @param item the items.Item that is to be removed.
+     * @param item the Item that is to be removed.
      */
     public void removeFromVacationStorage(User user, Item item) {
         user.getVacationStorage().remove(item);

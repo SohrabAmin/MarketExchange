@@ -408,12 +408,12 @@ public class User extends Account {
     }
 
     /**
-     * Helper function to only be used by system_options.admin_main_menus.options.UndoAction.java. Returns the first items.Item that matches the name and description
+     * Helper function to only be used by system_options.admin_main_menus.options.UndoAction.java. Returns the first Item that matches the name and description
      * in the User's wishlist
      *
-     * @param name        name of the items.Item
-     * @param description description of the items.Item
-     * @return items.Item object if name and description match; returns null if it doesn't
+     * @param name        name of the Item
+     * @param description description of the Item
+     * @return Item object if name and description match; returns null if it doesn't
      */
     public Item findInWishlist(String name, String description) {
         for (Item item : wishlist) {

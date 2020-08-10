@@ -20,7 +20,7 @@ public class ItemManager implements Serializable {
 
     private List<Item> rentableItem;
 
-    // private List<items.Item> deniedInventory;
+    // private List<Item> deniedInventory;
 
     /**
      * create inventory of all items in the system , and create separate list of tradable, sellable, rentable items

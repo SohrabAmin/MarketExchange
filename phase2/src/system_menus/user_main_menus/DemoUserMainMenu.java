@@ -26,7 +26,7 @@ public class DemoUserMainMenu implements DifferentUserMainMenu{
      * wishlists, view approved trades, approve meetings, confirm meetings, and change account settings.
      *
      * @param user             the user that is currently logged in to the system
-     * @param allItems         items.ItemManager that stores the system's inventory
+     * @param allItems         ItemManager that stores the system's inventory
      * @param allTradeRequests requests.TradeRequestManager that stores all the Trade Requests in the system
      * @param allUsers         UserManager that stores all the Users in the system
      * @param allMeetings      meetings.MeetingManager that deals with the creation of meetings
@@ -51,7 +51,7 @@ public class DemoUserMainMenu implements DifferentUserMainMenu{
                 "4. Initiate Trade\uD83C\uDD94\n" +
                 "5. View Pending Trade Requests\uD83C\uDD94\n" +
                 "6. Approve Pending Trade Requests\uD83C\uDD94\n" +
-                "7. Add items.Item to inventory\uD83C\uDD94\n" +
+                "7. Add Item to inventory\uD83C\uDD94\n" +
                 "8. View most recent trades\uD83C\uDD94\n" +
                 "9. View most frequent trading partners\uD83C\uDD94\n" +
                 "10. View status of my items\uD83C\uDD94\n" +

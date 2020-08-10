@@ -60,7 +60,7 @@ public class InventoryManager implements UserMainMenuOptions {
         }
         //remove the item they requested from inventory
         allUsers.removeFromInventory(allUsers.getUser(user), in.get((Integer) input - 1));
-        System.out.println("items.Item has been removed successfully!");
+        System.out.println("Item has been removed successfully!");
         return null;
     }
 }

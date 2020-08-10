@@ -32,9 +32,9 @@ public class OneWayMonetized extends OneWay {
     /**
      * Constructs a transactions.OneWayMonetized object. This is the subclass of OneWayRequest, as it contains all attributes,
      * yet has an additional cost attribute, depending of if the transactions.Transaction is permanent or temporary. If the transactions.Transaction will
-     * be temporary, then there is a rentDuration attribute that represents the amount of time the owner would like to rent out the items.Item.
+     * be temporary, then there is a rentDuration attribute that represents the amount of time the owner would like to rent out the Item.
      * @param user1 The User who initiated the requests.TradeRequest
-     * @param item The items.Item User1 currently wants
+     * @param item The Item User1 currently wants
      * @param temp A boolean representing if the requests.TradeRequest will be temp or not.
      * @param virtual A boolean that determines the requests.TradeRequest will have no meeting (true: This transactions.
      *                Transaction will not have a meetings.Meeting, false: This transactions.Transaction will have a meetings.Meeting.)
@@ -91,7 +91,7 @@ public class OneWayMonetized extends OneWay {
     }
 
     /**
-     * Gets the cost of this items.Item. Note: If the requests.TradeRequest is temporary, the cost will represent the cost to rent. If the requests.TradeRequest
+     * Gets the cost of this Item. Note: If the requests.TradeRequest is temporary, the cost will represent the cost to rent. If the requests.TradeRequest
      * is permanent, it will represent the cost to buy.
      * @return A double of the current cost of the item.
      */
@@ -100,18 +100,18 @@ public class OneWayMonetized extends OneWay {
     }
 
     /**
-     * Sets the duration for which the owner of the items.Item will allow the receiver of the items.Item to borrow it for. Notice this is only
+     * Sets the duration for which the owner of the Item will allow the receiver of the Item to borrow it for. Notice this is only
      * initiated if this requests.TradeRequest is temporary.
-     * @param days Integer of the number of days the owner of the items.Item will allow the receiver of the items.Item to borrow it for.
+     * @param days Integer of the number of days the owner of the Item will allow the receiver of the Item to borrow it for.
      */
     public void setRentDuration(int days){
         this.rentDuration = days;
     }
 
     /**
-     * Gets the duration for which the owner of the items.Item will allow the receiver of the items.Item to borrow it for. Notice this is only
+     * Gets the duration for which the owner of the Item will allow the receiver of the Item to borrow it for. Notice this is only
      * initiated if this requests.TradeRequest is temporary.
-     * @return Integer of the number of days the owner of the items.Item will allow the receiver of the items.Item to borrow it for.
+     * @return Integer of the number of days the owner of the Item will allow the receiver of the Item to borrow it for.
      */
     public int getRentDuration(){
         return this.rentDuration;

@@ -25,7 +25,7 @@ public class VacationUserMainMenu implements DifferentUserMainMenu {
      * system again.
      *
      * @param user             User currently logged into the system
-     * @param allItems         The instance of items.ItemManager
+     * @param allItems         The instance of ItemManager
      * @param allTradeRequests The instance of requests.TradeRequestManager
      * @param allUsers         The instance of UserManager
      * @param allMeetings      The instance of meetings.MeetingManager

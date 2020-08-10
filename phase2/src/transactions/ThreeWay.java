@@ -73,18 +73,18 @@ public class ThreeWay extends Transaction {
     public User getThirdTrader(){return this.thirdTrader;}
 
     /**
-     * Getter for the items.Item the firstTrader is giving.
+     * Getter for the Item the firstTrader is giving.
      *
-     * @return The items.Item the firstTrader is giving.
+     * @return The Item the firstTrader is giving.
      */
     public Item getFirstItem() {
         return this.items.get(0);
     }
 
     /**
-     * Getter for the items.Item the secondTrader is giving.
+     * Getter for the Item the secondTrader is giving.
      *
-     * @return The items.Item the secondTrader is giving.
+     * @return The Item the secondTrader is giving.
      */
     public Item getSecondItem() {
         return this.items.get(1);

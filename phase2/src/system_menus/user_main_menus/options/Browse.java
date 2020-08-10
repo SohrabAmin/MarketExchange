@@ -18,7 +18,7 @@ public class Browse implements UserMainMenuOptions {
      * Allows User user to browse the System's inventory and add any of the items in the System's inventory to
      * their wishlist.
      *  @param user     the User that wishes to browse the inventory and add items to their wishlist
-     * @param allItems the items.ItemManager that stores the system's inventory
+     * @param allItems the ItemManager that stores the system's inventory
      * @param allUsers the UserManager that stores the User user
      * @param currencyManager
      * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
@@ -58,13 +58,13 @@ public class Browse implements UserMainMenuOptions {
             //checks to see if the item is already in the user's wishlist
             for (int i = 0; i < user.getWishlist().size(); i++) {
                 if (item.equals(user.getWishlist().get(i))) {
-                    System.out.println("\nitems.Item is already in your wishlist!");
+                    System.out.println("\nItem is already in your wishlist!");
                     return null;
                 }
             }
             allUsers.addToFC(item.getCategory(), user);
             allUsers.addToWishlist(user, item);
-            System.out.println("\nitems.Item has been added to your wishlist \uD83C\uDF20");
+            System.out.println("\nItem has been added to your wishlist \uD83C\uDF20");
             return null;
         } else {
             System.out.println("\n\uD83E\uDDD0 This ID is invalid. Please try again!");

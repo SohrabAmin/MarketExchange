@@ -52,7 +52,7 @@ public class TradeSystem {
         //either returns the saved requests.TradeRequest object with all the stored Trade Requests
         //or creates a new requests.TradeRequest object if file TradeRequestList.ser is empty
         allTradeRequests = readwrite.tradeRequestPopulate("TradeRequestList.ser");
-        //populates the system inventory in the initialized items.ItemManager AllItems with all the saved
+        //populates the system inventory in the initialized ItemManager AllItems with all the saved
         //items in the file ItemList.ser
         readwrite.itemPopulate(allItems, "ItemList.ser");
         //reads the file and populates UserManager allUsers with the Users stored in UserList.ser

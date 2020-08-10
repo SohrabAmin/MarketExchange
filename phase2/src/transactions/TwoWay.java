@@ -16,10 +16,10 @@ public class TwoWay extends Transaction implements Serializable {
     private List<Item> items;
 
     /**
-     * Constructor of transactions.TwoWay. Requires the item of the first User, the items.Item of the second User, and the boolean regarding if it's temporary. True: transactions.TwoWay is temporary. False: transactions.TwoWay is permanent.
+     * Constructor of transactions.TwoWay. Requires the item of the first User, the Item of the second User, and the boolean regarding if it's temporary. True: transactions.TwoWay is temporary. False: transactions.TwoWay is permanent.
      *
-     * @param item1 The items.Item the first User is giving to the second User.
-     * @param item2 The items.Item the second User is giving to the first User.
+     * @param item1 The Item the first User is giving to the second User.
+     * @param item2 The Item the second User is giving to the first User.
      * @param temp  If the transactions.TwoWay is temporary.
      */
     public TwoWay(Item item1, Item item2, boolean temp, boolean virtual) {
@@ -51,18 +51,18 @@ public class TwoWay extends Transaction implements Serializable {
     }
 
     /**
-     * Getter for the items.Item the firstTrader is giving.
+     * Getter for the Item the firstTrader is giving.
      *
-     * @return The items.Item the firstTrader is giving.
+     * @return The Item the firstTrader is giving.
      */
     public Item getFirstItem() {
         return this.items.get(0);
     }
 
     /**
-     * Getter for the items.Item the secondTrader is giving.
+     * Getter for the Item the secondTrader is giving.
      *
-     * @return The items.Item the secondTrader is giving.
+     * @return The Item the secondTrader is giving.
      */
     public Item getSecondItem() {
         return this.items.get(1);

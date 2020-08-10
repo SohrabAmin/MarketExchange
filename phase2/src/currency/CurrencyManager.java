@@ -27,9 +27,9 @@ public class CurrencyManager {
     }
 
     /**
-     * Adds in-app currency to the User. It requires that the currency.CreditCard is not expired. It is assumed that the User always has enough to upload.
+     * Adds in-app currency to the User. It requires that the CreditCard is not expired. It is assumed that the User always has enough to upload.
      * @param user The User that is uploading in-app currency
-     * @param card The associated currency.CreditCard
+     * @param card The associated CreditCard
      * @param amount The amount the User would like to upload
      * @return a boolean. True: The funds were successfully added. False: The card is expired)
      */

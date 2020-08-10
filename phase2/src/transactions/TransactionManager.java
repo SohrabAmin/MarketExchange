@@ -47,9 +47,9 @@ public class TransactionManager implements Serializable {
      * 4: Cancelled.
      * Notice by updating the tradeStatus the instance of transactions.Transaction is being moved to a new attribute list within transactions.TransactionManager.
      * finalizedMeeting implies the initialMeeting has been set.
-     * pendingSecondExchange means the first exchange was successful, but the User(s) must return their items.Item a month after the initialMeeting.
+     * pendingSecondExchange means the first exchange was successful, but the User(s) must return their Item a month after the initialMeeting.
      * Cancelled implies one of the following: User(s) did not show up to the meetings.Meeting or User(s) altered
-     * meeting too many times, and completed means the transactions.Transaction was successful, and the items.Item(s) have been officially swapped.
+     * meeting too many times, and completed means the transactions.Transaction was successful, and the Item(s) have been officially swapped.
      * Completed means either the finalizedMeeting had occurred (for permanent transactions.Transaction), or the secondExchange has occurred.
      *  @param itemManager Class that manages Items.
      * @param userManager Class that manages Users.
@@ -247,7 +247,7 @@ public class TransactionManager implements Serializable {
      *
      * @param userManager The instance of UserManager.
      * @param transaction The given temporary transactions.Transaction.
-     * @param itemManager The instance of items.ItemManager.
+     * @param itemManager The instance of ItemManager.
      */
     public void handleSecondExchange(UserManager userManager, ItemManager itemManager, Transaction transaction) {
         User user1;
@@ -306,11 +306,11 @@ public class TransactionManager implements Serializable {
     }
 
     /**
-     * Handles the back-end completion of a temporary transactions.Transaction. Notice the first exchange is giving items.Item(s) to the User(s). Only called in updateTransactionStatus.
+     * Handles the back-end completion of a temporary transactions.Transaction. Notice the first exchange is giving Item(s) to the User(s). Only called in updateTransactionStatus.
      *
      * @param userManager The instance of UserManager.
      * @param transaction The given temporary transactions.Transaction.
-     * @param itemManager The instance of items.ItemManager.
+     * @param itemManager The instance of ItemManager.
      */
     public void handleFirstExchange(UserManager userManager, Transaction transaction, ItemManager itemManager, CurrencyManager currencyManger) {
         User user1;
@@ -375,7 +375,7 @@ public class TransactionManager implements Serializable {
      * Handles the back-end results of a permanent transactions.Transaction occurring. This is only called by updateTransactionStatus.
      *
      * @param userManager The instance of UserManager.
-     * @param itemManager The instance of items.ItemManager.
+     * @param itemManager The instance of ItemManager.
      * @param transaction The given temporary transactions.Transaction.
      */
     public void handleCompletedPerm(UserManager userManager, ItemManager itemManager, Transaction transaction, CurrencyManager currencyManager) {

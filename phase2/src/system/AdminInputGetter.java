@@ -84,7 +84,7 @@ public class AdminInputGetter {
 
         //if they have pending items, show it here
         if (allPendingItems.size() > 0) {
-            System.out.println("\uD83D\uDCE9 You have " + allPendingItems.size() + " Pending items.Item Requests!");
+            System.out.println("\uD83D\uDCE9 You have " + allPendingItems.size() + " Pending Item Requests!");
         }
 
         // if a super admin has changed this admin's super admin status,

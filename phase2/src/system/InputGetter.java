@@ -56,7 +56,7 @@ public class InputGetter {
      * frequent trading partners, view item statuses, add items to wishlist, request unfreeze and log out.
      *
      * @param user             the user that is currently logged in to the system
-     * @param allItems         items.ItemManager that stores the system's inventory
+     * @param allItems         ItemManager that stores the system's inventory
      * @param allTradeRequests requests.TradeRequestManager that stores all the Trade Requests in the system
      * @param allUsers         UserManager that stores all the Users in the system
      * @param allMeetings      meetings.MeetingManager that deals with the creation of meetings

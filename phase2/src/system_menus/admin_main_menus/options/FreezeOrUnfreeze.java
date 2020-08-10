@@ -23,7 +23,7 @@ public class FreezeOrUnfreeze implements AdminMainMenuOptions {
      * @param allUsers UserManager which stores all the users in the system
      * @param admin the current Admin logged into the system
      * @param allAdmins AdminManager which holds all the Admins, FrozenRequests and Thresholds in the system
-     * @param allItems items.ItemManager which holds the system inventory
+     * @param allItems ItemManager which holds the system inventory
      * @param allUserMessages UserMessageManager which stores all the Users messages to Admin
      * @return depending on what the Admin inputs it will return different objects:
      * returns null to tell mainmenu() to call execute() again

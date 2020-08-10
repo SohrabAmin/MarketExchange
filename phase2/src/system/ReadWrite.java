@@ -90,7 +90,7 @@ public class ReadWrite implements Serializable {
 
     /**
      * Deals with reading from the external file fileName and if it is not empty, it will populate the list
-     * of items in items.ItemManager im with the list of saved items from the file. It will not do anything if it is empty.
+     * of items in ItemManager im with the list of saved items from the file. It will not do anything if it is empty.
      *
      * @param fileName the name of the file the method is reading from
      * @throws IOException

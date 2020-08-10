@@ -215,9 +215,9 @@ public class Item implements Serializable {
     }
 
     /**
-     * Returns a String representation of this items.Item, which includes name and description
+     * Returns a String representation of this Item, which includes name and description
      *
-     * @return String representation of this items.Item
+     * @return String representation of this Item
      */
     public String toString() {
         return "item \"" + this.getName() + "\" with description \"" + this.getDescription() + "\"";

@@ -34,7 +34,7 @@ public class ChosenOption {
      *
      * @param user The User currently logged into the system
      * @param allAdmins AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
-     * @param allItems items.ItemManager which stores the system's inventory
+     * @param allItems ItemManager which stores the system's inventory
      * @param allMeetings meetings.MeetingManager which deals with creating and editing meetings
      * @param allTradeRequests requests.TradeRequestManager which stores and edits all the TradeRequests in the system
      * @param allTransactions transactions.TransactionManager which stores and edits all Transactions in the system
@@ -61,7 +61,7 @@ public class ChosenOption {
      * admin the current Admin logged into the system
      * @param allAdmins AdminManager which holds all the Admins, FrozenRequests and Thresholds in the system
      * @param allUsers UserManager which holds all the Users in the system
-     * @param allItems items.ItemManager which holds the system inventory
+     * @param allItems ItemManager which holds the system inventory
      * @return depending on what the Admin inputs it will return different objects:
      * returns null to tell mainmenu() to call system_options.admin_main_menus.options.AddAdmin() again
      * returns String "back" to tell mainmenu() to prompt main menu again so User can choose another

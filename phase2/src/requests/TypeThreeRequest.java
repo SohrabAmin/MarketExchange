@@ -39,10 +39,10 @@ public class TypeThreeRequest extends TradeRequest {
     /**
      * Constructs a transactions.ThreeWay requests.TradeRequest instance. This class is instantiated by the User that attempts to initiate the transactions.Transaction, and should be stored within the receiving User's
      * pendingRequest. If the receiving User accepts the conditions of the transactions.Transaction, they may accept the requests.TradeRequest, and an instance of transactions.Transaction is created. Notice this is only called
-     * once a User has received a twoWayRequest, and would like to add in a third User (perhaps they want the items.Item user1 is offering, but doesn't want to give up the items.Item user1 wants).
-     * @param item1 The items.Item belonging to User1, the User who requested the twoWay.
-     * @param item2 The items.Item belonging to User2, the User requesting the threeWay.
-     * @param item3 The items.Item belonging to User3.
+     * once a User has received a twoWayRequest, and would like to add in a third User (perhaps they want the Item user1 is offering, but doesn't want to give up the Item user1 wants).
+     * @param item1 The Item belonging to User1, the User who requested the twoWay.
+     * @param item2 The Item belonging to User2, the User requesting the threeWay.
+     * @param item3 The Item belonging to User3.
      * @param message A String representation of any message user1 may want to send user2.
      * @param temp A boolean representing if the requests.TradeRequest will be temp or not.
      * @param date A Calender representing the date/time the requests.TradeRequest was sent.
@@ -138,23 +138,23 @@ public class TypeThreeRequest extends TradeRequest {
     }
 
     /**
-     * Gets the items.Item that user1 would be giving to user2.
-     * @return items.Item that user1 would be giving to user2.
+     * Gets the Item that user1 would be giving to user2.
+     * @return Item that user1 would be giving to user2.
      */
     public Item getFirstItem(){
         return this.item1;
     }
 
     /**
-     * Gets the items.Item that user2 would be giving to user3.
-     * @return items.Item that user2 would be giving to user3.
+     * Gets the Item that user2 would be giving to user3.
+     * @return Item that user2 would be giving to user3.
      */
     public Item getSecondItem(){
         return this.item2;
     }
     /**
-     * Gets the items.Item that user3 would be giving to user1.
-     * @return items.Item that user2 would be giving to user1.
+     * Gets the Item that user3 would be giving to user1.
+     * @return Item that user2 would be giving to user1.
      */
 
     public Item getThirdItem(){

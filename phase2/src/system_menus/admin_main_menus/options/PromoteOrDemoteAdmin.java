@@ -26,7 +26,7 @@ public class PromoteOrDemoteAdmin implements AdminMainMenuOptions {
      * @param admin     Admin logged in to the system
      * @param allAdmins The instance of AdminManager
      * @param allUsers  The instance of UserManager
-     * @param allItems  The instance of items.ItemManager
+     * @param allItems  The instance of ItemManager
      * @return null if the current menu is to be reprinted; Admin admin if the admin is to be redirected to the main menu.
      */
     public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,

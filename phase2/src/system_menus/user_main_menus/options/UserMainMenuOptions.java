@@ -18,7 +18,7 @@ public interface UserMainMenuOptions {
      * menu option is.
      *
      * @param user The User currently logged into the system
-     * @param allItems items.ItemManager which stores the system's inventory
+     * @param allItems ItemManager which stores the system's inventory
      * @param allTradeRequests requests.TradeRequestManager which stores and edits all the TradeRequests in the system
      * @param allUsers UserManager which stores all the Users in the system
      * @param allMeetings meetings.MeetingManager which deals with creating and editing meetings

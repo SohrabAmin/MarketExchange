@@ -181,9 +181,9 @@ public class AddItemToSystem implements UserMainMenuOptions {
         newItem = new Item(itemName, user, description, category, digital, t, s,
                 r, sprice, rprice, days);
         System.out.println("\nThe item you wish to add is the following: ");
-        System.out.println("items.Item name: " + newItem.getName() + "\n" + "items.Item description: " +
+        System.out.println("Item name: " + newItem.getName() + "\n" + "Item description: " +
                 newItem.getDescription() + "\n"
-                + "items.Item Category:" + newItem.getCategory());
+                + "Item Category:" + newItem.getCategory());
 
         System.out.println("\nIf this is correct, please enter '1'. If you would like to change the item, " +
                 "please enter '2'.");

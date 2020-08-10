@@ -22,8 +22,8 @@ public class TypeTwoRequest extends TradeRequest {
     /**
      * Constructs a transactions.TwoWay requests.TradeRequest instance. This class is instantiated by the User that attempts to initiate the transactions.Transaction, and should be stored within the receiving User's
      * pendingRequest. If the receiving User accepts the conditions of the transactions.Transaction, they may accept the requests.TradeRequest, and an instance of transactions.Transaction is created.
-     * @param item1 The User initiated the requests.TradeRequest's items.Item.
-     * @param item2 The items.Item belonging to the
+     * @param item1 The User initiated the requests.TradeRequest's Item.
+     * @param item2 The Item belonging to the
      * @param message A String representation of any message user1 may want to send user2.
      * @param temp A boolean representing if the requests.TradeRequest will be temp or not.
      * @param date A Calender representing the date/time the requests.TradeRequest was sent.
@@ -54,16 +54,16 @@ public class TypeTwoRequest extends TradeRequest {
     }
 
     /**
-     * Gets the items.Item that the firstUser is offering.
-     * @return The items.Item the firstUser is offering.
+     * Gets the Item that the firstUser is offering.
+     * @return The Item the firstUser is offering.
      */
     public Item getFirstItem() {
         return this.item1;
     }
 
     /**
-     * Get the items.Item that the FirstUser wants from the secondUser.
-     * @return The items.Item the firstUser wants.
+     * Get the Item that the FirstUser wants from the secondUser.
+     * @return The Item the firstUser wants.
      */
     public Item getSecondItem() {
         return this.item2;

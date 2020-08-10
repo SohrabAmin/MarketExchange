@@ -19,7 +19,7 @@ public class ConfirmMeetings implements UserMainMenuOptions {
      * Displays the pending transactions that the User user has. It will allow users to approve or edit the transactions
      * they currently have pending.
      *  @param user            the User that wants to view their pending transactions
-     * @param allItems        items.ItemManager that stores the system's inventory
+     * @param allItems        ItemManager that stores the system's inventory
      * @param allUsers        UserManager that stores all the Users in the system
      * @param allMeetings     meetings.MeetingManager that deals with the creation of meetings
      * @param allTransactions transactions.TransactionManager that stores all the information of all system transactions

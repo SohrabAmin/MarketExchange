@@ -21,7 +21,7 @@ public class TypeOneRequest extends TradeRequest {
      * Constructs a transactions.OneWay requests.TradeRequest instance. This class is instantiated by the User that attempts to initiate the transactions.Transaction, and should be stored within the receiving User's
      * pendingRequest. If the receiving User accepts the conditions of the transactions.Transaction, they may accept the requests.TradeRequest, and an instance of transactions.Transaction is created.
      * @param user1 The User who initiated the requests.TradeRequest
-     * @param item The items.Item User1 currently wants.
+     * @param item The Item User1 currently wants.
      * @param message A String representation of any message user1 may want to send user2.
      * @param temp A boolean representing if the requests.TradeRequest will be temp or not.
      * @param date A Calender representing the date/time the requests.TradeRequest was sent.
@@ -51,8 +51,8 @@ public class TypeOneRequest extends TradeRequest {
     }
 
     /**
-     * Gets the items.Item that the User initiating the requests.TradeRequest (user1) wants from another User (user2).
-     * @return items.Item that user1 wants from user2
+     * Gets the Item that the User initiating the requests.TradeRequest (user1) wants from another User (user2).
+     * @return Item that user1 wants from user2
      */
     public Item getItem() {
         return this.item;
