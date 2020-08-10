@@ -88,12 +88,14 @@ public class LogInSystem {
 
         ArrayList<String> temp = new ArrayList<>();
 
-        System.out.println("Please press 1 to login to your account, or press 2 to create an account. " +
-                "Enter 'exit' to exit at any time.");
+        System.out.println("Please press '1' to login to your account, or '2' to create an account or '3' " +
+                "to return to the main page.\nEnter 'exit' to exit at any time.");
         try {
             String input = br.readLine().toLowerCase(); //make sure that Login and login are both used
             //user wants to signup for an account
             switch (input) {
+                case "3":
+                    return null;
                 case "exit":
                     return input;
                 case "1":
