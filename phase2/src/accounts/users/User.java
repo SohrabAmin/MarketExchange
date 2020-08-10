@@ -37,7 +37,7 @@ public class User extends Account {
     private Map<Integer, List<TradeRequest>> weeklyRequestLimit;
     private Map<String, Integer> FrequentCategory;
     private String location;
-    private Integer points = 0;
+    private int points;
     private boolean isOnVacation;
     private boolean isVIP;
     private List<Item> vacationStorage;
@@ -387,7 +387,7 @@ public class User extends Account {
      * Getter for this user's points
      * @return this user's points as int
      */
-    public Integer getPoints() {
+    public int getPoints() {
         return this.points;
     }
 

@@ -104,7 +104,8 @@ public class TradeSystem {
         allUsers.addToInventory(allUsers.getUser(A), phone);
         allItems.addItem(phone);
 
-
+        // testing PointsManager
+        allUsers.getUser(Tina).setPoints(40);
 
 
 

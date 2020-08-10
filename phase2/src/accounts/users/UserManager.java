@@ -8,7 +8,9 @@ import requests.typeThreeRequest;
 import transactions.*;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * Creates, keeps track of, and changes values of Users.
@@ -351,27 +353,18 @@ public class UserManager implements Serializable {
             if (onewaymonetized.getFirstTrader() == user) {
                 user.setPoints(user.getPoints() + 1);
             }
-        }
-        else if (transaction instanceof OneWay){
+        } else if (transaction instanceof OneWay) {
             OneWay oneway = (OneWay) transaction;
             if (oneway.getSecondTrader() == user) {
                 user.setPoints(user.getPoints() + 1);
             }
-        }
-        else if (transaction instanceof TwoWay){
+        } else if (transaction instanceof TwoWay) {
             user.setPoints(user.getPoints() + 2);
-        }
-        else if (transaction instanceof ThreeWay){
+        } else if (transaction instanceof ThreeWay) {
             user.setPoints(user.getPoints() + 3);
-        }
-        else {
+        } else {
             user.setPoints(user.getPoints());
         }
-    }
-
-    public void setUserVIP(User user){
-            user.setIsVIP(true);
-            user.setPoints(user.getPoints() - 20);
     }
 
     /**
@@ -498,18 +491,16 @@ public class UserManager implements Serializable {
         }
         return null;
     }
-    /**
-     * Setter for  User become VIP
-     * @param user who becomes VIP
-     * the points of this user -20
-     */
-    public void addToFC (String category, User user){
+
+    public void addToFC(String category, User user) {
         Integer old = user.getFrequentCategory().get(category);
-        Integer score = old +1;
+        Integer score = old + 1;
         user.getFrequentCategory().replace(category, score);
     }
+
     /**
      * Getter for all Frozen Users
+     *
      * @return all frozen users in system as a List of User
      */
     public List<User> getAllFrozenUsers() {
@@ -522,8 +513,10 @@ public class UserManager implements Serializable {
         }
         return allFrozenUsers;
     }
+
     /**
      * Getter for all PseudoFrozenUsers
+     *
      * @return all PsudoFrozenUsers as a List of User
      */
     public List<User> getAllPseudoFrozenUsers() {
@@ -559,55 +552,72 @@ public class UserManager implements Serializable {
 
     /**
      * Setter for notifyUndo, add Admin's undo actions to the List of Undo actions for the user who's action is undone by admin.
-     * @param user the user who's action is undone by admin
+     *
+     * @param user   the user who's action is undone by admin
      * @param action this user's action that is undone by admin
-     *(used to notify user what is undone by admin)
+     *               (used to notify user what is undone by admin)
      */
-    public void addToNotifyUndo(User user, String action){user.getNotifyUndo().add(action);}
+    public void addToNotifyUndo(User user, String action) {
+        user.getNotifyUndo().add(action);
+    }
 
     /**
      * Setter for AdminActionHistory, add admin's undo action to AdminAction History
-     * @param user the user that has action being undone by admin
+     *
+     * @param user   the user that has action being undone by admin
      * @param action the action that is being undone by admin
      */
-    public void addToAdminActionHistory(User user, String action) {user.getAdminActionHistory().add(action);}
+    public void addToAdminActionHistory(User user, String action) {
+        user.getAdminActionHistory().add(action);
+    }
 
     /**
      * remove admin's undo action notification(as string)from the List of all undo actions when user logged in and saw the message.
-     * @param user the user who logged in and saw this message
+     *
+     * @param user   the user who logged in and saw this message
      * @param undone the messages that is seen by this user when logging in.
      */
-    public void removeFromNotifyUndo(User user, String undone){user.getNotifyUndo().remove(undone);}
+    public void removeFromNotifyUndo(User user, String undone) {
+        user.getNotifyUndo().remove(undone);
+    }
 
     /**
      * Setter for messages sent by this user to the Admin
-     * @param user the user who sent message to Admin
+     *
+     * @param user    the user who sent message to Admin
      * @param message the message sent by this user
      */
-    public void addToAdminMessages(User user, String message) {user.getAdminMessages().add(message);}
+    public void addToAdminMessages(User user, String message) {
+        user.getAdminMessages().add(message);
+    }
 
     /**
      * remove the message from the List of all messages sent by this user
-     * @param user the user who has sent message to Admin
+     *
+     * @param user    the user who has sent message to Admin
      * @param message message sent by this user
      */
-    public void removeFromAdminMessages(User user, String message) {user.getAdminMessages().remove(message);}
+    public void removeFromAdminMessages(User user, String message) {
+        user.getAdminMessages().remove(message);
+    }
 
     /**
      * Setter for ApprovedThreeWay, add approved three way trade request to the List of all this user's three way trade request.
-     * @param user the user who has approved three way trade request
+     *
+     * @param user    the user who has approved three way trade request
      * @param request request that is approved by this user
      */
-    public void addToApprovedThreeWay(User user, typeThreeRequest request){
+    public void addToApprovedThreeWay(User user, typeThreeRequest request) {
         user.getApprovedThreeWay().add(request);
     }
 
     /**
      * Remove the three way trade request from the List of all approved three way trade for a specific user.
-     * @param user the user who
+     *
+     * @param user    the user who
      * @param request
      */
-    public void removeFromApprovedThreeway(User user, typeThreeRequest request){
+    public void removeFromApprovedThreeway(User user, typeThreeRequest request) {
         user.getApprovedThreeWay().remove(request);
     }
 }

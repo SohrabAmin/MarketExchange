@@ -44,12 +44,12 @@ public class LogInSystem {
 
                     //if they are admin, it will prompt admin authenticator() method in system.AdminInputGetter
                     case "2":
-                        Admin temp = adminAuthenticator(adminmanager);
+                        ///Admin temp = adminAuthenticator(adminmanager);
                         //authenticator() returns null when user wants to go back to main welcome screen
-                        if (temp == null) {
-                            return LogIn();
-                        }
-                        return temp;
+                        ///if (temp == null) {
+                        ///    return LogIn();
+                        ///}
+                        return adminAuthenticator(adminmanager);
 
                     case "3":
                         return new User("Demo", "123");
@@ -175,7 +175,7 @@ public class LogInSystem {
      * @param allAdmins accounts.admins.AdminManager which stores all the admin in the system.
      * @return returns an accounts.admins.Admin which will be used to prompt the main menu in LogIn System
      */
-    public Admin adminAuthenticator(AdminManager allAdmins) {
+    public Object adminAuthenticator(AdminManager allAdmins) {
 
         //we fill out allUsers with whatever is in ser file
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -200,6 +200,9 @@ public class LogInSystem {
                             curr++;
                         }
                     }
+                    if (input.equals("exit")) {
+                        return "exit";
+                    }
                     for (int i = 0; i < allAdmins.getAllAdmins().size(); i++) {
                         if (allAdmins.getAllAdmins().get(i).getName().equals(temp.get(0)))
                             if (allAdmins.getAllAdmins().get(i).getPassword().equals(temp.get(1))) {
@@ -212,6 +215,9 @@ public class LogInSystem {
                     return adminAuthenticator(allAdmins);
                 case "2":
                     return null;
+
+                case "exit":
+                    return "exit";
                 default:
                     System.out.println("Invalid input. Please try again.");
                     return adminAuthenticator(allAdmins);
