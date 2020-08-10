@@ -9,6 +9,8 @@ import items.Item;
 import items.ItemManager;
 import meetings.MeetingManager;
 import requests.TradeRequestManager;
+import system_menus.ChosenOption;
+import system_menus.user_main_menus.options.ConfirmMeetings;
 import transactions.TransactionManager;
 
 import java.util.Scanner;
@@ -39,23 +41,31 @@ public class VacationUserMainMenu implements DifferentUserMainMenu {
         Scanner scanner = new Scanner(System.in);
         System.out.print("----------------------------------------------------------------------------------------------" +
                 "\n\uD83D\uDC4B Welcome back, " + user.getName() + "!\n");
-        System.out.println("Are you still on vacation? If so, press 1. If not, press 2.");
+        System.out.println("Press 1 to remain on vacation. Press 2 to return from vacation. Press 3 to confirm a trade " +
+                "is done from your side.");
         String confirmation = scanner.nextLine();
-        if (confirmation.equals("1")) {
-            System.out.println("Go enjoy your vacation!");
-            return null;
-        } else if (confirmation.equals("2")) {
-            System.out.println("We hope you enjoyed your vacation!");
-            user.setIsOnVacation(false);
-            for (int i = 0; i < user.getVacationStorage().size(); i++) {
-                Item item = user.getVacationStorage().get(i);
-                allUsers.addToInventory(user, item);
-                allUsers.removeFromVacationStorage(user, item);
-            }
-            return user;
-        } else {
-            System.out.println("Invalid option. Please try again.");
-            return null;
+        switch (confirmation) {
+            case "1":
+                System.out.println("Go enjoy your vacation!");
+                return null;
+            case "2":
+                System.out.println("We hope you enjoyed your vacation!");
+                user.setIsOnVacation(false);
+                for (int i = 0; i < user.getVacationStorage().size(); i++) {
+                    Item item = user.getVacationStorage().get(i);
+                    allUsers.addToInventory(user, item);
+                    allUsers.removeFromVacationStorage(user, item);
+                }
+                return user;
+            case "3":
+                ChosenOption option = new ChosenOption();
+                option.setChosenOption(new ConfirmMeetings());
+                option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
+                        allTransactions, allAdmins, undoLogger, allUserMessages, currencyManager);
+                return user;
+            default:
+                System.out.println("Invalid option. Please try again.");
+                return null;
         }
     }
 }

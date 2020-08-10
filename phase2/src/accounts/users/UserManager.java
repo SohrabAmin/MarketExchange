@@ -641,7 +641,7 @@ public class UserManager implements Serializable {
      * @param user    the user who
      * @param request
      */
-    public void removeFromApprovedThreeway(User user, typeThreeRequest request) {
+    public void removeFromApprovedThreeWay(User user, typeThreeRequest request) {
         user.getApprovedThreeWay().remove(request);
     }
 }

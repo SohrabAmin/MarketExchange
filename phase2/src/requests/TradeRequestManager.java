@@ -106,10 +106,10 @@ public class TradeRequestManager implements Serializable {
             User user3 = userManager.getUser(((typeThreeRequest) request).getThirdUser());
             userManager.removeFromOutboundRequests(user2, request);
             if(((typeThreeRequest) request).getFirstApproved().getName().equals(user1.getName())){
-                userManager.removeFromApprovedThreeway(user1, (typeThreeRequest) request);
+                userManager.removeFromApprovedThreeWay(user1, (typeThreeRequest) request);
                 userManager.removeFromPendingRequests(user3, request);
             }else if(((typeThreeRequest) request).getFirstApproved().getName().equals(user3.getName())){
-                userManager.removeFromApprovedThreeway(user3, (typeThreeRequest) request);
+                userManager.removeFromApprovedThreeWay(user3, (typeThreeRequest) request);
                 userManager.removeFromPendingRequests(user1, request);
             }
         }
