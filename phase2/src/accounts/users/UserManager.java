@@ -91,14 +91,6 @@ public class UserManager implements Serializable {
         user.setIsPseudoFrozen(false);
     }
 
-    public void goOnVacation(User user) {
-        user.setIsOnVacation(true);
-    }
-
-    public void returnFromVacation(User user) {
-        user.setIsOnVacation(false);
-    }
-
     /**
      * Adds an items.Item to a accounts.users.User's draft inventory
      *
@@ -537,10 +529,10 @@ public class UserManager implements Serializable {
      */
     public List<User> getAllFrozenUsers() {
         List<User> allFrozenUsers = new ArrayList<>();
-        for (int i = 0; i < userList.size(); i++) {
-            if (userList.get(i).getIsFrozen()) {
+        for (User user : userList) {
+            if (user.getIsFrozen()) {
                 //if getIsFrozen returns true for frozen accounts
-                allFrozenUsers.add(userList.get(i));
+                allFrozenUsers.add(user);
             }
         }
         return allFrozenUsers;
@@ -553,10 +545,10 @@ public class UserManager implements Serializable {
      */
     public List<User> getAllPseudoFrozenUsers() {
         List<User> possibleFrozenPeople = new ArrayList<>();
-        for (int i = 0; i < userList.size(); i++) {
-            if (userList.get(i).getIsPseudoFrozen()) {
+        for (User user : userList) {
+            if (user.getIsPseudoFrozen()) {
                 //if getIsFrozen returns true for frozen accounts
-                possibleFrozenPeople.add(userList.get(i));
+                possibleFrozenPeople.add(user);
             }
         }
         return possibleFrozenPeople;
