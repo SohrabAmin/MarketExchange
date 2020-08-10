@@ -121,7 +121,7 @@ public class WishlistManager implements UserMainMenuOptions {
         }
         System.out.print("Please enter the description of item or 'back' to go back to the main menu.\n");
         String description = sc.nextLine();
-        if (name.equals("back")) {
+        if (description.equals("back")) {
             return "back";
         }
         System.out.print("Please choose the category of item by typing the number or 'back' to go back to the main menu.\n");
@@ -132,7 +132,7 @@ public class WishlistManager implements UserMainMenuOptions {
 
         String category = "Undefined";
         while (category.equals("Undefined")) {
-            if (name.equals("back")) {
+            if (ID.equals("back")) {
                 return "back";
             } else if (ID.equals("1")) {
                 category = "Electronics";
@@ -146,16 +146,12 @@ public class WishlistManager implements UserMainMenuOptions {
                 category = "Books";
             } else if (ID.equals("6")) {
                 category = "Home and Kitchen supplies";
-
             } else if (ID.equals("7")) {
                 category = "Clothing";
-
             } else if (ID.equals("8")) {
                 category = "Movies, music and TV";
-
             } else if (ID.equals("9")) {
                 category = "Office Supplies";
-
             } else if (ID.equals("10")) {
                 category = "Gaming";
             } else {
