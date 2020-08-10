@@ -5,8 +5,8 @@ import items.Item;
 import java.util.Calendar;
 
 /**
- * Constructs a transactions.OneWay requests.TradeRequest, that a accounts.users.User can send to another accounts.users.User if the want to initiated a transactions.Transaction. Notice this difference from a transactions.Transaction, as
- * the system does not create an instance of transactions.Transaction unless the corresponding requests.TradeRequest has been approved by the accounts.users.User receiving the requests.TradeRequest. Notice we
+ * Constructs a transactions.OneWay requests.TradeRequest, that a User can send to another User if the want to initiated a transactions.Transaction. Notice this difference from a transactions.Transaction, as
+ * the system does not create an instance of transactions.Transaction unless the corresponding requests.TradeRequest has been approved by the User receiving the requests.TradeRequest. Notice we
  * assuming noMeeting Transactions are permanent, as it's illogical to "return" and emailed item.
  */
 public class TypeOneRequest extends TradeRequest {
@@ -18,9 +18,9 @@ public class TypeOneRequest extends TradeRequest {
     private boolean monetized;
 
     /**
-     * Constructs a transactions.OneWay requests.TradeRequest instance. This class is instantiated by the accounts.users.User that attempts to initiate the transactions.Transaction, and should be stored within the receiving accounts.users.User's
-     * pendingRequest. If the receiving accounts.users.User accepts the conditions of the transactions.Transaction, they may accept the requests.TradeRequest, and an instance of transactions.Transaction is created.
-     * @param user1 The accounts.users.User who initiated the requests.TradeRequest
+     * Constructs a transactions.OneWay requests.TradeRequest instance. This class is instantiated by the User that attempts to initiate the transactions.Transaction, and should be stored within the receiving User's
+     * pendingRequest. If the receiving User accepts the conditions of the transactions.Transaction, they may accept the requests.TradeRequest, and an instance of transactions.Transaction is created.
+     * @param user1 The User who initiated the requests.TradeRequest
      * @param item The items.Item User1 currently wants.
      * @param message A String representation of any message user1 may want to send user2.
      * @param temp A boolean representing if the requests.TradeRequest will be temp or not.
@@ -35,23 +35,23 @@ public class TypeOneRequest extends TradeRequest {
         this.monetized = monetized;
     }
     /**
-     * Gets the accounts.users.User who initiates the requests.TypeOneRequest
-     * @return accounts.users.User that initiated the requests.TypeOneRequest
+     * Gets the User who initiates the requests.TypeOneRequest
+     * @return User that initiated the requests.TypeOneRequest
      */
     public User getFirstUser() {
         return this.user1;
     }
 
     /**
-     * Gets the accounts.users.User who receives the requests.TypeTwoRequest
-     * @return accounts.users.User that received requests.TypeTwoRequest
+     * Gets the User who receives the requests.TypeTwoRequest
+     * @return User that received requests.TypeTwoRequest
      */
     public User getSecondUser() {
         return this.user2;
     }
 
     /**
-     * Gets the items.Item that the accounts.users.User initiating the requests.TradeRequest (user1) wants from another accounts.users.User (user2).
+     * Gets the items.Item that the User initiating the requests.TradeRequest (user1) wants from another User (user2).
      * @return items.Item that user1 wants from user2
      */
     public Item getItem() {

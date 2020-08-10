@@ -13,11 +13,11 @@ import currency.*;
 
 public class InventoryManager implements UserMainMenuOptions {
     /**
-     * Prints out the accounts.users.User user's inventory; also calls accounts.users.UserManager to remove inventory Items upon user's request
-     *  @param user     the accounts.users.User that wants to see their inventory
-     * @param allUsers the accounts.users.UserManager which stores the accounts.users.User user
+     * Prints out the User user's inventory; also calls UserManager to remove inventory Items upon user's request
+     *  @param user     the User that wants to see their inventory
+     * @param allUsers the UserManager which stores the User user
      * @param currencyManager
-     * @return null if the current menu is to be reprinted; accounts.users.User user if the user is to be redirected to the main menu;
+     * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
      * String "exit" if the user is to be logged out.
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
@@ -35,7 +35,7 @@ public class InventoryManager implements UserMainMenuOptions {
             System.out.println("\uD83D\uDCE6 " + (i + 1) + " . " + in.get(i).getName());
         }
         Scanner sc = new Scanner(System.in);
-        //asks if the accounts.users.User wants to remove an item from their wishlist
+        //asks if the User wants to remove an item from their wishlist
         System.out.println("If you would like to remove an item, please enter the ID of the item you would like to remove " +
                 "or type 'back'");
         Object input = sc.nextLine();

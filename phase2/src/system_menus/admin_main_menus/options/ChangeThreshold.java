@@ -20,7 +20,7 @@ public class ChangeThreshold implements AdminMainMenuOptions {
      * Changes the lentMinusBorrowedThreshold which dictates how much more a user has to have lent than borrowed,
      * before trading. The threshold change affects all Users in the system.
      *
-     * @param allUsers  changes LentMinusBorrowedThreshold variable in the system's accounts.users.UserManager
+     * @param allUsers  changes LentMinusBorrowedThreshold variable in the system's UserManager
      * @param allAdmins changes LentMinusBorrowedThreshold variable in the system's accounts.admins.AdminManager
      * @param admin the current accounts.admins.Admin logged into the system
      * @param allItems items.ItemManager which holds the system inventory

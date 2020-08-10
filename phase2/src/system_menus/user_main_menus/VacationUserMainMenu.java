@@ -20,20 +20,20 @@ import java.util.logging.Logger;
 public class VacationUserMainMenu implements DifferentUserMainMenu {
 
     /**
-     * Displays the main menu for a accounts.users.User on vacation. Users on vacation can either stay on vacation or declare they have
+     * Displays the main menu for a User on vacation. Users on vacation can either stay on vacation or declare they have
      * returned from vacation, in which case their inventory Items are restored and they can participate in the trade
      * system again.
      *
-     * @param user             accounts.users.User currently logged into the system
+     * @param user             User currently logged into the system
      * @param allItems         The instance of items.ItemManager
      * @param allTradeRequests The instance of requests.TradeRequestManager
-     * @param allUsers         The instance of accounts.users.UserManager
+     * @param allUsers         The instance of UserManager
      * @param allMeetings      The instance of meetings.MeetingManager
      * @param allTransactions  The instance of transactions.TransactionManager
      * @param allAdmins        The instance of accounts.admins.AdminManager
      * @param undoLogger       Logger that logs actions in the system
-     * @param allUserMessages  The instance of accounts.users.UserMessageManager
-     * @return null if the current menu is to be reprinted; accounts.users.User user if the user is to be redirected to the main menu;
+     * @param allUserMessages  The instance of UserMessageManager
+     * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
      * String "exit" if the user is to be logged out.
      */
     public Object mainMenu(User user, ItemManager allItems, TradeRequestManager allTradeRequests,

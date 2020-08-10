@@ -26,9 +26,9 @@ public class OneWay extends Transaction implements Serializable {
     private final Item item;
 
     /**
-     * Constructor for transactions.OneWay. Requires a borrower of type accounts.users.User, an items.Item for the accounts.users.User to attain, and a boolean temp which specifies if transactions.OneWay is temporary.
+     * Constructor for transactions.OneWay. Requires a borrower of type User, an items.Item for the User to attain, and a boolean temp which specifies if transactions.OneWay is temporary.
      *
-     * @param user1 The accounts.users.User that intends to borrow an item from another accounts.users.User.
+     * @param user1 The User that intends to borrow an item from another User.
      * @param item     The items.Item the borrower intends to attain.
      * @param temp     If the transactions.OneWay is temporary or not.
      */
@@ -49,7 +49,7 @@ public class OneWay extends Transaction implements Serializable {
     }
 
     /**
-     * Getter for the lender, or the accounts.users.User giving an items.Item to another accounts.users.User.
+     * Getter for the lender, or the User giving an items.Item to another User.
      *
      * @return The lender of a given transactions.OneWay.
      */
@@ -58,7 +58,7 @@ public class OneWay extends Transaction implements Serializable {
     }
 
     /**
-     * Setter for the lender, or the accounts.users.User giving an items.Item to another accounts.users.User.
+     * Setter for the lender, or the User giving an items.Item to another User.
      *
      * @return The lender of a given transactions.OneWay.
      */

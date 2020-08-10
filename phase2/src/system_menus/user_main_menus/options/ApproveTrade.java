@@ -34,14 +34,14 @@ public class ApproveTrade implements UserMainMenuOptions {
 
 
     /**
-     * Displays accounts.users.User user's pending requests and deals with approving and rejecting any pending Trade Requests.
+     * Displays User user's pending requests and deals with approving and rejecting any pending Trade Requests.
      *
-     * @param user            accounts.users.User that wishes to view and approve or reject their pending Trade requests
-     * @param allUsers        accounts.users.UserManager that stores all Users
+     * @param user            User that wishes to view and approve or reject their pending Trade requests
+     * @param allUsers        UserManager that stores all Users
      * @param allMeetings     meetings.MeetingManager that deals with creating meetings
      * @param allTransactions transactions.TransactionManager that deals with the System's Transactions
      * @param currencyManager
-     * @return null if the current menu is to be reprinted; accounts.users.User user if the user is to be redirected to the main menu;
+     * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
      * String "exit" if the user is to be logged out.
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
@@ -688,11 +688,11 @@ public class ApproveTrade implements UserMainMenuOptions {
         }
 
     /**
-     * Helper function. If accounts.users.User user rejects the trade, it will remove the Trade Request from the user's pending
+     * Helper function. If User user rejects the trade, it will remove the Trade Request from the user's pending
      * request list.
      *
-     * @param user     the accounts.users.User that rejected the trade and wishes to have it removed from their pending requests
-     * @param allUsers accounts.users.UserManager that contains accounts.users.User user
+     * @param user     the User that rejected the trade and wishes to have it removed from their pending requests
+     * @param allUsers UserManager that contains User user
      * @param request  the Trade Request that is to be rejected and removed
      */
     public void rejectTrade(User user, UserManager allUsers, TradeRequest request) {
@@ -701,7 +701,7 @@ public class ApproveTrade implements UserMainMenuOptions {
     }
 
     /**
-     * Initiates a meetings.Meeting by asking the accounts.users.User for a proposed date, time and location for the meeting.
+     * Initiates a meetings.Meeting by asking the User for a proposed date, time and location for the meeting.
      *
      * @param allMeetings meetings.MeetingManager that deals with creating meetings
      * @return returns meetings.Meeting object containing all information of the proposed meeting

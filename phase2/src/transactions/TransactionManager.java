@@ -47,8 +47,8 @@ public class TransactionManager implements Serializable {
      * 4: Cancelled.
      * Notice by updating the tradeStatus the instance of transactions.Transaction is being moved to a new attribute list within transactions.TransactionManager.
      * finalizedMeeting implies the initialMeeting has been set.
-     * pendingSecondExchange means the first exchange was successful, but the accounts.users.User(s) must return their items.Item a month after the initialMeeting.
-     * Cancelled implies one of the following: accounts.users.User(s) did not show up to the meetings.Meeting or accounts.users.User(s) altered
+     * pendingSecondExchange means the first exchange was successful, but the User(s) must return their items.Item a month after the initialMeeting.
+     * Cancelled implies one of the following: User(s) did not show up to the meetings.Meeting or User(s) altered
      * meeting too many times, and completed means the transactions.Transaction was successful, and the items.Item(s) have been officially swapped.
      * Completed means either the finalizedMeeting had occurred (for permanent transactions.Transaction), or the secondExchange has occurred.
      *  @param itemManager Class that manages Items.
@@ -148,7 +148,7 @@ public class TransactionManager implements Serializable {
      * Pending implies the transactions.Transaction is in progress.
      *
      * @param transaction The specified transactions.Transaction that has been created.
-     * @param userManager The instance of accounts.users.UserManager.
+     * @param userManager The instance of UserManager.
      */
     public void addToPendingTransactions(Transaction transaction, UserManager userManager,
                                          CurrencyManager currencyManager) {
@@ -185,7 +185,7 @@ public class TransactionManager implements Serializable {
     /**
      * Executes the back-end results of a transactions.Transaction being cancelled. A transactions.Transaction being cancelled can result in being frozen (unable to participate in trading).
      *
-     * @param userManager The instance of accounts.users.UserManager.
+     * @param userManager The instance of UserManager.
      * @param transaction The given instance of transactions.Transaction.
      */
     public void handleCancelledTrade(AdminManager adminManager, UserManager userManager, Transaction transaction,
@@ -245,7 +245,7 @@ public class TransactionManager implements Serializable {
     /**
      * Handles the back-end completion of a temporary transactions.Transaction. Notice the second exchange is returning objects back to original owner. Only called in updateTransactionStatus.
      *
-     * @param userManager The instance of accounts.users.UserManager.
+     * @param userManager The instance of UserManager.
      * @param transaction The given temporary transactions.Transaction.
      * @param itemManager The instance of items.ItemManager.
      */
@@ -306,9 +306,9 @@ public class TransactionManager implements Serializable {
     }
 
     /**
-     * Handles the back-end completion of a temporary transactions.Transaction. Notice the first exchange is giving items.Item(s) to the accounts.users.User(s). Only called in updateTransactionStatus.
+     * Handles the back-end completion of a temporary transactions.Transaction. Notice the first exchange is giving items.Item(s) to the User(s). Only called in updateTransactionStatus.
      *
-     * @param userManager The instance of accounts.users.UserManager.
+     * @param userManager The instance of UserManager.
      * @param transaction The given temporary transactions.Transaction.
      * @param itemManager The instance of items.ItemManager.
      */
@@ -374,7 +374,7 @@ public class TransactionManager implements Serializable {
     /**
      * Handles the back-end results of a permanent transactions.Transaction occurring. This is only called by updateTransactionStatus.
      *
-     * @param userManager The instance of accounts.users.UserManager.
+     * @param userManager The instance of UserManager.
      * @param itemManager The instance of items.ItemManager.
      * @param transaction The given temporary transactions.Transaction.
      */

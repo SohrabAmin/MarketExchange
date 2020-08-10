@@ -91,7 +91,7 @@ public class AdminManager implements Serializable {
     }
 
     /**
-     * Getter for the threshold that dictates the number of transactions any one accounts.users.User can conduct in one week
+     * Getter for the threshold that dictates the number of transactions any one User can conduct in one week
      *
      * @return current threshold
      */
@@ -100,7 +100,7 @@ public class AdminManager implements Serializable {
     }
 
     /**
-     * Setter for the threshold that dictates the number of transactions any one accounts.users.User can conduct in one week; only an
+     * Setter for the threshold that dictates the number of transactions any one User can conduct in one week; only an
      * accounts.admins.Admin should change this threshold
      *
      * @param weeklyTransactionLimit new threshold
@@ -110,7 +110,7 @@ public class AdminManager implements Serializable {
     }
 
     /**
-     * Getter for the threshold that dictates how many transactions a accounts.users.User can leave incomplete before their account is
+     * Getter for the threshold that dictates how many transactions a User can leave incomplete before their account is
      * frozen
      *
      * @return current threshold
@@ -120,7 +120,7 @@ public class AdminManager implements Serializable {
     }
 
     /**
-     * Setter for the threshold that dictates how many transactions a accounts.users.User can leave incomplete before their account is
+     * Setter for the threshold that dictates how many transactions a User can leave incomplete before their account is
      * frozen
      *
      * @param incompleteTransactionLimit new threshold
@@ -132,16 +132,16 @@ public class AdminManager implements Serializable {
     /**
      * Returns a list of all the Users in frozenRequest.
      *
-     * @return List<accounts.users.User> returns list of Users in frozen Request
+     * @return List<User> returns list of Users in frozen Request
      */
     public List<User> getFrozenRequests() {
         return frozenRequests;
     }
 
     /**
-     * Adds the accounts.users.User requesting to be unfrozen to the list of frozenRequests
+     * Adds the User requesting to be unfrozen to the list of frozenRequests
      *
-     * @param user the accounts.users.User requesting to be unfrozen
+     * @param user the User requesting to be unfrozen
      */
     public void addFrozenRequest(User user) {
         frozenRequests.add(user);
@@ -150,7 +150,7 @@ public class AdminManager implements Serializable {
     /**
      * Removes the user from the frozenRequests list
      *
-     * @param user the accounts.users.User that has been removed from the list of frozenRequests
+     * @param user the User that has been removed from the list of frozenRequests
      */
     public void removeFromFrozenRequest(User user) {
         frozenRequests.remove(user);

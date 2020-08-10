@@ -15,12 +15,12 @@ import java.util.logging.Logger;
 public class NotifyAdminOfUnfreezeRequest implements UserMainMenuOptions {
 
     /**
-     * Notifies the accounts.admins.Admin of a Request to Unfreeze from accounts.users.User user.
+     * Notifies the accounts.admins.Admin of a Request to Unfreeze from User user.
      *
      * @param user      frozen user sending the request to admin to be unfrozen
      * @param allAdmins contains the method for adding frozen requests
      * @param currencyManager
-     * @return returns accounts.users.User so that they can be redirected to the main menu
+     * @return returns User so that they can be redirected to the main menu
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,

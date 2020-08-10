@@ -11,10 +11,10 @@ import currency.*;
 import system_menus.admin_main_menus.options.*;
 import system_menus.user_main_menus.options.*;
 
-/** Constructs a transactions.OneWayMonetized requests.TradeRequest, that a accounts.users.User can send to another
- * accounts.users.User if they want to initiate a transactions.Transaction. Notice this difference from a transactions.
+/** Constructs a transactions.OneWayMonetized requests.TradeRequest, that a User can send to another
+ * User if they want to initiate a transactions.Transaction. Notice this difference from a transactions.
  * Transaction, as the system does not create an instance of transactions.Transaction unless the corresponding
- * requests.TradeRequest has been approved by the accounts.users.User receiving the requests.TradeRequest. Also
+ * requests.TradeRequest has been approved by the User receiving the requests.TradeRequest. Also
  * Notice that this type of transactions.Transaction will involve in-app currency, which distinguishes it from a
  * transactions.OneWay. Notice we are assuming noMeeting Transactions are permanent, as it's illogical to "return"
  * and emailed item.
@@ -33,7 +33,7 @@ public class OneWayMonetized extends OneWay {
      * Constructs a transactions.OneWayMonetized object. This is the subclass of OneWayRequest, as it contains all attributes,
      * yet has an additional cost attribute, depending of if the transactions.Transaction is permanent or temporary. If the transactions.Transaction will
      * be temporary, then there is a rentDuration attribute that represents the amount of time the owner would like to rent out the items.Item.
-     * @param user1 The accounts.users.User who initiated the requests.TradeRequest
+     * @param user1 The User who initiated the requests.TradeRequest
      * @param item The items.Item User1 currently wants
      * @param temp A boolean representing if the requests.TradeRequest will be temp or not.
      * @param virtual A boolean that determines the requests.TradeRequest will have no meeting (true: This transactions.

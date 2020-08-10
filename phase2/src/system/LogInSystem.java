@@ -12,7 +12,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 /**
- * This is the initial screen. It will ask the user to input whether or not the user is an AdminUser or accounts.users.User. It
+ * This is the initial screen. It will ask the user to input whether or not the user is an AdminUser or User. It
  * will then redirect it to to the correct authenticate method to authenticate the attempted login or signup.
  */
 public class LogInSystem {
@@ -67,17 +67,17 @@ public class LogInSystem {
     }
 
     /**
-     * Method authenticator prompts the accounts.users.User to either login or signup for an accounts.Account; proceeds to prompt accounts.users.User for
-     * username and password. If they login, authenticator will check the list of Users stored in accounts.users.UserManager allUsers
+     * Method authenticator prompts the User to either login or signup for an accounts.Account; proceeds to prompt User for
+     * username and password. If they login, authenticator will check the list of Users stored in UserManager allUsers
      * and will return the user to system.TradeSystem so that they can log in and see main menu if the credentials are correct
-     * and accounts.users.User exists. Else, it will prompt them to log in or sign up again. If they sign up, it will create a new
-     * accounts.users.User which will be added to the system and returned to system.TradeSystem so they can log in and see main menu. If
+     * and User exists. Else, it will prompt them to log in or sign up again. If they sign up, it will create a new
+     * User which will be added to the system and returned to system.TradeSystem so they can log in and see main menu. If
      * username exists, it will prompt to log in or sign up again.
      *
-     * @param allUsers accounts.users.UserManager object which stores all the Users in the system
-     * @return depending on what the accounts.users.User inputs it will return different objects
+     * @param allUsers UserManager object which stores all the Users in the system
+     * @return depending on what the User inputs it will return different objects
      * returns String "exit" to tell system.TradeSystem.run() to stop trying to log in and exit the system
-     * returns accounts.users.User object to tell system.TradeSystem.run() to prompt main menu for the returned accounts.users.User
+     * returns User object to tell system.TradeSystem.run() to prompt main menu for the returned User
      */
     public Object userAuthenticator(UserManager allUsers) {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -111,10 +111,10 @@ public class LogInSystem {
                     if (input.equals("exit")) {
                         return input;
                     }
-                    //checks to see if the accounts.users.User exists in the System by checking it against
-                    //the list of accounts.users in accounts.users.UserManager allUsers by comparing username and passwords against
+                    //checks to see if the User exists in the System by checking it against
+                    //the list of accounts.users in UserManager allUsers by comparing username and passwords against
                     //the inputted username and password
-                    //if credentials check out, it will return the accounts.users.User
+                    //if credentials check out, it will return the User
                     for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
                         if (allUsers.getAllUsers().get(i).getName().equals(temp.get(0)))
                             if (allUsers.getAllUsers().get(i).getPassword().equals(temp.get(1))) {

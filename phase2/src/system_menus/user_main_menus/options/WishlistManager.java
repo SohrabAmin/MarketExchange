@@ -15,15 +15,15 @@ import currency.*;
 public class WishlistManager implements UserMainMenuOptions {
 
     /**
-     * Prints out the wishlist of the accounts.users.User user showing the name and description of the items. Allows user to edit
+     * Prints out the wishlist of the User user showing the name and description of the items. Allows user to edit
      * their wishlist by adding or removing items.
      *
-     * @param user     the accounts.users.User that is requesting to see/edit their wishlist.
-     * @param allUsers accounts.users.UserManager which stores the accounts.users.User user.
+     * @param user     the User that is requesting to see/edit their wishlist.
+     * @param allUsers UserManager which stores the User user.
      * @param currencyManager
-     * @return depending on what the accounts.users.User inputs it will return different objects
+     * @return depending on what the User inputs it will return different objects
      * returns null to tell mainmenu() to call wishlist() again
-     * returns String "back" to tell mainmenu() to prompt main menu again so accounts.users.User can choose another
+     * returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
      * main menu option
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
@@ -67,19 +67,19 @@ public class WishlistManager implements UserMainMenuOptions {
     }
 
     /**
-     * Deals with removing a new item to the accounts.users.User's wishlist. Prompts user for the item they want to remove and
+     * Deals with removing a new item to the User's wishlist. Prompts user for the item they want to remove and
      * removes it
      *
-     * @param user     the accounts.users.User requesting to remove an item from their wishlist
-     * @param allUsers accounts.users.UserManager which stores all Users
-     * @return depending on what the accounts.users.User inputs it will return different objects:
+     * @param user     the User requesting to remove an item from their wishlist
+     * @param allUsers UserManager which stores all Users
+     * @return depending on what the User inputs it will return different objects:
      * returns null to tell mainmenu() to call addtoWishlist() again
-     * returns String "back" to tell mainmenu() to prompt main menu again so accounts.users.User can choose another
+     * returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
      * main menu option
      */
     public Object removeFromWishlist(User user, UserManager allUsers) {
         Scanner sc = new Scanner(System.in);
-        //asks if the accounts.users.User wants to remove an item from their wishlist
+        //asks if the User wants to remove an item from their wishlist
         System.out.print("If you would like to remove an item, please enter the ID of the item you would like to remove " +
                 "or type 'back' to return to the main menu.\n");
         Object input = sc.nextLine();
@@ -101,14 +101,14 @@ public class WishlistManager implements UserMainMenuOptions {
     }
 
     /**
-     * Deals with adding a new item to the accounts.users.User's wishlist. Prompts user for details of the item
+     * Deals with adding a new item to the User's wishlist. Prompts user for details of the item
      * and sends a request to the accounts.admins.Admin for approval.
      *
-     * @param user     the accounts.users.User requesting to add a new item to their wishlist
-     * @param allUsers accounts.users.UserManager which stores all Users
-     * @return depending on what the accounts.users.User inputs it will return different objects:
+     * @param user     the User requesting to add a new item to their wishlist
+     * @param allUsers UserManager which stores all Users
+     * @return depending on what the User inputs it will return different objects:
      * returns null to tell mainmenu() to call addtoWishlist() again
-     * returns String "back" to tell mainmenu() to prompt main menu again so accounts.users.User can choose another
+     * returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
      * main menu option
      */
     public Object addToWishlist(User user, UserManager allUsers, Logger undoLogger) {

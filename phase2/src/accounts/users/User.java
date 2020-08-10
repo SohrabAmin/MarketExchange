@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * represent a accounts.users.User with name and password. store and getter for all values of a user.
+ * represent a User with name and password. store and getter for all values of a user.
  */
 
 public class User extends Account {
@@ -56,7 +56,7 @@ public class User extends Account {
     }
 
     /**
-     * constructs an instance of accounts.users.User with name and password
+     * constructs an instance of User with name and password
      *
      * @param name     of this user as a string
      * @param password of this user as a string
@@ -182,7 +182,7 @@ public class User extends Account {
     /**
      * getter for the top 3 most frequent trading partners
      *
-     * @return the 3 most frequent trading partners as a List of accounts.users.User
+     * @return the 3 most frequent trading partners as a List of User
      */
     public List<User> getTopTradingPartners() {
         return topTradingPartners;
@@ -254,8 +254,8 @@ public class User extends Account {
     }
 
     /**
-     * getter for if user is PseudoFrozen, A pseudo-frozen accounts.users.User is prevented from conducting transactions until
-     * an accounts.admins.Admin decides to either freeze the accounts.users.User or let the accounts.users.User slide
+     * getter for if user is PseudoFrozen, A pseudo-frozen User is prevented from conducting transactions until
+     * an accounts.admins.Admin decides to either freeze the User or let the User slide
      *
      * @return the status if this user is PseudoFrozen as a boolean
      */
@@ -273,38 +273,38 @@ public class User extends Account {
     }
 
     /**
-     * Getter for whether this accounts.users.User is on vacation. A accounts.users.User on vacation cannot participate in the trade system, and will
+     * Getter for whether this User is on vacation. A User on vacation cannot participate in the trade system, and will
      * not have their items listed in the system, until they return from vacation.
      *
-     * @return whether this accounts.users.User is on vacation
+     * @return whether this User is on vacation
      */
     public boolean getIsOnVacation() {
         return this.isOnVacation;
     }
 
     /**
-     * Setter for whether this accounts.users.User in on vacation. A accounts.users.User on vacation cannot participate in the trade system, and will
+     * Setter for whether this User in on vacation. A User on vacation cannot participate in the trade system, and will
      * not have their items listed in the system, until they return from vacation.
      *
-     * @param isOnVacation whether this accounts.users.User should be on vacation
+     * @param isOnVacation whether this User should be on vacation
      */
     public void setIsOnVacation(boolean isOnVacation) {
         this.isOnVacation = isOnVacation;
     }
 
     /**
-     * Getter for whether this accounts.users.User is a VIP
+     * Getter for whether this User is a VIP
      *
-     * @return whether this accounts.users.User is a VIP
+     * @return whether this User is a VIP
      */
     public boolean getIsVIP() {
         return this.isVIP;
     }
 
     /**
-     * Setter for whether this accounts.users.User is a VIP
+     * Setter for whether this User is a VIP
      *
-     * @param isVIP whether this accounts.users.User should be a VIP
+     * @param isVIP whether this User should be a VIP
      */
     public void setIsVIP(boolean isVIP) {
         // new VIP privilege: increase lent - borrowed ratio
@@ -352,18 +352,18 @@ public class User extends Account {
     }
 
     /**
-     * Getter for this accounts.users.User's list of trade-back Transactions
+     * Getter for this User's list of trade-back Transactions
      *
-     * @return This accounts.users.User's list of trade-back Transactions
+     * @return This User's list of trade-back Transactions
      */
     public List<Transaction> getSecondAgreedUponMeeting() {
         return this.secondAgreedUponMeetings;
     }
 
     /**
-     * Getter for this accounts.users.User's map of (week of the year) --> (Transactions requested)
+     * Getter for this User's map of (week of the year) --> (Transactions requested)
      *
-     * @return This accounts.users.User's map of (week of the year) --> (Transactions requested)
+     * @return This User's map of (week of the year) --> (Transactions requested)
      */
     public Map<Integer, List<TradeRequest>> getWeeklyRequestLimit() {
         return this.weeklyRequestLimit;
@@ -409,7 +409,7 @@ public class User extends Account {
 
     /**
      * Helper function to only be used by system_options.admin_main_menus.options.UndoAction.java. Returns the first items.Item that matches the name and description
-     * in the accounts.users.User's wishlist
+     * in the User's wishlist
      *
      * @param name        name of the items.Item
      * @param description description of the items.Item

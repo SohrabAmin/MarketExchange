@@ -14,9 +14,9 @@ import currency.*;
 public class PrintMostRecentTrades implements UserMainMenuOptions {
 
     /**
-     * Prints out the accounts.users.User user's most recent trades.
-     *  @param user     accounts.users.User that is requesting to see their most recent trades
-     * @param allUsers accounts.users.UserManager which stores all Users in the system
+     * Prints out the User user's most recent trades.
+     *  @param user     User that is requesting to see their most recent trades
+     * @param allUsers UserManager which stores all Users in the system
      * @param currencyManager
      * @return
      */

@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A class that manages the in-app currency of a accounts.users.User.
+ * A class that manages the in-app currency of a User.
  */
 public class CurrencyManager {
 
@@ -27,10 +27,10 @@ public class CurrencyManager {
     }
 
     /**
-     * Adds in-app currency to the accounts.users.User. It requires that the currency.CreditCard is not expired. It is assumed that the accounts.users.User always has enough to upload.
-     * @param user The accounts.users.User that is uploading in-app currency
+     * Adds in-app currency to the User. It requires that the currency.CreditCard is not expired. It is assumed that the User always has enough to upload.
+     * @param user The User that is uploading in-app currency
      * @param card The associated currency.CreditCard
-     * @param amount The amount the accounts.users.User would like to upload
+     * @param amount The amount the User would like to upload
      * @return a boolean. True: The funds were successfully added. False: The card is expired)
      */
     public boolean addFunds(User user, CreditCard card, double amount){
@@ -45,7 +45,7 @@ public class CurrencyManager {
      * Takes the appropriate amount of in-app currency from user1, and stores it. When the transactions.Transaction has been confirmed, the amount will be deposited into
      * user2's account. If the transactions.Transaction has been cancelled, the currency will be returned to user1.
      * @param trade The given transactions.OneWayMonetized request.
-     * @param userManager The instance of accounts.users.UserManager, to call getUser()
+     * @param userManager The instance of UserManager, to call getUser()
      */
     public void holdFunds(OneWayMonetized trade, UserManager userManager){
         this.inProgressSale.put(trade, trade.getCost());
@@ -56,7 +56,7 @@ public class CurrencyManager {
     /**
      * Returns the "held" currency into user1's account.
      * @param trade The given transactions.OneWayMonetized request.
-     * @param userManager The instance of accounts.users.UserManager, to call getUser()
+     * @param userManager The instance of UserManager, to call getUser()
      */
     public void reverseHold(OneWayMonetized trade, UserManager userManager){
         User user1 = userManager.getUser(trade.getFirstTrader());
@@ -67,7 +67,7 @@ public class CurrencyManager {
     /**
      * Deposits the "held" funds into user2's account
      * @param trade The given transactions.OneWayMonetized request.
-     * @param userManager The instance of accounts.users.UserManager, to call getUser()
+     * @param userManager The instance of UserManager, to call getUser()
      */
     public void completeSale(OneWayMonetized trade, UserManager userManager){
         User user2 = userManager.getUser(trade.getSecondTrader());

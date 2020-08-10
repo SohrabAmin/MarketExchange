@@ -16,15 +16,15 @@ import currency.*;
 public class ConfirmMeetings implements UserMainMenuOptions {
 
     /**
-     * Displays the pending transactions that the accounts.users.User user has. It will allow accounts.users to approve or edit the transactions
+     * Displays the pending transactions that the User user has. It will allow accounts.users to approve or edit the transactions
      * they currently have pending.
-     *  @param user            the accounts.users.User that wants to view their pending transactions
+     *  @param user            the User that wants to view their pending transactions
      * @param allItems        items.ItemManager that stores the system's inventory
-     * @param allUsers        accounts.users.UserManager that stores all the Users in the system
+     * @param allUsers        UserManager that stores all the Users in the system
      * @param allMeetings     meetings.MeetingManager that deals with the creation of meetings
      * @param allTransactions transactions.TransactionManager that stores all the information of all system transactions
      * @param currencyManager
-     * @return null if the current menu is to be reprinted; accounts.users.User user if the user is to be redirected to the main menu;
+     * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
      * String "exit" if the user is to be logged out.
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,

@@ -75,7 +75,7 @@ public class ReadWrite implements Serializable {
 
     /**
      * Deals with reading from the external file fileName and if it is not empty, it will populate the list
-     * of Users in accounts.users.UserManager um with the list of saved Users from the file. It will not do anything if it is empty.
+     * of Users in UserManager um with the list of saved Users from the file. It will not do anything if it is empty.
      *
      * @param fileName the name of the file the method is reading from
      * @throws IOException
@@ -138,11 +138,11 @@ public class ReadWrite implements Serializable {
     }
 
     /**
-     * Deals with reading from the external file fileName and if it is not empty, it will return the accounts.users.UserMessageManager
-     * object stored in fileName; if it is empty, it will return a new accounts.users.UserMessageManager.
+     * Deals with reading from the external file fileName and if it is not empty, it will return the UserMessageManager
+     * object stored in fileName; if it is empty, it will return a new UserMessageManager.
      *
      * @param fileName the name of the file the method is reading from
-     * @return returns an accounts.users.UserMessageManager object
+     * @return returns an UserMessageManager object
      * @throws IOException
      * @throws ClassNotFoundException
      */

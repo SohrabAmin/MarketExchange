@@ -24,9 +24,9 @@ public class TradeRequestManager implements Serializable {
     }
     /**
      * Adds an instance of requests.TradeRequest to one of three attributes in requests.TradeRequestManager: pending, confirmed or cancelled, depending on
-     * the accounts.users.User receiving the Trade Request's response. Also, adds to accounts.users.User's pendingRequests if request is not yet acted upon by receiving accounts.users.User.
+     * the User receiving the Trade Request's response. Also, adds to User's pendingRequests if request is not yet acted upon by receiving User.
      *
-     * @param userManager The instance of accounts.users.UserManager, to access addToPendingRequest.
+     * @param userManager The instance of UserManager, to access addToPendingRequest.
      * @param request     The given instance of requests.TradeRequest.
      */
     public void receiveTradeRequest(UserManager userManager, TradeRequest request) {
@@ -56,10 +56,10 @@ public class TradeRequestManager implements Serializable {
         this.pending.add(request);
     }
     /**
-     * Updates attribute list(s) (pending/denied/confirmed) depending on the wishes of the accounts.users.User receiving the requests.TradeRequest.
+     * Updates attribute list(s) (pending/denied/confirmed) depending on the wishes of the User receiving the requests.TradeRequest.
      *
      * @param userManager        The instance of userManager, required for accessing handleConfirmedRequest.
-     * @param request            The given requests.TradeRequest that the receiving accounts.users.User intends to act upon.
+     * @param request            The given requests.TradeRequest that the receiving User intends to act upon.
      * @param status             The status the system intends to give to this requests.TradeRequest.
      */
     public void updateRequestStatus(UserManager userManager, TradeRequest request, int status) {
@@ -82,9 +82,9 @@ public class TradeRequestManager implements Serializable {
         request.setStatus(status);
     }
     /**
-     * Accepts the requests.TradeRequest within a accounts.users.User's pendingList, creates an instance of transactions.Transaction.
+     * Accepts the requests.TradeRequest within a User's pendingList, creates an instance of transactions.Transaction.
      *
-     * @param userManager        The instance of accounts.users.UserManager.
+     * @param userManager        The instance of UserManager.
      * @param request            The status the system intends to give to this requests.TradeRequest.
      */
     public void handleRequestResponse( UserManager userManager, TradeRequest request) {

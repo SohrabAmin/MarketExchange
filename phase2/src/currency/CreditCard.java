@@ -5,7 +5,7 @@ import accounts.users.User;
 import java.util.Calendar;
 
 /**
- * Constructs a currency.CreditCard, that is used so a accounts.users.User can upload cash for in-app currency, so they can request a transactions.OneWayMonetized requests.TradeRequest.
+ * Constructs a currency.CreditCard, that is used so a User can upload cash for in-app currency, so they can request a transactions.OneWayMonetized requests.TradeRequest.
  */
 public class CreditCard {
 
@@ -17,10 +17,10 @@ public class CreditCard {
 
     /**
      * Constructs a credit card object. The constructor requires all relevant details about the card, in order to charge them.
-     * @param cardNumber a long of the accounts.users.User's currency.CreditCard's number
-     * @param cardName a String of the accounts.users.User's name on the currency.CreditCard
+     * @param cardNumber a long of the User's currency.CreditCard's number
+     * @param cardName a String of the User's name on the currency.CreditCard
      * @param expiration a Calender of the expiration date of the Card
-     * @param cardHolder the accounts.users.User who currently holds the currency.CreditCard
+     * @param cardHolder the User who currently holds the currency.CreditCard
      * @param CVV an int of the CVV of the currency.CreditCard
      */
     public CreditCard(long cardNumber, String cardName, Calendar expiration, User cardHolder, int CVV ){

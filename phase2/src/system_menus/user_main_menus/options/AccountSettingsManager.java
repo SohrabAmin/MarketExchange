@@ -13,13 +13,13 @@ import java.util.logging.Logger;
 public class AccountSettingsManager implements UserMainMenuOptions {
 
     /**
-     * Deals with changing the account settings of accounts.users.User-- they are able to change their username,
+     * Deals with changing the account settings of User-- they are able to change their username,
      * password and/or location.
      *
-     * @param user            the accounts.users.User who wants to change their account settings
-     * @param allUsers        accounts.users.UserManager which stores all the accounts.users in the system
+     * @param user            the User who wants to change their account settings
+     * @param allUsers        UserManager which stores all the accounts.users in the system
      * @param currencyManager
-     * @return null if the current menu is to be reprinted; accounts.users.User user if the user is to be redirected to the main menu;
+     * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
      * String "exit" if the user is to be logged out.
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
@@ -76,10 +76,10 @@ public class AccountSettingsManager implements UserMainMenuOptions {
     }
 
     /**
-     * Deals with changing the accounts.users.User user's location.
+     * Deals with changing the User user's location.
      *
-     * @param user the accounts.users.User that wants to change their location
-     * @return returns different objects depending on the accounts.users.User user's input
+     * @param user the User that wants to change their location
+     * @return returns different objects depending on the User user's input
      * returns "back" to return to the main menu
      * returns null to tell the accountSettings() to call locationChange() again
      * returns "account settings" to tell main menu to call accountSettings() again
@@ -122,10 +122,10 @@ public class AccountSettingsManager implements UserMainMenuOptions {
     }
 
     /**
-     * Deals with changing the accounts.users.User user's password.
+     * Deals with changing the User user's password.
      *
-     * @param user the accounts.users.User that wants to change their password
-     * @return returns different objects depending on the accounts.users.User user's input
+     * @param user the User that wants to change their password
+     * @return returns different objects depending on the User user's input
      * returns "back" to return to the main menu
      * returns null to tell the accountSettings() to call passwordChange() again
      * returns "account settings" to tell main menu to call accountSettings() again
@@ -158,11 +158,11 @@ public class AccountSettingsManager implements UserMainMenuOptions {
     }
 
     /**
-     * Deals with changing the accounts.users.User user's username.
+     * Deals with changing the User user's username.
      *
-     * @param user     the accounts.users.User that wants to change their username
-     * @param allUsers accounts.users.UserManager that stores all the accounts.users in the system
-     * @return returns different objects depending on the accounts.users.User user's input
+     * @param user     the User that wants to change their username
+     * @param allUsers UserManager that stores all the accounts.users in the system
+     * @return returns different objects depending on the User user's input
      * returns "back" to return to the main menu
      * returns null to tell the accountSettings() to call userNameChange() again
      * returns "account settings" to tell main menu to call accountSettings() again

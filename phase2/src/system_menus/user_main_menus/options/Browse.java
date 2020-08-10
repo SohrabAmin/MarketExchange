@@ -15,13 +15,13 @@ import currency.*;
 public class Browse implements UserMainMenuOptions {
 
     /**
-     * Allows accounts.users.User user to browse the System's inventory and add any of the items in the System's inventory to
+     * Allows User user to browse the System's inventory and add any of the items in the System's inventory to
      * their wishlist.
-     *  @param user     the accounts.users.User that wishes to browse the inventory and add items to their wishlist
+     *  @param user     the User that wishes to browse the inventory and add items to their wishlist
      * @param allItems the items.ItemManager that stores the system's inventory
-     * @param allUsers the accounts.users.UserManager that stores the accounts.users.User user
+     * @param allUsers the UserManager that stores the User user
      * @param currencyManager
-     * @return null if the current menu is to be reprinted; accounts.users.User user if the user is to be redirected to the main menu;
+     * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
      * String "exit" if the user is to be logged out.
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
@@ -75,9 +75,9 @@ public class Browse implements UserMainMenuOptions {
     /**
      * Prints out all items that we have in the program
      *
-     * @param user     the accounts.users.User that wants to see their inventory
+     * @param user     the User that wants to see their inventory
      * @param allItems stores all the items in the system
-     * @return returns a accounts.users.User which will prompt the main menu
+     * @return returns a User which will prompt the main menu
      */
 
     public List<Item> DisplayBrowse(User user, ItemManager allItems) {

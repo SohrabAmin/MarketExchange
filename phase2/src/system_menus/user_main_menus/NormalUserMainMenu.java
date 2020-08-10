@@ -34,13 +34,13 @@ public class NormalUserMainMenu implements DifferentUserMainMenu {
      * @param user             the user that is currently logged in to the system
      * @param allItems         items.ItemManager that stores the system's inventory
      * @param allTradeRequests requests.TradeRequestManager that stores all the Trade Requests in the system
-     * @param allUsers         accounts.users.UserManager that stores all the Users in the system
+     * @param allUsers         UserManager that stores all the Users in the system
      * @param allMeetings      meetings.MeetingManager that deals with the creation of meetings
      * @param allTransactions  transactions.TransactionManager that stores all the Transactions in the system
-     * @param allUserMessages  accounts.users.UserMessageManager which stores all the Users messages to accounts.admins.Admin
-     * @return depending on what the accounts.users.User inputs it will return different objects:
-     * returns accounts.users.User to system.TradeSystem() to either remain logged into the system and prompt mainMenu
-     * returns null to log out of the system and allow another accounts.users.User to log in
+     * @param allUserMessages  UserMessageManager which stores all the Users messages to accounts.admins.Admin
+     * @return depending on what the User inputs it will return different objects:
+     * returns User to system.TradeSystem() to either remain logged into the system and prompt mainMenu
+     * returns null to log out of the system and allow another User to log in
      * returns String "exit" to tell system.TradeSystem() to end the program and save all the data before
      * exiting the System
      */

@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 /**
  * Constructs a class that stores/manages the availability of Users. This will only be created when a ThreeWayRequest has been instantiated,
- * with all values in the HashMap set to "False". The accounts.users.User has to edit the days they available to exchange items at a meetings.Meeting.
+ * with all values in the HashMap set to "False". The User has to edit the days they available to exchange items at a meetings.Meeting.
  */
 public class AvailabilityChart {
 
@@ -31,7 +31,7 @@ public class AvailabilityChart {
     }
 
     /**
-     * Alters the values of the chart. This is called when a accounts.users.User wants to choose a day in which the are free to meet up (set the corresponding day to true).
+     * Alters the values of the chart. This is called when a User wants to choose a day in which the are free to meet up (set the corresponding day to true).
      * @param day an Integer representing the day in question.
      * @param available a boolean for whether they are free to meet up or not.
      */
@@ -40,7 +40,7 @@ public class AvailabilityChart {
     }
 
     /**
-     * Gets the current version of a accounts.users.User's chart.
+     * Gets the current version of a User's chart.
      * @return HashMap of chart (key: Integer, value: Boolean)
      */
     public HashMap <Integer, Boolean> getChart(){

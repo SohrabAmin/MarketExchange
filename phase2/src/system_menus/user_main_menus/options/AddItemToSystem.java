@@ -13,12 +13,12 @@ import currency.*;
 public class AddItemToSystem implements UserMainMenuOptions {
     /**
      * Deals with requesting to add a new item to the system's inventory. Prompts user for details of the item
-     * and sends a request to the accounts.admins.Admin for approval. Adds the item to the accounts.users.User's item history so they can
+     * and sends a request to the accounts.admins.Admin for approval. Adds the item to the User's item history so they can
      * view its current status.
-     *  @param user     the accounts.users.User requesting to add a new item to the system
-     * @param allUsers accounts.users.UserManager which stores all Users
+     *  @param user     the User requesting to add a new item to the system
+     * @param allUsers UserManager which stores all Users
      * @param currencyManager
-     * @return null if the current menu is to be reprinted; accounts.users.User user if the user is to be redirected to the main menu;
+     * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
      * String "exit" if the user is to be logged out.
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,

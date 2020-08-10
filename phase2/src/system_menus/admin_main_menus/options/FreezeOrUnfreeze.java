@@ -20,11 +20,11 @@ public class FreezeOrUnfreeze implements AdminMainMenuOptions {
     /**
      * Allows admin to either view unfreeze requests, freeze and unfreeze accounts.users in the system.
      *
-     * @param allUsers accounts.users.UserManager which stores all the accounts.users in the system
+     * @param allUsers UserManager which stores all the accounts.users in the system
      * @param admin the current accounts.admins.Admin logged into the system
      * @param allAdmins accounts.admins.AdminManager which holds all the Admins, FrozenRequests and Thresholds in the system
      * @param allItems items.ItemManager which holds the system inventory
-     * @param allUserMessages accounts.users.UserMessageManager which stores all the Users messages to accounts.admins.Admin
+     * @param allUserMessages UserMessageManager which stores all the Users messages to accounts.admins.Admin
      * @return depending on what the accounts.admins.Admin inputs it will return different objects:
      * returns null to tell mainmenu() to call execute() again
      * returns String "back" to tell mainmenu() to prompt main menu again so accounts.admins.Admin can choose another
@@ -65,10 +65,10 @@ public class FreezeOrUnfreeze implements AdminMainMenuOptions {
 
     /**
      * Allows admin to view unfreeze requests they have and allows them to unfreeze any of those Users if they so choose.
-     * If they unfreeze a accounts.users.User, it will remove their request from frozenRequests and change their status isPseudoFrozen and
+     * If they unfreeze a User, it will remove their request from frozenRequests and change their status isPseudoFrozen and
      * isFrozen to false.
      *
-     * @param allUsers accounts.users.UserManager which stores all the accounts.users in the system
+     * @param allUsers UserManager which stores all the accounts.users in the system
      * @param allAdmins Adminmanager which stores the FrozenRequests
      * @return depending on what the accounts.admins.Admin inputs it will return different objects:
      * returns null to tell mainmenu() to call system_options.admin_main_menus.options.FreezeOrUnfreeze() again
@@ -105,10 +105,10 @@ public class FreezeOrUnfreeze implements AdminMainMenuOptions {
     }
 
     /**
-     * Displays a list of all frozen and pseudo frozen Users in accounts.users.UserManager and prompts accounts.admins.Admin to input
-     * which accounts.users.User they wish to unfreeze and unfreezes those Users
+     * Displays a list of all frozen and pseudo frozen Users in UserManager and prompts accounts.admins.Admin to input
+     * which User they wish to unfreeze and unfreezes those Users
      *
-     * @param allUsers accounts.users.UserManager which stores all the Users in the system
+     * @param allUsers UserManager which stores all the Users in the system
      * @param allAdmins accounts.admins.AdminManager which stores the FrozenRequests
      * @return depending on what the accounts.admins.Admin inputs it will return different objects:
      * returns null to tell system_options.admin_main_menus.options.FreezeOrUnfreeze() to call Unfreeze() again
@@ -169,10 +169,10 @@ public class FreezeOrUnfreeze implements AdminMainMenuOptions {
     }
 
     /**
-     * Displays a list of all unfrozen and pseudo frozen Users in accounts.users.UserManager and prompts accounts.admins.Admin to input
-     * which accounts.users.User they wish to freeze and freezes those Users
+     * Displays a list of all unfrozen and pseudo frozen Users in UserManager and prompts accounts.admins.Admin to input
+     * which User they wish to freeze and freezes those Users
      *
-     * @param allUsers accounts.users.UserManager which stores all the Users in the system
+     * @param allUsers UserManager which stores all the Users in the system
      * @param allAdmins accounts.admins.AdminManager which stores the FrozenRequests
      * @return depending on what the accounts.admins.Admin inputs it will return different objects:
      * returns null to tell system_options.admin_main_menus.options.FreezeOrUnfreeze() to call Freeze() again

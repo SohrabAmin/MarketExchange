@@ -25,7 +25,7 @@ public class AddAdmin implements AdminMainMenuOptions {
      *
      * @param admin the current accounts.admins.Admin logged into the system
      * @param allAdmins accounts.admins.AdminManager which holds all the Admins, FrozenRequests and Thresholds in the system
-     * @param allUsers accounts.users.UserManager which holds all the Users in the system
+     * @param allUsers UserManager which holds all the Users in the system
      * @param allItems items.ItemManager which holds the system inventory
      * @return depending on what the accounts.admins.Admin inputs it will return different objects:
      * returns null to tell mainmenu() to call execute() again

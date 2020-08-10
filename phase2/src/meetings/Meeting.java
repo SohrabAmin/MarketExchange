@@ -144,7 +144,7 @@ public class Meeting {
     /**
      * Edits the number edits of of a user
      *
-     * @param user accounts.users.User who edited the meeting
+     * @param user User who edited the meeting
      * @param i    New number of edits associated with user
      */
     public void changeHistory(User user, int i) {
@@ -154,7 +154,7 @@ public class Meeting {
     /**
      * gets accounts.users edit history for meetings.Meeting
      *
-     * @param user accounts.users.User who edited meeting
+     * @param user User who edited meeting
      * @return number of times user has edited the meeting
      */
     public int geteditHistory(String user) {

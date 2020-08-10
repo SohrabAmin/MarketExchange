@@ -17,7 +17,7 @@ public class UserManager implements Serializable {
     private List<User> userList;
 
     /**
-     * Constructs the instance of accounts.users.UserManager with an empty list of Users
+     * Constructs the instance of UserManager with an empty list of Users
      */
 
     public UserManager() {
@@ -25,10 +25,10 @@ public class UserManager implements Serializable {
     }
 
     /**
-     * Creates a accounts.users.User and adds them to the list of all Users
+     * Creates a User and adds them to the list of all Users
      *
-     * @param newUserUsername new accounts.users.User's account username
-     * @param newUserPassword new accounts.users.User's account password
+     * @param newUserUsername new User's account username
+     * @param newUserPassword new User's account password
      */
     public void createUser(String newUserUsername, String newUserPassword) {
         User newUser = new User(newUserUsername, newUserPassword);
@@ -54,97 +54,97 @@ public class UserManager implements Serializable {
     }
 
     /**
-     * Freezes a accounts.users.User account
+     * Freezes a User account
      *
-     * @param user accounts.users.User account to be frozen
+     * @param user User account to be frozen
      */
     public void freeze(User user) {
         user.setIsFrozen(true);
     }
 
     /**
-     * Unfreezes a accounts.users.User account
+     * Unfreezes a User account
      *
-     * @param user accounts.users.User account to be unfrozen
+     * @param user User account to be unfrozen
      */
     public void unfreeze(User user) {
         user.setIsFrozen(false);
     }
 
     /**
-     * Pseudo-freezes a accounts.users.User account. A pseudo-frozen accounts.users.User is prevented from conducting transactions until an accounts.admins.Admin
-     * decides to either freeze the accounts.users.User or let the accounts.users.User slide
+     * Pseudo-freezes a User account. A pseudo-frozen User is prevented from conducting transactions until an accounts.admins.Admin
+     * decides to either freeze the User or let the User slide
      *
-     * @param user accounts.users.User account to be pseudo-frozen
+     * @param user User account to be pseudo-frozen
      */
     public void pseudoFreeze(User user) {
         user.setIsPseudoFrozen(true);
     }
 
     /**
-     * Un-pseudo-freezes a accounts.users.User account. A pseudo-frozen accounts.users.User is prevented from conducting transactions until an accounts.admins.Admin
-     * decides to either freeze the accounts.users.User or let the accounts.users.User slide
+     * Un-pseudo-freezes a User account. A pseudo-frozen User is prevented from conducting transactions until an accounts.admins.Admin
+     * decides to either freeze the User or let the User slide
      *
-     * @param user accounts.users.User account to be un-pseudo-frozen
+     * @param user User account to be un-pseudo-frozen
      */
     public void unPseudoFreeze(User user) {
         user.setIsPseudoFrozen(false);
     }
 
     /**
-     * Adds an items.Item to a accounts.users.User's draft inventory
+     * Adds an items.Item to a User's draft inventory
      *
-     * @param user accounts.users.User whose draft inventory will be added to
-     * @param item items.Item to be added to this accounts.users.User's draft inventory
+     * @param user User whose draft inventory will be added to
+     * @param item items.Item to be added to this User's draft inventory
      */
     public void addToDraftInventory(User user, Item item) {
         user.getDraftInventory().add(item);
     }
 
     /**
-     * Adds an item to a accounts.users.User's inventory
+     * Adds an item to a User's inventory
      *
-     * @param user accounts.users.User whose inventory will be added to
-     * @param item items.Item to be added to this accounts.users.User's inventory
+     * @param user User whose inventory will be added to
+     * @param item items.Item to be added to this User's inventory
      */
     public void addToInventory(User user, Item item) {
         user.getInventory().add(item);
     }
 
     /**
-     * Removes an items.Item from a accounts.users.User's inventory
+     * Removes an items.Item from a User's inventory
      *
-     * @param user accounts.users.User whose inventory will have an items.Item removed from it
-     * @param item items.Item to be removed from this accounts.users.User's inventory
+     * @param user User whose inventory will have an items.Item removed from it
+     * @param item items.Item to be removed from this User's inventory
      */
     public void removeFromInventory(User user, Item item) {
         user.getInventory().remove(item);
     }
 
     /**
-     * Adds an items.Item to a accounts.users.User's wishlist
+     * Adds an items.Item to a User's wishlist
      *
-     * @param user accounts.users.User whose wishlist will be added to
-     * @param item items.Item to be added to this accounts.users.User's wishlist
+     * @param user User whose wishlist will be added to
+     * @param item items.Item to be added to this User's wishlist
      */
     public void addToWishlist(User user, Item item) {
         user.getWishlist().add(item);
     }
 
     /**
-     * Removes an items.Item from a accounts.users.User's wishlist
+     * Removes an items.Item from a User's wishlist
      *
-     * @param user accounts.users.User whose wishlist will have an items.Item removed from it
-     * @param item items.Item to be removed from this accounts.users.User's wishlist
+     * @param user User whose wishlist will have an items.Item removed from it
+     * @param item items.Item to be removed from this User's wishlist
      */
     public void removeFromWishlist(User user, Item item) {
         user.getWishlist().remove(item);
     }
 
     /**
-     * Moves an items.Item from a accounts.users.User's draft inventory to their inventory (after an accounts.admins.Admin approves this items.Item)
+     * Moves an items.Item from a User's draft inventory to their inventory (after an accounts.admins.Admin approves this items.Item)
      *
-     * @param user accounts.users.User who will have a draft inventory items.Item approved
+     * @param user User who will have a draft inventory items.Item approved
      * @param item items.Item approved by an accounts.admins.Admin
      */
     public void approveDraftInventoryItem(User user, Item item, ItemManager allItems) {
@@ -155,9 +155,9 @@ public class UserManager implements Serializable {
     }
 
     /**
-     * Removes an items.Item from a accounts.users.User's draft inventory (after an accounts.admins.Admin rejects this items.Item)
+     * Removes an items.Item from a User's draft inventory (after an accounts.admins.Admin rejects this items.Item)
      *
-     * @param user accounts.users.User who will have a draft inventory items.Item rejected
+     * @param user User who will have a draft inventory items.Item rejected
      * @param item items.Item rejected by an accounts.admins.Admin
      */
     public void rejectDraftInventoryItem(User user, Item item) {
@@ -166,20 +166,20 @@ public class UserManager implements Serializable {
     }
 
     /**
-     * Adds an items.Item to a accounts.users.User's itemHistory (list of items that have been submitted to the system)
+     * Adds an items.Item to a User's itemHistory (list of items that have been submitted to the system)
      *
-     * @param user accounts.users.User whose itemHistory will be added to
-     * @param item items.Item to add to this accounts.users.User's itemHistory
+     * @param user User whose itemHistory will be added to
+     * @param item items.Item to add to this User's itemHistory
      */
     public void addToItemHistory(User user, Item item) {
         user.getItemHistory().put(item, "Pending");
     }
 
     /**
-     * Changes an items.Item's status (either "Pending", "Approved", or "Rejected") in a accounts.users.User's itemHistory (list of items
+     * Changes an items.Item's status (either "Pending", "Approved", or "Rejected") in a User's itemHistory (list of items
      * that have been submitted to the system). Only an accounts.admins.Admin should change an items.Item's status
      *
-     * @param user   accounts.users.User whose items.Item will have its status changed
+     * @param user   User whose items.Item will have its status changed
      * @param item   items.Item whose status is to be changed
      * @param status this items.Item's new status
      */
@@ -188,13 +188,13 @@ public class UserManager implements Serializable {
     }
 
     /**
-     * Checks the number of Transactions a accounts.users.User has requested in a week against the weekly transactions.Transaction limit
+     * Checks the number of Transactions a User has requested in a week against the weekly transactions.Transaction limit
      *
      * @param adminManager The instance of accounts.admins.AdminManager
-     * @param user         accounts.users.User whose number of requested Transactions in a week will be checked against the weekly
+     * @param user         User whose number of requested Transactions in a week will be checked against the weekly
      *                     transactions.Transaction limit
      * @param date         A Calendar representing the date, in the week in question
-     * @return True if and only if the number of Transactions this accounts.users.User requested in the given week is less than the
+     * @return True if and only if the number of Transactions this User requested in the given week is less than the
      * weekly transaction limit
      */
     public boolean checkWeeklyRequestLimit(AdminManager adminManager, User user, Calendar date) {
@@ -205,10 +205,10 @@ public class UserManager implements Serializable {
     }
 
     /**
-     * Adds a transactions.Transaction to a accounts.users.User's list of Transactions requested in a given week
+     * Adds a transactions.Transaction to a User's list of Transactions requested in a given week
      *
-     * @param user    accounts.users.User whose list of Transactions requested in a given week will be added to
-     * @param request requests.TradeRequest to add to this accounts.users.User's list of Transactions requested in a given week
+     * @param user    User whose list of Transactions requested in a given week will be added to
+     * @param request requests.TradeRequest to add to this User's list of Transactions requested in a given week
      */
     public void addToWeeklyRequestLimit(User user, TradeRequest request) {
         Integer temp = request.getDate().get(Calendar.WEEK_OF_YEAR);
@@ -216,112 +216,112 @@ public class UserManager implements Serializable {
     }
 
     /**
-     * Adds a requests.TradeRequest to a accounts.users.User's list of outbound TradeRequests
+     * Adds a requests.TradeRequest to a User's list of outbound TradeRequests
      *
-     * @param user    accounts.users.User whose list of outbound TradeRequests will be added to
-     * @param request requests.TradeRequest to add to this accounts.users.User's list of outbound TradeRequests
+     * @param user    User whose list of outbound TradeRequests will be added to
+     * @param request requests.TradeRequest to add to this User's list of outbound TradeRequests
      */
     public void addToOutboundRequests(User user, TradeRequest request) {
         user.getOutboundRequests().add(request);
     }
 
     /**
-     * Removes a requests.TradeRequest from a accounts.users.User's list of outbound TradeRequests
+     * Removes a requests.TradeRequest from a User's list of outbound TradeRequests
      *
-     * @param user    accounts.users.User who will have a requests.TradeRequest removed from their list of outbound TradeRequests
-     * @param request requests.TradeRequest to remove from this accounts.users.User's list of outbound TradeRequests
+     * @param user    User who will have a requests.TradeRequest removed from their list of outbound TradeRequests
+     * @param request requests.TradeRequest to remove from this User's list of outbound TradeRequests
      */
     public void removeFromOutboundRequests(User user, TradeRequest request) {
         user.getOutboundRequests().remove(request);
     }
 
     /**
-     * Adds a requests.TradeRequest to a accounts.users.User's pending trade requests
+     * Adds a requests.TradeRequest to a User's pending trade requests
      *
-     * @param user    accounts.users.User who will receive a new requests.TradeRequest
-     * @param request requests.TradeRequest to be received by this accounts.users.User
+     * @param user    User who will receive a new requests.TradeRequest
+     * @param request requests.TradeRequest to be received by this User
      */
     public void addToPendingRequests(User user, TradeRequest request) {
         user.getPendingRequests().add(request);
     }
 
     /**
-     * Removes a requests.TradeRequest from a accounts.users.User's pending trade requests
+     * Removes a requests.TradeRequest from a User's pending trade requests
      *
-     * @param user    accounts.users.User who will have a requests.TradeRequest removed from their pending trade requests
-     * @param request requests.TradeRequest to be removed from this accounts.users.User's pending trade requests
+     * @param user    User who will have a requests.TradeRequest removed from their pending trade requests
+     * @param request requests.TradeRequest to be removed from this User's pending trade requests
      */
     public void removeFromPendingRequests(User user, TradeRequest request) {
         user.getPendingRequests().remove(request);
     }
 
     /**
-     * Adds a transactions.Transaction to a accounts.users.User's list of pending trades
+     * Adds a transactions.Transaction to a User's list of pending trades
      *
-     * @param user        accounts.users.User whose list of pending trades will be added to
-     * @param transaction transactions.Transaction to add to this accounts.users.User's list of pending trades
+     * @param user        User whose list of pending trades will be added to
+     * @param transaction transactions.Transaction to add to this User's list of pending trades
      */
     public void addToPendingTrades(User user, Transaction transaction) {
         user.getPendingTrades().add(transaction);
     }
 
     /**
-     * Removes a transactions.Transaction from a accounts.users.User's list of pending trades
+     * Removes a transactions.Transaction from a User's list of pending trades
      *
-     * @param user        accounts.users.User who will have a transactions.Transaction removed from their list of pending trades
-     * @param transaction transactions.Transaction to remove from this accounts.users.User's list of pending trades
+     * @param user        User who will have a transactions.Transaction removed from their list of pending trades
+     * @param transaction transactions.Transaction to remove from this User's list of pending trades
      */
     public void removeFromPendingTrades(User user, Transaction transaction) {
         user.getPendingTrades().remove(transaction);
     }
 
     /**
-     * Adds a transactions.Transaction to a accounts.users.User's list of agreedUponMeetings (Transactions containing a meeting to which both accounts.users.User
+     * Adds a transactions.Transaction to a User's list of agreedUponMeetings (Transactions containing a meeting to which both User
      * and their trading partner have agreed, but the meeting has not transpired in real life)
      *
-     * @param user        accounts.users.User whose list of agreedUponMeetings list will be added to
-     * @param transaction transactions.Transaction to add to this accounts.users.User's list of agreedUponMeetings
+     * @param user        User whose list of agreedUponMeetings list will be added to
+     * @param transaction transactions.Transaction to add to this User's list of agreedUponMeetings
      */
     public void addToAgreedUponMeetings(User user, Transaction transaction) {
         user.getAgreedUponMeeting().add(transaction);
     }
 
     /**
-     * Removes a transactions.Transaction from a accounts.users.User's list of agreedUponMeetings (Transactions containing a meeting to which both
-     * accounts.users.User and their trading partner have agreed, but the meeting has not transpired in real life)
+     * Removes a transactions.Transaction from a User's list of agreedUponMeetings (Transactions containing a meeting to which both
+     * User and their trading partner have agreed, but the meeting has not transpired in real life)
      *
-     * @param user        accounts.users.User who will have a transactions.Transaction removed from their list of agreedUponMeetings
-     * @param transaction transactions.Transaction to remove from this accounts.users.User's list of agreedUponMeetings
+     * @param user        User who will have a transactions.Transaction removed from their list of agreedUponMeetings
+     * @param transaction transactions.Transaction to remove from this User's list of agreedUponMeetings
      */
     public void removeFromAgreedUponMeetings(User user, Transaction transaction) {
         user.getAgreedUponMeeting().remove(transaction);
     }
 
     /**
-     * Adds a transactions.Transaction to a accounts.users.User's list of trade-back Transactions
+     * Adds a transactions.Transaction to a User's list of trade-back Transactions
      *
-     * @param user        accounts.users.User whose list of trade-back Transactions will be added to
-     * @param transaction transactions.Transaction to add to this accounts.users.User's list of trade-back Transactions
+     * @param user        User whose list of trade-back Transactions will be added to
+     * @param transaction transactions.Transaction to add to this User's list of trade-back Transactions
      */
     public void addToSecondAgreedUponMeetings(User user, Transaction transaction) {
         user.getSecondAgreedUponMeeting().add(transaction);
     }
 
     /**
-     * Removes a transactions.Transaction from a accounts.users.User's list of of trade-back Transactions
+     * Removes a transactions.Transaction from a User's list of of trade-back Transactions
      *
-     * @param user        accounts.users.User who will have a transactions.Transaction removed from their list of trade-back Transactions
-     * @param transaction transactions.Transaction to remove from this accounts.users.User's list of trade-back Transactions
+     * @param user        User who will have a transactions.Transaction removed from their list of trade-back Transactions
+     * @param transaction transactions.Transaction to remove from this User's list of trade-back Transactions
      */
     public void removeFromSecondAgreedUponMeetings(User user, Transaction transaction) {
         user.getSecondAgreedUponMeeting().remove(transaction);
     }
 
     /**
-     * Updates a accounts.users.User's trade history
+     * Updates a User's trade history
      *
-     * @param user        accounts.users.User whose trade history is to be updated
-     * @param transaction transactions.Transaction to be added to this accounts.users.User's trade history
+     * @param user        User whose trade history is to be updated
+     * @param transaction transactions.Transaction to be added to this User's trade history
      */
     public void updateTradeHistory(User user, Transaction transaction) {
         user.getTradeHistory().add(transaction);
@@ -334,7 +334,7 @@ public class UserManager implements Serializable {
      * points can be updated accordingly depending on what type of transaction it was
      * and if you were the borrower or lender
      *
-     * @param user        accounts.users.User whose points are to be updated
+     * @param user        User whose points are to be updated
      * @param transaction Most recent transaction of user
      */
     private void updateUserPoints(User user, Transaction transaction) {
@@ -358,13 +358,13 @@ public class UserManager implements Serializable {
     }
 
     /**
-     * Updates a accounts.users.User's list of top three trading partners.
+     * Updates a User's list of top three trading partners.
      * <p>
      * Please note: the websites https://www.geeksforgeeks.org/count-occurrences-elements-list-java/ and
      * https://stackoverflow.com/questions/21054415/how-to-sort-a-hashmap-by-the-integer-value were referenced in order
      * to implement this method.
      *
-     * @param user accounts.users.User whose list of top three trading partners is to be updated
+     * @param user User whose list of top three trading partners is to be updated
      */
     public void updateTopTradingPartners(User user) {
         List<Transaction> tradeHistoryCopy = user.getTradeHistory();
@@ -424,8 +424,8 @@ public class UserManager implements Serializable {
         Object[] setOfMapEntries = partnerToFrequencyMap.entrySet().toArray();
         Arrays.sort(setOfMapEntries,
                 (mapEntry1, mapEntry2) ->
-                        ((Map.Entry<accounts.users.User, Integer>) mapEntry2).getValue().
-                                compareTo(((Map.Entry<accounts.users.User, Integer>) mapEntry1).getValue()));
+                        ((Map.Entry<User, Integer>) mapEntry2).getValue().
+                                compareTo(((Map.Entry<User, Integer>) mapEntry1).getValue()));
         // Reference for the above five lines:
         // https://stackoverflow.com/questions/21054415/how-to-sort-a-hashmap-by-the-integer-value
 
@@ -434,17 +434,17 @@ public class UserManager implements Serializable {
             if (loopCount == 3) {
                 break;
             }
-            topTradingPartners.add(((Map.Entry<accounts.users.User, Integer>) mapEntry).getKey());
+            topTradingPartners.add(((Map.Entry<User, Integer>) mapEntry).getKey());
             loopCount++;
         }
         user.setTopTradingPartners(topTradingPartners);
     }
 
     /**
-     * Getter for the most recent three items that a accounts.users.User traded away
+     * Getter for the most recent three items that a User traded away
      *
-     * @param user the accounts.users.User in question
-     * @return list of most recent three items that this accounts.users.User traded away
+     * @param user the User in question
+     * @return list of most recent three items that this User traded away
      */
     public List<Item> getRecentlyTradedItems(User user) {
         List<Item> recentlyTradedItems = new ArrayList<>();
@@ -491,21 +491,21 @@ public class UserManager implements Serializable {
     }
 
     /**
-     * Adds a cancelled transaction to a accounts.users.User's list of cancelled transactions
+     * Adds a cancelled transaction to a User's list of cancelled transactions
      *
-     * @param user                 accounts.users.User whose list of cancelled transactions will be added to
-     * @param cancelledTransaction cancelled transaction to be added to this accounts.users.User's list of cancelled transactions
+     * @param user                 User whose list of cancelled transactions will be added to
+     * @param cancelledTransaction cancelled transaction to be added to this User's list of cancelled transactions
      */
     public void addToCancelledTransactions(User user, Transaction cancelledTransaction) {
         user.getCancelledTransactions().add(cancelledTransaction);
     }
 
     /**
-     * Used to associate a accounts.users.User that is an attribute of another object with the corresponding accounts.users.User in the system's list
+     * Used to associate a User that is an attribute of another object with the corresponding User in the system's list
      * of all Users
      *
-     * @param userAsAnAttribute accounts.users.User that is an attribute of another object
-     * @return accounts.users.User in the system's list of all Users
+     * @param userAsAnAttribute User that is an attribute of another object
+     * @return User in the system's list of all Users
      */
     public User getUser(User userAsAnAttribute) {
         for (User originalUser : userList) {
@@ -555,9 +555,9 @@ public class UserManager implements Serializable {
     }
 
     /**
-     * Adds items.Item item to accounts.users.User user's VacationStorage when they go on vacation.
+     * Adds items.Item item to User user's VacationStorage when they go on vacation.
      *
-     * @param user the accounts.users.User that is going on vacation and needs to store their items.
+     * @param user the User that is going on vacation and needs to store their items.
      * @param item the items.Item from their inventory that is going to be stored.
      */
     public void addToVacationStorage(User user, Item item) {
@@ -565,9 +565,9 @@ public class UserManager implements Serializable {
     }
 
     /**
-     * Removes items.Item item from accounts.users.User user's VacationStorage when they return from vacation.
+     * Removes items.Item item from User user's VacationStorage when they return from vacation.
      *
-     * @param user the accounts.users.User that has returned from vacation and needs to remove items from their VacationStorage
+     * @param user the User that has returned from vacation and needs to remove items from their VacationStorage
      * @param item the items.Item that is to be removed.
      */
     public void removeFromVacationStorage(User user, Item item) {

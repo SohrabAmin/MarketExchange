@@ -58,9 +58,9 @@ public class ThreeWay extends Transaction {
     }
 
     /**
-     * Setter for the secondTrader of a ThreeWay; the accounts.users.User who accepts the ThreeWay.
+     * Setter for the secondTrader of a ThreeWay; the User who accepts the ThreeWay.
      *
-     * @return The secondTrader; the accounts.users.User who accepts the ThreeWay.
+     * @return The secondTrader; the User who accepts the ThreeWay.
      */
     public User getSecondTrader() {
         return this.secondTrader;

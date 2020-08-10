@@ -13,11 +13,11 @@ import currency.*;
 public class PrintTop3TradingPartners implements UserMainMenuOptions {
 
     /**
-     * Prints out the accounts.users.User user's top 3 trading partners.
+     * Prints out the User user's top 3 trading partners.
      *
-     * @param user the accounts.users.User who is requesting to see their top 3 trading partners
+     * @param user the User who is requesting to see their top 3 trading partners
      * @param currencyManager
-     * @return null if the current menu is to be reprinted; accounts.users.User user if the user is to be redirected to the main menu;
+     * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
      * String "exit" if the user is to be logged out.
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,

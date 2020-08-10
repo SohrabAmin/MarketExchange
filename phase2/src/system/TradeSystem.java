@@ -35,7 +35,7 @@ public class TradeSystem {
     /**
      * Run calls multiple gateways in order to populate the System with saved information pertaining Transactions,
      * Admins, Users, Meetings, Items and TradeRequests. It will call methods that allow Users and Admins to log in
-     * and view the main menu as long as an accounts.admins.Admin or accounts.users.User doesn't want to exit the system. If they choose to exit,
+     * and view the main menu as long as an accounts.admins.Admin or User doesn't want to exit the system. If they choose to exit,
      * the gateways will be called again and saved the information for future use.
      *
      * @throws IOException
@@ -55,10 +55,10 @@ public class TradeSystem {
         //populates the system inventory in the initialized items.ItemManager AllItems with all the saved
         //items in the file ItemList.ser
         readwrite.itemPopulate(allItems, "ItemList.ser");
-        //reads the file and populates accounts.users.UserManager allUsers with the Users stored in UserList.ser
+        //reads the file and populates UserManager allUsers with the Users stored in UserList.ser
         readwrite.userPopulate(allUsers, "UserList.ser");
-        //either returns the saved accounts.users.UserMessageManager object with all the stored user messages
-        //or creates a new accounts.users.UserMessageManager object if file UserMessages.ser is empty
+        //either returns the saved UserMessageManager object with all the stored user messages
+        //or creates a new UserMessageManager object if file UserMessages.ser is empty
         allUserMessages = readwrite.userMessagePopulate("UserMessages.ser");
 
 
@@ -119,7 +119,7 @@ public class TradeSystem {
 
 
 
-        //If there is no current accounts.users.User, prompts log in and prompts the correct menu depending on the type of accounts.Account
+        //If there is no current User, prompts log in and prompts the correct menu depending on the type of accounts.Account
         while (currentUser == null) {
             LogInSystem system1 = new LogInSystem(allUsers, allAdmins);
             Object loggedIn = system1.LogIn();
@@ -153,7 +153,7 @@ public class TradeSystem {
 
         System.out.print("Goodbye!\uD83D\uDEAA \n");
 
-        //saves all the accounts.users in accounts.users.UserManager to an external file
+        //saves all the accounts.users in UserManager to an external file
         readwrite.saveToFile("UserList.ser", allUsers);
         //saves current accounts.admins.AdminManager object allAdmins to external file
         readwrite.saveToFile("AdminList.ser", allAdmins);
@@ -163,7 +163,7 @@ public class TradeSystem {
         readwrite.saveToFile("ItemList.ser", allItems);
         //saves current requests.TradeRequest object allTradeRequests to an external file
         readwrite.saveToFile("TradeRequestList.ser", allTradeRequests);
-        //saves current accounts.users.UserMessageManager object allTradeRequests to an external file
+        //saves current UserMessageManager object allTradeRequests to an external file
         readwrite.saveToFile("UserMessages.ser", allUserMessages);
     }
 }

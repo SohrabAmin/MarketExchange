@@ -13,11 +13,11 @@ import currency.*;
 public class PrintOutboundRequests implements UserMainMenuOptions {
 
     /**
-     * Prints a accounts.users.User's outbound TradeRequests
+     * Prints a User's outbound TradeRequests
      *
-     * @param user accounts.users.User whose outbound TradeRequests are to be printed
+     * @param user User whose outbound TradeRequests are to be printed
      * @param currencyManager
-     * @return null if the current menu is to be reprinted; accounts.users.User user if the user is to be redirected to the main menu;
+     * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
      * String "exit" if the user is to be logged out.
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
