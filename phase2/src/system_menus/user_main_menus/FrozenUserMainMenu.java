@@ -69,31 +69,42 @@ public class FrozenUserMainMenu implements  DifferentUserMainMenu{
         try {
             String input = br.readLine();
             if (!input.equals("exit")) {
-                if (input.equals("1")) { //view and edit wishlist
-                    option.setChosenOption(new WishlistManager());
-                } else if (input.equals("2")) { //view inventory
-                    option.setChosenOption(new InventoryManager());
-                } else if (input.equals("3")) { //browse
-                    option.setChosenOption(new Browse());
-                } else if (input.equals("4")) { //add item to inventory
-                    option.setChosenOption(new AddItemToSystem());
-                } else if (input.equals("5")) { //view recent trades
-                    option.setChosenOption(new PrintMostRecentTrades());
-                } else if (input.equals("6")) { //view most freq trading partners
-                    option.setChosenOption(new PrintTop3TradingPartners());
-                } else if (input.equals("7")){  //view item status
-                    option.setChosenOption(new PrintItemHistory());
-                } else if (input.equals("8")) { //request to be unfrozen
-                    option.setChosenOption(new NotifyAdminOfUnfreezeRequest());
-                } else if (input.equals("9")) { //message admin
-                    option.setChosenOption(new UserMessage());
-                } else if (input.equals("10")) { //change account settings
-                    option.setChosenOption(new AccountSettingsManager());
-                } else if (input.equals("11")) { //logout
-                    return null;
-                } else { //returns to main menu
-                    System.out.println("That is not a valid option. Please try again.");
-                    return user;
+                switch (input) {
+                    case "1":  //view and edit wishlist
+                        option.setChosenOption(new WishlistManager());
+                        break;
+                    case "2":  //view inventory
+                        option.setChosenOption(new InventoryManager());
+                        break;
+                    case "3":  //browse
+                        option.setChosenOption(new Browse());
+                        break;
+                    case "4":  //add item to inventory
+                        option.setChosenOption(new AddItemToSystem());
+                        break;
+                    case "5":  //view recent trades
+                        option.setChosenOption(new PrintMostRecentTrades());
+                        break;
+                    case "6":  //view most freq trading partners
+                        option.setChosenOption(new PrintTop3TradingPartners());
+                        break;
+                    case "7":   //view item status
+                        option.setChosenOption(new PrintItemHistory());
+                        break;
+                    case "8":  //request to be unfrozen
+                        option.setChosenOption(new NotifyAdminOfUnfreezeRequest());
+                        break;
+                    case "9":  //message admin
+                        option.setChosenOption(new UserMessage());
+                        break;
+                    case "10":  //change account settings
+                        option.setChosenOption(new AccountSettingsManager());
+                        break;
+                    case "11":  //logout
+                        return null;
+                    default:  //returns to main menu
+                        System.out.println("That is not a valid option. Please try again.");
+                        return user;
                 }
                 Object result = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
                         allTransactions, allAdmins, undoLogger, allUserMessages , currencyManager);

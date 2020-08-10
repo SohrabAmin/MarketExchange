@@ -68,112 +68,116 @@ public class DemoUserMainMenu implements DifferentUserMainMenu{
         Scanner sc = new Scanner(System.in);
         String a = sc.nextLine();
         if (!a.equals("exit")) {
-            if (a.equals("1")) { //view wishlist
-                System.out.print("-------------------------------------------------------" +
-                        "\n\uD83D\uDC81 Your wishlist are items that you want to have in the future! You can add or remove items from" +
-                        " it as you please.\n");
-                ChosenOption option = new ChosenOption();
-                option.setChosenOption(new WishlistManager());
-                Object temp = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
-                        allTransactions, allAdmins, undoLogger, allUserMessages, currencyManager);
-                while (temp == null) {
-                    temp = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
+            switch (a) {
+                case "1": { //view wishlist
+                    System.out.print("-------------------------------------------------------" +
+                            "\n\uD83D\uDC81 Your wishlist are items that you want to have in the future! You can add or remove items from" +
+                            " it as you please.\n");
+                    ChosenOption option = new ChosenOption();
+                    option.setChosenOption(new WishlistManager());
+                    Object temp = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
                             allTransactions, allAdmins, undoLogger, allUserMessages, currencyManager);
+                    while (temp == null) {
+                        temp = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
+                                allTransactions, allAdmins, undoLogger, allUserMessages, currencyManager);
+                    }
+                    return user;
                 }
-                return user;
-            } else if (a.equals("2")) { //view inventory
-                System.out.print("-------------------------------------------------------" +
-                        "\n\uD83D\uDC81 As a user, you can add items to be added to your inventory. " +
-                        "Once you add an item, the item is sent to approval to accounts.admins.Admin.\n");
-                return user;
-            } else if (a.equals("3")) { //browse items
-                System.out.print("-------------------------------------------------------" +
-                        "\n\uD83D\uDC81 As a user, you can see all items available in the system to trade. " +
-                        "Each item is approved by an admin.\n");
-                ChosenOption option = new ChosenOption();
-                option.setChosenOption(new Browse());
-                Object temp = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
-                        allTransactions, allAdmins, undoLogger, allUserMessages, currencyManager);
-                while (temp == null) {
-                    temp = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
+                case "2":  //view inventory
+                    System.out.print("-------------------------------------------------------" +
+                            "\n\uD83D\uDC81 As a user, you can add items to be added to your inventory. " +
+                            "Once you add an item, the item is sent to approval to accounts.admins.Admin.\n");
+                    return user;
+                case "3": { //browse items
+                    System.out.print("-------------------------------------------------------" +
+                            "\n\uD83D\uDC81 As a user, you can see all items available in the system to trade. " +
+                            "Each item is approved by an admin.\n");
+                    ChosenOption option = new ChosenOption();
+                    option.setChosenOption(new Browse());
+                    Object temp = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
                             allTransactions, allAdmins, undoLogger, allUserMessages, currencyManager);
+                    while (temp == null) {
+                        temp = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
+                                allTransactions, allAdmins, undoLogger, allUserMessages, currencyManager);
+                    }
+                    return user;
                 }
-                return user;
-            } else if (a.equals("4")) { //choose the id?
-                System.out.print("-------------------------------------------------------" +
-                        "\n\uD83D\uDC81 As a user, you can choose an item and initiate a 1way or 2way " +
-                        "permanent/temporary trade.\n");
-                //else input was "back", returns to main menu
-                return user;
-            } else if (a.equals("5")) { //pending trade requests
-                System.out.print("-------------------------------------------------------" +
-                        "\n\uD83D\uDC81 As a user, you can see any pending trade requests.\n");
-                return user;
-            } else if (a.equals("6")) { //approve pending trade requests
-                System.out.print("-------------------------------------------------------\n" +
-                        "\uD83D\uDC81 As a user, you can look through all trade requests and their details and " +
-                        "decide if you want to confirm or reject the trade.\n");
-                return user;
-            } else if (a.equals("7")) { //request to add new item
-                System.out.print("-------------------------------------------------------" +
-                        "\n\uD83D\uDC81 As a user, you can add items to your inventory. However, once added, " +
-                        "the request will be sent to admin for approval. \n" +
-                        "Once approved, the item will show up in your inventory and it will be visible to other " +
-                        "accounts.users when browsing.\n");
-                return user;
-            } else if (a.equals("8")) { //View most recent trades
-                System.out.print("-------------------------------------------------------\n" +
-                        "\uD83D\uDC81 As a user, you can see information about your 3 most recent trades.\n");
-                return user;
-            } else if (a.equals("9")) { //View most frequent trading partners
-                System.out.print("-------------------------------------------------------" +
-                        "\n\uD83D\uDC81 As a user, you can see who your most frequently trading partners are.\n");
-            } else if (a.equals("10")) { //view item status
-                System.out.print("-------------------------------------------------------" +
-                        "\n\uD83D\uDC81 As a user, you can see a list of all items you have ever submitted to the " +
-                        "system and whether they were approved/rejected by admin or still pending on admin's approval.\n");
-                return user;
-            } else if (a.equals("11")) { //approve meeting
-                System.out.print("-------------------------------------------------------" +
-                        "\n\uD83D\uDC81 As a user, once a trade is accepted by the other party, " +
-                        "you can see the suggested meeting, approve meeting or suggest an alternative " +
-                        "meeting here.\n");
-                return user;
-            } else if (a.equals("12")) { //confirm meetings
-                System.out.print("-------------------------------------------------------" +
-                        "\n\uD83D\uDC81 As a user, here you can confirm a meeting happened or if it did " +
-                        "not happen. If the meeting did not happen, both parties may be penalized.\n");
-                return user;
-            } else if (a.equals("13")) { //view outbound reqs
-                System.out.print("-------------------------------------------------------" +
-                        "\n\uD83D\uDC81 As a user, you can see the status of the outbound trade requests " +
-                        "you have sent.\n");
-                return user;
-            } else if (a.equals("14")) { //message admin
-                System.out.print("-------------------------------------------------------" +
-                        "\n\uD83D\uDC81 As a user, you message the accounts.admins.Admin about general inquiries, questions, etc!\n" +
-                        "You will also be able to view any replies from admin.");
-                return user;
-            } else if (a.equals("15")) { //change account settings
-                System.out.print("-------------------------------------------------------" +
-                        "\n\uD83D\uDC81 As a user, you can change your account settings; this includes changing" +
-                        " your username, password and set location.\nYou can view a log of all actions" +
-                        " taken against your account by the accounts.admins.Admin!\n");
-                return user;
-            } else if (a.equals("16")) {
-                System.out.print("-------------------------------------------------------" +
-                        "\n\uD83D\uDC81 By 'going on vacation', all your current items will be stored and not" +
-                        "shown in the system inventory \nuntil you return! This prevents attempts to trade while you" +
-                        "are out of town.");
-                return user;
-            } else if (a.equals("17")) {
-                System.out.print("-------------------------------------------------------" +
-                        "\n\uD83D\uDC81 Logging out as Demo!\n");
-                //logout
-                return null;
-            } else { //if they input invalid response
-                System.out.print("\uD83E\uDDD0 Invalid Response!\n");
-                return user;
+                case "4":  //choose the id?
+                    System.out.print("-------------------------------------------------------" +
+                            "\n\uD83D\uDC81 As a user, you can choose an item and initiate a 1way or 2way " +
+                            "permanent/temporary trade.\n");
+                    //else input was "back", returns to main menu
+                    return user;
+                case "5":  //pending trade requests
+                    System.out.print("-------------------------------------------------------" +
+                            "\n\uD83D\uDC81 As a user, you can see any pending trade requests.\n");
+                    return user;
+                case "6":  //approve pending trade requests
+                    System.out.print("-------------------------------------------------------\n" +
+                            "\uD83D\uDC81 As a user, you can look through all trade requests and their details and " +
+                            "decide if you want to confirm or reject the trade.\n");
+                    return user;
+                case "7":  //request to add new item
+                    System.out.print("-------------------------------------------------------" +
+                            "\n\uD83D\uDC81 As a user, you can add items to your inventory. However, once added, " +
+                            "the request will be sent to admin for approval. \n" +
+                            "Once approved, the item will show up in your inventory and it will be visible to other " +
+                            "accounts.users when browsing.\n");
+                    return user;
+                case "8":  //View most recent trades
+                    System.out.print("-------------------------------------------------------\n" +
+                            "\uD83D\uDC81 As a user, you can see information about your 3 most recent trades.\n");
+                    return user;
+                case "9":  //View most frequent trading partners
+                    System.out.print("-------------------------------------------------------" +
+                            "\n\uD83D\uDC81 As a user, you can see who your most frequently trading partners are.\n");
+                    break;
+                case "10":  //view item status
+                    System.out.print("-------------------------------------------------------" +
+                            "\n\uD83D\uDC81 As a user, you can see a list of all items you have ever submitted to the " +
+                            "system and whether they were approved/rejected by admin or still pending on admin's approval.\n");
+                    return user;
+                case "11":  //approve meeting
+                    System.out.print("-------------------------------------------------------" +
+                            "\n\uD83D\uDC81 As a user, once a trade is accepted by the other party, " +
+                            "you can see the suggested meeting, approve meeting or suggest an alternative " +
+                            "meeting here.\n");
+                    return user;
+                case "12":  //confirm meetings
+                    System.out.print("-------------------------------------------------------" +
+                            "\n\uD83D\uDC81 As a user, here you can confirm a meeting happened or if it did " +
+                            "not happen. If the meeting did not happen, both parties may be penalized.\n");
+                    return user;
+                case "13":  //view outbound reqs
+                    System.out.print("-------------------------------------------------------" +
+                            "\n\uD83D\uDC81 As a user, you can see the status of the outbound trade requests " +
+                            "you have sent.\n");
+                    return user;
+                case "14":  //message admin
+                    System.out.print("-------------------------------------------------------" +
+                            "\n\uD83D\uDC81 As a user, you message the accounts.admins.Admin about general inquiries, questions, etc!\n" +
+                            "You will also be able to view any replies from admin.");
+                    return user;
+                case "15":  //change account settings
+                    System.out.print("-------------------------------------------------------" +
+                            "\n\uD83D\uDC81 As a user, you can change your account settings; this includes changing" +
+                            " your username, password and set location.\nYou can view a log of all actions" +
+                            " taken against your account by the accounts.admins.Admin!\n");
+                    return user;
+                case "16":
+                    System.out.print("-------------------------------------------------------" +
+                            "\n\uD83D\uDC81 By 'going on vacation', all your current items will be stored and not" +
+                            "shown in the system inventory \nuntil you return! This prevents attempts to trade while you" +
+                            "are out of town.");
+                    return user;
+                case "17":
+                    System.out.print("-------------------------------------------------------" +
+                            "\n\uD83D\uDC81 Logging out as Demo!\n");
+                    //logout
+                    return null;
+                default:  //if they input invalid response
+                    System.out.print("\uD83E\uDDD0 Invalid Response!\n");
+                    return user;
             }
         } else {//input is "exit"
             return a;

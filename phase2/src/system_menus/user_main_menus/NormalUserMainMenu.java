@@ -95,45 +95,63 @@ public class NormalUserMainMenu implements DifferentUserMainMenu {
             String input = br.readLine();
             if (!input.equals("exit")) {
                 //depending on their input, the correct "strategy" will be created and stored in the system_options.ChosenOption class
-                if (input.equals("1")) { //view and edit wishlist
-                    option.setChosenOption(new WishlistManager());
-                } else if (input.equals("2")) { //view inventory
-                    option.setChosenOption(new InventoryManager());
-                } else if (input.equals("3")) { //browse
-                    option.setChosenOption(new Browse());
-                } else if (input.equals("4")) { //initiate trade
-                    option.setChosenOption(new TradeInitiator());
-                } else if (input.equals("5")) { //view pending trade requests
-                    option.setChosenOption(new ManagePaymentOptions());
-                } else if (input.equals("6")) { //approve trade reqs
-                    option.setChosenOption(new ApproveTrade());
-                } else if (input.equals("7")) { //add item to inventory
-                    option.setChosenOption(new AddItemToSystem());
-                } else if (input.equals("8")) { //view recent trades
-                    option.setChosenOption(new PrintMostRecentTrades());
-                } else if (input.equals("9")) { //view most freq trading partners
-                    option.setChosenOption(new PrintTop3TradingPartners());
-                } else if (input.equals("10")) {  //view item status
-                    option.setChosenOption(new PrintItemHistory());
-                } else if (input.equals("11")) { //approve meeting
-                    option.setChosenOption(new PendingTransactionProcess());
-                } else if (input.equals("12")) { //confirm meeting for approved trades
-                    option.setChosenOption(new ConfirmMeetings());
-                } else if (input.equals("13")) { //view outbound req status
-                    option.setChosenOption(new PrintOutboundRequests());
-                } else if (input.equals("14")) { //message admin
-                    option.setChosenOption(new UserMessage());
-                } else if (input.equals("15")) { //change account settings
-                    option.setChosenOption(new AccountSettingsManager());
-                } else if (input.equals("16")) { //go on vacation
-                    option.setChosenOption(new VacationPrompter());
-                } else if (input.equals("17")) { //points
-                    option.setChosenOption(new PointsManager());
-                } else if (input.equals("18")) { //logout
-                    return null;
-                } else { //returns to main menu
-                    System.out.println("That is not a valid option. Please try again.");
-                    return user;
+                switch (input) {
+                    case "1":  //view and edit wishlist
+                        option.setChosenOption(new WishlistManager());
+                        break;
+                    case "2":  //view inventory
+                        option.setChosenOption(new InventoryManager());
+                        break;
+                    case "3":  //browse
+                        option.setChosenOption(new Browse());
+                        break;
+                    case "4":  //initiate trade
+                        option.setChosenOption(new TradeInitiator());
+                        break;
+                    case "5":  //view pending trade requests
+                        option.setChosenOption(new ManagePaymentOptions());
+                        break;
+                    case "6":  //approve trade reqs
+                        option.setChosenOption(new ApproveTrade());
+                        break;
+                    case "7":  //add item to inventory
+                        option.setChosenOption(new AddItemToSystem());
+                        break;
+                    case "8":  //view recent trades
+                        option.setChosenOption(new PrintMostRecentTrades());
+                        break;
+                    case "9":  //view most freq trading partners
+                        option.setChosenOption(new PrintTop3TradingPartners());
+                        break;
+                    case "10":   //view item status
+                        option.setChosenOption(new PrintItemHistory());
+                        break;
+                    case "11":  //approve meeting
+                        option.setChosenOption(new PendingTransactionProcess());
+                        break;
+                    case "12":  //confirm meeting for approved trades
+                        option.setChosenOption(new ConfirmMeetings());
+                        break;
+                    case "13":  //view outbound req status
+                        option.setChosenOption(new PrintOutboundRequests());
+                        break;
+                    case "14":  //message admin
+                        option.setChosenOption(new UserMessage());
+                        break;
+                    case "15":  //change account settings
+                        option.setChosenOption(new AccountSettingsManager());
+                        break;
+                    case "16":  //go on vacation
+                        option.setChosenOption(new VacationPrompter());
+                        break;
+                    case "17":  //points
+                        option.setChosenOption(new PointsManager());
+                        break;
+                    case "18":  //logout
+                        return null;
+                    default:  //returns to main menu
+                        System.out.println("That is not a valid option. Please try again.");
+                        return user;
                 }
                 //the option that is chosen by the user will be run
                 Object result = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
