@@ -9,7 +9,7 @@ import meetings.Meeting;
 public class Transaction {
 
 
-    private int tradeStatus = 0; // 0: In progress. 1: Finalized meetings.Meeting (the initialMeeting has been set) 2: Pending Second Exchange (only for temporary transactions.Transaction). 3: Completed 4: Cancelled.
+    private int tradeStatus = 0; // 0: In progress. 1: Finalized Meeting (the initialMeeting has been set) 2: Pending Second Exchange (only for temporary transactions.Transaction). 3: Completed 4: Cancelled.
 
     private boolean temp; //Set true is this transactions.Transaction in temporary (must revert in a month).
 
@@ -41,7 +41,7 @@ public class Transaction {
     }
 
     /**
-     * Getter for a given transactions.Transaction's tradeStatus. 0: In progress. 1: Finalized meetings.Meeting (the initialMeeting has been set) 2: Pending Second Exchange (only for temporary transactions.Transaction). 3: Completed 4: Cancelled.
+     * Getter for a given transactions.Transaction's tradeStatus. 0: In progress. 1: Finalized Meeting (the initialMeeting has been set) 2: Pending Second Exchange (only for temporary transactions.Transaction). 3: Completed 4: Cancelled.
      *
      * @return The trade status of a transactions.Transaction
      */
@@ -50,7 +50,7 @@ public class Transaction {
     }
 
     /**
-     * Changes a transactions.Transaction's trade status: 0: In progress. 1: Finalized meetings.Meeting (the initialMeeting has been set) 2: Pending Second Exchange (only for temporary transactions.Transaction). 3: Completed 4: Cancelled.
+     * Changes a transactions.Transaction's trade status: 0: In progress. 1: Finalized Meeting (the initialMeeting has been set) 2: Pending Second Exchange (only for temporary transactions.Transaction). 3: Completed 4: Cancelled.
      *
      * @param tradeStatus The trade status of a transactions.Transaction
      */

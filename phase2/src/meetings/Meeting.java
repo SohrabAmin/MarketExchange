@@ -18,8 +18,8 @@ public class Meeting {
     private HashMap<String, Integer> confirm; //0 for not confirmed - 1 for confirmed that meeting took place
 
     /**
-     * @param date  date of meetings.Meeting
-     * @param place place of meetings.Meeting
+     * @param date  date of Meeting
+     * @param place place of Meeting
      */
     public Meeting(Calendar date, String place) {
         this.date = date;
@@ -29,9 +29,9 @@ public class Meeting {
     }
 
     /**
-     * Checks if both users have confimred the meetings.Meeting
+     * Checks if both users have confimred the Meeting
      *
-     * @return True if both users have confirmed meetings.Meeting, false otherwise.
+     * @return True if both users have confirmed Meeting, false otherwise.
      */
     public boolean confirmedByBothSides() {
         //Used https://stackoverflow.com/questions/27254302/counting-duplicate-values-in-hashmap as reference
@@ -79,7 +79,7 @@ public class Meeting {
     }
 
     /**
-     * Confirms users confirmation value of a meetings.Meeting
+     * Confirms users confirmation value of a Meeting
      *
      * @param name name of user
      */
@@ -90,20 +90,20 @@ public class Meeting {
 
 
     /**
-     * Gets users confirmation value of a meetings.Meeting
+     * Gets users confirmation value of a Meeting
      *
      * @param name name of user
-     * @return Integer representing if user confirmed meetings.Meeting
+     * @return Integer representing if user confirmed Meeting
      */
     public Integer userconfirmed(String name) {
         return confirm.get(name);
     }
 
     /**
-     * Get name of other user in meetings.Meeting
+     * Get name of other user in Meeting
      *
-     * @param name name of original user in meetings.Meeting
-     * @return name of other user in meetings.Meeting
+     * @param name name of original user in Meeting
+     * @return name of other user in Meeting
      */
     public String getOtherSide(String name) {
         for (String key : confirm.keySet()) {
@@ -124,18 +124,18 @@ public class Meeting {
     }
 
     /**
-     * Change last user who edited meetings.Meeting
+     * Change last user who edited Meeting
      *
-     * @param name name of user who last edited meetings.Meeting
+     * @param name name of user who last edited Meeting
      */
     public void changeLastEdit(String name) {
         lastEdit = name;
     }
 
     /**
-     * Get name of user who last edited meetings.Meeting
+     * Get name of user who last edited Meeting
      *
-     * @return Name of user who edited meetings.Meeting last
+     * @return Name of user who edited Meeting last
      */
     public String viewLastEdit() {
         return lastEdit;
@@ -152,7 +152,7 @@ public class Meeting {
     }
 
     /**
-     * gets users edit history for meetings.Meeting
+     * gets users edit history for Meeting
      *
      * @param user User who edited meeting
      * @return number of times user has edited the meeting
@@ -162,7 +162,7 @@ public class Meeting {
     }
 
     /**
-     * gets date for meetings.Meeting
+     * gets date for Meeting
      *
      * @return this Meetings date
      */
@@ -171,16 +171,16 @@ public class Meeting {
     }
 
     /**
-     * gets place of meetings.Meeting
+     * gets place of Meeting
      *
-     * @return this meetings.Meeting place
+     * @return this Meeting place
      */
     public String getPlace() {
         return place;
     }
 
     /**
-     * gets confirmed value of meetings.Meeting
+     * gets confirmed value of Meeting
      *
      * @return this Meetings confirmed value
      */
@@ -198,18 +198,18 @@ public class Meeting {
     }
 
     /**
-     * sets date for meetings.Meeting
+     * sets date for Meeting
      *
-     * @param date date to be set for meetings.Meeting
+     * @param date date to be set for Meeting
      */
     public void setDate(Calendar date) {
         this.date = date;
     }
 
     /**
-     * sets place for meetings.Meeting
+     * sets place for Meeting
      *
-     * @param place place to be set for meetings.Meeting
+     * @param place place to be set for Meeting
      */
     public void setPlace(String place) {
         this.place = place;
@@ -232,7 +232,7 @@ public class Meeting {
     }
 
     /**
-     * Returns a string representation of this meetings.Meeting.
+     * Returns a string representation of this Meeting.
      *
      * @return String of this Meetings date and place.
      */

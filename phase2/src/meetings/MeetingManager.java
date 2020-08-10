@@ -7,10 +7,10 @@ public class MeetingManager {
     /**
      * Creates a meeting object
      *
-     * @param date  date of the meetings.Meeting to be created with format dd-mm-yyyy
-     * @param time  24 hour time of the meetings.Meeting to be created with format hh:mm
-     * @param place place of the meetings.Meeting to be created
-     * @return meetings.Meeting object with date, time and place
+     * @param date  date of the Meeting to be created with format dd-mm-yyyy
+     * @param time  24 hour time of the Meeting to be created with format hh:mm
+     * @param place place of the Meeting to be created
+     * @return Meeting object with date, time and place
      */
     public Meeting createMeeting(String date, String time, String place) {
         return new Meeting(createDate(date, time), place);
@@ -49,7 +49,7 @@ public class MeetingManager {
     /**
      * Edits the meetings date, time and place
      *
-     * @param meeting meetings.Meeting to be edited
+     * @param meeting Meeting to be edited
      * @param date    New date for meeting
      * @param time    New time for meeting
      * @param place   New place for meeting

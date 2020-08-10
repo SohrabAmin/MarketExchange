@@ -32,8 +32,8 @@ public class CorrespondingMainMenu {
      * @param user The User currently logged into the system
      * @param allAdmins AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
      * @param allItems ItemManager which stores the system's inventory
-     * @param allMeetings meetings.MeetingManager which deals with creating and editing meetings
-     * @param allTradeRequests requests.TradeRequestManager which stores and edits all the TradeRequests in the system
+     * @param allMeetings MeetingManager which deals with creating and editing meetings
+     * @param allTradeRequests TradeRequestManager which stores and edits all the TradeRequests in the system
      * @param allTransactions transactions.TransactionManager which stores and edits all Transactions in the system
      * @param allUsers UserManager which stores all the Users in the system
      * @param undoLogger Logger that logs actions in the system

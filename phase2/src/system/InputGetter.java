@@ -57,9 +57,9 @@ public class InputGetter {
      *
      * @param user             the user that is currently logged in to the system
      * @param allItems         ItemManager that stores the system's inventory
-     * @param allTradeRequests requests.TradeRequestManager that stores all the Trade Requests in the system
+     * @param allTradeRequests TradeRequestManager that stores all the Trade Requests in the system
      * @param allUsers         UserManager that stores all the Users in the system
-     * @param allMeetings      meetings.MeetingManager that deals with the creation of meetings
+     * @param allMeetings      MeetingManager that deals with the creation of meetings
      * @param allTransactions  transactions.TransactionManager that stores all the Transactions in the system
      * @param allUserMessages  UserMessageManager which stores all the Users messages to Admin
      * @param allAdmins        AdminManager which stores all the admins in the system

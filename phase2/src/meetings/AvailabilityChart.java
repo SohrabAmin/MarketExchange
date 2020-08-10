@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 /**
  * Constructs a class that stores/manages the availability of Users. This will only be created when a ThreeWayRequest has been instantiated,
- * with all values in the HashMap set to "False". The User has to edit the days they available to exchange items at a meetings.Meeting.
+ * with all values in the HashMap set to "False". The User has to edit the days they available to exchange items at a Meeting.
  */
 public class AvailabilityChart {
 
@@ -15,7 +15,7 @@ public class AvailabilityChart {
 
 
     /**
-     * Constructs an instance of meetings.AvailabilityChart. A HashMap will be initialized, with the key as an int representing the day after the request was
+     * Constructs an instance of AvailabilityChart. A HashMap will be initialized, with the key as an int representing the day after the request was
      * instantiated (1-7), and the value as a boolean
      * representing whether they are available or not (True: They are available. False: They are not available). All values are initially false.
      */

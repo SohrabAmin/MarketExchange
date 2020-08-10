@@ -17,7 +17,7 @@ public class TradeInitiator implements UserMainMenuOptions {
      * Initiates a one-way or two-way trade between two Users. Prompts user for details of the trade.
      *  @param user             the User currently logged in and the user that is initiating the trade
      * @param allItems         ItemManager which stores a system inventory containing all the items in the system
-     * @param allTradeRequests requests.TradeRequestManager which deals with sending Trade requests to users
+     * @param allTradeRequests TradeRequestManager which deals with sending Trade requests to users
      * @param allUsers         UserManager which stores all the Users in the system
      * @param currencyManager
      * @return

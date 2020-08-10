@@ -21,7 +21,7 @@ public class ConfirmMeetings implements UserMainMenuOptions {
      *  @param user            the User that wants to view their pending transactions
      * @param allItems        ItemManager that stores the system's inventory
      * @param allUsers        UserManager that stores all the Users in the system
-     * @param allMeetings     meetings.MeetingManager that deals with the creation of meetings
+     * @param allMeetings     MeetingManager that deals with the creation of meetings
      * @param allTransactions transactions.TransactionManager that stores all the information of all system transactions
      * @param currencyManager
      * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;

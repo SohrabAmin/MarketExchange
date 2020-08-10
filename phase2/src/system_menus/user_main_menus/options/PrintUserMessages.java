@@ -12,7 +12,7 @@ import currency.*;
 public class PrintUserMessages implements UserMainMenuOptions {
 
     /**
-     * Prints the messages that User user has. Messages include Trade Requests and meetings.Meeting requests.
+     * Prints the messages that User user has. Messages include Trade Requests and Meeting requests.
      *  @param user     the User who wishes to view their messages
      * @param allUsers UserManager which stores User user
      * @param currencyManager

@@ -41,14 +41,14 @@ public class TransactionManager implements Serializable {
     /**
      * Updates the tradeStatus of a given transactions.Transaction.
      * 0: In progress.
-     * 1: Finalized meetings.Meeting (the initialMeeting has been set!).
+     * 1: Finalized Meeting (the initialMeeting has been set!).
      * 2: Pending Second Exchange (only for temporary transactions.Transaction).
      * 3: Completed
      * 4: Cancelled.
      * Notice by updating the tradeStatus the instance of transactions.Transaction is being moved to a new attribute list within transactions.TransactionManager.
      * finalizedMeeting implies the initialMeeting has been set.
      * pendingSecondExchange means the first exchange was successful, but the User(s) must return their Item a month after the initialMeeting.
-     * Cancelled implies one of the following: User(s) did not show up to the meetings.Meeting or User(s) altered
+     * Cancelled implies one of the following: User(s) did not show up to the Meeting or User(s) altered
      * meeting too many times, and completed means the transactions.Transaction was successful, and the Item(s) have been officially swapped.
      * Completed means either the finalizedMeeting had occurred (for permanent transactions.Transaction), or the secondExchange has occurred.
      *  @param itemManager Class that manages Items.
@@ -126,7 +126,7 @@ public class TransactionManager implements Serializable {
      * Initiates and stores the initialMeeting of a given transactions.Transaction. Required for all types of Transactions.
      *
      * @param transaction The given transactions.Transaction.
-     * @param meeting     The given meetings.Meeting.
+     * @param meeting     The given Meeting.
      */
     public void setInitialMeeting(Transaction transaction, Meeting meeting) {
         transaction.setInitialMeeting(meeting);

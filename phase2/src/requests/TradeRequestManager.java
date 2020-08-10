@@ -7,14 +7,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 /**
- * Manages all TradeRequests. Changes values in requests.TradeRequest by accessing getters/setters. Should only be instantiated once.
+ * Manages all TradeRequests. Changes values in TradeRequest by accessing getters/setters. Should only be instantiated once.
  */
 public class TradeRequestManager implements Serializable {
     private List<TradeRequest> pending;
     private List<TradeRequest> denied;
     private List<TradeRequest> confirmed;
     /**
-     * Constructs an instance of requests.TradeRequestManager. Does not require an arguments for instantiation, however, this constructor
+     * Constructs an instance of TradeRequestManager. Does not require an arguments for instantiation, however, this constructor
      * will initialize three list attributes: pending, denied and confirmed.
      */
     public TradeRequestManager() {
@@ -23,11 +23,11 @@ public class TradeRequestManager implements Serializable {
         this.confirmed = new ArrayList<TradeRequest>();
     }
     /**
-     * Adds an instance of requests.TradeRequest to one of three attributes in requests.TradeRequestManager: pending, confirmed or cancelled, depending on
+     * Adds an instance of TradeRequest to one of three attributes in TradeRequestManager: pending, confirmed or cancelled, depending on
      * the User receiving the Trade Request's response. Also, adds to User's pendingRequests if request is not yet acted upon by receiving User.
      *
      * @param userManager The instance of UserManager, to access addToPendingRequest.
-     * @param request     The given instance of requests.TradeRequest.
+     * @param request     The given instance of TradeRequest.
      */
     public void receiveTradeRequest(UserManager userManager, TradeRequest request) {
         User user1;
@@ -56,11 +56,11 @@ public class TradeRequestManager implements Serializable {
         this.pending.add(request);
     }
     /**
-     * Updates attribute list(s) (pending/denied/confirmed) depending on the wishes of the User receiving the requests.TradeRequest.
+     * Updates attribute list(s) (pending/denied/confirmed) depending on the wishes of the User receiving the TradeRequest.
      *
      * @param userManager        The instance of userManager, required for accessing handleConfirmedRequest.
-     * @param request            The given requests.TradeRequest that the receiving User intends to act upon.
-     * @param status             The status the system intends to give to this requests.TradeRequest.
+     * @param request            The given TradeRequest that the receiving User intends to act upon.
+     * @param status             The status the system intends to give to this TradeRequest.
      */
     public void updateRequestStatus(UserManager userManager, TradeRequest request, int status) {
         if (request.getStatus() == 0) {
@@ -82,10 +82,10 @@ public class TradeRequestManager implements Serializable {
         request.setStatus(status);
     }
     /**
-     * Accepts the requests.TradeRequest within a User's pendingList, creates an instance of transactions.Transaction.
+     * Accepts the TradeRequest within a User's pendingList, creates an instance of transactions.Transaction.
      *
      * @param userManager        The instance of UserManager.
-     * @param request            The status the system intends to give to this requests.TradeRequest.
+     * @param request            The status the system intends to give to this TradeRequest.
      */
     public void handleRequestResponse( UserManager userManager, TradeRequest request) {
         User user1;

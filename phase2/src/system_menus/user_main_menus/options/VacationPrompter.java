@@ -21,9 +21,9 @@ public class VacationPrompter implements UserMainMenuOptions {
      *
      * @param user             User currently logged into the system
      * @param allItems         The instance of ItemManager
-     * @param allTradeRequests The instance of requests.TradeRequestManager
+     * @param allTradeRequests The instance of TradeRequestManager
      * @param allUsers         The instance of UserManager
-     * @param allMeetings      The instance of meetings.MeetingManager
+     * @param allMeetings      The instance of MeetingManager
      * @param allTransactions  The instance of transactions.TransactionManager
      * @param allAdmins        The instance of AdminManager
      * @param undoLogger       Logger that logs actions in the system

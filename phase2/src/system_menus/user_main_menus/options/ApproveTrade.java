@@ -38,7 +38,7 @@ public class ApproveTrade implements UserMainMenuOptions {
      *
      * @param user            User that wishes to view and approve or reject their pending Trade requests
      * @param allUsers        UserManager that stores all Users
-     * @param allMeetings     meetings.MeetingManager that deals with creating meetings
+     * @param allMeetings     MeetingManager that deals with creating meetings
      * @param allTransactions transactions.TransactionManager that deals with the System's Transactions
      * @param currencyManager
      * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
@@ -701,10 +701,10 @@ public class ApproveTrade implements UserMainMenuOptions {
     }
 
     /**
-     * Initiates a meetings.Meeting by asking the User for a proposed date, time and location for the meeting.
+     * Initiates a Meeting by asking the User for a proposed date, time and location for the meeting.
      *
-     * @param allMeetings meetings.MeetingManager that deals with creating meetings
-     * @return returns meetings.Meeting object containing all information of the proposed meeting
+     * @param allMeetings MeetingManager that deals with creating meetings
+     * @return returns Meeting object containing all information of the proposed meeting
      */
     public Meeting meetingInitiator(MeetingManager allMeetings) {
         System.out.print("\uD83D\uDCC5 Please enter your proposed date for this trade in format dd-mm-yyyy\n");

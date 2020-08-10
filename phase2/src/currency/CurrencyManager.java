@@ -20,7 +20,7 @@ public class CurrencyManager {
 
     /**
      * Always instantiated when the main method is initially called. Creates a HashMap that stores all the sales in progress, where the key
-     * is the transactions.OneWayMonetized requests.TradeRequest, and value is the Double.
+     * is the transactions.OneWayMonetized TradeRequest, and value is the Double.
      */
     public CurrencyManager(){
         this.inProgressSale = new HashMap<>();

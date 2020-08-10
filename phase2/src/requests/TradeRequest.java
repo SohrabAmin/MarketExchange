@@ -6,7 +6,7 @@ import java.util.Calendar;
 
 /**
  * Constructs a trade request, that a User can send to another User if the want to initiated a transactions.Transaction. Notice this difference from a transactions.Transaction, as
- * the system does not create an instance of transactions.Transaction unless the corresponding requests.TradeRequest has been approved by the User receiving the requests.TradeRequest. Notice we
+ * the system does not create an instance of transactions.Transaction unless the corresponding TradeRequest has been approved by the User receiving the TradeRequest. Notice we
  * assuming noMeeting Transactions are permanent, as it's illogical to "return" and emailed item.
  */
 public class TradeRequest implements Serializable {
@@ -17,12 +17,12 @@ public class TradeRequest implements Serializable {
     private boolean virtual;
 
     /**
-     * Constructs a requests.TradeRequest instance. This class is instantiated by the User that attempts to initiate the transactions.Transaction, and should be stored within the receiving User's
-     * pendingRequest. If the receiving User accepts the conditions of the transactions.Transaction, they may accept the requests.TradeRequest, and an instance of transactions.Transaction is created.
-     * @param date        A Calender representing the date/time the requests.TradeRequest was initiated.
+     * Constructs a TradeRequest instance. This class is instantiated by the User that attempts to initiate the transactions.Transaction, and should be stored within the receiving User's
+     * pendingRequest. If the receiving User accepts the conditions of the transactions.Transaction, they may accept the TradeRequest, and an instance of transactions.Transaction is created.
+     * @param date        A Calender representing the date/time the TradeRequest was initiated.
      * @param virtual   A boolean representing if a meeting will be required or not.
      * @param message     A string representation of any message the requester User may want to send to the receiver User.
-     * @param temp        A boolean regarding if the User requesting a requests.TradeRequest wants a temporary transactions.Transaction or not.
+     * @param temp        A boolean regarding if the User requesting a TradeRequest wants a temporary transactions.Transaction or not.
      */
     public TradeRequest(String message, boolean temp, Calendar date, boolean virtual) {
         this.message = message;
@@ -33,7 +33,7 @@ public class TradeRequest implements Serializable {
     }
 
     /**
-     * Gets the message the User initiating the requests.TradeRequest sent to the User receiving the requests.TradeRequest.
+     * Gets the message the User initiating the TradeRequest sent to the User receiving the TradeRequest.
      *
      * @return String representation of the message.
      */
@@ -43,18 +43,18 @@ public class TradeRequest implements Serializable {
 
 
     /**
-     * Gets the current status of a requests.TradeRequest.
+     * Gets the current status of a TradeRequest.
      *
-     * @return An integer, which represents the status of a requests.TradeRequest. 0: In progress, 1: Declined, 2: Accepted
+     * @return An integer, which represents the status of a TradeRequest. 0: In progress, 1: Declined, 2: Accepted
      */
     public int getStatus() {
         return this.status;
     }
 
     /**
-     * Sets the current status of a requests.TradeRequest. Should only be used when a User either declines or accepts a requests.TradeRequest.
+     * Sets the current status of a TradeRequest. Should only be used when a User either declines or accepts a TradeRequest.
      *
-     * @param status An integer, which represents the status of a requests.TradeRequest. 0: In progress, 1: Declined, 2: Accepted
+     * @param status An integer, which represents the status of a TradeRequest. 0: In progress, 1: Declined, 2: Accepted
      */
     public void setStatus(int status) {
         this.status = status;
@@ -70,8 +70,8 @@ public class TradeRequest implements Serializable {
     }
 
     /**
-     * Gets the date for which the requests.TradeRequest was initiated.
-     * @return A Calender that represents the date for which the requests.TradeRequest was sent.
+     * Gets the date for which the TradeRequest was initiated.
+     * @return A Calender that represents the date for which the TradeRequest was sent.
      */
     public Calendar getDate() {
         return this.date;
@@ -88,7 +88,7 @@ public class TradeRequest implements Serializable {
     }
 
     /**
-     * Gets a String representation of this requests.TradeRequest's date (which is of type Calender). It is of format yyyy-mm-dd.
+     * Gets a String representation of this TradeRequest's date (which is of type Calender). It is of format yyyy-mm-dd.
      * @return A String representation of the date.
      */
     public String dateToString() {

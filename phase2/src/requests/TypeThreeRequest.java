@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
- * Constructs a transactions.ThreeWay requests.TradeRequest, that a User can send to another
+ * Constructs a transactions.ThreeWay TradeRequest, that a User can send to another
  * User if the want to initiated a transactions.Transaction. Notice this difference from a transactions.
  * Transaction, as the system does not create an instance of transactions.Transaction unless the corresponding requests.
- * TradeRequest has been approved by the User receiving the requests.TradeRequest. Notice we
+ * TradeRequest has been approved by the User receiving the TradeRequest. Notice we
  * assuming noMeeting Transactions are permanent, as it's illogical to "return" and emailed item.
  */
 public class TypeThreeRequest extends TradeRequest {
@@ -37,16 +37,16 @@ public class TypeThreeRequest extends TradeRequest {
 
 
     /**
-     * Constructs a transactions.ThreeWay requests.TradeRequest instance. This class is instantiated by the User that attempts to initiate the transactions.Transaction, and should be stored within the receiving User's
-     * pendingRequest. If the receiving User accepts the conditions of the transactions.Transaction, they may accept the requests.TradeRequest, and an instance of transactions.Transaction is created. Notice this is only called
+     * Constructs a transactions.ThreeWay TradeRequest instance. This class is instantiated by the User that attempts to initiate the transactions.Transaction, and should be stored within the receiving User's
+     * pendingRequest. If the receiving User accepts the conditions of the transactions.Transaction, they may accept the TradeRequest, and an instance of transactions.Transaction is created. Notice this is only called
      * once a User has received a twoWayRequest, and would like to add in a third User (perhaps they want the Item user1 is offering, but doesn't want to give up the Item user1 wants).
      * @param item1 The Item belonging to User1, the User who requested the twoWay.
      * @param item2 The Item belonging to User2, the User requesting the threeWay.
      * @param item3 The Item belonging to User3.
      * @param message A String representation of any message user1 may want to send user2.
-     * @param temp A boolean representing if the requests.TradeRequest will be temp or not.
-     * @param date A Calender representing the date/time the requests.TradeRequest was sent.
-     * @param virtual A boolean that determines the requests.TradeRequest will have no meeting (true: This transactions.Transaction will not have a meetings.Meeting, false: This transactions.Transaction will have a meetings.Meeting.)
+     * @param temp A boolean representing if the TradeRequest will be temp or not.
+     * @param date A Calender representing the date/time the TradeRequest was sent.
+     * @param virtual A boolean that determines the TradeRequest will have no meeting (true: This transactions.Transaction will not have a Meeting, false: This transactions.Transaction will have a Meeting.)
      */
     public TypeThreeRequest(Item item1, Item item2, Item item3, String message, boolean temp, Calendar date, boolean virtual){
         super(message, temp, date, virtual);
@@ -114,24 +114,24 @@ public class TypeThreeRequest extends TradeRequest {
         thirdUserLocation = location;
     }
     /**
-     * Gets the User who initially sent the requests.typeTwoRequest to user2
-     * @return User that initially sent the requests.typeTwoRequest
+     * Gets the User who initially sent the typeTwoRequest to user2
+     * @return User that initially sent the typeTwoRequest
      */
     public User getFirstUser(){
         return this.user1;
     }
 
     /**
-     * Gets the User who initiated the requests.typeThreeRequest
-     * @return User that initiated the requests.typeThreeRequest
+     * Gets the User who initiated the typeThreeRequest
+     * @return User that initiated the typeThreeRequest
      */
     public User getSecondUser(){
         return this.user2;
     }
 
     /**
-     * Gets the User who user2 wanted to bring in for the requests.typeThreeRequest
-     * @return User that user2 wanted to bring in for the requests.typeThreeRequest
+     * Gets the User who user2 wanted to bring in for the typeThreeRequest
+     * @return User that user2 wanted to bring in for the typeThreeRequest
      */
     public User getThirdUser(){
         return this.user3;
@@ -171,7 +171,7 @@ public class TypeThreeRequest extends TradeRequest {
     /**
      * Gets the number of people that have currently approved. Notice: 0: user1 & user3 have not approved yet. 1: One of user1 or user3 has approved. 2: All three
      * Users have approved. (we are assuming user2 approves, as they sent the request)
-     * @return An int of the number of people that have approved this requests.TradeRequest.
+     * @return An int of the number of people that have approved this TradeRequest.
      */
     public int getApproved(){
         return approved;
@@ -179,7 +179,7 @@ public class TypeThreeRequest extends TradeRequest {
 
     /**
      * Sets the first User to approve the ThreeWayRequest (either user1 or user3)
-     * @param user The User who first approved the requests.TradeRequest
+     * @param user The User who first approved the TradeRequest
      */
     public void setFirstApproved(User user){
         this.firstApproved = user;
@@ -187,28 +187,28 @@ public class TypeThreeRequest extends TradeRequest {
 
     /**
      * Gets the first User to approve the ThreeWayRequest (either user1 or user3)
-     * @return The User who first approved the requests.TradeRequest
+     * @return The User who first approved the TradeRequest
      */
     public User getFirstApproved(){
         return this.firstApproved;
     }
 
     /**
-     * Gets User1's availability for the next 7 days. This aids in planning the meetings.Meeting.
+     * Gets User1's availability for the next 7 days. This aids in planning the Meeting.
      * @return HashMap of user1 availability for the next 7 days.
      */
     public AvailabilityChart getUser1Availability() {
         return user1Availability;
     }
     /**
-     * Gets User2's availability for the next 7 days. This aids in planning the meetings.Meeting.
+     * Gets User2's availability for the next 7 days. This aids in planning the Meeting.
      * @return HashMap of user2 availability for the next 7 days.
      */
     public AvailabilityChart getUser2Availability(){
         return user2Availability;
     }
     /**
-     * Gets User3s availability for the next 7 days. This aids in planning the meetings.Meeting.
+     * Gets User3s availability for the next 7 days. This aids in planning the Meeting.
      * @return HasMap of user3 availability for the next 7 days.
      */
     public AvailabilityChart getUser3Availability(){

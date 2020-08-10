@@ -11,10 +11,10 @@ import currency.*;
 import system_menus.admin_main_menus.options.*;
 import system_menus.user_main_menus.options.*;
 
-/** Constructs a transactions.OneWayMonetized requests.TradeRequest, that a User can send to another
+/** Constructs a transactions.OneWayMonetized TradeRequest, that a User can send to another
  * User if they want to initiate a transactions.Transaction. Notice this difference from a transactions.
  * Transaction, as the system does not create an instance of transactions.Transaction unless the corresponding
- * requests.TradeRequest has been approved by the User receiving the requests.TradeRequest. Also
+ * TradeRequest has been approved by the User receiving the TradeRequest. Also
  * Notice that this type of transactions.Transaction will involve in-app currency, which distinguishes it from a
  * transactions.OneWay. Notice we are assuming noMeeting Transactions are permanent, as it's illogical to "return"
  * and emailed item.
@@ -33,11 +33,11 @@ public class OneWayMonetized extends OneWay {
      * Constructs a transactions.OneWayMonetized object. This is the subclass of OneWayRequest, as it contains all attributes,
      * yet has an additional cost attribute, depending of if the transactions.Transaction is permanent or temporary. If the transactions.Transaction will
      * be temporary, then there is a rentDuration attribute that represents the amount of time the owner would like to rent out the Item.
-     * @param user1 The User who initiated the requests.TradeRequest
+     * @param user1 The User who initiated the TradeRequest
      * @param item The Item User1 currently wants
-     * @param temp A boolean representing if the requests.TradeRequest will be temp or not.
-     * @param virtual A boolean that determines the requests.TradeRequest will have no meeting (true: This transactions.
-     *                Transaction will not have a meetings.Meeting, false: This transactions.Transaction will have a meetings.Meeting.)
+     * @param temp A boolean representing if the TradeRequest will be temp or not.
+     * @param virtual A boolean that determines the TradeRequest will have no meeting (true: This transactions.
+     *                Transaction will not have a Meeting, false: This transactions.Transaction will have a Meeting.)
      */
     public OneWayMonetized(User user1, Item item, boolean temp, boolean virtual, String email){
         super(user1, item, temp, virtual);
@@ -91,7 +91,7 @@ public class OneWayMonetized extends OneWay {
     }
 
     /**
-     * Gets the cost of this Item. Note: If the requests.TradeRequest is temporary, the cost will represent the cost to rent. If the requests.TradeRequest
+     * Gets the cost of this Item. Note: If the TradeRequest is temporary, the cost will represent the cost to rent. If the TradeRequest
      * is permanent, it will represent the cost to buy.
      * @return A double of the current cost of the item.
      */
@@ -101,7 +101,7 @@ public class OneWayMonetized extends OneWay {
 
     /**
      * Sets the duration for which the owner of the Item will allow the receiver of the Item to borrow it for. Notice this is only
-     * initiated if this requests.TradeRequest is temporary.
+     * initiated if this TradeRequest is temporary.
      * @param days Integer of the number of days the owner of the Item will allow the receiver of the Item to borrow it for.
      */
     public void setRentDuration(int days){
@@ -110,7 +110,7 @@ public class OneWayMonetized extends OneWay {
 
     /**
      * Gets the duration for which the owner of the Item will allow the receiver of the Item to borrow it for. Notice this is only
-     * initiated if this requests.TradeRequest is temporary.
+     * initiated if this TradeRequest is temporary.
      * @return Integer of the number of days the owner of the Item will allow the receiver of the Item to borrow it for.
      */
     public int getRentDuration(){

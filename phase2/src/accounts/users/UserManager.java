@@ -208,7 +208,7 @@ public class UserManager implements Serializable {
      * Adds a transactions.Transaction to a User's list of Transactions requested in a given week
      *
      * @param user    User whose list of Transactions requested in a given week will be added to
-     * @param request requests.TradeRequest to add to this User's list of Transactions requested in a given week
+     * @param request TradeRequest to add to this User's list of Transactions requested in a given week
      */
     public void addToWeeklyRequestLimit(User user, TradeRequest request) {
         Integer temp = request.getDate().get(Calendar.WEEK_OF_YEAR);
@@ -216,40 +216,40 @@ public class UserManager implements Serializable {
     }
 
     /**
-     * Adds a requests.TradeRequest to a User's list of outbound TradeRequests
+     * Adds a TradeRequest to a User's list of outbound TradeRequests
      *
      * @param user    User whose list of outbound TradeRequests will be added to
-     * @param request requests.TradeRequest to add to this User's list of outbound TradeRequests
+     * @param request TradeRequest to add to this User's list of outbound TradeRequests
      */
     public void addToOutboundRequests(User user, TradeRequest request) {
         user.getOutboundRequests().add(request);
     }
 
     /**
-     * Removes a requests.TradeRequest from a User's list of outbound TradeRequests
+     * Removes a TradeRequest from a User's list of outbound TradeRequests
      *
-     * @param user    User who will have a requests.TradeRequest removed from their list of outbound TradeRequests
-     * @param request requests.TradeRequest to remove from this User's list of outbound TradeRequests
+     * @param user    User who will have a TradeRequest removed from their list of outbound TradeRequests
+     * @param request TradeRequest to remove from this User's list of outbound TradeRequests
      */
     public void removeFromOutboundRequests(User user, TradeRequest request) {
         user.getOutboundRequests().remove(request);
     }
 
     /**
-     * Adds a requests.TradeRequest to a User's pending trade requests
+     * Adds a TradeRequest to a User's pending trade requests
      *
-     * @param user    User who will receive a new requests.TradeRequest
-     * @param request requests.TradeRequest to be received by this User
+     * @param user    User who will receive a new TradeRequest
+     * @param request TradeRequest to be received by this User
      */
     public void addToPendingRequests(User user, TradeRequest request) {
         user.getPendingRequests().add(request);
     }
 
     /**
-     * Removes a requests.TradeRequest from a User's pending trade requests
+     * Removes a TradeRequest from a User's pending trade requests
      *
-     * @param user    User who will have a requests.TradeRequest removed from their pending trade requests
-     * @param request requests.TradeRequest to be removed from this User's pending trade requests
+     * @param user    User who will have a TradeRequest removed from their pending trade requests
+     * @param request TradeRequest to be removed from this User's pending trade requests
      */
     public void removeFromPendingRequests(User user, TradeRequest request) {
         user.getPendingRequests().remove(request);

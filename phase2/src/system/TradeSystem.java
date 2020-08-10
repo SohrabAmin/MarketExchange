@@ -49,8 +49,8 @@ public class TradeSystem {
         //either returns the saved transactions.TransactionManager object with all the stored Transactions
         //or creates a new transactions.Transaction object if file TransactionList.ser is empty
         allTransactions = readwrite.transactionManagerPopulate("TransactionList.ser");
-        //either returns the saved requests.TradeRequest object with all the stored Trade Requests
-        //or creates a new requests.TradeRequest object if file TradeRequestList.ser is empty
+        //either returns the saved TradeRequest object with all the stored Trade Requests
+        //or creates a new TradeRequest object if file TradeRequestList.ser is empty
         allTradeRequests = readwrite.tradeRequestPopulate("TradeRequestList.ser");
         //populates the system inventory in the initialized ItemManager AllItems with all the saved
         //items in the file ItemList.ser
@@ -161,7 +161,7 @@ public class TradeSystem {
         readwrite.saveToFile("TransactionList.ser", allTransactions);
         //saves the systemInventory in AllItems to an external file
         readwrite.saveToFile("ItemList.ser", allItems);
-        //saves current requests.TradeRequest object allTradeRequests to an external file
+        //saves current TradeRequest object allTradeRequests to an external file
         readwrite.saveToFile("TradeRequestList.ser", allTradeRequests);
         //saves current UserMessageManager object allTradeRequests to an external file
         readwrite.saveToFile("UserMessages.ser", allUserMessages);
