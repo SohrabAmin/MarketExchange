@@ -684,11 +684,10 @@ public class UndoAction implements AdminMainMenuOptions {
      * @return null so admin can return back to the list of logs when undoTradeRequest is done
      */
     public Object undoWishlist (UserManager allUsers, String chosenLog){
-        System.out.println(chosenLog.split(" ")[2]);
         User temp = new User(chosenLog.split(" ")[2], "1");
         User user = allUsers.getUser(temp);
         if (user == null) {
-            System.out.println("This user no longer exists.");
+            System.out.println("This user no longer exists or has changed their username. No actions have been undone.");
             return null;
         }
         String itemName = chosenLog.split("\"")[1];

@@ -19,7 +19,9 @@ public class NotifyUserOfAdminUndo implements UserNotification {
             for (int i = 0; i < user.getNotifyUndo().size(); i++) {
                 System.out.println(user.getNotifyUndo().get(i));
                 allUsers.addToAdminActionHistory(user, user.getNotifyUndo().get(i));
-                allUsers.removeFromNotifyUndo(user, user.getNotifyUndo().get(i));
+            }
+            for (int j = 0; j < user.getNotifyUndo().size(); j++) {
+                allUsers.removeFromNotifyUndo(user, user.getNotifyUndo().get(j));
             }
             System.out.println("For further information, please message Admin. To read these notifications again, " +
                     "please go to Account Settings to view Admin Change Log.\n");
