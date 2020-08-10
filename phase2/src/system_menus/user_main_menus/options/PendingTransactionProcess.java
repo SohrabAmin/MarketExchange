@@ -2,7 +2,6 @@ package system_menus.user_main_menus.options;
 
 import java.util.List;
 import java.util.Scanner;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import transactions.*;
 import meetings.*;
@@ -49,8 +48,8 @@ public class PendingTransactionProcess implements UserMainMenuOptions {
                 if (user.getName().equals(b.getName())) {
                     b = t.getFirstTrader();
                 }
-                System.out.print((i + 1) + " . items.Item " + t.getItem().getName() + " with " + b.getName() + "\n");
-                System.out.print("[One Way] " + Integer.toString(i + 1) + " . items.Item " + t.getItem().getName() +
+                System.out.print((i + 1) + " . Item " + t.getItem().getName() + " with " + b.getName() + "\n");
+                System.out.print("[One Way] " + Integer.toString(i + 1) + " . Item " + t.getItem().getName() +
                         " with " + b.getName() + "\n");
             }
             if (pendingTransactions.get(i) instanceof TwoWay) {
@@ -59,7 +58,7 @@ public class PendingTransactionProcess implements UserMainMenuOptions {
                 if (user.getName().equals(b.getName())) {
                     b = t.getSecondTrader();
                 }
-                System.out.print("[Two Way] " + Integer.toString(i + 1) + " . items.Item " + t.getFirstItem().getName() +
+                System.out.print("[Two Way] " + Integer.toString(i + 1) + " . Item " + t.getFirstItem().getName() +
                         " with " + b.getName() + "\n");
             }
         }
@@ -94,9 +93,7 @@ public class PendingTransactionProcess implements UserMainMenuOptions {
                 if (input.equals("1")) { //if they approve
                     //need another method for usermanager so that transactions in progress but meeting is set
                     System.out.print("Your meeting has been set!\n");
-                    allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 1, currencyManager);
-
-                    undoLogger.log(Level.INFO, selectedT.toString());
+                    allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 1, currencyManager, undoLogger );
 
                 } else if (input.equals(("2"))) {
                     //they want to propose a new time
@@ -110,9 +107,7 @@ public class PendingTransactionProcess implements UserMainMenuOptions {
                     if (tt.getInitialMeeting().geteditHistory(user.getName()) == allAdmins.getMeetingEditThreshold()) {
                         //one person reached 3 edits, its time to delete this transaction
                         allTransactions.handleCancelledTrade(allAdmins, allUsers, selectedT, currencyManager);
-                        allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 4, currencyManager);
-
-                        undoLogger.log(Level.INFO, selectedT.toString());
+                        allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 4, currencyManager, undoLogger );
 
                         System.out.print("\uD83D\uDE22 Sorry! You couldn't agree on a time so we deleted the transaction!\n" +
                                 "Please try again!\n");
@@ -134,9 +129,7 @@ public class PendingTransactionProcess implements UserMainMenuOptions {
                 } else if (input.equals("3")) {
                     //need another method for usermanager so that transactions in progress but meeting is set
                     System.out.print("Your meeting has been cancelled!\n");
-                    allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 4, currencyManager);
-
-                    undoLogger.log(Level.INFO, selectedT.toString());
+                    allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 4, currencyManager, undoLogger );
                 }
             }
         }
@@ -159,9 +152,8 @@ public class PendingTransactionProcess implements UserMainMenuOptions {
                 String input = sc1.nextLine();
                 if (input.equals("1")) { //if they approve
                     //need another method for usermanager so that transactions in progress but meeting is set
-                    allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 1, currencyManager);
+                    allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 1, currencyManager, undoLogger );
 
-                    undoLogger.log(Level.INFO, selectedT.toString());
 
                 } else if (input.equals(("2"))) { //they want to propose a new time
                     //provide warning if the is at their 3rd strike
@@ -172,9 +164,7 @@ public class PendingTransactionProcess implements UserMainMenuOptions {
                     if (tt2.getInitialMeeting().geteditHistory(user.getName()) == 3) {
                         //one person reached 3 edits, its time to delete this transaction
                         allTransactions.handleCancelledTrade(allAdmins, allUsers, selectedT, currencyManager);
-                        allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 4, currencyManager);
-
-                        undoLogger.log(Level.INFO, selectedT.toString());
+                        allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 4, currencyManager, undoLogger);
 
                         System.out.print("\uD83D\uDE22 Sorry! You couldn't agree on a time so we deleted the transaction!\n" +
                                 "Please try again!\n");

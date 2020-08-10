@@ -80,8 +80,6 @@ public class TwoWay extends Transaction implements Serializable {
                 "; \nTrader 2: " + getSecondTrader().getName() + " Item: " + getSecondItem().getName() +
                 "; \nStatus: " + getTradeStatus() +
                 "; \nIs temporary?: " + getTemp() +
-                "; \nIs in-person?: " + !getVirtual() +
-                "; \nInitial meeting: " + getInitialMeeting().toString() +
-                "; \nReturn meeting: " + getReturnMeeting().toString() + ".\n";
+                "; \nIs in-person?: " + !getVirtual() + " \n";
     }
 }

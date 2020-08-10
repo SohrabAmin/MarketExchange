@@ -48,7 +48,7 @@ public class ChosenOption {
      */
     public Object executeOption(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                                 UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                                AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages, CurrencyManager allCurrency ) {
+                                AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages, CurrencyManager allCurrency) {
 
         return ((UserMainMenuOptions) chosenOption).execute(user, allItems, allTradeRequests, allUsers,
                 allMeetings, allTransactions, allAdmins, undoLogger, allUserMessages, allCurrency );
@@ -70,8 +70,8 @@ public class ChosenOption {
      */
     public Object executeOption(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,
                                 UserMessageManager allUserMessages, TransactionManager allTransactions,
-                                TradeRequestManager allRequests, CurrencyManager allCurrency) {
+                                TradeRequestManager allRequests, CurrencyManager allCurrency, Logger undoLogger) {
         return ((AdminMainMenuOptions) chosenOption).execute(admin, allAdmins, allUsers, allItems, allUserMessages, allTransactions,
-                allRequests, allCurrency);
+                allRequests, allCurrency, undoLogger);
     }
 }

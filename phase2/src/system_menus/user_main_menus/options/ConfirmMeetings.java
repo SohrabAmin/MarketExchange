@@ -114,36 +114,17 @@ public class ConfirmMeetings implements UserMainMenuOptions {
                     else if (t.getPerson1Confirmed()){
                         //if one person has confirmed
                         t.Person2Confirmed();
-                        allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 3, currencyManager);
+                        allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 3, currencyManager, undoLogger);
                         //i probably should deal with money here or moe/aidan should idk
                         System.out.print("Confirmed by you! Looks like both sides have confirmed!\n");
                         return user;
 
                     }
-
-
-                }
-
-                else if (action.equals("2")){
+                } else if (action.equals("2")){
                     System.out.print("\u2639 Cancelling this transaction! We are sorry to hear that! Better luck next time!\n");
-                    allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 4, currencyManager);
-
-
-
-
+                    allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 4, currencyManager, undoLogger );
                 }
-
             }
-
-
-
-
-
-
-
-
-
-
             System.out.print("You have selected:\n");
             Integer confirmed = selectedTransaction.getInitialMeeting().userconfirmed(user.getName());
 
@@ -159,16 +140,12 @@ public class ConfirmMeetings implements UserMainMenuOptions {
             if (action.equals("1")) {
                 //confirm meeting by the user
 
-
-
                 selectedTransaction.getInitialMeeting().meetingConfirmed(user.getName());
                 System.out.print("Confirmed that the meeting occurred on " + selectedTransaction.getInitialMeeting() + "\n");
 
                 //lets check if both people have confirmed meeting
                 if (selectedTransaction.getInitialMeeting().confirmedByBothSides()) {
                     //looks like the meeting was confirmed by both parties!
-
-
 
                     //now i have to check if it was 2 way or 3 way
 
@@ -177,11 +154,11 @@ public class ConfirmMeetings implements UserMainMenuOptions {
                         System.out.print("\uD83E\uDD29 Looks like the meeting was confirmed by both sides!\n ");
 
                         if (!selectedTransaction.getTemp()){
-                        allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 3, currencyManager);
+                        allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 3, currencyManager, undoLogger );
                         return user;}
                         else if (selectedTransaction.getTemp()){
                             //if it was a temporary meeting, then I need to set up a second meeting
-                            allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 2, currencyManager);
+                            allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 2, currencyManager, undoLogger );
                             //by now, the second agreed upon meeting is set for both accounts.users
 
 
@@ -209,11 +186,11 @@ public class ConfirmMeetings implements UserMainMenuOptions {
                     else if (selectedTransaction instanceof TwoWay){
                         System.out.print("\uD83E\uDD29 Looks like the meeting was confirmed by both sides!\n ");
                     if (!selectedTransaction.getTemp()) { //if it was a permenant transaction
-                        allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 3, currencyManager);
+                        allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 3, currencyManager, undoLogger );
 
                     } else if (selectedTransaction.getTemp()) {
                         //if it was a temporary meeting, then I need to set up a second meeting
-                        allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 2, currencyManager);
+                        allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 2, currencyManager, undoLogger );
                         //by now, the second agreed upon meeting is set for both accounts.users
                         Calendar date = selectedTransaction.getInitialMeeting().getDate();
                         date.add(Calendar.MONTH, 1);
@@ -231,11 +208,11 @@ public class ConfirmMeetings implements UserMainMenuOptions {
                         //if its confirmed by all 3 side
                         if (selectedTransaction.getInitialMeeting().confirmByThreeSides()){
                             if (!selectedTransaction.getTemp()) { //if it was a permenant transaction
-                                allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 3, currencyManager);
+                                allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 3, currencyManager, undoLogger);
                                 System.out.print("Guess it is confirmed by all 3 people?!\n");
                             }else if (selectedTransaction.getTemp()) { //if it was temporary
                                 //if it was a temporary meeting, then I need to set up a second meeting
-                                allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 2, currencyManager);
+                                allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 2, currencyManager, undoLogger );
                                 //by now, the second agreed upon meeting is set for both accounts.users
                                 Calendar date = selectedTransaction.getInitialMeeting().getDate();
                                 date.add(Calendar.MONTH, 1);
@@ -247,24 +224,13 @@ public class ConfirmMeetings implements UserMainMenuOptions {
                                 allTransactions.setFinalMeeting(selectedTransaction, returnMeeting);
 
                             }
-
-
-
-
-
                         }
-
-
-
-
-
-
                     }
 
                 }
             } else if (selection.equals("2") || selection.equals("3")) { //cancelling
                 System.out.print("\u2639 We are sorry to hear that! Better luck next time!\n");
-                allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 4, currencyManager);
+                allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 4, currencyManager, undoLogger);
             }
         }
         else if (selection.equals("2")) {
@@ -309,13 +275,13 @@ public class ConfirmMeetings implements UserMainMenuOptions {
 
                     if (selectedTransaction instanceof OneWay){
                         System.out.print("\uD83E\uDD29 Looks like the meeting was confirmed by both sides!\n ");
-                        allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 3, currencyManager);
+                        allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 3, currencyManager, undoLogger);
                     }
 
 
                     if (selectedTransaction instanceof TwoWay){
                     System.out.print("\uD83E\uDD29 Looks like the meeting was confirmed by both sides!\n ");
-                    allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 3, currencyManager);
+                    allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 3, currencyManager, undoLogger);
                     }
                     else if (selectedTransaction instanceof ThreeWay){
                         selectedTransaction.getInitialMeeting().meetingConfirmed(user.getName());
@@ -323,7 +289,7 @@ public class ConfirmMeetings implements UserMainMenuOptions {
                         if (selectedTransaction.getReturnMeeting().confirmByThreeSides()){
                             //if everyone confirmed
                             System.out.print("Looks like everyone confirmed!\n");
-                            allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 3, currencyManager);
+                            allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 3, currencyManager,undoLogger );
                         }
 
 

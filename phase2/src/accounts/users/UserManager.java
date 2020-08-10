@@ -645,8 +645,8 @@ public class UserManager implements Serializable {
         user.getApprovedThreeWay().remove(request);
     }
 
-    public void addToVIPStatusChangeHistory(User user, String VIPStatusChange) {
-        user.getVIPStatusChangeHistory().add(VIPStatusChange);
+    public void addToVIPStatusChangeNotifications(User user, String VIPStatusChangeNotification) {
+        user.getVIPStatusChangeNotifications().add(VIPStatusChangeNotification);
     }
 
     public void removeFromVIPStatusChangeNotifications(User user, String VIPStatusChangeNotification) {

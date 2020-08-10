@@ -44,7 +44,6 @@ public class User extends Account {
     private ArrayList<String> notifyUndo;
     private ArrayList<String> adminActionHistory;
     private ArrayList<String> VIPStatusChangeNotifications;
-    private ArrayList<String> VIPStatusChangeHistory;
     private ArrayList<String> AdminMessages;
     private double capital = 250; //US dollars
     private List<CreditCard> creditCards;
@@ -84,7 +83,6 @@ public class User extends Account {
         notifyUndo = new ArrayList<>();
         adminActionHistory = new ArrayList<>();
         VIPStatusChangeNotifications = new ArrayList<>();
-        VIPStatusChangeHistory = new ArrayList<>();
         AdminMessages = new ArrayList<>();
         vacationStorage = new ArrayList<>();
         this.creditCards = new ArrayList<>();
@@ -528,10 +526,6 @@ public class User extends Account {
 
     public List<String> getVIPStatusChangeNotifications() {
         return this.VIPStatusChangeNotifications;
-    }
-
-    public List<String> getVIPStatusChangeHistory() {
-        return this.VIPStatusChangeHistory;
     }
 
 }

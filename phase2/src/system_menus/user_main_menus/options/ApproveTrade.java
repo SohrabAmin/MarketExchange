@@ -200,11 +200,11 @@ public class ApproveTrade implements UserMainMenuOptions {
                     //no one has approved yet.
 
                                         System.out.print("Funds are now held until you confirm that you have sent the email and " + t.getFirstUser().getName() +
-                            " confirms that they have recieved the email.\n");
+                            " confirms that they have received the email.\n");
                     allTransactions.addToPendingTransactions(final1, allUsers, currencyManager);
                     allTradeRequests.updateRequestStatus(allUsers, cTrade, 1);
 
-                    allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, final1, 1, currencyManager);
+                    allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, final1, 1, currencyManager, undoLogger);
                     return user;
 
                 }
@@ -664,7 +664,7 @@ public class ApproveTrade implements UserMainMenuOptions {
                          final3.setInitialMeeting(finalizedmeeting);
                         allTradeRequests.updateRequestStatus(allUsers, cTrade, 1);
 
-                        allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, final3, 1, currencyManager);
+                        allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, final3, 1, currencyManager, undoLogger);
 
                         //FINALLY EVERYONE IS HAPPY LETS PROPOSE A MEETING
 

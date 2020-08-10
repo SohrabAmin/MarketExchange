@@ -13,6 +13,7 @@ import transactions.TransactionManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class FreezeOrUnfreeze implements AdminMainMenuOptions {
 
@@ -31,7 +32,7 @@ public class FreezeOrUnfreeze implements AdminMainMenuOptions {
      */
     public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,
                           UserMessageManager allUserMessages, TransactionManager allTransactions,
-                          TradeRequestManager allRequests, CurrencyManager allCurrency) {
+                          TradeRequestManager allRequests, CurrencyManager allCurrency, Logger undoLogger) {
         System.out.println("What would you like to do? Please select the number beside the option or enter " +
                 "'back' to return to the main menu.");
         System.out.println("1.View unfreeze requests\n2.Unfreeze frozen accounts.users\n3.Freeze accounts.users");
