@@ -11,10 +11,8 @@ import accounts.users.*;
 import accounts.admins.*;
 import requests.*;
 import currency.*;
-import system_menus.admin_main_menus.options.*;
-import system_menus.user_main_menus.options.*;
 
-public class Browse implements userMainMenuOptions {
+public class Browse implements UserMainMenuOptions {
 
     /**
      * Allows accounts.users.User user to browse the System's inventory and add any of the items in the System's inventory to

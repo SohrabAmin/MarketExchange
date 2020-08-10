@@ -10,9 +10,8 @@ import accounts.users.*;
 import accounts.admins.*;
 import requests.*;
 import currency.*;
-import system_menus.admin_main_menus.options.*;
-import system_menus.user_main_menus.options.*;
-public class PrintMostRecentTrades implements userMainMenuOptions{
+
+public class PrintMostRecentTrades implements UserMainMenuOptions {
 
     /**
      * Prints out the accounts.users.User user's most recent trades.

@@ -13,7 +13,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class changeThreshold implements adminMainMenuOptions {
+public class ChangeThreshold implements AdminMainMenuOptions {
 
     /**
      * Changes the lentMinusBorrowedThreshold which dictates how much more a user has to have lent than borrowed,

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class PromoteOrDemoteAdmin implements adminMainMenuOptions {
+public class PromoteOrDemoteAdmin implements AdminMainMenuOptions {
 
     /**
      * Allows a super admin to:

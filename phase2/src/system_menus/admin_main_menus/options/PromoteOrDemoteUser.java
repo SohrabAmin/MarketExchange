@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class PromoteOrDemoteUser implements adminMainMenuOptions {
+public class PromoteOrDemoteUser implements AdminMainMenuOptions {
 
     /**
      * Allows an admin to:

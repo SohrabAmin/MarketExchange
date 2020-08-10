@@ -9,10 +9,8 @@ import accounts.users.*;
 import accounts.admins.*;
 import requests.*;
 import currency.*;
-import system_menus.admin_main_menus.options.*;
-import system_menus.user_main_menus.options.*;
 
-public class AddItemToSystem implements userMainMenuOptions {
+public class AddItemToSystem implements UserMainMenuOptions {
     /**
      * Deals with requesting to add a new item to the system's inventory. Prompts user for details of the item
      * and sends a request to the accounts.admins.Admin for approval. Adds the item to the accounts.users.User's item history so they can

@@ -11,7 +11,7 @@ import java.util.Calendar;
  * assuming noMeeting Transactions are permanent, as it's illogical to "return" and emailed item.
  */
 
-public class typeTwoRequest extends TradeRequest {
+public class TypeTwoRequest extends TradeRequest {
 
 
     private User user1;
@@ -29,7 +29,7 @@ public class typeTwoRequest extends TradeRequest {
      * @param date A Calender representing the date/time the requests.TradeRequest was sent.
      * @param virtual A boolean that determines the requests.TradeRequest will have no meeting (true: This transactions.Transaction will not have a meetings.Meeting, false: This transactions.Transaction will have a meetings.Meeting.)
      */
-    public typeTwoRequest(Item item1, Item item2, String message, boolean temp, Calendar date, boolean virtual) {
+    public TypeTwoRequest(Item item1, Item item2, String message, boolean temp, Calendar date, boolean virtual) {
         super(message, temp, date, virtual);
         this.user1 = item1.getOwner();
         this.user2 = item2.getOwner();
@@ -38,16 +38,16 @@ public class typeTwoRequest extends TradeRequest {
     }
 
     /**
-     * Gets the accounts.users.User who initiates the requests.typeTwoRequest
-     * @return accounts.users.User that initiated the requests.typeTwoRequest
+     * Gets the accounts.users.User who initiates the requests.TypeTwoRequest
+     * @return accounts.users.User that initiated the requests.TypeTwoRequest
      */
     public User getFirstUser() {
         return this.user1;
     }
 
     /**
-     * Gets the accounts.users.User who receives the requests.typeTwoRequest
-     * @return accounts.users.User that received requests.typeTwoRequest
+     * Gets the accounts.users.User who receives the requests.TypeTwoRequest
+     * @return accounts.users.User that received requests.TypeTwoRequest
      */
     public User getSecondUser() {
         return this.user2;

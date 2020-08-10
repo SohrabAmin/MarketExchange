@@ -9,8 +9,8 @@ import currency.CurrencyManager;
 import items.ItemManager;
 import meetings.MeetingManager;
 import requests.TradeRequestManager;
-import system_menus.admin_main_menus.options.adminMainMenuOptions;
-import system_menus.user_main_menus.options.userMainMenuOptions;
+import system_menus.admin_main_menus.options.AdminMainMenuOptions;
+import system_menus.user_main_menus.options.UserMainMenuOptions;
 import transactions.TransactionManager;
 
 import java.util.logging.Logger;
@@ -50,7 +50,7 @@ public class ChosenOption {
                                 UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
                                 AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages, CurrencyManager allCurrency ) {
 
-        return ((userMainMenuOptions) chosenOption).execute(user, allItems, allTradeRequests, allUsers,
+        return ((UserMainMenuOptions) chosenOption).execute(user, allItems, allTradeRequests, allUsers,
                 allMeetings, allTransactions, allAdmins, undoLogger, allUserMessages, allCurrency );
     }
 
@@ -63,7 +63,7 @@ public class ChosenOption {
      * @param allUsers accounts.users.UserManager which holds all the Users in the system
      * @param allItems items.ItemManager which holds the system inventory
      * @return depending on what the accounts.admins.Admin inputs it will return different objects:
-     * returns null to tell mainmenu() to call system_options.admin_main_menus.options.addAdmin() again
+     * returns null to tell mainmenu() to call system_options.admin_main_menus.options.AddAdmin() again
      * returns String "back" to tell mainmenu() to prompt main menu again so accounts.users.User can choose another
      * main menu option
      * returns String "exit" to prompt system.TradeSystem to save all the information and exit the System
@@ -71,7 +71,7 @@ public class ChosenOption {
     public Object executeOption(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,
                                 UserMessageManager allUserMessages, TransactionManager allTransactions,
                                 TradeRequestManager allRequests, CurrencyManager allCurrency) {
-        return ((adminMainMenuOptions) chosenOption).execute(admin, allAdmins, allUsers, allItems, allUserMessages, allTransactions,
+        return ((AdminMainMenuOptions) chosenOption).execute(admin, allAdmins, allUsers, allItems, allUserMessages, allTransactions,
                 allRequests, allCurrency);
     }
 }

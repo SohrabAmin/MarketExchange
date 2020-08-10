@@ -9,9 +9,8 @@ import accounts.users.*;
 import accounts.admins.*;
 import requests.*;
 import currency.*;
-import system_menus.admin_main_menus.options.*;
-import system_menus.user_main_menus.options.*;
-public class PrintItemHistory implements userMainMenuOptions {
+
+public class PrintItemHistory implements UserMainMenuOptions {
 
     /**
      * Allows the accounts.users.User to view their item history and it's status. It will display whether it is

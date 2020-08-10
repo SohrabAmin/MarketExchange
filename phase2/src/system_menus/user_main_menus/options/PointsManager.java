@@ -13,7 +13,7 @@ import transactions.TransactionManager;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
-public class PointsManager implements userMainMenuOptions {
+public class PointsManager implements UserMainMenuOptions {
     /**
      * Displays the points of the user and allow user to become VIP user if they are eligible.
      *

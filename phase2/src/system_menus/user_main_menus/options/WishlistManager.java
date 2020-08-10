@@ -11,9 +11,8 @@ import accounts.users.*;
 import accounts.admins.*;
 import requests.*;
 import currency.*;
-import system_menus.admin_main_menus.options.*;
-import system_menus.user_main_menus.options.*;
-public class WishlistManager implements userMainMenuOptions {
+
+public class WishlistManager implements UserMainMenuOptions {
 
     /**
      * Prints out the wishlist of the accounts.users.User user showing the name and description of the items. Allows user to edit

@@ -4,7 +4,7 @@ import accounts.Account;
 import currency.CreditCard;
 import items.Item;
 import requests.TradeRequest;
-import requests.typeThreeRequest;
+import requests.TypeThreeRequest;
 import transactions.Transaction;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class User extends Account {
     private List<Transaction> tradeHistory;
     private List<User> topTradingPartners;
     private List<TradeRequest> pendingRequests;
-    private List<typeThreeRequest> approvedThreeWay;
+    private List<TypeThreeRequest> approvedThreeWay;
     private List<TradeRequest> outboundRequests;
     private List<Transaction> pendingTrades;
     private boolean isPseudoFrozen;
@@ -489,7 +489,7 @@ public class User extends Account {
      * Getter for Approved three way trade for this user
      * @return all the approved three way trade requests that are approved by this user.
      */
-    public List<typeThreeRequest> getApprovedThreeWay(){
+    public List<TypeThreeRequest> getApprovedThreeWay(){
         return this.approvedThreeWay;
     }
 

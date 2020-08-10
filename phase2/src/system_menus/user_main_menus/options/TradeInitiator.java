@@ -10,9 +10,8 @@ import accounts.users.*;
 import accounts.admins.*;
 import requests.*;
 import currency.*;
-import system_menus.admin_main_menus.options.*;
-import system_menus.user_main_menus.options.*;
-public class TradeInitiator implements userMainMenuOptions {
+
+public class TradeInitiator implements UserMainMenuOptions {
 
     /**
      * Initiates a one-way or two-way trade between two Users. Prompts user for details of the trade.
@@ -103,7 +102,7 @@ public class TradeInitiator implements userMainMenuOptions {
 
         }
 
-            typeOneRequest trade = new typeOneRequest(user, tradeItem, email, false, today, tradeItem.getVirtual(), true);
+            TypeOneRequest trade = new TypeOneRequest(user, tradeItem, email, false, today, tradeItem.getVirtual(), true);
             allTradeRequests.receiveTradeRequest(allUsers, trade);
 
             System.out.print("Your request is sent.\n");
@@ -145,7 +144,7 @@ public class TradeInitiator implements userMainMenuOptions {
             String mssge = "";
             System.out.print("Please enter message for the owner of the item\n");
             mssge =  sc.nextLine();
-            typeOneRequest trade = new typeOneRequest(user, tradeItem, mssge, false, today, tradeItem.getVirtual(), true);
+            TypeOneRequest trade = new TypeOneRequest(user, tradeItem, mssge, false, today, tradeItem.getVirtual(), true);
             allTradeRequests.receiveTradeRequest(allUsers, trade);
             System.out.print("Your request is sent!\n");
             return user;
@@ -165,7 +164,7 @@ public class TradeInitiator implements userMainMenuOptions {
             String mssge = "";
             System.out.print("Please enter message for the owner of the item\n");
             mssge =  sc.nextLine();
-            typeOneRequest trade = new typeOneRequest(user, tradeItem, mssge, true, today, tradeItem.getVirtual(), true);
+            TypeOneRequest trade = new TypeOneRequest(user, tradeItem, mssge, true, today, tradeItem.getVirtual(), true);
             allTradeRequests.receiveTradeRequest(allUsers, trade);
             System.out.print("Your request to rent item for " + tradeItem.getRentDuration() + " days is sent!\n");
             return user;
@@ -193,7 +192,7 @@ public class TradeInitiator implements userMainMenuOptions {
                 }
 
 
-                typeOneRequest trade = new typeOneRequest(user, tradeItem, mssge, true, today, tradeItem.getVirtual(), true);
+                TypeOneRequest trade = new TypeOneRequest(user, tradeItem, mssge, true, today, tradeItem.getVirtual(), true);
                 allTradeRequests.receiveTradeRequest(allUsers, trade);
                 System.out.print("Your request to rent item for " + tradeItem.getRentDuration() + " days is sent!\n");
                 return user;
@@ -206,7 +205,7 @@ public class TradeInitiator implements userMainMenuOptions {
                     return user;
                 }
 
-                typeOneRequest trade = new typeOneRequest(user, tradeItem, mssge, false, today, tradeItem.getVirtual(), true);
+                TypeOneRequest trade = new TypeOneRequest(user, tradeItem, mssge, false, today, tradeItem.getVirtual(), true);
                 allTradeRequests.receiveTradeRequest(allUsers, trade);
                 System.out.print("Your request is sent!\n");
                 return user;
@@ -231,7 +230,7 @@ public class TradeInitiator implements userMainMenuOptions {
                     System.out.print("\nYou do not have enough money to buy this\n");
                     return user;
                 }
-                typeOneRequest trade = new typeOneRequest(user, tradeItem, mssge, false, today, tradeItem.getVirtual(), true);
+                TypeOneRequest trade = new TypeOneRequest(user, tradeItem, mssge, false, today, tradeItem.getVirtual(), true);
                 allTradeRequests.receiveTradeRequest(allUsers, trade);
                 System.out.print("Your request is sent!\n");
                 return user;
@@ -264,7 +263,7 @@ public class TradeInitiator implements userMainMenuOptions {
                     return user;
                 }
 
-                typeOneRequest trade = new typeOneRequest(user, tradeItem, mssge, true, today, tradeItem.getVirtual(), true);
+                TypeOneRequest trade = new TypeOneRequest(user, tradeItem, mssge, true, today, tradeItem.getVirtual(), true);
                 allTradeRequests.receiveTradeRequest(allUsers, trade);
                 System.out.print("Your request to rent item for " + tradeItem.getRentDuration() + " days is sent!\n");
                 return user;
@@ -300,7 +299,7 @@ public class TradeInitiator implements userMainMenuOptions {
                 }
 
 
-                typeOneRequest trade = new typeOneRequest(user, tradeItem, mssge, true, today, tradeItem.getVirtual(), true);
+                TypeOneRequest trade = new TypeOneRequest(user, tradeItem, mssge, true, today, tradeItem.getVirtual(), true);
                 allTradeRequests.receiveTradeRequest(allUsers, trade);
                 System.out.print("Your request to rent item for " + tradeItem.getRentDuration() + " days is sent!\n");
                 return user;
@@ -317,7 +316,7 @@ public class TradeInitiator implements userMainMenuOptions {
                 String mssge = "";
                 System.out.print("Please enter message for the owner of the item\n");
                 mssge =  sc.nextLine();
-                typeOneRequest trade = new typeOneRequest(user, tradeItem, mssge, false, today, tradeItem.getVirtual(), true);
+                TypeOneRequest trade = new TypeOneRequest(user, tradeItem, mssge, false, today, tradeItem.getVirtual(), true);
                 allTradeRequests.receiveTradeRequest(allUsers, trade);
                 System.out.print("Your request is sent!\n");
                 return user;
@@ -388,7 +387,7 @@ public class TradeInitiator implements userMainMenuOptions {
             System.out.print("\nPlease enter '1' to confirm this trade or '2' to cancel the current trade and restart.\n");
             String confirmation = sc.nextLine();
             if (confirmation.equals("1")) {
-                TradeRequest trades = new typeOneRequest(user, tradeItem, message, temp, today, tradeItem.getVirtual(), monetized);
+                TradeRequest trades = new TypeOneRequest(user, tradeItem, message, temp, today, tradeItem.getVirtual(), monetized);
                 allUsers.addToWeeklyRequestLimit(user, trades);
                 allUsers.addToOutboundRequests(user, trades);
                 allTradeRequests.receiveTradeRequest(allUsers, trades);
@@ -475,7 +474,7 @@ public class TradeInitiator implements userMainMenuOptions {
             if (confirmation.equals("1")) {
                 myList.add(salam);
                 myList.add(tradeItem);
-                TradeRequest request = new typeTwoRequest(salam, tradeItem, message, temp, today, tradeItem.getVirtual());;
+                TradeRequest request = new TypeTwoRequest(salam, tradeItem, message, temp, today, tradeItem.getVirtual());;
                 allTradeRequests.receiveTradeRequest(allUsers, request);
                 allUsers.addToOutboundRequests(user, request);
                 allUsers.addToWeeklyRequestLimit(user, request);

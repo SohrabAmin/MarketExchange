@@ -6,12 +6,11 @@ import accounts.users.*;
 import accounts.admins.*;
 import requests.*;
 import currency.*;
-import system_menus.admin_main_menus.options.*;
-import system_menus.user_main_menus.options.*;
+
 import java.util.Scanner;
 import java.util.logging.Logger;
 
-public class AccountSettingsManager implements userMainMenuOptions {
+public class AccountSettingsManager implements UserMainMenuOptions {
 
     /**
      * Deals with changing the account settings of accounts.users.User-- they are able to change their username,

@@ -9,7 +9,7 @@ import java.util.Calendar;
  * the system does not create an instance of transactions.Transaction unless the corresponding requests.TradeRequest has been approved by the accounts.users.User receiving the requests.TradeRequest. Notice we
  * assuming noMeeting Transactions are permanent, as it's illogical to "return" and emailed item.
  */
-public class typeOneRequest extends TradeRequest {
+public class TypeOneRequest extends TradeRequest {
 
 
     private User user1;
@@ -27,7 +27,7 @@ public class typeOneRequest extends TradeRequest {
      * @param date A Calender representing the date/time the requests.TradeRequest was sent.
      * @param virtual A boolean that determines the requests.TradeRequest will have no meeting (true: This transactions.Transaction will not have a meetings.Meeting, false: This transactions.Transaction will have a meetings.Meeting.)
      */
-    public typeOneRequest(User user1, Item item, String message, boolean temp, Calendar date, boolean virtual, boolean monetized) {
+    public TypeOneRequest(User user1, Item item, String message, boolean temp, Calendar date, boolean virtual, boolean monetized) {
         super(message, temp, date, virtual);
         this.user1 = user1;
         this.user2 = item.getOwner();
@@ -35,16 +35,16 @@ public class typeOneRequest extends TradeRequest {
         this.monetized = monetized;
     }
     /**
-     * Gets the accounts.users.User who initiates the requests.typeOneRequest
-     * @return accounts.users.User that initiated the requests.typeOneRequest
+     * Gets the accounts.users.User who initiates the requests.TypeOneRequest
+     * @return accounts.users.User that initiated the requests.TypeOneRequest
      */
     public User getFirstUser() {
         return this.user1;
     }
 
     /**
-     * Gets the accounts.users.User who receives the requests.typeTwoRequest
-     * @return accounts.users.User that received requests.typeTwoRequest
+     * Gets the accounts.users.User who receives the requests.TypeTwoRequest
+     * @return accounts.users.User that received requests.TypeTwoRequest
      */
     public User getSecondUser() {
         return this.user2;

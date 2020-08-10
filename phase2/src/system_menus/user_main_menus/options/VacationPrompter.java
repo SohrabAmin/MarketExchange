@@ -9,9 +9,8 @@ import accounts.users.*;
 import accounts.admins.*;
 import requests.*;
 import currency.*;
-import system_menus.admin_main_menus.options.*;
-import system_menus.user_main_menus.options.*;
-public class VacationPrompter implements userMainMenuOptions {
+
+public class VacationPrompter implements UserMainMenuOptions {
     Scanner scanner = new Scanner(System.in);
 
     /**

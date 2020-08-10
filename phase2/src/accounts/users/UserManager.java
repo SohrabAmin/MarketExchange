@@ -4,7 +4,7 @@ import accounts.admins.AdminManager;
 import items.Item;
 import items.ItemManager;
 import requests.TradeRequest;
-import requests.typeThreeRequest;
+import requests.TypeThreeRequest;
 import transactions.*;
 
 import java.io.Serializable;
@@ -631,7 +631,7 @@ public class UserManager implements Serializable {
      * @param user    the user who has approved three way trade request
      * @param request request that is approved by this user
      */
-    public void addToApprovedThreeWay(User user, typeThreeRequest request) {
+    public void addToApprovedThreeWay(User user, TypeThreeRequest request) {
         user.getApprovedThreeWay().add(request);
     }
 
@@ -641,7 +641,7 @@ public class UserManager implements Serializable {
      * @param user    the user who
      * @param request
      */
-    public void removeFromApprovedThreeWay(User user, typeThreeRequest request) {
+    public void removeFromApprovedThreeWay(User user, TypeThreeRequest request) {
         user.getApprovedThreeWay().remove(request);
     }
 }

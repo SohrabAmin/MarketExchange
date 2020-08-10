@@ -9,7 +9,7 @@ import items.ItemManager;
 import requests.TradeRequestManager;
 import transactions.TransactionManager;
 
-public interface adminMainMenuOptions {
+public interface AdminMainMenuOptions {
     public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,
                           UserMessageManager allUserMessages, TransactionManager allTransactions,
                           TradeRequestManager allRequests, CurrencyManager allCurrency);

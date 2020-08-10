@@ -71,13 +71,13 @@ public class AdminInputGetter {
                 switch (input) {
                     //depending on their input, the correct "strategy" will be created and stored in the system_options.ChosenOption class
                     case "1":  //add new admin
-                        option.setChosenOption(new addAdmin());
+                        option.setChosenOption(new AddAdmin());
                         break;
                     case "2":  //change system threshold
-                        option.setChosenOption(new changeThreshold());
+                        option.setChosenOption(new ChangeThreshold());
                         break;
                     case "3":  //view items that need to be approved
-                        option.setChosenOption(new approvePendingItem());
+                        option.setChosenOption(new ApprovePendingItem());
                         break;
                     case "4":  //freeze or unfreeze accounts.users
                         option.setChosenOption(new FreezeOrUnfreeze());

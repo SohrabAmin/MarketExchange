@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class FreezeOrUnfreeze implements adminMainMenuOptions {
+public class FreezeOrUnfreeze implements AdminMainMenuOptions {
 
     /**
      * Allows admin to either view unfreeze requests, freeze and unfreeze accounts.users in the system.

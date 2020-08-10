@@ -10,14 +10,12 @@ import accounts.users.*;
 import accounts.admins.*;
 import requests.*;
 import currency.*;
-import system_menus.admin_main_menus.options.*;
-import system_menus.user_main_menus.options.*;
 
 /**
  * Display in User's main menu. Allow user to send and view messages to and from Admin.
  */
 
-public class UserMessage implements userMainMenuOptions, Serializable {
+public class UserMessage implements UserMainMenuOptions, Serializable {
     /**
      *
      * @param user The User currently logged into the system

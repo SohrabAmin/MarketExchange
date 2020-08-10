@@ -12,7 +12,7 @@ import transactions.TransactionManager;
 
 import java.util.logging.Logger;
 
-public class NotifyAdminOfUnfreezeRequest implements userMainMenuOptions {
+public class NotifyAdminOfUnfreezeRequest implements UserMainMenuOptions {
 
     /**
      * Notifies the accounts.admins.Admin of a Request to Unfreeze from accounts.users.User user.

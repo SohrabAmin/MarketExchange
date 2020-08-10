@@ -8,9 +8,8 @@ import accounts.users.*;
 import accounts.admins.*;
 import requests.*;
 import currency.*;
-import system_menus.admin_main_menus.options.*;
-import system_menus.user_main_menus.options.*;
-public class PrintUserMessages implements userMainMenuOptions {
+
+public class PrintUserMessages implements UserMainMenuOptions {
 
     /**
      * Prints the messages that accounts.users.User user has. Messages include Trade Requests and meetings.Meeting requests.

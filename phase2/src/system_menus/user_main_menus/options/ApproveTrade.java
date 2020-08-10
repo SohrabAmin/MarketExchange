@@ -14,10 +14,8 @@ import accounts.users.*;
 import accounts.admins.*;
 import requests.*;
 import currency.*;
-import system_menus.admin_main_menus.options.*;
-import system_menus.user_main_menus.options.*;
 
-public class ApproveTrade implements userMainMenuOptions {
+public class ApproveTrade implements UserMainMenuOptions {
 
 
 
@@ -59,8 +57,8 @@ public class ApproveTrade implements userMainMenuOptions {
         System.out.print("Here are your pending trade requests: \n");
         for (int i = 0; i < Trades.size(); i++) {
             String ext = "";
-            if (Trades.get(i) instanceof typeOneRequest) {
-                typeOneRequest t = (typeOneRequest) Trades.get(i);
+            if (Trades.get(i) instanceof TypeOneRequest) {
+                TypeOneRequest t = (TypeOneRequest) Trades.get(i);
                 //monitized or not
                 String ext1 = "";
                 //the person is looking to buy
@@ -89,14 +87,14 @@ public class ApproveTrade implements userMainMenuOptions {
 
                 }
             }
-            if (Trades.get(i) instanceof typeTwoRequest) {
-                typeTwoRequest t = (typeTwoRequest) Trades.get(i);
+            if (Trades.get(i) instanceof TypeTwoRequest) {
+                TypeTwoRequest t = (TypeTwoRequest) Trades.get(i);
                 //monitized or not
                 System.out.print(t.getFirstUser().getName() + " wants item: " + t.getSecondItem().getName() + " in return for " + t.getFirstItem().getName() +
                         "\n");
             }
-            if (Trades.get(i) instanceof typeThreeRequest) {
-                typeThreeRequest t = (typeThreeRequest) Trades.get(i);
+            if (Trades.get(i) instanceof TypeThreeRequest) {
+                TypeThreeRequest t = (TypeThreeRequest) Trades.get(i);
                 //--------------------------just displaying the message for the 3 way request
                 if (t.getApproved() == 1) {
                     String firstPerson = t.getFirstUser().getName();
@@ -177,10 +175,10 @@ public class ApproveTrade implements userMainMenuOptions {
         String temp = "Permanent";
         TradeRequest cTrade = Trades.get(pendingRequestIndex);
 
-        if (cTrade instanceof typeOneRequest) {
+        if (cTrade instanceof TypeOneRequest) {
             //print the trade
             //then acccept or deny
-            typeOneRequest t = (typeOneRequest) cTrade;
+            TypeOneRequest t = (TypeOneRequest) cTrade;
             boolean money = t.getMonetized();
             //if monetized
             System.out.print("Here is the trade you selected: " + t.getItem() + "\n");
@@ -251,9 +249,9 @@ public class ApproveTrade implements userMainMenuOptions {
                 return null;
             }
         }
-        if (cTrade instanceof typeTwoRequest) {
+        if (cTrade instanceof TypeTwoRequest) {
 
-            typeTwoRequest t = (typeTwoRequest) cTrade;
+            TypeTwoRequest t = (TypeTwoRequest) cTrade;
             System.out.print("Here is the trade you selected: " + "They want: " + t.getSecondItem() + "\n");
             System.out.print("Press 1 to approve and press 2 to deny and 3 to extend to a threeway\n");
             input = sc.next();
@@ -300,7 +298,7 @@ public class ApproveTrade implements userMainMenuOptions {
                 ArrayList<Item> userinventory = new ArrayList<>();
                 //go through currently logged in user's inventory and grab all items that arent already involved in this trade
                 for (int k = 0; k < user.getInventory().size(); k++) {
-                    if (!user.getInventory().get(k).getName().equals(((typeTwoRequest) cTrade).getFirstItem().getName()) && !user.getInventory().get(k).getName().equals(((typeTwoRequest) cTrade).getSecondItem().getName())) {
+                    if (!user.getInventory().get(k).getName().equals(((TypeTwoRequest) cTrade).getFirstItem().getName()) && !user.getInventory().get(k).getName().equals(((TypeTwoRequest) cTrade).getSecondItem().getName())) {
                         userinventory.add(user.getInventory().get(k));
                     }
                 }
@@ -323,18 +321,18 @@ public class ApproveTrade implements userMainMenuOptions {
                 Item newItemFromUser2 = userinventory.get(index3way);
 
                 //item2
-                Item sadItem = ((typeTwoRequest) cTrade).getSecondItem();
+                Item sadItem = ((TypeTwoRequest) cTrade).getSecondItem();
 
                 // i need to find an item closest to sadItem that doesnt exist in user1 or user2's inventory
 
 
                 //now lets see all other items that arent common between these two accounts.users to find a third person
-                Item replacement = ((typeTwoRequest) cTrade).getSecondItem();
+                Item replacement = ((TypeTwoRequest) cTrade).getSecondItem();
                 ArrayList<Item> nonuserinventory = new ArrayList<>();
 
                 for (int l = 0; l < allItems.getSystemInventory().size(); l++) {
-                    if (!allItems.getSystemInventory().get(l).getOwner().getName().equals(((typeTwoRequest) cTrade).getFirstUser().getName()) &&
-                            !allItems.getSystemInventory().get(l).getOwner().getName().equals(((typeTwoRequest) cTrade).getSecondUser().getName())) {
+                    if (!allItems.getSystemInventory().get(l).getOwner().getName().equals(((TypeTwoRequest) cTrade).getFirstUser().getName()) &&
+                            !allItems.getSystemInventory().get(l).getOwner().getName().equals(((TypeTwoRequest) cTrade).getSecondUser().getName())) {
                         nonuserinventory.add(allItems.getSystemInventory().get(l));
                     }
                 }
@@ -357,7 +355,7 @@ public class ApproveTrade implements userMainMenuOptions {
 
                 //so now replacement is the third user's item
                 allTradeRequests.updateRequestStatus(allUsers, cTrade, 2);
-                typeThreeRequest finalReq = new typeThreeRequest(((typeTwoRequest) cTrade).getFirstItem(), newItemFromUser2, replacement, "Kill me please",
+                TypeThreeRequest finalReq = new TypeThreeRequest(((TypeTwoRequest) cTrade).getFirstItem(), newItemFromUser2, replacement, "Kill me please",
                         cTrade.getTemp(), Calendar.getInstance(), cTrade.getVirtual());
                 //well one person approved!
                 finalReq.userApproves();
@@ -409,8 +407,8 @@ public class ApproveTrade implements userMainMenuOptions {
 
 
         }
-        if (cTrade instanceof typeThreeRequest) {
-            typeThreeRequest t = (typeThreeRequest) cTrade;
+        if (cTrade instanceof TypeThreeRequest) {
+            TypeThreeRequest t = (TypeThreeRequest) cTrade;
             String firstPerson = t.getFirstUser().getName();
             String secondPerson = t.getSecondUser().getName();
             String thirdPerson = t.getThirdUser().getName();

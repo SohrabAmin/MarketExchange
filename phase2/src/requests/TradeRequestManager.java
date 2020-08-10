@@ -32,22 +32,22 @@ public class TradeRequestManager implements Serializable {
     public void receiveTradeRequest(UserManager userManager, TradeRequest request) {
         User user1;
         User user2;
-        if(request instanceof typeOneRequest){
-            user1 = userManager.getUser(((typeOneRequest) request).getFirstUser());
-            user2 = userManager.getUser(((typeOneRequest) request).getSecondUser());
+        if(request instanceof TypeOneRequest){
+            user1 = userManager.getUser(((TypeOneRequest) request).getFirstUser());
+            user2 = userManager.getUser(((TypeOneRequest) request).getSecondUser());
             userManager.addToOutboundRequests(user1, request);
             userManager.addToWeeklyRequestLimit(user1, request);
             userManager.addToPendingRequests(user2, request);
-        }else if(request instanceof typeTwoRequest){
-            user1 = userManager.getUser(((typeTwoRequest) request).getFirstUser());
-            user2 = userManager.getUser(((typeTwoRequest) request).getSecondUser());
+        }else if(request instanceof TypeTwoRequest){
+            user1 = userManager.getUser(((TypeTwoRequest) request).getFirstUser());
+            user2 = userManager.getUser(((TypeTwoRequest) request).getSecondUser());
             userManager.addToOutboundRequests(user1, request);
             userManager.addToWeeklyRequestLimit(user1, request);
             userManager.addToPendingRequests(user2, request);
         }else{
-            user1 = userManager.getUser(((typeThreeRequest) request).getFirstUser());
-            user2 = userManager.getUser(((typeThreeRequest) request).getSecondUser());
-            User user3 = userManager.getUser(((typeThreeRequest) request).getThirdUser());
+            user1 = userManager.getUser(((TypeThreeRequest) request).getFirstUser());
+            user2 = userManager.getUser(((TypeThreeRequest) request).getSecondUser());
+            User user3 = userManager.getUser(((TypeThreeRequest) request).getThirdUser());
             userManager.addToOutboundRequests(user2, request);
             userManager.addToWeeklyRequestLimit(user2, request);
             userManager.addToPendingRequests(user1, request);
@@ -90,31 +90,31 @@ public class TradeRequestManager implements Serializable {
     public void handleRequestResponse( UserManager userManager, TradeRequest request) {
         User user1;
         User user2;
-        if(request instanceof typeOneRequest){
-            user1 = userManager.getUser(((typeOneRequest) request).getFirstUser());
-            user2 = userManager.getUser(((typeOneRequest) request).getSecondUser());
+        if(request instanceof TypeOneRequest){
+            user1 = userManager.getUser(((TypeOneRequest) request).getFirstUser());
+            user2 = userManager.getUser(((TypeOneRequest) request).getSecondUser());
             userManager.removeFromOutboundRequests(user1, request);
             userManager.removeFromPendingRequests(user2, request);
-        }else if(request instanceof typeTwoRequest){
-            user1 = userManager.getUser(((typeTwoRequest) request).getFirstUser());
-            user2 = userManager.getUser(((typeTwoRequest) request).getSecondUser());
+        }else if(request instanceof TypeTwoRequest){
+            user1 = userManager.getUser(((TypeTwoRequest) request).getFirstUser());
+            user2 = userManager.getUser(((TypeTwoRequest) request).getSecondUser());
             userManager.removeFromOutboundRequests(user1, request);
             userManager.removeFromPendingRequests(user2, request);
         }else{
-            user1 = userManager.getUser(((typeThreeRequest) request).getFirstUser());
-            user2 = userManager.getUser(((typeThreeRequest) request).getSecondUser());
-            User user3 = userManager.getUser(((typeThreeRequest) request).getThirdUser());
+            user1 = userManager.getUser(((TypeThreeRequest) request).getFirstUser());
+            user2 = userManager.getUser(((TypeThreeRequest) request).getSecondUser());
+            User user3 = userManager.getUser(((TypeThreeRequest) request).getThirdUser());
             userManager.removeFromOutboundRequests(user2, request);
-            if(((typeThreeRequest) request).getFirstApproved().getName().equals(user1.getName())){
-                userManager.removeFromApprovedThreeWay(user1, (typeThreeRequest) request);
+            if(((TypeThreeRequest) request).getFirstApproved().getName().equals(user1.getName())){
+                userManager.removeFromApprovedThreeWay(user1, (TypeThreeRequest) request);
                 userManager.removeFromPendingRequests(user3, request);
-            }else if(((typeThreeRequest) request).getFirstApproved().getName().equals(user3.getName())){
-                userManager.removeFromApprovedThreeWay(user3, (typeThreeRequest) request);
+            }else if(((TypeThreeRequest) request).getFirstApproved().getName().equals(user3.getName())){
+                userManager.removeFromApprovedThreeWay(user3, (TypeThreeRequest) request);
                 userManager.removeFromPendingRequests(user1, request);
             }
         }
     }
-    public void handleSingleApproved(UserManager userManager, typeThreeRequest request, User user){
+    public void handleSingleApproved(UserManager userManager, TypeThreeRequest request, User user){
         if(user.getName().equals(request.getFirstUser().getName())){
             User user1 = userManager.getUser(user);
             userManager.removeFromPendingRequests(user1, request);

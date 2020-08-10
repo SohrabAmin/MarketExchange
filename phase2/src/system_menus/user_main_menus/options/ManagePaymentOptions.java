@@ -11,14 +11,12 @@ import accounts.users.*;
 import accounts.admins.*;
 import requests.*;
 import currency.*;
-import system_menus.admin_main_menus.options.*;
-import system_menus.user_main_menus.options.*;
 
 /**
  * Display in user's Main Menu, Allow user to manage their payment( credit card and in-app currency)
  */
 
-public class ManagePaymentOptions implements userMainMenuOptions {
+public class ManagePaymentOptions implements UserMainMenuOptions {
     /**
      * @param user             the user that is currently logged in to the system
      * @param allItems         ItemManager that stores the system's inventory

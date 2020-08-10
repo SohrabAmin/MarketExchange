@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class approvePendingItem implements adminMainMenuOptions {
+public class ApprovePendingItem implements AdminMainMenuOptions {
 
     /**
      * Checks for items pending approval from all Users in accounts.users.UserManager and displays them to admin

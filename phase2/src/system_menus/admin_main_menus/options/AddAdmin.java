@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class addAdmin implements adminMainMenuOptions {
+public class AddAdmin implements AdminMainMenuOptions {
 
     /**
      * Adds a new admin to the list of all Admins in accounts.admins.AdminManager. Only the initial admin should be able to add new

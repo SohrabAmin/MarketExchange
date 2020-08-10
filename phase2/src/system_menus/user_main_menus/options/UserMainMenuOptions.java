@@ -11,7 +11,7 @@ import currency.*;
 import system_menus.admin_main_menus.options.*;
 import system_menus.user_main_menus.options.*;
 
-public interface userMainMenuOptions {
+public interface UserMainMenuOptions {
     /**
      * Classes that implement this interface are the main menu options for accounts.users.User. All those classes should
      * have the 'execute' method which will execute the particular prompts and actions specific to whatever the

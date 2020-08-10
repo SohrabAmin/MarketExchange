@@ -9,8 +9,8 @@ import items.Item;
 import items.ItemManager;
 import requests.TradeRequest;
 import requests.TradeRequestManager;
-import requests.typeOneRequest;
-import requests.typeTwoRequest;
+import requests.TypeOneRequest;
+import requests.TypeTwoRequest;
 import system.ReadWrite;
 import transactions.TransactionManager;
 
@@ -23,7 +23,7 @@ import java.util.Scanner;
  *Display in Admin Main Menu, Allow Admin to undo actions of all users.
  */
 
-public class UndoAction implements adminMainMenuOptions {
+public class UndoAction implements AdminMainMenuOptions {
     /**
      *
      * @param admin admin who is currently in the system
@@ -139,11 +139,11 @@ public class UndoAction implements adminMainMenuOptions {
         //parses through all outbound requests in user1's list
         //user1 is the user that initiated the trade
         for (int j = 0; j < user1.getOutboundRequests().size(); j++) {
-            if (user1.getOutboundRequests().get(j) instanceof typeOneRequest) {
+            if (user1.getOutboundRequests().get(j) instanceof TypeOneRequest) {
                 //if all the variables match, the request will be saved in variable request
-                if (((typeOneRequest) user1.getOutboundRequests().get(j)).getFirstUser().equals(user1) &&
-                        ((typeOneRequest) user1.getOutboundRequests().get(j)).getSecondUser().getName().equals(user2.getName()) &&
-                        ((typeOneRequest) user1.getOutboundRequests().get(j)).getItem().getName().equals(itemName) &&
+                if (((TypeOneRequest) user1.getOutboundRequests().get(j)).getFirstUser().equals(user1) &&
+                        ((TypeOneRequest) user1.getOutboundRequests().get(j)).getSecondUser().getName().equals(user2.getName()) &&
+                        ((TypeOneRequest) user1.getOutboundRequests().get(j)).getItem().getName().equals(itemName) &&
                         user1.getOutboundRequests().get(j).getTemp() == temp &&
                         user1.getOutboundRequests().get(j).getVirtual() == virtual &&
                         user1.getOutboundRequests().get(j).getMessage().equals(msg)) {
@@ -202,12 +202,12 @@ public class UndoAction implements adminMainMenuOptions {
         //parses through all outbound requests in user1's list
         //user1 is the user that initiated the trade
         for (int j = 0; j < user1.getOutboundRequests().size(); j++) {
-            if (user1.getOutboundRequests().get(j) instanceof typeTwoRequest) {
+            if (user1.getOutboundRequests().get(j) instanceof TypeTwoRequest) {
                 //if all the variables match, the request will be saved in variable request
-                if (((typeTwoRequest) user1.getOutboundRequests().get(j)).getFirstUser().equals(user1) &&
-                        ((typeTwoRequest) user1.getOutboundRequests().get(j)).getSecondUser().getName().equals(user2.getName()) &&
-                        ((typeTwoRequest) user1.getOutboundRequests().get(j)).getFirstItem().getName().equals(itemName1) &&
-                        ((typeTwoRequest) user1.getOutboundRequests().get(j)).getSecondItem().getName().equals(itemName2) &&
+                if (((TypeTwoRequest) user1.getOutboundRequests().get(j)).getFirstUser().equals(user1) &&
+                        ((TypeTwoRequest) user1.getOutboundRequests().get(j)).getSecondUser().getName().equals(user2.getName()) &&
+                        ((TypeTwoRequest) user1.getOutboundRequests().get(j)).getFirstItem().getName().equals(itemName1) &&
+                        ((TypeTwoRequest) user1.getOutboundRequests().get(j)).getSecondItem().getName().equals(itemName2) &&
                         user1.getOutboundRequests().get(j).getTemp() == temp &&
                         user1.getOutboundRequests().get(j).getVirtual() == virtual &&
                         user1.getOutboundRequests().get(j).getMessage().equals(msg)) {

@@ -10,10 +10,8 @@ import accounts.users.*;
 import accounts.admins.*;
 import requests.*;
 import currency.*;
-import system_menus.admin_main_menus.options.*;
-import system_menus.user_main_menus.options.*;
 
-public class InventoryManager implements userMainMenuOptions {
+public class InventoryManager implements UserMainMenuOptions {
     /**
      * Prints out the accounts.users.User user's inventory; also calls accounts.users.UserManager to remove inventory Items upon user's request
      *  @param user     the accounts.users.User that wants to see their inventory

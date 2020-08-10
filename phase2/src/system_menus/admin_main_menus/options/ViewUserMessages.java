@@ -16,7 +16,7 @@ import java.util.Scanner;
  * Display in Admin's menu. Allow admin to view, reply and delete user's messages.
  */
 
-public class ViewUserMessages implements adminMainMenuOptions {
+public class ViewUserMessages implements AdminMainMenuOptions {
     /**
      * Display in Admin's menu. Allow admin to view, reply and delete user's messages.
      * @param admin The Admin currently logged into the system

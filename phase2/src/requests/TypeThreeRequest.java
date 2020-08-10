@@ -12,7 +12,7 @@ import java.util.Calendar;
  * the system does not create an instance of transactions.Transaction unless the corresponding requests.TradeRequest has been approved by the accounts.users.User receiving the requests.TradeRequest. Notice we
  * assuming noMeeting Transactions are permanent, as it's illogical to "return" and emailed item.
  */
-public class typeThreeRequest extends TradeRequest {
+public class TypeThreeRequest extends TradeRequest {
 
 
     private User user1;
@@ -46,7 +46,7 @@ public class typeThreeRequest extends TradeRequest {
      * @param date A Calender representing the date/time the requests.TradeRequest was sent.
      * @param virtual A boolean that determines the requests.TradeRequest will have no meeting (true: This transactions.Transaction will not have a meetings.Meeting, false: This transactions.Transaction will have a meetings.Meeting.)
      */
-    public typeThreeRequest(Item item1, Item item2, Item item3, String message, boolean temp, Calendar date, boolean virtual){
+    public TypeThreeRequest(Item item1, Item item2, Item item3, String message, boolean temp, Calendar date, boolean virtual){
         super(message, temp, date, virtual);
         this.user1 = item1.getOwner();
         this.user2 = item2.getOwner();
@@ -112,24 +112,24 @@ public class typeThreeRequest extends TradeRequest {
         thirdUserLocation = location;
     }
     /**
-     * Gets the accounts.users.User who initially sent the requests.typeTwoRequest to user2
-     * @return accounts.users.User that initially sent the requests.typeTwoRequest
+     * Gets the accounts.users.User who initially sent the requests.TypeTwoRequest to user2
+     * @return accounts.users.User that initially sent the requests.TypeTwoRequest
      */
     public User getFirstUser(){
         return this.user1;
     }
 
     /**
-     * Gets the accounts.users.User who initiated the requests.typeThreeRequest
-     * @return accounts.users.User that initiated the requests.typeThreeRequest
+     * Gets the accounts.users.User who initiated the requests.TypeThreeRequest
+     * @return accounts.users.User that initiated the requests.TypeThreeRequest
      */
     public User getSecondUser(){
         return this.user2;
     }
 
     /**
-     * Gets the accounts.users.User who user2 wanted to bring in for the requests.typeThreeRequest
-     * @return accounts.users.User that user2 wanted to bring in for the requests.typeThreeRequest
+     * Gets the accounts.users.User who user2 wanted to bring in for the requests.TypeThreeRequest
+     * @return accounts.users.User that user2 wanted to bring in for the requests.TypeThreeRequest
      */
     public User getThirdUser(){
         return this.user3;
