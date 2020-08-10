@@ -14,9 +14,8 @@ public class NotifyAdminOfSuperAdminStatusChange implements AdminNotification {
         if (admin.getSuperAdminStatusChangeNotifications().size() > 0) {
             for (int i = 0; i < admin.getSuperAdminStatusChangeNotifications().size(); i++) {
                 System.out.println(admin.getSuperAdminStatusChangeNotifications().get(i));
-            }
-            for (int j = 0; j < admin.getSuperAdminStatusChangeNotifications().size(); j++) {
-                allAdmins.removeFromSuperAdminStatusChangeNotifications(admin, admin.getSuperAdminStatusChangeNotifications().get(j));
+                allAdmins.removeFromSuperAdminStatusChangeNotifications(admin, admin.getSuperAdminStatusChangeNotifications().get(i));
+                i = i - 1;
             }
         }
     }

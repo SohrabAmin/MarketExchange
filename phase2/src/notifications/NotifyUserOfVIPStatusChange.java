@@ -15,9 +15,8 @@ public class NotifyUserOfVIPStatusChange implements UserNotification {
             for (int i = 0; i < user.getVIPStatusChangeNotifications().size(); i++) {
                 System.out.println(user.getVIPStatusChangeNotifications().get(i));
                 allUsers.addToAdminActionHistory(user, user.getVIPStatusChangeNotifications().get(i));
-            }
-            for (int j = 0; j < user.getVIPStatusChangeNotifications().size(); j++) {
-                allUsers.removeFromVIPStatusChangeNotifications(user, user.getVIPStatusChangeNotifications().get(j));
+                allUsers.removeFromVIPStatusChangeNotifications(user, user.getVIPStatusChangeNotifications().get(i));
+                i = i - 1;
             }
             System.out.println("For further information, please message Admin. To read these notifications again, " +
                     "please go to Account Settings to view Admin Change Log.\n");
