@@ -20,7 +20,7 @@ public class CurrencyManager {
 
     /**
      * Always instantiated when the main method is initially called. Creates a HashMap that stores all the sales in progress, where the key
-     * is the transactions.OneWayMonetized TradeRequest, and value is the Double.
+     * is the OneWayMonetized TradeRequest, and value is the Double.
      */
     public CurrencyManager(){
         this.inProgressSale = new HashMap<>();
@@ -42,9 +42,9 @@ public class CurrencyManager {
     }
 
     /**
-     * Takes the appropriate amount of in-app currency from user1, and stores it. When the transactions.Transaction has been confirmed, the amount will be deposited into
-     * user2's account. If the transactions.Transaction has been cancelled, the currency will be returned to user1.
-     * @param trade The given transactions.OneWayMonetized request.
+     * Takes the appropriate amount of in-app currency from user1, and stores it. When the Transaction has been confirmed, the amount will be deposited into
+     * user2's account. If the Transaction has been cancelled, the currency will be returned to user1.
+     * @param trade The given OneWayMonetized request.
      * @param userManager The instance of UserManager, to call getUser()
      */
     public void holdFunds(OneWayMonetized trade, UserManager userManager){
@@ -55,7 +55,7 @@ public class CurrencyManager {
 
     /**
      * Returns the "held" currency into user1's account.
-     * @param trade The given transactions.OneWayMonetized request.
+     * @param trade The given OneWayMonetized request.
      * @param userManager The instance of UserManager, to call getUser()
      */
     public void reverseHold(OneWayMonetized trade, UserManager userManager){
@@ -66,7 +66,7 @@ public class CurrencyManager {
 
     /**
      * Deposits the "held" funds into user2's account
-     * @param trade The given transactions.OneWayMonetized request.
+     * @param trade The given OneWayMonetized request.
      * @param userManager The instance of UserManager, to call getUser()
      */
     public void completeSale(OneWayMonetized trade, UserManager userManager){

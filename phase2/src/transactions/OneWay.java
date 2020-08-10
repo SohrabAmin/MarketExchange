@@ -15,7 +15,7 @@ import system_menus.user_main_menus.options.*;
 import java.io.Serializable;
 
 /**
- * Subclass of transactions.Transaction, instantiated when a OnwWay transactions.Transaction is made (an attempt to strictly borrow/lend).
+ * Subclass of Transaction, instantiated when a OnwWay Transaction is made (an attempt to strictly borrow/lend).
  */
 public class OneWay extends Transaction implements Serializable {
 
@@ -26,11 +26,11 @@ public class OneWay extends Transaction implements Serializable {
     private final Item item;
 
     /**
-     * Constructor for transactions.OneWay. Requires a borrower of type User, an Item for the User to attain, and a boolean temp which specifies if transactions.OneWay is temporary.
+     * Constructor for OneWay. Requires a borrower of type User, an Item for the User to attain, and a boolean temp which specifies if OneWay is temporary.
      *
      * @param user1 The User that intends to borrow an item from another User.
      * @param item     The Item the borrower intends to attain.
-     * @param temp     If the transactions.OneWay is temporary or not.
+     * @param temp     If the OneWay is temporary or not.
      */
     public OneWay(User user1, Item item, boolean temp, boolean virtual) {
         super(temp, virtual);
@@ -40,9 +40,9 @@ public class OneWay extends Transaction implements Serializable {
     }
 
     /**
-     * Getter for the borrower of the transactions.OneWay.
+     * Getter for the borrower of the OneWay.
      *
-     * @return The borrower of a given transactions.OneWay.
+     * @return The borrower of a given OneWay.
      */
     public User getFirstTrader() {
         return this.user1;
@@ -51,7 +51,7 @@ public class OneWay extends Transaction implements Serializable {
     /**
      * Getter for the lender, or the User giving an Item to another User.
      *
-     * @return The lender of a given transactions.OneWay.
+     * @return The lender of a given OneWay.
      */
     public User getSecondTrader() {
         return this.user2;
@@ -60,16 +60,16 @@ public class OneWay extends Transaction implements Serializable {
     /**
      * Setter for the lender, or the User giving an Item to another User.
      *
-     * @return The lender of a given transactions.OneWay.
+     * @return The lender of a given OneWay.
      */
     public Item getItem() {
         return this.item;
     }
 
     /**
-     * Returns a String representation of a transactions.Transaction, with nicely formatted attributes
+     * Returns a String representation of a Transaction, with nicely formatted attributes
      *
-     * @return String representation of this transactions.Transaction
+     * @return String representation of this Transaction
      */
     public String toString() {
 

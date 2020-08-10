@@ -27,7 +27,7 @@ public class TransactionManager implements Serializable {
 
 
     /**
-     * Constructs transactions.TransactionManager. Creates three ArrayList which store all instances of transactions.Transaction: inProgressTransaction, completedTransaction, cancelledTransaction.
+     * Constructs TransactionManager. Creates three ArrayList which store all instances of Transaction: inProgressTransaction, completedTransaction, cancelledTransaction.
      * Does not require argument for instantiation.
      */
     public TransactionManager() {
@@ -39,22 +39,22 @@ public class TransactionManager implements Serializable {
     }
 
     /**
-     * Updates the tradeStatus of a given transactions.Transaction.
+     * Updates the tradeStatus of a given Transaction.
      * 0: In progress.
      * 1: Finalized Meeting (the initialMeeting has been set!).
-     * 2: Pending Second Exchange (only for temporary transactions.Transaction).
+     * 2: Pending Second Exchange (only for temporary Transaction).
      * 3: Completed
      * 4: Cancelled.
-     * Notice by updating the tradeStatus the instance of transactions.Transaction is being moved to a new attribute list within transactions.TransactionManager.
+     * Notice by updating the tradeStatus the instance of Transaction is being moved to a new attribute list within TransactionManager.
      * finalizedMeeting implies the initialMeeting has been set.
      * pendingSecondExchange means the first exchange was successful, but the User(s) must return their Item a month after the initialMeeting.
      * Cancelled implies one of the following: User(s) did not show up to the Meeting or User(s) altered
-     * meeting too many times, and completed means the transactions.Transaction was successful, and the Item(s) have been officially swapped.
-     * Completed means either the finalizedMeeting had occurred (for permanent transactions.Transaction), or the secondExchange has occurred.
+     * meeting too many times, and completed means the Transaction was successful, and the Item(s) have been officially swapped.
+     * Completed means either the finalizedMeeting had occurred (for permanent Transaction), or the secondExchange has occurred.
      *  @param itemManager Class that manages Items.
      * @param userManager Class that manages Users.
-     * @param transaction The given transactions.Transaction.
-     * @param tradeStatus The current status of a given transactions.Transaction.
+     * @param transaction The given Transaction.
+     * @param tradeStatus The current status of a given Transaction.
      * @param undoLogger
      */
     public void updateTransactionStatus(ItemManager itemManager, UserManager userManager, AdminManager adminManager,
@@ -123,9 +123,9 @@ public class TransactionManager implements Serializable {
     }
 
     /**
-     * Initiates and stores the initialMeeting of a given transactions.Transaction. Required for all types of Transactions.
+     * Initiates and stores the initialMeeting of a given Transaction. Required for all types of Transactions.
      *
-     * @param transaction The given transactions.Transaction.
+     * @param transaction The given Transaction.
      * @param meeting     The given Meeting.
      */
     public void setInitialMeeting(Transaction transaction, Meeting meeting) {
@@ -134,20 +134,20 @@ public class TransactionManager implements Serializable {
     }
 
     /**
-     * Initiates and stores the finalMeeting within transactions.Transaction. Only accessed if transactions.Transaction temp = True, otherwise is kept Null
+     * Initiates and stores the finalMeeting within Transaction. Only accessed if Transaction temp = True, otherwise is kept Null
      *
      * @param transaction The given transaction. InitialMeeting is stored in this instance
-     * @param meeting     The initial meeting, which is stored in the given transactions.Transaction
+     * @param meeting     The initial meeting, which is stored in the given Transaction
      */
     public void setFinalMeeting(Transaction transaction, Meeting meeting) {
         transaction.setReturnMeeting(meeting);
     }
 
     /**
-     * Adds a given new transactions.Transaction to the attribute list pendingTransaction held in transactions.TransactionManager.
-     * Pending implies the transactions.Transaction is in progress.
+     * Adds a given new Transaction to the attribute list pendingTransaction held in TransactionManager.
+     * Pending implies the Transaction is in progress.
      *
-     * @param transaction The specified transactions.Transaction that has been created.
+     * @param transaction The specified Transaction that has been created.
      * @param userManager The instance of UserManager.
      */
     public void addToPendingTransactions(Transaction transaction, UserManager userManager,
@@ -183,10 +183,10 @@ public class TransactionManager implements Serializable {
 
 
     /**
-     * Executes the back-end results of a transactions.Transaction being cancelled. A transactions.Transaction being cancelled can result in being frozen (unable to participate in trading).
+     * Executes the back-end results of a Transaction being cancelled. A Transaction being cancelled can result in being frozen (unable to participate in trading).
      *
      * @param userManager The instance of UserManager.
-     * @param transaction The given instance of transactions.Transaction.
+     * @param transaction The given instance of Transaction.
      */
     public void handleCancelledTrade(AdminManager adminManager, UserManager userManager, Transaction transaction,
                                      CurrencyManager currencyManager) {
@@ -243,10 +243,10 @@ public class TransactionManager implements Serializable {
     }
 
     /**
-     * Handles the back-end completion of a temporary transactions.Transaction. Notice the second exchange is returning objects back to original owner. Only called in updateTransactionStatus.
+     * Handles the back-end completion of a temporary Transaction. Notice the second exchange is returning objects back to original owner. Only called in updateTransactionStatus.
      *
      * @param userManager The instance of UserManager.
-     * @param transaction The given temporary transactions.Transaction.
+     * @param transaction The given temporary Transaction.
      * @param itemManager The instance of ItemManager.
      */
     public void handleSecondExchange(UserManager userManager, ItemManager itemManager, Transaction transaction) {
@@ -306,10 +306,10 @@ public class TransactionManager implements Serializable {
     }
 
     /**
-     * Handles the back-end completion of a temporary transactions.Transaction. Notice the first exchange is giving Item(s) to the User(s). Only called in updateTransactionStatus.
+     * Handles the back-end completion of a temporary Transaction. Notice the first exchange is giving Item(s) to the User(s). Only called in updateTransactionStatus.
      *
      * @param userManager The instance of UserManager.
-     * @param transaction The given temporary transactions.Transaction.
+     * @param transaction The given temporary Transaction.
      * @param itemManager The instance of ItemManager.
      */
     public void handleFirstExchange(UserManager userManager, Transaction transaction, ItemManager itemManager, CurrencyManager currencyManger) {
@@ -372,11 +372,11 @@ public class TransactionManager implements Serializable {
     }
 
     /**
-     * Handles the back-end results of a permanent transactions.Transaction occurring. This is only called by updateTransactionStatus.
+     * Handles the back-end results of a permanent Transaction occurring. This is only called by updateTransactionStatus.
      *
      * @param userManager The instance of UserManager.
      * @param itemManager The instance of ItemManager.
-     * @param transaction The given temporary transactions.Transaction.
+     * @param transaction The given temporary Transaction.
      */
     public void handleCompletedPerm(UserManager userManager, ItemManager itemManager, Transaction transaction, CurrencyManager currencyManager) {
         User user1;

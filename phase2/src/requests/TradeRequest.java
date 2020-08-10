@@ -5,8 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
- * Constructs a trade request, that a User can send to another User if the want to initiated a transactions.Transaction. Notice this difference from a transactions.Transaction, as
- * the system does not create an instance of transactions.Transaction unless the corresponding TradeRequest has been approved by the User receiving the TradeRequest. Notice we
+ * Constructs a trade request, that a User can send to another User if the want to initiated a Transaction. Notice this difference from a Transaction, as
+ * the system does not create an instance of Transaction unless the corresponding TradeRequest has been approved by the User receiving the TradeRequest. Notice we
  * assuming noMeeting Transactions are permanent, as it's illogical to "return" and emailed item.
  */
 public class TradeRequest implements Serializable {
@@ -17,12 +17,12 @@ public class TradeRequest implements Serializable {
     private boolean virtual;
 
     /**
-     * Constructs a TradeRequest instance. This class is instantiated by the User that attempts to initiate the transactions.Transaction, and should be stored within the receiving User's
-     * pendingRequest. If the receiving User accepts the conditions of the transactions.Transaction, they may accept the TradeRequest, and an instance of transactions.Transaction is created.
+     * Constructs a TradeRequest instance. This class is instantiated by the User that attempts to initiate the Transaction, and should be stored within the receiving User's
+     * pendingRequest. If the receiving User accepts the conditions of the Transaction, they may accept the TradeRequest, and an instance of Transaction is created.
      * @param date        A Calender representing the date/time the TradeRequest was initiated.
      * @param virtual   A boolean representing if a meeting will be required or not.
      * @param message     A string representation of any message the requester User may want to send to the receiver User.
-     * @param temp        A boolean regarding if the User requesting a TradeRequest wants a temporary transactions.Transaction or not.
+     * @param temp        A boolean regarding if the User requesting a TradeRequest wants a temporary Transaction or not.
      */
     public TradeRequest(String message, boolean temp, Calendar date, boolean virtual) {
         this.message = message;
@@ -63,7 +63,7 @@ public class TradeRequest implements Serializable {
     /**
      * Gets whether the requester User would like to temporarily exchange items, or permanently exchange items. True: Temporary, False: Permanent.
      *
-     * @return If the potential transactions.Transaction would be temporary.
+     * @return If the potential Transaction would be temporary.
      */
     public boolean getTemp() {
         return this.temp;
@@ -78,10 +78,10 @@ public class TradeRequest implements Serializable {
     }
 
     /**
-     * Gets whether the User would like the potential transactions.Transaction to be "online" or not. Notice: Only certain Items
+     * Gets whether the User would like the potential Transaction to be "online" or not. Notice: Only certain Items
      * will be eligible to be involved in a Virtual trade. These Transactions also do not require any meeting, and
-     * is always a permanent transactions.Transaction.
-     * @return Boolean of whether the potential transactions.Transaction will be virtual or not.
+     * is always a permanent Transaction.
+     * @return Boolean of whether the potential Transaction will be virtual or not.
      */
     public Boolean getVirtual() {
         return this.virtual;

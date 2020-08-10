@@ -82,7 +82,7 @@ public class TradeRequestManager implements Serializable {
         request.setStatus(status);
     }
     /**
-     * Accepts the TradeRequest within a User's pendingList, creates an instance of transactions.Transaction.
+     * Accepts the TradeRequest within a User's pendingList, creates an instance of Transaction.
      *
      * @param userManager        The instance of UserManager.
      * @param request            The status the system intends to give to this TradeRequest.

@@ -39,7 +39,7 @@ public class ApproveTrade implements UserMainMenuOptions {
      * @param user            User that wishes to view and approve or reject their pending Trade requests
      * @param allUsers        UserManager that stores all Users
      * @param allMeetings     MeetingManager that deals with creating meetings
-     * @param allTransactions transactions.TransactionManager that deals with the System's Transactions
+     * @param allTransactions TransactionManager that deals with the System's Transactions
      * @param currencyManager
      * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
      * String "exit" if the user is to be logged out.
@@ -438,9 +438,9 @@ public class ApproveTrade implements UserMainMenuOptions {
                 input = sc.next();
 
                 if (input.equals("1")) { //they approved
-//                        transactions.ThreeWay final3 = new transactions.ThreeWay(t.getFirstItem(), t.getSecondItem(), t.getThirdItem(), t.getTemp(), t.getVirtual());
+//                        ThreeWay final3 = new ThreeWay(t.getFirstItem(), t.getSecondItem(), t.getThirdItem(), t.getTemp(), t.getVirtual());
 //                        allTransactions.addToPendingTransactions(final3, allUsers, currencyManager);
-//                        System.out.print("Approved and transactions.Transaction is made!\n");
+//                        System.out.print("Approved and Transaction is made!\n");
 //                        return user;
                     //if they approve, now user 2 has to approve of this too right?
                     t.userApproves();

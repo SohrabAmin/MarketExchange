@@ -97,9 +97,9 @@ public class ThreeWay extends Transaction {
     public Item getThirdItem(){return this.items.get(2);}
 
     /**
-     * Returns a String representation of a transactions.Transaction, with nicely formatted attributes
+     * Returns a String representation of a Transaction, with nicely formatted attributes
      *
-     * @return String representation of this transactions.Transaction
+     * @return String representation of this Transaction
      */
     public String toString() {
 

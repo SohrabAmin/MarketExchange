@@ -41,7 +41,7 @@ public class ChangeThreshold implements AdminMainMenuOptions {
         System.out.println("Meeting edits threshold: " + allAdmins.getMeetingEditThreshold());
         //prompts user to enter what threshold they wish to edit
         System.out.println("\nWhich threshold would you like to edit? Please enter the number beside the option.");
-        System.out.println("1.Lent - borrow threshold\n2.Weekly transactions.Transaction Limit\n3.Incomplete transactions.Transaction Limit" +
+        System.out.println("1.Lent - borrow threshold\n2.Weekly Transaction Limit\n3.Incomplete Transaction Limit" +
                 "\n4.Meeting Edits Threshold\n");
         System.out.println("Enter 'back' to return to the main menu.");
         Object thresholdOption = null;

@@ -5,7 +5,7 @@ import accounts.users.User;
 import java.util.Calendar;
 
 /**
- * Constructs a CreditCard, that is used so a User can upload cash for in-app currency, so they can request a transactions.OneWayMonetized TradeRequest.
+ * Constructs a CreditCard, that is used so a User can upload cash for in-app currency, so they can request a OneWayMonetized TradeRequest.
  */
 public class CreditCard {
 

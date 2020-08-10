@@ -30,7 +30,7 @@ public class DemoUserMainMenu implements DifferentUserMainMenu{
      * @param allTradeRequests TradeRequestManager that stores all the Trade Requests in the system
      * @param allUsers         UserManager that stores all the Users in the system
      * @param allMeetings      MeetingManager that deals with the creation of meetings
-     * @param allTransactions  transactions.TransactionManager that stores all the Transactions in the system
+     * @param allTransactions  TransactionManager that stores all the Transactions in the system
      * @param allUserMessages  UserMessageManager which stores all the User messages to Admin
      * @return depending on what the User inputs it will return different objects:
      * returns User to TradeSystem() to either remain logged into the system and prompt mainMenu

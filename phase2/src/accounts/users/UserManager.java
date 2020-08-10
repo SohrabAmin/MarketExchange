@@ -188,11 +188,11 @@ public class UserManager implements Serializable {
     }
 
     /**
-     * Checks the number of Transactions a User has requested in a week against the weekly transactions.Transaction limit
+     * Checks the number of Transactions a User has requested in a week against the weekly Transaction limit
      *
      * @param adminManager The instance of AdminManager
      * @param user         User whose number of requested Transactions in a week will be checked against the weekly
-     *                     transactions.Transaction limit
+     *                     Transaction limit
      * @param date         A Calendar representing the date, in the week in question
      * @return True if and only if the number of Transactions this User requested in the given week is less than the
      * weekly transaction limit
@@ -205,7 +205,7 @@ public class UserManager implements Serializable {
     }
 
     /**
-     * Adds a transactions.Transaction to a User's list of Transactions requested in a given week
+     * Adds a Transaction to a User's list of Transactions requested in a given week
      *
      * @param user    User whose list of Transactions requested in a given week will be added to
      * @param request TradeRequest to add to this User's list of Transactions requested in a given week
@@ -256,62 +256,62 @@ public class UserManager implements Serializable {
     }
 
     /**
-     * Adds a transactions.Transaction to a User's list of pending trades
+     * Adds a Transaction to a User's list of pending trades
      *
      * @param user        User whose list of pending trades will be added to
-     * @param transaction transactions.Transaction to add to this User's list of pending trades
+     * @param transaction Transaction to add to this User's list of pending trades
      */
     public void addToPendingTrades(User user, Transaction transaction) {
         user.getPendingTrades().add(transaction);
     }
 
     /**
-     * Removes a transactions.Transaction from a User's list of pending trades
+     * Removes a Transaction from a User's list of pending trades
      *
-     * @param user        User who will have a transactions.Transaction removed from their list of pending trades
-     * @param transaction transactions.Transaction to remove from this User's list of pending trades
+     * @param user        User who will have a Transaction removed from their list of pending trades
+     * @param transaction Transaction to remove from this User's list of pending trades
      */
     public void removeFromPendingTrades(User user, Transaction transaction) {
         user.getPendingTrades().remove(transaction);
     }
 
     /**
-     * Adds a transactions.Transaction to a User's list of agreedUponMeetings (Transactions containing a meeting to which both User
+     * Adds a Transaction to a User's list of agreedUponMeetings (Transactions containing a meeting to which both User
      * and their trading partner have agreed, but the meeting has not transpired in real life)
      *
      * @param user        User whose list of agreedUponMeetings list will be added to
-     * @param transaction transactions.Transaction to add to this User's list of agreedUponMeetings
+     * @param transaction Transaction to add to this User's list of agreedUponMeetings
      */
     public void addToAgreedUponMeetings(User user, Transaction transaction) {
         user.getAgreedUponMeeting().add(transaction);
     }
 
     /**
-     * Removes a transactions.Transaction from a User's list of agreedUponMeetings (Transactions containing a meeting to which both
+     * Removes a Transaction from a User's list of agreedUponMeetings (Transactions containing a meeting to which both
      * User and their trading partner have agreed, but the meeting has not transpired in real life)
      *
-     * @param user        User who will have a transactions.Transaction removed from their list of agreedUponMeetings
-     * @param transaction transactions.Transaction to remove from this User's list of agreedUponMeetings
+     * @param user        User who will have a Transaction removed from their list of agreedUponMeetings
+     * @param transaction Transaction to remove from this User's list of agreedUponMeetings
      */
     public void removeFromAgreedUponMeetings(User user, Transaction transaction) {
         user.getAgreedUponMeeting().remove(transaction);
     }
 
     /**
-     * Adds a transactions.Transaction to a User's list of trade-back Transactions
+     * Adds a Transaction to a User's list of trade-back Transactions
      *
      * @param user        User whose list of trade-back Transactions will be added to
-     * @param transaction transactions.Transaction to add to this User's list of trade-back Transactions
+     * @param transaction Transaction to add to this User's list of trade-back Transactions
      */
     public void addToSecondAgreedUponMeetings(User user, Transaction transaction) {
         user.getSecondAgreedUponMeeting().add(transaction);
     }
 
     /**
-     * Removes a transactions.Transaction from a User's list of of trade-back Transactions
+     * Removes a Transaction from a User's list of of trade-back Transactions
      *
-     * @param user        User who will have a transactions.Transaction removed from their list of trade-back Transactions
-     * @param transaction transactions.Transaction to remove from this User's list of trade-back Transactions
+     * @param user        User who will have a Transaction removed from their list of trade-back Transactions
+     * @param transaction Transaction to remove from this User's list of trade-back Transactions
      */
     public void removeFromSecondAgreedUponMeetings(User user, Transaction transaction) {
         user.getSecondAgreedUponMeeting().remove(transaction);
@@ -321,7 +321,7 @@ public class UserManager implements Serializable {
      * Updates a User's trade history
      *
      * @param user        User whose trade history is to be updated
-     * @param transaction transactions.Transaction to be added to this User's trade history
+     * @param transaction Transaction to be added to this User's trade history
      */
     public void updateTradeHistory(User user, Transaction transaction) {
         user.getTradeHistory().add(transaction);

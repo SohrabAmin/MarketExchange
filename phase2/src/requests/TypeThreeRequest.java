@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
- * Constructs a transactions.ThreeWay TradeRequest, that a User can send to another
- * User if the want to initiated a transactions.Transaction. Notice this difference from a transactions.
- * Transaction, as the system does not create an instance of transactions.Transaction unless the corresponding requests.
+ * Constructs a ThreeWay TradeRequest, that a User can send to another
+ * User if the want to initiated a Transaction. Notice this difference from a transactions.
+ * Transaction, as the system does not create an instance of Transaction unless the corresponding requests.
  * TradeRequest has been approved by the User receiving the TradeRequest. Notice we
  * assuming noMeeting Transactions are permanent, as it's illogical to "return" and emailed item.
  */
@@ -37,8 +37,8 @@ public class TypeThreeRequest extends TradeRequest {
 
 
     /**
-     * Constructs a transactions.ThreeWay TradeRequest instance. This class is instantiated by the User that attempts to initiate the transactions.Transaction, and should be stored within the receiving User's
-     * pendingRequest. If the receiving User accepts the conditions of the transactions.Transaction, they may accept the TradeRequest, and an instance of transactions.Transaction is created. Notice this is only called
+     * Constructs a ThreeWay TradeRequest instance. This class is instantiated by the User that attempts to initiate the Transaction, and should be stored within the receiving User's
+     * pendingRequest. If the receiving User accepts the conditions of the Transaction, they may accept the TradeRequest, and an instance of Transaction is created. Notice this is only called
      * once a User has received a twoWayRequest, and would like to add in a third User (perhaps they want the Item user1 is offering, but doesn't want to give up the Item user1 wants).
      * @param item1 The Item belonging to User1, the User who requested the twoWay.
      * @param item2 The Item belonging to User2, the User requesting the threeWay.
@@ -46,7 +46,7 @@ public class TypeThreeRequest extends TradeRequest {
      * @param message A String representation of any message user1 may want to send user2.
      * @param temp A boolean representing if the TradeRequest will be temp or not.
      * @param date A Calender representing the date/time the TradeRequest was sent.
-     * @param virtual A boolean that determines the TradeRequest will have no meeting (true: This transactions.Transaction will not have a Meeting, false: This transactions.Transaction will have a Meeting.)
+     * @param virtual A boolean that determines the TradeRequest will have no meeting (true: This Transaction will not have a Meeting, false: This Transaction will have a Meeting.)
      */
     public TypeThreeRequest(Item item1, Item item2, Item item3, String message, boolean temp, Calendar date, boolean virtual){
         super(message, temp, date, virtual);
@@ -67,7 +67,7 @@ public class TypeThreeRequest extends TradeRequest {
     }
 
     /**
-     * Gets a String representation of the firstUser's location. This is for ensuring participants in a transactions.Transaction
+     * Gets a String representation of the firstUser's location. This is for ensuring participants in a Transaction
      * are within the same city.
      * @return String representation of the firstUser's location.
      */
@@ -76,7 +76,7 @@ public class TypeThreeRequest extends TradeRequest {
     }
 
     /**
-     * Sets the location of the firstUser. This is for ensuring participants in a potential transactions.Transaction are within the same city.
+     * Sets the location of the firstUser. This is for ensuring participants in a potential Transaction are within the same city.
      * @param location A String of the User's location.
      */
     public void addtoFirstUserLocation (String location){
@@ -84,7 +84,7 @@ public class TypeThreeRequest extends TradeRequest {
     }
 
     /**
-     * Gets a String representation of the secondUser's location. This is for ensuring participants in a transactions.Transaction
+     * Gets a String representation of the secondUser's location. This is for ensuring participants in a Transaction
      * are within the same city.
      * @return String representation of the secondUser's location.
      */
@@ -92,14 +92,14 @@ public class TypeThreeRequest extends TradeRequest {
         return secondUserLocation;
     }
     /**
-     * Sets the location of the secondUser. This is for ensuring participants in a potential transactions.Transaction are within the same city.
+     * Sets the location of the secondUser. This is for ensuring participants in a potential Transaction are within the same city.
      * @param location A String of the User's location.
      */
     public void addtoSecondUserLocation (String location){
         secondUserLocation.add(location);
     }
     /**
-     * Gets a String representation of the thirdUser's location. This is for ensuring participants in a transactions.Transaction
+     * Gets a String representation of the thirdUser's location. This is for ensuring participants in a Transaction
      * are within the same city.
      * @return String representation of the thirdUser's location.
      */
@@ -107,7 +107,7 @@ public class TypeThreeRequest extends TradeRequest {
         return thirdUserLocation;
     }
     /**
-     * Sets the location of the thirdUser. This is for ensuring participants in a potential transactions.Transaction are within the same city.
+     * Sets the location of the thirdUser. This is for ensuring participants in a potential Transaction are within the same city.
      * @param location A String of the User's location.
      */
     public void setThirdUserLocation (String location){

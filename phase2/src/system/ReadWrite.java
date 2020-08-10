@@ -104,11 +104,11 @@ public class ReadWrite implements Serializable {
     }
 
     /**
-     * Deals with reading from the external file fileName and if it is not empty, it will return the transactions.TransactionManager
-     * object stored in fileName; if it is empty, it will return a new transactions.TransactionManager.
+     * Deals with reading from the external file fileName and if it is not empty, it will return the TransactionManager
+     * object stored in fileName; if it is empty, it will return a new TransactionManager.
      *
      * @param fileName the name of the file the method is reading from
-     * @return returns an transactions.TransactionManager object
+     * @return returns an TransactionManager object
      * @throws IOException
      * @throws ClassNotFoundException
      */

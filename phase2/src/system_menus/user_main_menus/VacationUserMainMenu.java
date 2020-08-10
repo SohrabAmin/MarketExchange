@@ -29,7 +29,7 @@ public class VacationUserMainMenu implements DifferentUserMainMenu {
      * @param allTradeRequests The instance of TradeRequestManager
      * @param allUsers         The instance of UserManager
      * @param allMeetings      The instance of MeetingManager
-     * @param allTransactions  The instance of transactions.TransactionManager
+     * @param allTransactions  The instance of TransactionManager
      * @param allAdmins        The instance of AdminManager
      * @param undoLogger       Logger that logs actions in the system
      * @param allUserMessages  The instance of UserMessageManager

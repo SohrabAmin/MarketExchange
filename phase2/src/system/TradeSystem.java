@@ -46,8 +46,8 @@ public class TradeSystem {
         //or creates a new AdminManager object with a default admin with user name Tina and password 123456
         //if the file AdminList.ser is empty
         allAdmins = readwrite.adminPopulate("AdminList.ser");
-        //either returns the saved transactions.TransactionManager object with all the stored Transactions
-        //or creates a new transactions.Transaction object if file TransactionList.ser is empty
+        //either returns the saved TransactionManager object with all the stored Transactions
+        //or creates a new Transaction object if file TransactionList.ser is empty
         allTransactions = readwrite.transactionManagerPopulate("TransactionList.ser");
         //either returns the saved TradeRequest object with all the stored Trade Requests
         //or creates a new TradeRequest object if file TradeRequestList.ser is empty
@@ -157,7 +157,7 @@ public class TradeSystem {
         readwrite.saveToFile("UserList.ser", allUsers);
         //saves current AdminManager object allAdmins to external file
         readwrite.saveToFile("AdminList.ser", allAdmins);
-        //saves current transactions.TransactionManager object allTransactions to an external file
+        //saves current TransactionManager object allTransactions to an external file
         readwrite.saveToFile("TransactionList.ser", allTransactions);
         //saves the systemInventory in AllItems to an external file
         readwrite.saveToFile("ItemList.ser", allItems);

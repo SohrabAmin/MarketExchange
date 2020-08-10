@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Subclass of transactions. Transaction, instantiated when a transactions. TwoWay transactions.Transaction is made (an exchange of Items).
+ * Subclass of transactions. Transaction, instantiated when a transactions. TwoWay Transaction is made (an exchange of Items).
  */
 
 public class TwoWay extends Transaction implements Serializable {
@@ -16,11 +16,11 @@ public class TwoWay extends Transaction implements Serializable {
     private List<Item> items;
 
     /**
-     * Constructor of transactions.TwoWay. Requires the item of the first User, the Item of the second User, and the boolean regarding if it's temporary. True: transactions.TwoWay is temporary. False: transactions.TwoWay is permanent.
+     * Constructor of TwoWay. Requires the item of the first User, the Item of the second User, and the boolean regarding if it's temporary. True: TwoWay is temporary. False: TwoWay is permanent.
      *
      * @param item1 The Item the first User is giving to the second User.
      * @param item2 The Item the second User is giving to the first User.
-     * @param temp  If the transactions.TwoWay is temporary.
+     * @param temp  If the TwoWay is temporary.
      */
     public TwoWay(Item item1, Item item2, boolean temp, boolean virtual) {
 
@@ -33,18 +33,18 @@ public class TwoWay extends Transaction implements Serializable {
     }
 
     /**
-     * Getter for the firstTrader of a transactions.TwoWay; The User who initiates the transactions.TwoWay.
+     * Getter for the firstTrader of a TwoWay; The User who initiates the TwoWay.
      *
-     * @return The firstTrader; the User who initiates the transactions.TwoWay.
+     * @return The firstTrader; the User who initiates the TwoWay.
      */
     public User getFirstTrader() {
         return this.user1;
     }
 
     /**
-     * Setter for the secondTrader of a transactions.TwoWay; the User who accepts the transactions.TwoWay.
+     * Setter for the secondTrader of a TwoWay; the User who accepts the TwoWay.
      *
-     * @return The secondTrader; the User who accepts the transactions.TwoWay.
+     * @return The secondTrader; the User who accepts the TwoWay.
      */
     public User getSecondTrader() {
         return this.user2;
@@ -69,9 +69,9 @@ public class TwoWay extends Transaction implements Serializable {
     }
 
     /**
-     * Returns a String representation of a transactions.Transaction, with nicely formatted attributes
+     * Returns a String representation of a Transaction, with nicely formatted attributes
      *
-     * @return String representation of this transactions.Transaction
+     * @return String representation of this Transaction
      */
     public String toString() {
 
