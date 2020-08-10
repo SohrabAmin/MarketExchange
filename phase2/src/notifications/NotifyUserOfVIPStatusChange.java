@@ -1,9 +1,9 @@
-package system;
+package notifications;
 
 import accounts.users.User;
 import accounts.users.UserManager;
 
-public class NotifyUserOfVIPStatusChange {
+public class NotifyUserOfVIPStatusChange implements UserNotification {
     /**
      * Notify user of a change to their VIP status when they log in
      *

@@ -1,4 +1,4 @@
-package system;
+package notifications;
 
 import accounts.users.User;
 import accounts.users.UserManager;
@@ -7,10 +7,11 @@ import accounts.users.UserManager;
  * notify user of all the admin undo actions
  */
 
-public class NotifyUserOfAdminUndo {
+public class NotifyUserOfAdminUndo implements UserNotification {
     /**
      * notify user of all the admin undo actions when user logged in
-     * @param user user who logged in
+     *
+     * @param user     user who logged in
      * @param allUsers all users stored in UserManager
      */
     public void notify(User user, UserManager allUsers) {

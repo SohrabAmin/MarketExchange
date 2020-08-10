@@ -1,9 +1,9 @@
-package system;
+package notifications;
 
 import accounts.admins.Admin;
 import accounts.admins.AdminManager;
 
-public class NotifyAdminOfSuperAdminStatusChange {
+public class NotifyAdminOfSuperAdminStatusChange implements AdminNotification {
     /**
      * Notify admin of a change to their "super admin" status when they log in
      *
