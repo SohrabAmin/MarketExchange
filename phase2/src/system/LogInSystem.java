@@ -67,7 +67,7 @@ public class LogInSystem {
     }
 
     /**
-     * Method authenticator prompts the User to either login or signup for an accounts.Account; proceeds to prompt User for
+     * Method authenticator prompts the User to either login or signup for an Account; proceeds to prompt User for
      * username and password. If they login, authenticator will check the list of Users stored in UserManager allUsers
      * and will return the user to system.TradeSystem so that they can log in and see main menu if the credentials are correct
      * and User exists. Else, it will prompt them to log in or sign up again. If they sign up, it will create a new
@@ -112,7 +112,7 @@ public class LogInSystem {
                         return input;
                     }
                     //checks to see if the User exists in the System by checking it against
-                    //the list of accounts.users in UserManager allUsers by comparing username and passwords against
+                    //the list of users in UserManager allUsers by comparing username and passwords against
                     //the inputted username and password
                     //if credentials check out, it will return the User
                     for (int i = 0; i < allUsers.getAllUsers().size(); i++) {

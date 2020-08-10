@@ -18,9 +18,9 @@ import java.util.logging.Logger;
 public class FreezeOrUnfreeze implements AdminMainMenuOptions {
 
     /**
-     * Allows admin to either view unfreeze requests, freeze and unfreeze accounts.users in the system.
+     * Allows admin to either view unfreeze requests, freeze and unfreeze users in the system.
      *
-     * @param allUsers UserManager which stores all the accounts.users in the system
+     * @param allUsers UserManager which stores all the users in the system
      * @param admin the current Admin logged into the system
      * @param allAdmins AdminManager which holds all the Admins, FrozenRequests and Thresholds in the system
      * @param allItems items.ItemManager which holds the system inventory
@@ -68,7 +68,7 @@ public class FreezeOrUnfreeze implements AdminMainMenuOptions {
      * If they unfreeze a User, it will remove their request from frozenRequests and change their status isPseudoFrozen and
      * isFrozen to false.
      *
-     * @param allUsers UserManager which stores all the accounts.users in the system
+     * @param allUsers UserManager which stores all the users in the system
      * @param allAdmins Adminmanager which stores the FrozenRequests
      * @return depending on what the Admin inputs it will return different objects:
      * returns null to tell mainmenu() to call system_options.admin_main_menus.options.FreezeOrUnfreeze() again
@@ -120,7 +120,7 @@ public class FreezeOrUnfreeze implements AdminMainMenuOptions {
         for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
             if (allUsers.getAllUsers().get(i).getIsFrozen() || allUsers.getAllUsers().get(i).getIsPseudoFrozen()) {
                 //if getIsFrozen returns true for frozen accounts
-                // or if getIsPseudoFrozen returns true for pseudo frozen accounts.users
+                // or if getIsPseudoFrozen returns true for pseudo frozen users
                 frozenUsers.add(allUsers.getAllUsers().get(i));
             }
         }
@@ -183,7 +183,7 @@ public class FreezeOrUnfreeze implements AdminMainMenuOptions {
         List<User> unfrozenUsers = new ArrayList<>();
         for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
             if (!allUsers.getAllUsers().get(i).getIsFrozen() || allUsers.getAllUsers().get(i).getIsPseudoFrozen()) {
-                //if getIsFrozen is not true or if getIsPseudoFrozen returns true for pseudo frozen accounts.users
+                //if getIsFrozen is not true or if getIsPseudoFrozen returns true for pseudo frozen users
                 unfrozenUsers.add(allUsers.getAllUsers().get(i));
             }
         }
@@ -217,7 +217,7 @@ public class FreezeOrUnfreeze implements AdminMainMenuOptions {
                 allUsers.unPseudoFreeze(chosenUser);
             }
             allUsers.freeze(chosenUser);
-            //accounts.users will need to re-request to be unfrozen if they go from pseudo-frozen to actually frozen
+            //users will need to re-request to be unfrozen if they go from pseudo-frozen to actually frozen
             for (int i = 0; i < allAdmins.getFrozenRequests().size(); i++) {
                 if (allAdmins.getFrozenRequests().get(i).getName().equals(chosenUser.getName())) {
                     allAdmins.removeFromFrozenRequest(chosenUser);

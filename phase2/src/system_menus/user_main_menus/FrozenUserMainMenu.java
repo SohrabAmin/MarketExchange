@@ -21,7 +21,7 @@ public class FrozenUserMainMenu implements  DifferentUserMainMenu{
     /**
      * Displays the main menu for a frozen or pseudoFrozen user and prompts user for input depending on what they want to do.
      * <p>
-     * Frozen accounts.users are able to do the following:
+     * Frozen users are able to do the following:
      * View wishlist, view inventory, browse items, add items to inventory, view most recent trades, view most
      * frequent trading partners, view item statuses, add items to wishlist, request unfreeze and log out.
      *

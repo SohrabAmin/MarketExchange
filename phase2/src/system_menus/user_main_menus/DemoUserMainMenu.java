@@ -18,7 +18,7 @@ public class DemoUserMainMenu implements DifferentUserMainMenu{
     /**
      * Displays the main menu for a demo user and prompts user for input depending on what they want to do.
      * <p>
-     * Demo accounts.users are able only able to browse items and log out.
+     * Demo users are able only able to browse items and log out.
      * However, they can choose from the following and it will show them what those menu options do if they create
      * an account:
      * View wishlist, view inventory, initiate trade, view messages, approve pending trades, add

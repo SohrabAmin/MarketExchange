@@ -29,9 +29,9 @@ public class Meeting {
     }
 
     /**
-     * Checks if both accounts.users have confimred the meetings.Meeting
+     * Checks if both users have confimred the meetings.Meeting
      *
-     * @return True if both accounts.users have confirmed meetings.Meeting, false otherwise.
+     * @return True if both users have confirmed meetings.Meeting, false otherwise.
      */
     public boolean confirmedByBothSides() {
         //Used https://stackoverflow.com/questions/27254302/counting-duplicate-values-in-hashmap as reference
@@ -61,7 +61,7 @@ public class Meeting {
     }
 
     /**
-     * Set confirmation values of both accounts.users to 0
+     * Set confirmation values of both users to 0
      *
      * @param side1 name of first user
      * @param side2 name of second user
@@ -79,7 +79,7 @@ public class Meeting {
     }
 
     /**
-     * Confirms accounts.users confirmation value of a meetings.Meeting
+     * Confirms users confirmation value of a meetings.Meeting
      *
      * @param name name of user
      */
@@ -90,7 +90,7 @@ public class Meeting {
 
 
     /**
-     * Gets accounts.users confirmation value of a meetings.Meeting
+     * Gets users confirmation value of a meetings.Meeting
      *
      * @param name name of user
      * @return Integer representing if user confirmed meetings.Meeting
@@ -152,7 +152,7 @@ public class Meeting {
     }
 
     /**
-     * gets accounts.users edit history for meetings.Meeting
+     * gets users edit history for meetings.Meeting
      *
      * @param user User who edited meeting
      * @return number of times user has edited the meeting

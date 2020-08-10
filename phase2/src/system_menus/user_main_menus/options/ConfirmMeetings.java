@@ -16,7 +16,7 @@ import currency.*;
 public class ConfirmMeetings implements UserMainMenuOptions {
 
     /**
-     * Displays the pending transactions that the User user has. It will allow accounts.users to approve or edit the transactions
+     * Displays the pending transactions that the User user has. It will allow users to approve or edit the transactions
      * they currently have pending.
      *  @param user            the User that wants to view their pending transactions
      * @param allItems        items.ItemManager that stores the system's inventory
@@ -159,7 +159,7 @@ public class ConfirmMeetings implements UserMainMenuOptions {
                         else if (selectedTransaction.getTemp()){
                             //if it was a temporary meeting, then I need to set up a second meeting
                             allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 2, currencyManager, undoLogger );
-                            //by now, the second agreed upon meeting is set for both accounts.users
+                            //by now, the second agreed upon meeting is set for both users
 
 
                             Calendar date = selectedTransaction.getInitialMeeting().getDate();
@@ -191,7 +191,7 @@ public class ConfirmMeetings implements UserMainMenuOptions {
                     } else if (selectedTransaction.getTemp()) {
                         //if it was a temporary meeting, then I need to set up a second meeting
                         allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 2, currencyManager, undoLogger );
-                        //by now, the second agreed upon meeting is set for both accounts.users
+                        //by now, the second agreed upon meeting is set for both users
                         Calendar date = selectedTransaction.getInitialMeeting().getDate();
                         date.add(Calendar.MONTH, 1);
                         Meeting returnMeeting = new Meeting(date, selectedTransaction.getInitialMeeting().getPlace());
@@ -213,7 +213,7 @@ public class ConfirmMeetings implements UserMainMenuOptions {
                             }else if (selectedTransaction.getTemp()) { //if it was temporary
                                 //if it was a temporary meeting, then I need to set up a second meeting
                                 allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 2, currencyManager, undoLogger );
-                                //by now, the second agreed upon meeting is set for both accounts.users
+                                //by now, the second agreed upon meeting is set for both users
                                 Calendar date = selectedTransaction.getInitialMeeting().getDate();
                                 date.add(Calendar.MONTH, 1);
                                 Meeting returnMeeting = new Meeting(date, selectedTransaction.getInitialMeeting().getPlace());

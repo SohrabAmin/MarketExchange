@@ -51,7 +51,7 @@ public class InputGetter {
      * items to inventory, view recent trades, view most frequent trading partners, view item statuses, add items to
      * wishlists, view approved trades, approve meetings, confirm meetings, and log out.
      * <p>
-     * Frozen accounts.users are able to do the following:
+     * Frozen users are able to do the following:
      * View wishlist, view inventory, browse items, add items to inventory, view most recent trades, view most
      * frequent trading partners, view item statuses, add items to wishlist, request unfreeze and log out.
      *
@@ -62,7 +62,7 @@ public class InputGetter {
      * @param allMeetings      meetings.MeetingManager that deals with the creation of meetings
      * @param allTransactions  transactions.TransactionManager that stores all the Transactions in the system
      * @param allUserMessages  UserMessageManager which stores all the Users messages to Admin
-     * @param allAdmins        AdminManager which stores all the accounts.admins in the system
+     * @param allAdmins        AdminManager which stores all the admins in the system
      * @return depending on what the User inputs it will return different objects:
      * returns User to system.TradeSystem() to either remain logged into the system and prompt mainMenu
      * returns null to log out of the system and allow another User to log in

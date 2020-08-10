@@ -16,7 +16,7 @@ public class PendingTransactionProcess implements UserMainMenuOptions {
 
 
     /**
-     * Displays the pending transactions that the User user has. It will allow accounts.users to approve or edit the transactions
+     * Displays the pending transactions that the User user has. It will allow users to approve or edit the transactions
      * they currently have pending.
      *  @param user            the User that wants to view their pending transactions
      * @param allItems        items.ItemManager that stores the system's inventory

@@ -119,7 +119,7 @@ public class TradeSystem {
 
 
 
-        //If there is no current User, prompts log in and prompts the correct menu depending on the type of accounts.Account
+        //If there is no current User, prompts log in and prompts the correct menu depending on the type of Account
         while (currentUser == null) {
             LogInSystem system1 = new LogInSystem(allUsers, allAdmins);
             Object loggedIn = system1.LogIn();
@@ -153,7 +153,7 @@ public class TradeSystem {
 
         System.out.print("Goodbye!\uD83D\uDEAA \n");
 
-        //saves all the accounts.users in UserManager to an external file
+        //saves all the users in UserManager to an external file
         readwrite.saveToFile("UserList.ser", allUsers);
         //saves current AdminManager object allAdmins to external file
         readwrite.saveToFile("AdminList.ser", allAdmins);

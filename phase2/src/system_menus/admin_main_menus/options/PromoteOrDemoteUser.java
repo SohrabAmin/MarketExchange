@@ -33,9 +33,9 @@ public class PromoteOrDemoteUser implements AdminMainMenuOptions {
                           UserMessageManager allUserMessages, TransactionManager allTransactions,
                           TradeRequestManager allRequests, CurrencyManager allCurrency, Logger undoLogger) {
 
-        // the following four lines are commented out because currently any admin can promote accounts.users or demote VIPs
+        // the following four lines are commented out because currently any admin can promote users or demote VIPs
         //if (!admin.getIsSuperAdmin()) {
-        //    System.out.println("Sorry, but only super accounts.admins can access this menu!");
+        //    System.out.println("Sorry, but only super admins can access this menu!");
         //    return admin;
         //}
 
@@ -48,7 +48,7 @@ public class PromoteOrDemoteUser implements AdminMainMenuOptions {
                 System.out.println("Type the number beside the name of the user to promote to VIP user.");
 
                 for (User indexedUser : allUsers.getAllUsers()) {
-                    // the list of accounts.users that will be displayed to the logged in admin
+                    // the list of users that will be displayed to the logged in admin
                     if (!indexedUser.getIsVIP()) {
                         listOfUserNames.add(indexedUser.getName());
                     }
@@ -75,7 +75,7 @@ public class PromoteOrDemoteUser implements AdminMainMenuOptions {
                     // first check whether the admin typed in an valid number
                     if (listOfUserNames.size() >= (int) idOfUserChosenForPromotion - 1) {
 
-                        // loop through the list of accounts.users to find the user to promote
+                        // loop through the list of users to find the user to promote
                         for (User indexedUser : allUsers.getAllUsers()) {
                             if (indexedUser.getName().equals(listOfUserNames.get((int) idOfUserChosenForPromotion - 1))) {
                                 indexedUser.setIsVIP(true);
@@ -97,7 +97,7 @@ public class PromoteOrDemoteUser implements AdminMainMenuOptions {
 
                 for (User indexedUser : allUsers.getAllUsers()) {
 
-                    // the list of VIP accounts.users that will be displayed to the logged in admin
+                    // the list of VIP users that will be displayed to the logged in admin
                     if (indexedUser.getIsVIP()) {
                         listOfVIPNames.add(indexedUser.getName());
                     }
@@ -125,7 +125,7 @@ public class PromoteOrDemoteUser implements AdminMainMenuOptions {
                     // first check whether the admin typed in an actual user name
                     if (listOfVIPNames.size() >= ((int) idOfVIPChosenForDemotion - 1)) {
 
-                        // loop through the list of accounts.users to find the VIP user to demote
+                        // loop through the list of users to find the VIP user to demote
                         for (User indexedUser : allUsers.getAllUsers()) {
                             if (indexedUser.getName().equals(listOfVIPNames.get((int) idOfVIPChosenForDemotion - 1))) {
                                 indexedUser.setIsVIP(false);

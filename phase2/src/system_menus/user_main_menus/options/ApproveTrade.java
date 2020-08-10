@@ -326,7 +326,7 @@ public class ApproveTrade implements UserMainMenuOptions {
                 // i need to find an item closest to sadItem that doesnt exist in user1 or user2's inventory
 
 
-                //now lets see all other items that arent common between these two accounts.users to find a third person
+                //now lets see all other items that arent common between these two users to find a third person
                 Item replacement = ((TypeTwoRequest) cTrade).getSecondItem();
                 ArrayList<Item> nonuserinventory = new ArrayList<>();
 

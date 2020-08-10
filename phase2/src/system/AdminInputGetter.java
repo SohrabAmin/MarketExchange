@@ -54,7 +54,7 @@ public class AdminInputGetter {
     /**
      * Displays the main menu of an AdminUser and prompts the user for input.
      *
-     * @param admin accounts.Account of the Admin.
+     * @param admin Account of the Admin.
      * @return depending on what the Admin inputs it will return different objects:
      * returns Admin to system.TradeSystem() to either remain logged into the system and prompt mainMenu
      * returns null to log out of the system and allow another Admin to log in
@@ -77,7 +77,7 @@ public class AdminInputGetter {
         if (allAdmins.getFrozenRequests().size() > 0) {
             System.out.println("\uD83D\uDCF3 You have " + allAdmins.getFrozenRequests().size() + " Frozen user requests!");
         }
-        //if they have frozen accounts.users, show it here
+        //if they have frozen users, show it here
         if (allUsers.getAllFrozenUsers().size() > 0) {
             System.out.println("\u2603 You have " + allUsers.getAllFrozenUsers().size() + " Frozen users!");
         }
@@ -112,7 +112,7 @@ public class AdminInputGetter {
                     case "3":  //view items that need to be approved
                         option.setChosenOption(new ApprovePendingItem());
                         break;
-                    case "4":  //freeze or unfreeze accounts.users
+                    case "4":  //freeze or unfreeze users
                         option.setChosenOption(new FreezeOrUnfreeze());
                         break;
                     case "5": //promote a user or demote a VIP user

@@ -49,7 +49,7 @@ public class User extends Account {
     private List<CreditCard> creditCards;
     private CreditCard defaultCreditCard;
 
-    //potential hash map for outbound requests to help accounts.admins undo
+    //potential hash map for outbound requests to help admins undo
 
 
     public User() {

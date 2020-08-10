@@ -17,7 +17,7 @@ public class AccountSettingsManager implements UserMainMenuOptions {
      * password and/or location.
      *
      * @param user            the User who wants to change their account settings
-     * @param allUsers        UserManager which stores all the accounts.users in the system
+     * @param allUsers        UserManager which stores all the users in the system
      * @param currencyManager
      * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
      * String "exit" if the user is to be logged out.
@@ -161,7 +161,7 @@ public class AccountSettingsManager implements UserMainMenuOptions {
      * Deals with changing the User user's username.
      *
      * @param user     the User that wants to change their username
-     * @param allUsers UserManager that stores all the accounts.users in the system
+     * @param allUsers UserManager that stores all the users in the system
      * @return returns different objects depending on the User user's input
      * returns "back" to return to the main menu
      * returns null to tell the accountSettings() to call userNameChange() again

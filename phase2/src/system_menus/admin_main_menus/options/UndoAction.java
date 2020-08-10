@@ -141,7 +141,7 @@ public class UndoAction implements AdminMainMenuOptions {
         if (categories[4].split(": ")[1].equals("true; ")) {
             virtual = false;
         }
-        //finds the accounts.users by comparing the name in the log to the Usernames in allUsers
+        //finds the users by comparing the name in the log to the Usernames in allUsers
         for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
             if (allUsers.getAllUsers().get(i).getName().equals(parseNames[1])) {
                 user1 = allUsers.getAllUsers().get(i);
@@ -178,7 +178,7 @@ public class UndoAction implements AdminMainMenuOptions {
             System.out.println("Request cannot be found. No actions can be undone.");
             return null;
         }
-        //otherwise, cancels the trade request and notifies the accounts.users involved
+        //otherwise, cancels the trade request and notifies the users involved
         allRequests.updateRequestStatus(allUsers, request, 1);
         String string = "Your one-way request for <" + user2.getName() + ">'s item <" + itemName + "> has been cancelled by Admin!";
         String string2 = "A one-way request for your item <" + itemName + "> from User <" + user1.getName() + "> has been cancelled by Admin!";
@@ -252,7 +252,7 @@ public class UndoAction implements AdminMainMenuOptions {
             System.out.println("Request cannot be found. No actions can be undone.");
             return null;
         }
-        //otherwise, cancels the trade request and notifies the accounts.users involved
+        //otherwise, cancels the trade request and notifies the users involved
         allRequests.updateRequestStatus(allUsers, request, 1);
         String string = "Your two-way request for <" + user2.getName() + ">'s item <" + itemName2 + "> has been cancelled by Admin!";
         String string2 = "A two-way request for your item <" + itemName2 + "> from User <" + user1.getName() + "> has been cancelled by Admin!";
@@ -335,7 +335,7 @@ public class UndoAction implements AdminMainMenuOptions {
             System.out.println("Request cannot be found. No actions can be undone.");
             return null;
         }
-        //otherwise, cancels the trade request and notifies the accounts.users involved
+        //otherwise, cancels the trade request and notifies the users involved
         allRequests.updateRequestStatus(allUsers, request, 1);
         String string = "Your three-way request with <" + user2.getName() + ">'s item <" + itemName2 +
                 "> and <" + user3.getName() + ">'s item <" + itemName3 + "> has been cancelled by Admin!";

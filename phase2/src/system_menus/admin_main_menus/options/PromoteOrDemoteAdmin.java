@@ -48,7 +48,7 @@ public class PromoteOrDemoteAdmin implements AdminMainMenuOptions {
 
                 for (Admin indexedAdmin : allAdmins.getAllAdmins()) {
 
-                    // the list of accounts.admins that will be displayed to the logged in super admin
+                    // the list of admins that will be displayed to the logged in super admin
                     if (!indexedAdmin.getIsSuperAdmin()) {
                         listOfAdminNames.add(indexedAdmin.getName());
                     }
@@ -67,7 +67,7 @@ public class PromoteOrDemoteAdmin implements AdminMainMenuOptions {
                     // first check whether the super admin typed in an actual admin name
                     if (listOfAdminNames.contains(nameOfAdminChosenForPromotion)) {
 
-                        // loop through the list of accounts.admins to find the admin to promote
+                        // loop through the list of admins to find the admin to promote
                         for (Admin indexedAdmin : allAdmins.getAllAdmins()) {
                             if (indexedAdmin.getName().equals(nameOfAdminChosenForPromotion)) {
                                 indexedAdmin.setIsSuperAdmin(true);
@@ -91,8 +91,8 @@ public class PromoteOrDemoteAdmin implements AdminMainMenuOptions {
 
                 for (Admin indexedAdmin : allAdmins.getAllAdmins()) {
 
-                    // the list of super accounts.admins that will be displayed to the logged in super admin
-                    // add super accounts.admins to the list of super accounts.admins, but do not add the logged in super admin
+                    // the list of super admins that will be displayed to the logged in super admin
+                    // add super admins to the list of super admins, but do not add the logged in super admin
                     if (indexedAdmin.getIsSuperAdmin() && !indexedAdmin.getName().equals(admin.getName())) {
                         listOfSuperAdminNames.add(indexedAdmin.getName());
                     }
@@ -111,7 +111,7 @@ public class PromoteOrDemoteAdmin implements AdminMainMenuOptions {
                     // first check whether the super admin typed in an actual super admin name
                     if (listOfSuperAdminNames.contains(nameOfSuperAdminChosenForDemotion)) {
 
-                        // loop through the list of accounts.admins to find the super admin to demote
+                        // loop through the list of admins to find the super admin to demote
                         for (Admin indexedAdmin : allAdmins.getAllAdmins()) {
                             if (indexedAdmin.getName().equals(nameOfSuperAdminChosenForDemotion)) {
                                 indexedAdmin.setIsSuperAdmin(false);
