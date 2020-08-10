@@ -44,14 +44,14 @@ public class addAdmin implements adminMainMenuOptions {
 
         ArrayList<String> temp = new ArrayList<>();
 
-        System.out.println("Please enter 'continue' to proceed to adding a new accounts.admins.Admin or 'back' to return to the " +
-                "accounts.admins.Admin menu." + " Enter 'exit' to exit the system at any time.");
+        System.out.println("Please press 1 to proceed to adding a new accounts.admins.Admin or press 2 to return to " +
+                "the accounts.admins.Admin menu." + " Enter 'exit' to exit the system at any time.");
         try {
             String input = br.readLine();
             if (input.equals("exit")) {
                 return input;
             }
-            if (input.equals("continue")) {
+            if (input.equals("1")) {
                 while (!input.equals("exit") && !prompts.usergot) {
                     if (prompts.hasNext()) {
                         System.out.println(prompts.next());
@@ -64,6 +64,9 @@ public class addAdmin implements adminMainMenuOptions {
                             prompts.usergot = true;
                     }
                 }
+                if (input.equals("exit")) {
+                    return "exit";
+                }
                 //loops through the list of allUsers in the system
                 for (int i = 0; i < allAdmins.getAllAdmins().size(); i++) {
                     //checks if the entered username already exists
@@ -75,8 +78,12 @@ public class addAdmin implements adminMainMenuOptions {
                 allAdmins.addAdmin(temp.get(0), temp.get(1));
                 System.out.println("\nNew admin has been added successfully.\n");
                 return "back";
-            } else if (input.equals("back")) {
+            } else if (input.equals("2")) {
                 return "back";
+            }
+            else {
+                System.out.println("Invalid input. Please try again.");
+                return null;
             }
         } catch (IOException ioException) {
             ioException.printStackTrace();
