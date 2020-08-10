@@ -9,9 +9,7 @@ import items.Item;
 import items.ItemManager;
 import requests.*;
 import system.ReadWrite;
-import transactions.OneWay;
-import transactions.Transaction;
-import transactions.TransactionManager;
+import transactions.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,7 +31,7 @@ public class UndoAction implements AdminMainMenuOptions {
      * @param allUserMessages UserMassageManager that stores all user massages
      * @param allTransactions TransactionManager which stores and edits all Transactions in the system
      * @param allRequests TradeRequestManager which store all tradeRequests
-     * @param allCurrency
+     * @param allCurrency CurrencyManager which in-app currency
      * @return depend on admin's input
      * return "back" so that admin can go back to the main menu for other options.
      * return null if there is no actions to undo, or values of users not match, or admins finished the undo actions
@@ -97,18 +95,35 @@ public class UndoAction implements AdminMainMenuOptions {
         return "back";
     }
 
+    /**
+     * Undoes a trade request based on the log.
+     *
+     * @param allUsers UserManager which stores all the users in the system
+     * @param allRequests TradeRequestManager which stores all the Trade Requests in the system
+     * @param chosenLog the Log containing information about the trade request
+     * @return null so admin can return back to the list of logs when undoTradeRequest is done
+     */
     public Object undoTradeRequest(UserManager allUsers, TradeRequestManager allRequests, String chosenLog) {
         String[] brokenUp = chosenLog.split(" ");
-        if (brokenUp[2].equals("Two-way")) { //if the trade request is two-way
-            return undoTwoWayRequest(allUsers, allRequests, chosenLog);
-        } else if (brokenUp[2].equals("One-way")) { //if the trade request is three way
-            return undoOneWayRequest(allUsers, allRequests, chosenLog);
-        } else if (brokenUp[2].equals("Three-way")) {
-            return undoThreeWayRequest(allUsers, allRequests, chosenLog);
+        switch (brokenUp[2]) {
+            case "Two-way":  //if the trade request is two-way
+                return undoTwoWayRequest(allUsers, allRequests, chosenLog);
+            case "One-way":  //if the trade request is three way
+                return undoOneWayRequest(allUsers, allRequests, chosenLog);
+            case "Three-way":
+                return undoThreeWayRequest(allUsers, allRequests, chosenLog);
         }
         return null;
     }
 
+    /**
+     * Helper function for undoTradeRequest(); deals with undoing OneWay trade requests
+     *
+     * @param allUsers UserManager which stores all the users in the system
+     * @param allRequests TradeRequestManager which stores all the Trade Requests in the system
+     * @param chosenLog the Log containing information about the trade request
+     * @return null so admin can return back to the list of logs when undoTradeRequest is done
+     */
     public Object undoOneWayRequest(UserManager allUsers, TradeRequestManager allRequests, String chosenLog) {
         String[] parseNames = chosenLog.split("'");
         String[] categories = chosenLog.split("\n");
@@ -173,6 +188,14 @@ public class UndoAction implements AdminMainMenuOptions {
         return null;
     }
 
+    /**
+     * Helper function for undoTradeRequest(); deals with undoing TwoWay trade requests
+     *
+     * @param allUsers UserManager which stores all the users in the system
+     * @param allRequests TradeRequestManager which stores all the Trade Requests in the system
+     * @param chosenLog the Log containing information about the trade request
+     * @return null so admin can return back to the list of logs when undoTradeRequest is done
+     */
     public Object undoTwoWayRequest(UserManager allUsers, TradeRequestManager allRequests, String chosenLog) {
         String[] parseNames = chosenLog.split("'");
         String[] categories = chosenLog.split("\n");
@@ -239,6 +262,14 @@ public class UndoAction implements AdminMainMenuOptions {
         return null;
     }
 
+    /**
+     * Helper function for undoTradeRequest(); deals with undoing ThreeWay trade requests
+     *
+     * @param allUsers UserManager which stores all the users in the system
+     * @param allRequests TradeRequestManager which stores all the Trade Requests in the system
+     * @param chosenLog the Log containing information about the trade request
+     * @return null so admin can return back to the list of logs when undoTradeRequest is done
+     */
     public Object undoThreeWayRequest(UserManager allUsers, TradeRequestManager allRequests, String chosenLog) {
         String[] parseLog = chosenLog.split("; \n");
         User user1 = null;
@@ -316,11 +347,61 @@ public class UndoAction implements AdminMainMenuOptions {
         System.out.println("Request has been successfully cancelled!");
         return null;
     }
+
+    /**
+     * Undoes Transactions by either cancelling in-progress transactions or reopening transactions.
+     *
+     * @param allAdmins AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
+     * @param allUsers UserManager which stores all the Users in the system
+     * @param allItems ItemManager which stores the system's inventory
+     * @param allTransactions TransactionManager which stores and edits all Transactions in the system
+     * @param allCurrency CurrencyManager which in-app currency
+     * @param undoLogger Logger that logs actions that happen in the system
+     * @param chosenLog the Log containing information about the trade request
+     * @return null so admin can return back to the list of logs when undoTradeRequest is done
+     */
+    public Object undoTransaction(UserManager allUsers, TransactionManager allTransactions,
+                                  CurrencyManager allCurrency, String chosenLog, ItemManager allItems, AdminManager allAdmins, Logger undoLogger) {
+        String[] stringSplit = chosenLog.split("; \n");
+        List<String> attributes = new ArrayList<>();
+        for (int i = 0; i < stringSplit.length; i++) {
+            String[] temp = stringSplit[i].split("; ");
+            attributes.add(temp[1]);
+        }
+        //attributes is now list formatted as follows:
+        // [User1, User 2, (User3), Status, is temporary?, is in-person?, initial meeting, return meeting]
+
+        if (stringSplit[0].split("; ")[1].equals("Three-way")) {
+            return undoThreeWayTransaction(allUsers, allTransactions, allCurrency, stringSplit, attributes, allItems, allAdmins, undoLogger);
+        } else if (stringSplit[0].split("; ")[1].equals("Two-way")) {
+            return undoTwoWayTransaction(allUsers, allTransactions, allCurrency, stringSplit, attributes, allItems, allAdmins, undoLogger);
+        } else if (stringSplit[0].split("; ")[1].equals("One-way")) {
+            return undoOneWayTransaction(allUsers, allTransactions, allCurrency, stringSplit, attributes, allItems, allAdmins, undoLogger);
+        } else if (stringSplit[0].split("; ")[1].equals("Monetized One-way")) {
+            return undoOneWayTransaction(allUsers, allTransactions, allCurrency, stringSplit, attributes, allItems, allAdmins, undoLogger);
+        }
+        return null;
+    }
+
+    /**
+     * Helper function for undoTransaction(); deals with undoing one-way and monetized one-way transactions
+     *
+     * @param allAdmins AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
+     * @param allUsers UserManager which stores all the Users in the system
+     * @param allItems ItemManager which stores the system's inventory
+     * @param allTransactions TransactionManager which stores and edits all Transactions in the system
+     * @param allCurrency CurrencyManager which in-app currency
+     * @param undoLogger Logger that logs actions that happen in the system
+     * @param attributes the attributes of the log- contains user info, item info and transaction info
+     * @param stringSplit helper variable which just stores a split version of the log
+     * @return null so admin can return back to the list of logs when undoTradeRequest is done
+     */
     public Object undoOneWayTransaction(UserManager allUsers, TransactionManager allTransactions,
-                                        CurrencyManager allCurrency, String chosenLog, String[] stringSplit, List<String> attributes,
-                                        ItemManager allItems, UserManager users, AdminManager allAdmins, Logger undoLogger) {
+                                        CurrencyManager allCurrency, String[] stringSplit, List<String> attributes,
+                                        ItemManager allItems, AdminManager allAdmins, Logger undoLogger) {
         Transaction transaction = null;
-        User user = null;
+        User user1 = null;
+        User user2 = null;
         int status;
         boolean temp = false;
         boolean virtual = false;
@@ -335,69 +416,273 @@ public class UndoAction implements AdminMainMenuOptions {
         try {
             //will try to turn the input into an integer
             //if input is not an integer, returns null and recalls execute()
-            status = Integer.parseInt((String) attributes.get(2));
+            status = Integer.parseInt(attributes.get(2));
         } catch (NumberFormatException e) {
             System.out.println("There has been an error with finding the transaction status. No actions can be undone.");
             return null;
         }
         for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
             if (allUsers.getAllUsers().get(i).getName().equals(attributes.get(0))) {
-                user = allUsers.getAllUsers().get(i);
-            }
-            if (user == null) { //if user doesn't exist in allUsers, prints error message
-                System.out.println("User no longer exists or has changed their name. No actions can be undone.");
-                return null;
+                user1 = allUsers.getAllUsers().get(i);
+            } else if (allUsers.getAllUsers().get(i).getName().equals(attributes.get(1))) {
+                user2 = allUsers.getAllUsers().get(i);
             }
         }
-        for (int j = 0; j < user.getPendingTrades().size(); j++) {
-            if (user.getPendingTrades().get(j) instanceof OneWay &&
-                    user.getPendingTrades().get(j).getTemp() == temp &&
-                    user.getPendingTrades().get(j).getVirtual() == virtual &&
-                    user.getPendingTrades().get(j).getTradeStatus() == status &&
-                    ((OneWay) user.getPendingTrades().get(j)).getItem().getName().equals(itemName) &&
-                    ((OneWay) user.getPendingTrades().get(j)).getFirstTrader().getName().equals(attributes.get(0)) &&
-                    ((OneWay) user.getPendingTrades().get(j)).getSecondTrader().getName().equals(attributes.get(1))) {
-                transaction = user.getPendingTrades().get(j);
+        if (user1 == null) { //if user doesn't exist in allUsers, prints error message
+            System.out.println("User no longer exists or has changed their name. No actions can be undone.");
+            return null;
+        } else if (user2 == null) { //if user doesn't exist in allUsers, prints error message
+            System.out.println("User no longer exists or has changed their name. No actions can be undone.");
+            return null;
+        } for (int j = 0; j < user1.getPendingTrades().size(); j++) {
+            if (user1.getPendingTrades().get(j) instanceof OneWay &&
+                    user1.getPendingTrades().get(j).getTemp() == temp &&
+                    user1.getPendingTrades().get(j).getVirtual() == virtual &&
+                    user1.getPendingTrades().get(j).getTradeStatus() == status &&
+                    ((OneWay) user1.getPendingTrades().get(j)).getItem().getName().equals(itemName) &&
+                    ((OneWay) user1.getPendingTrades().get(j)).getFirstTrader().getName().equals(attributes.get(0)) &&
+                    ((OneWay) user1.getPendingTrades().get(j)).getSecondTrader().getName().equals(attributes.get(1))) {
+                transaction = user1.getPendingTrades().get(j);
+            } else if (user1.getPendingTrades().get(j) instanceof OneWayMonetized &&
+                    user1.getPendingTrades().get(j).getTemp() == temp &&
+                    user1.getPendingTrades().get(j).getVirtual() == virtual &&
+                    user1.getPendingTrades().get(j).getTradeStatus() == status &&
+                    ((OneWayMonetized) user1.getPendingTrades().get(j)).getItem().getName().equals(itemName) &&
+                    ((OneWayMonetized) user1.getPendingTrades().get(j)).getFirstTrader().getName().equals(attributes.get(0)) &&
+                    ((OneWayMonetized) user1.getPendingTrades().get(j)).getSecondTrader().getName().equals(attributes.get(1))) {
+                transaction = user1.getPendingTrades().get(j);
             }
-        }
-        if (transaction == null) {
+        } if (transaction == null) {
             System.out.println("Transaction could not be found! No actions can be undone.");
             return null;
-        }
-        if (status == 4) { //cancelled
+        } if (status == 4) { //cancelled
+            //changes transaction to in progress
             allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, transaction, 0, allCurrency, undoLogger);
-
-        }
-        return null;
-    }
-    public Object undoTransaction(UserManager allUsers, TransactionManager allTransactions,
-                                  CurrencyManager allCurrency, String chosenLog, ItemManager allItems, AdminManager allAdmins, Logger undoLogger) {
-        String[] stringSplit = chosenLog.split("; \n");
-        List<String> attributes = new ArrayList<>();
-        for (int i = 0; i < stringSplit.length; i++) {
-            String[] temp = stringSplit[i].split("; ");
-            attributes.add(temp[1]);
-        }
-        //attributes is now list formatted as follows:
-        // [User1, User 2, (User3), Status, is temporary?, is in-person?, initial meeting, return meeting]
-
-        if (stringSplit[0].split("; ").equals("Three-way;")) {
-            return undoThreeWayTransaction(allUsers, allTransactions, allCurrency, chosenLog, stringSplit, attributes, allItems, allUsers, allAdmins, undoLogger);
-        } else if (stringSplit[0].split("; ").equals("Two-way;")) {
-            return undoOneWayTransaction(allUsers, allTransactions, allCurrency, chosenLog, stringSplit, attributes, allItems, allUsers, allAdmins, undoLogger);
-        } else if (stringSplit[0].split("; ").equals("One-way;")) {
-            return undoOneWayTransaction(allUsers, allTransactions, allCurrency, chosenLog, stringSplit, attributes, allItems, allUsers, allAdmins, undoLogger);
+            String string = "Your one-way transaction with User <" + user2.getName() + "> for their item <" + itemName + "> has been cancelled by Admin!";
+            String string2 = "Your one-way transaction with User <" + user1.getName() + "> for your item <" + itemName + "> has been cancelled by Admin!";
+            allUsers.addToNotifyUndo(user1, string);
+            allUsers.addToNotifyUndo(user2, string2);
+            System.out.println("Transaction has been successfully cancelled!");
+        } else { //otherwise cancels the transaction
+            allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, transaction, 4, allCurrency, undoLogger);
+            allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, transaction, 0, allCurrency, undoLogger);
+            String string = "Your one-way transaction with User <" + user2.getName() + "> for their item <" + itemName + "> has been re-opened by Admin!";
+            String string2 = "Your one-way transaction with User <" + user1.getName() + "> for your item <" + itemName + "> has been re-opened by Admin!";
+            allUsers.addToNotifyUndo(user1, string);
+            allUsers.addToNotifyUndo(user2, string2);
+            System.out.println("Transaction has been successfully re-opened!");
         }
         return null;
     }
 
-    private Object undoThreeWayTransaction(UserManager allUsers, TransactionManager allTransactions,
-                                           CurrencyManager allCurrency, String chosenLog, String[] stringSplit,
-                                           List<String> attributes, ItemManager allItems, UserManager users, AdminManager allAdmins,
+    /**
+     * Helper function for undoTransaction(); deals with undoing two-way transactions
+     *
+     * @param allAdmins AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
+     * @param allUsers UserManager which stores all the Users in the system
+     * @param allItems ItemManager which stores the system's inventory
+     * @param allTransactions TransactionManager which stores and edits all Transactions in the system
+     * @param allCurrency CurrencyManager which in-app currency
+     * @param undoLogger Logger that logs actions that happen in the system
+     * @param attributes the attributes of the log- contains user info, item info and transaction info
+     * @param stringSplit helper variable which just stores a split version of the log
+     * @return null so admin can return back to the list of logs when undoTradeRequest is done
+     */
+    private Object undoTwoWayTransaction(UserManager allUsers, TransactionManager allTransactions,
+                                           CurrencyManager allCurrency, String[] stringSplit,
+                                           List<String> attributes, ItemManager allItems, AdminManager allAdmins,
                                            Logger undoLogger) {
+        Transaction transaction = null;
+        User user1 = null;
+        User user2 = null;
+        int status;
+        boolean temp = false;
+        boolean virtual = false;
+        String itemName1 = stringSplit[1].split(" ")[3];
+        String itemName2 = stringSplit[2].split(" ")[3];
+
+        if (attributes.get(3).equals("true")) {
+            temp = true;
+        }
+        if (attributes.get(4).equals("false \n")) {
+            virtual = true;
+        }
+        try {
+            //will try to turn the input into an integer
+            //if input is not an integer, returns null and recalls execute()
+            status = Integer.parseInt(attributes.get(2));
+        } catch (NumberFormatException e) {
+            System.out.println("There has been an error with finding the transaction status. No actions can be undone.");
+            return null;
+        }
+        for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
+            if (allUsers.getAllUsers().get(i).getName().equals(attributes.get(0))) {
+                user1 = allUsers.getAllUsers().get(i);
+            } else if (allUsers.getAllUsers().get(i).getName().equals(attributes.get(1))) {
+                user2 = allUsers.getAllUsers().get(i);
+            }
+        }
+        if (user1 == null) { //if user doesn't exist in allUsers, prints error message
+            System.out.println("User no longer exists or has changed their name. No actions can be undone.");
+            return null;
+        } else if (user2 == null) { //if user doesn't exist in allUsers, prints error message
+            System.out.println("User no longer exists or has changed their name. No actions can be undone.");
+            return null;
+        } for (int j = 0; j < user1.getPendingTrades().size(); j++) {
+            if (user1.getPendingTrades().get(j) instanceof TwoWay &&
+                    user1.getPendingTrades().get(j).getTemp() == temp &&
+                    user1.getPendingTrades().get(j).getVirtual() == virtual &&
+                    user1.getPendingTrades().get(j).getTradeStatus() == status &&
+                    ((TwoWay) user1.getPendingTrades().get(j)).getFirstItem().getName().equals(itemName1) &&
+                    ((TwoWay) user1.getPendingTrades().get(j)).getSecondItem().getName().equals(itemName2) &&
+                    ((TwoWay) user1.getPendingTrades().get(j)).getFirstTrader().getName().equals(attributes.get(0)) &&
+                    ((TwoWay) user1.getPendingTrades().get(j)).getSecondTrader().getName().equals(attributes.get(1))) {
+                transaction = user1.getPendingTrades().get(j);
+            }
+        } if (transaction == null) {
+            System.out.println("Transaction could not be found! No actions can be undone.");
+            return null;
+        } if (status == 4) { //cancelled
+            //changes transaction to in progress
+            allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, transaction, 0, allCurrency, undoLogger);
+            String string = "Your two-way transaction with User <" + user2.getName() + "> for their item <" + itemName2 + "> in \n" +
+                    "exchange for your item <" + itemName1 + "> has been cancelled by Admin!";
+            String string2 = "Your two-way transaction with User <" + user1.getName() + "> for their item <" + itemName1 + "> in \n" +
+                    "exchange for your item <" + itemName2 + "> has been cancelled by Admin!";
+            allUsers.addToNotifyUndo(user1, string);
+            allUsers.addToNotifyUndo(user2, string2);
+            System.out.println("Transaction has been successfully cancelled!");
+        } else { //otherwise cancels the transaction
+            allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, transaction, 4, allCurrency, undoLogger);
+            String string = "Your two-way transaction with User <" + user2.getName() + "> for their item <" + itemName2 + "> in \n" +
+                    "exchange for your item <" + itemName1 + "> has been reopened by Admin!";
+            String string2 = "Your two-way transaction with User <" + user1.getName() + "> for their item <" + itemName1 + "> in \n" +
+                    "exchange for your item <" + itemName2 + "> has been re-opened by Admin!";
+            allUsers.addToNotifyUndo(user1, string);
+            allUsers.addToNotifyUndo(user2, string2);
+            System.out.println("Transaction has been successfully re-opened!");
+        }
         return null;
     }
 
+    /**
+     * Helper function for undoTransaction(); deals with undoing three-way transactions
+     *
+     * @param allAdmins AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
+     * @param allUsers UserManager which stores all the Users in the system
+     * @param allItems ItemManager which stores the system's inventory
+     * @param allTransactions TransactionManager which stores and edits all Transactions in the system
+     * @param allCurrency CurrencyManager which in-app currency
+     * @param undoLogger Logger that logs actions that happen in the system
+     * @param attributes the attributes of the log- contains user info, item info and transaction info
+     * @param stringSplit helper variable which just stores a split version of the log
+     * @return null so admin can return back to the list of logs when undoTradeRequest is done
+     */
+    private Object undoThreeWayTransaction(UserManager allUsers, TransactionManager allTransactions,
+                                           CurrencyManager allCurrency, String[] stringSplit,
+                                           List<String> attributes, ItemManager allItems, AdminManager allAdmins,
+                                           Logger undoLogger) {
+        Transaction transaction = null;
+        User user1 = null;
+        User user2 = null;
+        User user3 = null;
+        int status;
+        boolean temp = false;
+        boolean virtual = false;
+        String itemName1 = stringSplit[1].split(" ")[3];
+        String itemName2 = stringSplit[2].split(" ")[3];
+        String itemName3 = stringSplit[3].split(" ")[3];
+
+        if (attributes.get(4).equals("true")) {
+            temp = true;
+        }
+        if (attributes.get(5).equals("false \n")) {
+            virtual = true;
+        }
+        try {
+            //will try to turn the input into an integer
+            //if input is not an integer, returns null and recalls execute()
+            status = Integer.parseInt(attributes.get(2));
+        } catch (NumberFormatException e) {
+            System.out.println("There has been an error with finding the transaction status. No actions can be undone.");
+            return null;
+        }
+        for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
+            if (allUsers.getAllUsers().get(i).getName().equals(attributes.get(0))) {
+                user1 = allUsers.getAllUsers().get(i);
+            } else if (allUsers.getAllUsers().get(i).getName().equals(attributes.get(1))) {
+                user2 = allUsers.getAllUsers().get(i);
+            } else if (allUsers.getAllUsers().get(i).getName().equals(attributes.get(2))) {
+                user3 = allUsers.getAllUsers().get(i);
+            }
+        }
+        if (user1 == null) { //if user doesn't exist in allUsers, prints error message
+            System.out.println("User no longer exists or has changed their name. No actions can be undone.");
+            return null;
+        } else if (user2 == null) { //if user doesn't exist in allUsers, prints error message
+            System.out.println("User no longer exists or has changed their name. No actions can be undone.");
+            return null;
+        } else if (user3 == null) { //if user doesn't exist in allUsers, prints error message
+            System.out.println("User no longer exists or has changed their name. No actions can be undone.");
+            return null;
+        }
+        for (int j = 0; j < user1.getPendingTrades().size(); j++) {
+            if (user1.getPendingTrades().get(j) instanceof ThreeWay &&
+                    user1.getPendingTrades().get(j).getTemp() == temp &&
+                    user1.getPendingTrades().get(j).getVirtual() == virtual &&
+                    user1.getPendingTrades().get(j).getTradeStatus() == status &&
+                    ((ThreeWay) user1.getPendingTrades().get(j)).getFirstItem().getName().equals(itemName1) &&
+                    ((ThreeWay) user1.getPendingTrades().get(j)).getSecondItem().getName().equals(itemName2) &&
+                    ((ThreeWay) user1.getPendingTrades().get(j)).getThirdItem().getName().equals(itemName3) &&
+                    ((ThreeWay) user1.getPendingTrades().get(j)).getFirstTrader().getName().equals(attributes.get(0)) &&
+                    ((ThreeWay) user1.getPendingTrades().get(j)).getSecondTrader().getName().equals(attributes.get(1)) &&
+                    ((ThreeWay) user1.getPendingTrades().get(j)).getThirdTrader().getName().equals(attributes.get(2))) {
+                transaction = user1.getPendingTrades().get(j);
+            }
+        } if (transaction == null) {
+            System.out.println("Transaction could not be found! No actions can be undone.");
+            return null;
+        } if (status == 4) { //cancelled
+            //changes transaction to in progress
+            allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, transaction, 0, allCurrency, undoLogger);
+            String string = "Your three-way transaction with User <" + user2.getName() + "> for their item <" + itemName2 + "> and \n" +
+                    "User <" + user3.getName() + "> for their item <" + itemName3 + "> in exchange for your item <" + itemName1 +
+                    "> has been cancelled by Admin!";
+            String string2 = "Your three-way transaction with User <" + user1.getName() + "> for their item <" + itemName1 + "> and \n" +
+                    "User <" + user3.getName() + "> for their item <" + itemName3 + "> in exchange for your item <" + itemName2 +
+                    "> has been cancelled by Admin!";
+            String string3 = "Your three-way transaction with User <" + user1.getName() + "> for their item <" + itemName1 + "> and \n" +
+                    "User <" + user2.getName() + "> for their item <" + itemName2 + "> in exchange for your item <" + itemName3 +
+                    "> has been cancelled by Admin!";
+            allUsers.addToNotifyUndo(user1, string);
+            allUsers.addToNotifyUndo(user2, string2);
+            allUsers.addToNotifyUndo(user3, string3);
+            System.out.println("Transaction has been successfully cancelled!");
+        } else { //otherwise cancels the transaction
+            allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, transaction, 4, allCurrency, undoLogger);
+            String string = "Your three-way transaction with User <" + user2.getName() + "> for their item <" + itemName2 + "> and \n" +
+                    "User <" + user3.getName() + "> for their item <" + itemName3 + "> in exchange for your item <" + itemName1 +
+                    "> has been reopened by Admin!";
+            String string2 = "Your three-way transaction with User <" + user1.getName() + "> for their item <" + itemName1 + "> and \n" +
+                    "User <" + user3.getName() + "> for their item <" + itemName3 + "> in exchange for your item <" + itemName2 +
+                    "> has been reopened by Admin!";
+            String string3 = "Your three-way transaction with User <" + user1.getName() + "> for their item <" + itemName1 + "> and \n" +
+                    "User <" + user2.getName() + "> for their item <" + itemName2 + "> in exchange for your item <" + itemName3 +
+                    "> has been re-opened by Admin!";
+            allUsers.addToNotifyUndo(user1, string);
+            allUsers.addToNotifyUndo(user2, string2);
+            allUsers.addToNotifyUndo(user3, string3);
+            System.out.println("Transaction has been successfully re-opened!");
+        }
+        return null;
+    }
+
+    /**
+     * Undoes additions to wishlist by removing the item from the wishlist.
+     * @param allUsers UserManager which stores all the Users in the system
+     * @param chosenLog chosenLog the Log containing information about the wishlist addition
+     * @return null so admin can return back to the list of logs when undoTradeRequest is done
+     */
     public Object undoWishlist (UserManager allUsers, String chosenLog){
         System.out.println(chosenLog.split(" ")[2]);
         User temp = new User(chosenLog.split(" ")[2], "1");
