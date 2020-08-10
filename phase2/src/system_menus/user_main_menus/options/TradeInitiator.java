@@ -61,7 +61,7 @@ public class TradeInitiator implements UserMainMenuOptions {
         }
 
         if (allItems.getSystemInventory().size() < (Integer) inum) {
-            System.out.print("\uD83E\uDDD0 items.Item does not exist! Please try again!\n");
+            System.out.print("\uD83E\uDDD0 Item does not exist! Please try again!\n");
             return null;
         }
 
@@ -77,13 +77,9 @@ public class TradeInitiator implements UserMainMenuOptions {
                 System.out.print("\nYou do not have enough money to buy this\n");
                 return user;
             }
-
-
-
             System.out.print("This item is virtual and it is priced at $" + tradeItem.getSellPrice() + ". Please enter the email address you would like to receive the item in or \n" +
                 "type 'back' to go to previous menu.\n");
         String email = sc.nextLine();
-
 
         if (email.equals("back")){
             return null;
@@ -95,24 +91,15 @@ public class TradeInitiator implements UserMainMenuOptions {
             if (email.contains("@"))
             goodEmail = true;
             else
-            {
-                System.out.print("Please include an @ in the email address. '" + email + "' is missing an '@'\n");
+            { System.out.print("Please include an @ in the email address. '" + email + "' is missing an '@'\n");
                 email = sc.nextLine();
             }
-
         }
-
             TypeOneRequest trade = new TypeOneRequest(user, tradeItem, email, false, today, tradeItem.getVirtual(), true);
             allTradeRequests.receiveTradeRequest(allUsers, trade);
-
+            undoLogger.log(Level.INFO, trade.toString());
             System.out.print("Your request is sent.\n");
             return user;
-
-
-
-
-
-
         }
 
 
@@ -146,6 +133,7 @@ public class TradeInitiator implements UserMainMenuOptions {
             mssge =  sc.nextLine();
             TypeOneRequest trade = new TypeOneRequest(user, tradeItem, mssge, false, today, tradeItem.getVirtual(), true);
             allTradeRequests.receiveTradeRequest(allUsers, trade);
+            undoLogger.log(Level.INFO, trade.toString());
             System.out.print("Your request is sent!\n");
             return user;
         }
@@ -166,6 +154,7 @@ public class TradeInitiator implements UserMainMenuOptions {
             mssge =  sc.nextLine();
             TypeOneRequest trade = new TypeOneRequest(user, tradeItem, mssge, true, today, tradeItem.getVirtual(), true);
             allTradeRequests.receiveTradeRequest(allUsers, trade);
+            undoLogger.log(Level.INFO, trade.toString());
             System.out.print("Your request to rent item for " + tradeItem.getRentDuration() + " days is sent!\n");
             return user;
 
@@ -194,6 +183,7 @@ public class TradeInitiator implements UserMainMenuOptions {
 
                 TypeOneRequest trade = new TypeOneRequest(user, tradeItem, mssge, true, today, tradeItem.getVirtual(), true);
                 allTradeRequests.receiveTradeRequest(allUsers, trade);
+                undoLogger.log(Level.INFO, trade.toString());
                 System.out.print("Your request to rent item for " + tradeItem.getRentDuration() + " days is sent!\n");
                 return user;
 
@@ -208,6 +198,7 @@ public class TradeInitiator implements UserMainMenuOptions {
                 TypeOneRequest trade = new TypeOneRequest(user, tradeItem, mssge, false, today, tradeItem.getVirtual(), true);
                 allTradeRequests.receiveTradeRequest(allUsers, trade);
                 System.out.print("Your request is sent!\n");
+                undoLogger.log(Level.INFO, trade.toString());
                 return user;
 
             }
@@ -232,6 +223,7 @@ public class TradeInitiator implements UserMainMenuOptions {
                 }
                 TypeOneRequest trade = new TypeOneRequest(user, tradeItem, mssge, false, today, tradeItem.getVirtual(), true);
                 allTradeRequests.receiveTradeRequest(allUsers, trade);
+                undoLogger.log(Level.INFO, trade.toString());
                 System.out.print("Your request is sent!\n");
                 return user;
             }
@@ -301,6 +293,7 @@ public class TradeInitiator implements UserMainMenuOptions {
 
                 TypeOneRequest trade = new TypeOneRequest(user, tradeItem, mssge, true, today, tradeItem.getVirtual(), true);
                 allTradeRequests.receiveTradeRequest(allUsers, trade);
+                undoLogger.log(Level.INFO, trade.toString());
                 System.out.print("Your request to rent item for " + tradeItem.getRentDuration() + " days is sent!\n");
                 return user;
 
@@ -318,6 +311,7 @@ public class TradeInitiator implements UserMainMenuOptions {
                 mssge =  sc.nextLine();
                 TypeOneRequest trade = new TypeOneRequest(user, tradeItem, mssge, false, today, tradeItem.getVirtual(), true);
                 allTradeRequests.receiveTradeRequest(allUsers, trade);
+                undoLogger.log(Level.INFO, trade.toString());
                 System.out.print("Your request is sent!\n");
                 return user;
             }
@@ -498,8 +492,6 @@ public class TradeInitiator implements UserMainMenuOptions {
 
 
     }
-
-
 
     //taken from https://www.geeksforgeeks.org/how-to-find-the-entry-with-largest-value-in-a-java-map/
     // Find the entry with highest value

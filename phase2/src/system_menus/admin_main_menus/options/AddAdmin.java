@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import java.util.logging.Logger;
+
 public class AddAdmin implements AdminMainMenuOptions {
 
     /**
@@ -33,7 +35,7 @@ public class AddAdmin implements AdminMainMenuOptions {
      */
     public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,
                           UserMessageManager allUserMessages, TransactionManager allTransactions,
-                          TradeRequestManager allRequests, CurrencyManager allCurrency) {
+                          TradeRequestManager allRequests, CurrencyManager allCurrency, Logger undoLogger) {
         if (!admin.getIsSuperAdmin()) {
             System.out.println("Sorry but you do not have the authorization to add new accounts.admins!");
             return "back";
@@ -72,7 +74,7 @@ public class AddAdmin implements AdminMainMenuOptions {
                     //checks if the entered username already exists
                     if (temp.get(0).equals(allAdmins.getAllAdmins().get(i).getName())) {
                         System.out.print("Username already exists. Please choose a new username\n");
-                        return execute(admin, allAdmins, allUsers, allItems, allUserMessages, allTransactions, allRequests, allCurrency);
+                        return execute(admin, allAdmins, allUsers, allItems, allUserMessages, allTransactions, allRequests, allCurrency, undoLogger);
                     }
                 }
                 allAdmins.addAdmin(temp.get(0), temp.get(1));

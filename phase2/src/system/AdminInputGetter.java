@@ -13,16 +13,43 @@ import system_menus.admin_main_menus.options.*;
 import transactions.TransactionManager;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Deals with the input of an accounts.admins.Admin user-- particularly deals with the login system and displaying of main menu.
  */
 
 public class AdminInputGetter {
+    private static final Logger undoLogger = Logger.getLogger(AdminInputGetter.class.getName());
+    private File undoLog = new File("UndoLog.txt");
+    private static FileHandler fileHandler;
+
+    static {
+        try {
+            fileHandler = new FileHandler("UndoLog.txt", true);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Unable to initialize FileHandler.");
+        }
+    }
+
+    public AdminInputGetter() {
+        undoLogger.setLevel(Level.ALL);
+        fileHandler.setLevel(Level.ALL);
+        undoLogger.addHandler(fileHandler);
+
+        // Prevent fileHandler from printing to the console:
+        undoLogger.setUseParentHandlers(false);
+        // Credit for the above line goes to
+        // https://stackoverflow.com/questions/2533227/how-can-i-disable-the-default-console-handler-while-using-the-java-logging-api
+    }
 
     /**
      * Displays the main menu of an AdminUser and prompts the user for input.
@@ -101,11 +128,11 @@ public class AdminInputGetter {
                         return admin;
                 }
                 //the option that is chosen by the accounts.admins.Admin will be run
-                Object result = option.executeOption(admin, allAdmins, allUsers, allItems, allUserMessages, allTransactions, allRequests, allCurrency);
+                Object result = option.executeOption(admin, allAdmins, allUsers, allItems, allUserMessages, allTransactions, allRequests, allCurrency, undoLogger);
                 //if the execute() method of the option returns null, the option will be run again until the accounts.admins.Admin
                 //specifies that they want to return to the main menu
                 while (result == null) {
-                    result = option.executeOption(admin, allAdmins, allUsers, allItems, allUserMessages, allTransactions, allRequests, allCurrency);
+                    result = option.executeOption(admin, allAdmins, allUsers, allItems, allUserMessages, allTransactions, allRequests, allCurrency, undoLogger);
                 }
                 return admin;
             }

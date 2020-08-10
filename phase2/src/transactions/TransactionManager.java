@@ -7,15 +7,12 @@ import accounts.admins.AdminManager;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import transactions.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import meetings.*;
 import items.*;
-import accounts.users.*;
-import accounts.admins.*;
-import requests.*;
 import currency.*;
-import system_menus.admin_main_menus.options.*;
-import system_menus.user_main_menus.options.*;
 
 /**
  * Manages all Transactions. Changing their values by accessing their setters/getters. Stores all instances of Transactions. Should only be instantiated once.
@@ -54,14 +51,14 @@ public class TransactionManager implements Serializable {
      * Cancelled implies one of the following: accounts.users.User(s) did not show up to the meetings.Meeting or accounts.users.User(s) altered
      * meeting too many times, and completed means the transactions.Transaction was successful, and the items.Item(s) have been officially swapped.
      * Completed means either the finalizedMeeting had occurred (for permanent transactions.Transaction), or the secondExchange has occurred.
-     *
-     * @param itemManager Class that manages Items.
+     *  @param itemManager Class that manages Items.
      * @param userManager Class that manages Users.
      * @param transaction The given transactions.Transaction.
      * @param tradeStatus The current status of a given transactions.Transaction.
+     * @param undoLogger
      */
     public void updateTransactionStatus(ItemManager itemManager, UserManager userManager, AdminManager adminManager,
-                                        Transaction transaction, int tradeStatus, CurrencyManager currencyManager) {
+                                        Transaction transaction, int tradeStatus, CurrencyManager currencyManager, Logger undoLogger) {
         User user1;
         User user2;
         User user3;
@@ -120,6 +117,8 @@ public class TransactionManager implements Serializable {
         transaction.setTradeStatus(tradeStatus);
         if (!(transaction instanceof OneWayMonetized))
         transaction.getInitialMeeting().setConfirmedTrue(); /////////WHY
+
+        undoLogger.log(Level.INFO, transaction.toString());
 
     }
 
@@ -180,8 +179,6 @@ public class TransactionManager implements Serializable {
         }
 
         inProgressTransaction.add(transaction);
-
-
     }
 
 

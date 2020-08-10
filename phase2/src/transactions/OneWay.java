@@ -78,8 +78,6 @@ public class OneWay extends Transaction implements Serializable {
                 "; \nTrader 2: " + getSecondTrader().getName() + " Item: " + getItem().getName() +
                 "; \nStatus: " + getTradeStatus() +
                 "; \nIs temporary?: " + getTemp() +
-                "; \nIs in-person?: " + !getVirtual() +
-                "; \nInitial meeting: " + getInitialMeeting().toString() +
-                "; \nReturn meeting: " + getReturnMeeting().toString() + ".\n";
+                "; \nIs in-person?: " + !getVirtual() + " \n";
     }
 }

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Subclass of transactions.Transaction, instantiated when a transactions.TwoWay transactions.Transaction is made (an exchange of Items).
+ * Subclass of transactions. Transaction, instantiated when a transactions. TwoWay transactions.Transaction is made (an exchange of Items).
  */
 
 public class TwoWay extends Transaction implements Serializable {
@@ -80,8 +80,6 @@ public class TwoWay extends Transaction implements Serializable {
                 "; \nTrader 2: " + getSecondTrader().getName() + " Item: " + getSecondItem().getName() +
                 "; \nStatus: " + getTradeStatus() +
                 "; \nIs temporary?: " + getTemp() +
-                "; \nIs in-person?: " + !getVirtual() +
-                "; \nInitial meeting: " + getInitialMeeting().toString() +
-                "; \nReturn meeting: " + getReturnMeeting().toString() + ".\n";
+                "; \nIs in-person?: " + !getVirtual() + " \n";
     }
 }

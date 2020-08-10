@@ -11,6 +11,7 @@ import requests.TradeRequestManager;
 import transactions.TransactionManager;
 
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 /**
  * Display in Admin's menu. Allow admin to view, reply and delete user's messages.
@@ -33,7 +34,7 @@ public class ViewUserMessages implements AdminMainMenuOptions {
      */
     public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,
                           UserMessageManager allUserMessages, TransactionManager allTransactions,
-                          TradeRequestManager allRequests, CurrencyManager allCurrency) {
+                          TradeRequestManager allRequests, CurrencyManager allCurrency, Logger undoLogger) {
 
         if (allUserMessages.getAllUserMessage().size() == 0) {
             System.out.println("You have no messages.");

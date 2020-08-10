@@ -8,9 +8,10 @@ import currency.CurrencyManager;
 import items.ItemManager;
 import requests.TradeRequestManager;
 import transactions.TransactionManager;
+import java.util.logging.Logger;
 
 public interface AdminMainMenuOptions {
     public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,
                           UserMessageManager allUserMessages, TransactionManager allTransactions,
-                          TradeRequestManager allRequests, CurrencyManager allCurrency);
+                          TradeRequestManager allRequests, CurrencyManager allCurrency, Logger undoLogger);
 }
