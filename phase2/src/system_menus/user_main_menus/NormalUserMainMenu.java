@@ -69,7 +69,7 @@ public class NormalUserMainMenu implements DifferentUserMainMenu {
         System.out.print("Please select number from the following:\n" +
                 "1. View and edit Wishlist\n" +
                 "2. View Inventory\n" +
-                "3. system_options.user_main_menus.options.Browse Items\n" +
+                "3. Browse Items\n" +
                 "4. Initiate Trade\n" +
                 "5. Manage Payment Options\n" +
                 "6. Approve Pending Trade Requests\n" +

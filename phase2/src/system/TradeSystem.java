@@ -77,7 +77,7 @@ public class TradeSystem {
         allItems.addItem(shoe);
 
 
-        Item  ebook = new Item("ebook", allUsers.getUser(Tina) , "hi" , "Electronics" , false, true, true, false, 2.0, null, null);
+        Item  ebook = new Item("ebook", allUsers.getUser(Tina) , "hi" , "Electronics" , true, true, true, false, 2.0, null, null);
         allUsers.addToInventory(allUsers.getUser(Tina), ebook);
         allItems.addItem(ebook);
 

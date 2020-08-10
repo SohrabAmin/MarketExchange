@@ -173,7 +173,8 @@ public class ConfirmMeetings implements userMainMenuOptions {
 
 
                     //now i have to check if it was 2 way or 3 way
-                    if (selectedTransaction instanceof OneWay){
+
+                        if (selectedTransaction instanceof OneWay || selectedTransaction instanceof OneWayMonetized){
 
                         System.out.print("\uD83E\uDD29 Looks like the meeting was confirmed by both sides!\n ");
 
@@ -184,8 +185,18 @@ public class ConfirmMeetings implements userMainMenuOptions {
                             //if it was a temporary meeting, then I need to set up a second meeting
                             allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 2, currencyManager);
                             //by now, the second agreed upon meeting is set for both accounts.users
+
+
                             Calendar date = selectedTransaction.getInitialMeeting().getDate();
-                            date.add(Calendar.MONTH, 1);
+
+                            if (selectedTransaction instanceof OneWayMonetized){ //if it is rent
+                                OneWayMonetized temp = (OneWayMonetized) selectedTransaction;
+                               date.add(Calendar.DATE, temp.getRentDuration());
+
+                           }
+                            else {
+                                date.add(Calendar.MONTH, 1);
+                            }
                             Meeting returnMeeting = new Meeting(date, selectedTransaction.getInitialMeeting().getPlace());
                             returnMeeting.initialconfirm(user.getName(), selectedTransaction.getInitialMeeting().getOtherSide(user.getName()));
                             System.out.print("REMINDER: You need to return the borrowed item(s) back by " + returnMeeting.toString() + "\n");
@@ -196,10 +207,7 @@ public class ConfirmMeetings implements userMainMenuOptions {
 
                     }
 
-                    else if (selectedTransaction instanceof OneWayMonetized){
 
-
-                    }
                     else if (selectedTransaction instanceof TwoWay){
                         System.out.print("\uD83E\uDD29 Looks like the meeting was confirmed by both sides!\n ");
                     if (!selectedTransaction.getTemp()) { //if it was a permenant transaction

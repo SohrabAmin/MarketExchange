@@ -153,7 +153,7 @@ public class ApproveTrade implements userMainMenuOptions {
         }
         //-----------------NOW LET THE PERSON DECIDE WHAT WHICH TRADE THEY WANNA APPROVE OR REJECT --------
 
-        //printed all pending requests
+
         //select request
         System.out.print("\n");
         System.out.print("\u2754 Please type the ID of the trade you would like to view or 'back' to return to the main menu.\n");
@@ -184,6 +184,7 @@ public class ApproveTrade implements userMainMenuOptions {
             boolean money = t.getMonetized();
             //if monetized
             System.out.print("Here is the trade you selected: " + t.getItem() + "\n");
+            //if its a virtual trade
             if (t.getVirtual()){
                 System.out.print("This is a virtual trade.\n");
             }
@@ -192,9 +193,9 @@ public class ApproveTrade implements userMainMenuOptions {
             input = sc.next();
             if (input.equals("1")) { //approved
                 allTradeRequests.updateRequestStatus(allUsers, cTrade, 1);
+
+
                 //if it is virtual
-
-
                 if (t.getVirtual())
                 {
                     OneWayMonetized final1 = new OneWayMonetized(t.getFirstUser(), t.getItem(), false, t.getVirtual(), t.getMessage());
@@ -211,12 +212,6 @@ public class ApproveTrade implements userMainMenuOptions {
                 }
 
 
-
-
-
-
-
-
                 //check if it is monetized
                 //check if it is temporary
                 OneWay final1;
@@ -227,7 +222,7 @@ public class ApproveTrade implements userMainMenuOptions {
                     } else { //sellin
                         final1 = new OneWayMonetized(t.getFirstUser(), t.getItem(), false, t.getVirtual(), null);
                     }
-                } else { //if not mon
+                } else { //if not money but its a trade
                     if (t.getTemp()) {//if temporary
                         final1 = new OneWay(t.getFirstUser(), t.getItem(), true, t.getVirtual());
 

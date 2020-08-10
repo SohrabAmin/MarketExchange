@@ -43,6 +43,7 @@ public class OneWayMonetized extends OneWay {
         this.email = email;
         if(this.getTemp()){
             this.cost = item.getRentPrice();
+            this.rentDuration = item.getRentDuration();
         }else{
             this.cost = item.getSellPrice();
         }
