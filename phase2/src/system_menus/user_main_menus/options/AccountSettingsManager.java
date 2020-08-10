@@ -25,7 +25,7 @@ public class AccountSettingsManager implements UserMainMenuOptions {
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
                           AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages, CurrencyManager currencyManager) {
-        System.out.println("Please select the number beside the option you would like or 'back'" +
+        System.out.println("Please select the number beside the option you would like or 'back' " +
                 "to return to the main menu.");
         System.out.println("1. View Admin Change log");
         System.out.println("2. Change username");

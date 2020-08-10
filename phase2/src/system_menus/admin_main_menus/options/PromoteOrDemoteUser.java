@@ -8,7 +8,6 @@ import accounts.users.UserMessageManager;
 import currency.CurrencyManager;
 import items.ItemManager;
 import requests.TradeRequestManager;
-import system.NotifyUserOfVIPStatusChange;
 import transactions.TransactionManager;
 
 import java.util.ArrayList;
@@ -58,7 +57,7 @@ public class PromoteOrDemoteUser implements AdminMainMenuOptions {
                     return admin;
                 } else {
                     for (int i = 0; i < listOfUserNames.size(); i++) {
-                        System.out.println( (i+1) + ". " + listOfUserNames.get(i));
+                        System.out.println((i + 1) + ". " + listOfUserNames.get(i));
                     }
 
                     Object idOfUserChosenForPromotion = scanner.nextLine();
@@ -76,9 +75,11 @@ public class PromoteOrDemoteUser implements AdminMainMenuOptions {
 
                         // loop through the list of accounts.users to find the user to promote
                         for (User indexedUser : allUsers.getAllUsers()) {
-                            if (indexedUser.getName().equals(listOfUserNames.get((int)idOfUserChosenForPromotion - 1))) {
+                            if (indexedUser.getName().equals(listOfUserNames.get((int) idOfUserChosenForPromotion - 1))) {
                                 indexedUser.setIsVIP(true);
-                                System.out.println("User " + (listOfUserNames.get((int)idOfUserChosenForPromotion - 1)) + " was promoted to VIP!");
+                                allUsers.addToVIPStatusChangeNotifications(indexedUser,
+                                        "An admin promoted you to VIP!");
+                                System.out.println("User " + (listOfUserNames.get((int) idOfUserChosenForPromotion - 1)) + " was promoted to VIP!");
                             }
                         }
                         return admin;
@@ -105,7 +106,7 @@ public class PromoteOrDemoteUser implements AdminMainMenuOptions {
                     return admin;
                 } else {
                     for (int j = 0; j < listOfVIPNames.size(); j++) {
-                        System.out.println((j+1) + ". " + listOfVIPNames.get(j));
+                        System.out.println((j + 1) + ". " + listOfVIPNames.get(j));
                     }
 
                     Object idOfVIPChosenForDemotion = scanner.nextLine();
@@ -124,9 +125,11 @@ public class PromoteOrDemoteUser implements AdminMainMenuOptions {
 
                         // loop through the list of accounts.users to find the VIP user to demote
                         for (User indexedUser : allUsers.getAllUsers()) {
-                            if (indexedUser.getName().equals(listOfVIPNames.get((int)idOfVIPChosenForDemotion - 1))) {
+                            if (indexedUser.getName().equals(listOfVIPNames.get((int) idOfVIPChosenForDemotion - 1))) {
                                 indexedUser.setIsVIP(false);
-                                System.out.println("VIP " + listOfVIPNames.get((int)idOfVIPChosenForDemotion - 1) + " was demoted to user!");
+                                allUsers.addToVIPStatusChangeNotifications(indexedUser,
+                                        "An admin demoted you to user!");
+                                System.out.println("VIP " + listOfVIPNames.get((int) idOfVIPChosenForDemotion - 1) + " was demoted to user!");
                             }
                         }
                         return admin;
