@@ -2,6 +2,10 @@ package transactions;
 
 import meetings.Meeting;
 
+/**
+ * The super class for all types of Transactions. Should never be instantiated.
+ */
+
 public class Transaction {
 
 
@@ -28,6 +32,10 @@ public class Transaction {
         this.returnMeeting = null;
     }
 
+    /**
+     * Gets if the Transaction is virtual or not
+     * @return boolean if the Transaction is virtual or not
+     */
     public boolean getVirtual(){
         return virtual;
     }

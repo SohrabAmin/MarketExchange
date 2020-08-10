@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Subclass of transactions.Transaction, instantiated when a transactions.TwoWay transactions.Transaction is made (an exchange of Items).
+ * Subclass of transactions. Transaction, instantiated when a transactions. TwoWay transactions.Transaction is made (an exchange of Items).
  */
 
 public class TwoWay extends Transaction implements Serializable {

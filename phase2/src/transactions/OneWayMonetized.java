@@ -51,23 +51,41 @@ public class OneWayMonetized extends OneWay {
         }
     }
 
+    /**
+     * Gets the email of firstTrader
+     * @return String of firstTrader's email
+     */
     public  String getEmail(){
         return email;
 
     }
 
+    /**
+     * Sets that the firstTrader has confirmed that the email was sent
+     */
     public void Person1Confirmed(){
         person1EmailSent = true;
     }
 
+    /**
+     * Gets if the firstTrader has confirmed that the email was sent
+     * @return boolean if the email was sent or not
+     */
     public boolean getPerson1Confirmed(){
         return person1EmailSent;
     }
 
+    /**
+     * Sets that the secondTrader has confirmed that the email was sent
+     */
     public void Person2Confirmed(){
         person2EmailSent = true;
     }
 
+    /**
+     * Gets if the secondTrader has confirmed that the email was sent
+     * @return boolean if the email was sent of not
+     */
     public boolean getPerson2Confirmed(){
         return person2EmailSent;
     }

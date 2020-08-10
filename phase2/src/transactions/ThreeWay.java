@@ -14,6 +14,11 @@ import system_menus.user_main_menus.options.*;
 
 import java.util.*;
 
+/**
+ * A ThreeWay Transaction. This can only be done if the User receiving a twoWay TradeRequest would like to bring in a third User (perhaps they do not want to give
+ * up their item to User1). This implies the initial twoWay is denied, and user1 and user3 must accept this new request.
+ */
+
 public class ThreeWay extends Transaction {
 
 
@@ -25,7 +30,14 @@ public class ThreeWay extends Transaction {
 
     private List<Item> items;
 
-
+    /**
+     * Constructs a ThreeWay request. Requires all the Item's being traded, whether it's temporary or not, and whether it's virtual or not.
+     * @param item1 firstTraders's Item, going to secondTrader
+     * @param item2 thirdTrader's Item, going to thirdTrader
+     * @param item3 thirdTrader's item, going to firstTrader
+     * @param temp boolean whether the Transaction is temporary or not
+     * @param virtual boolean whether the Transaction is virtual or not
+     */
     public ThreeWay(Item item1, Item item2, Item item3, boolean temp, boolean virtual){
         super(temp, virtual);
         this.firstTrader = item1.getOwner();
@@ -37,20 +49,27 @@ public class ThreeWay extends Transaction {
         this.items.add(item3);
     }
 
+    /**
+     * Gets firstTrader's from the given ThreeWay Transaction
+     * @return The firsTrader; the User who's initially requested the *twoWay* with the secondTrader (so the secondTrader denied the firstTrader request, and requested a threeWay).
+     */
     public User getFirstTrader() {
         return this.firstTrader;
     }
 
     /**
-     * Setter for the secondTrader of a transactions.TwoWay; the accounts.users.User who accepts the transactions.TwoWay.
+     * Setter for the secondTrader of a ThreeWay; the accounts.users.User who accepts the ThreeWay.
      *
-     * @return The secondTrader; the accounts.users.User who accepts the transactions.TwoWay.
+     * @return The secondTrader; the accounts.users.User who accepts the ThreeWay.
      */
     public User getSecondTrader() {
         return this.secondTrader;
     }
 
-
+    /**
+     * Gets user3 from the given ThreeWay Transaction.
+     * @return the thirdTrader; the User who was brought into the threeWay
+     */
     public User getThirdTrader(){return this.thirdTrader;}
 
     /**
@@ -71,6 +90,10 @@ public class ThreeWay extends Transaction {
         return this.items.get(1);
     }
 
+    /**
+     * Gets the thirdTrader's Item.
+     * @return Item that thirdTrader is giving to firstTrader.
+     */
     public Item getThirdItem(){return this.items.get(2);}
 
     /**

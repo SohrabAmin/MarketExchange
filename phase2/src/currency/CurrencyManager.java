@@ -77,9 +77,9 @@ public class CurrencyManager {
     }
 
     /**
-     * Come back to this
-     * @param date
-     * @return
+     * Gets the current date, with setting the day to the 30th (as only month and year are on credit card's)
+     * @param date A string of the date dd-mm-yyyy
+     * @return A Calender representation of the current date.
      */
     public Calendar getDate(String date) {
         Calendar cal = Calendar.getInstance();
@@ -88,6 +88,11 @@ public class CurrencyManager {
         return cal;
     }
 
+    /**
+     * Gets the date in SimpleDateFormat
+     * @param date Calender object representing the date
+     * @return SimpleDateFormat of the date.
+     */
     public String dateString(Calendar date) {
 
         DateFormat dateFormat = new SimpleDateFormat("EEE, MMM d, yyyy");
