@@ -526,7 +526,7 @@ public class ApproveTrade implements UserMainMenuOptions {
                 if (input.equals("1")) { //user 1 is also okay with the new item being given to them everyone is happy
                     //everyone is okay with this 3 way trade yay
                     //now lets see if this person is okay with the locations given to them! :(
-                    System.out.print("accounts.users.User 1 and 2 have chosen the following locations.\n");
+                    System.out.print("User 1 and 2 have chosen the following locations.\n");
 
                     for (int z = 0; z < t.getSecondUserLocation().size(); z++) {
                         System.out.print((z + 1) + " . " + t.getSecondUserLocation().get(z) + "\n");
@@ -603,7 +603,7 @@ public class ApproveTrade implements UserMainMenuOptions {
                     //if I can't find a time common between all 3 people, we gotta cancel sorry
                     if (commonMapbetweenU1andU2.isEmpty()) {
                         allTradeRequests.updateRequestStatus(allUsers, cTrade, 2);
-                        System.out.print("Sorry but accounts.users don't seem to be avaiable to meet in the next week. " +
+                        System.out.print("Sorry but users don't seem to be available to meet in the next week. " +
                                 "Cancelling this trade request.\n");
                         return user;
                     }
@@ -620,7 +620,7 @@ public class ApproveTrade implements UserMainMenuOptions {
 
                     if (commonMapbetweenothertwoandU3.isEmpty()) {
                         allTradeRequests.updateRequestStatus(allUsers, cTrade, 2);
-                        System.out.print("Sorry but accounts.users don't seem to be avaiable to meet in the next week. " +
+                        System.out.print("Sorry but accounts.users don't seem to be available to meet in the next week. " +
                                 "Cancelling this trade request.\n");
                         return user;
                     }
@@ -632,7 +632,7 @@ public class ApproveTrade implements UserMainMenuOptions {
 
 
                     Date meetingday = DateUtil.addDays(now, commonDayIncrement);
-                    System.out.print("We found a common day between all 3 accounts.users and that is: " + simpleDateformat.format(meetingday) + "\n");
+                    System.out.print("We found a common day between all 3 users and that is: " + simpleDateformat.format(meetingday) + "\n");
                     System.out.print("Setting up the meeting for upcoming " + simpleDateformat.format(meetingday) + " at 11 am local time at " + t.getthirdUserLocation() + "\n");
 
 
@@ -666,12 +666,6 @@ public class ApproveTrade implements UserMainMenuOptions {
 
                         allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, final3, 1, currencyManager);
 
-
-
-
-
-
-
                         //FINALLY EVERYONE IS HAPPY LETS PROPOSE A MEETING
 
                         return user;
@@ -683,16 +677,8 @@ public class ApproveTrade implements UserMainMenuOptions {
                         return null;
 
                     }
-
-
                 }
-
-
             }
-
-
-
-
         return null;
 
     }
@@ -713,9 +699,6 @@ public class ApproveTrade implements UserMainMenuOptions {
         allUsers.removeFromPendingRequests(user, request);
         System.out.print("\u274E Rejected!\n");
     }
-
-
-
 
     /**
      * Initiates a meetings.Meeting by asking the accounts.users.User for a proposed date, time and location for the meeting.

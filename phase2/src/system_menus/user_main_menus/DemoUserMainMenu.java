@@ -41,13 +41,13 @@ public class DemoUserMainMenu implements DifferentUserMainMenu{
     public Object mainMenu(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                            UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
                            AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages, CurrencyManager currencyManager) {
-        System.out.print("-------------------------------------------------------\n\uD83E\uDD16 Hello Demo accounts.users.User \uD83E\uDD16\n");
+        System.out.print("-------------------------------------------------------\n\uD83E\uDD16 Hello Demo User \uD83E\uDD16\n");
 
         System.out.println("Please select number from the following: ");
         System.out.println("\uD83C\uDD94 Indicates that signup/login as user is required!");
         System.out.println("\n1. View and edit Wishlist\n" +
                 "2. View Inventory\uD83C\uDD94\n" +
-                "3. system_options.user_main_menus.options.Browse Items\n" +
+                "3. Browse Items\n" +
                 "4. Initiate Trade\uD83C\uDD94\n" +
                 "5. View Pending Trade Requests\uD83C\uDD94\n" +
                 "6. Approve Pending Trade Requests\uD83C\uDD94\n" +
@@ -55,11 +55,11 @@ public class DemoUserMainMenu implements DifferentUserMainMenu{
                 "8. View most recent trades\uD83C\uDD94\n" +
                 "9. View most frequent trading partners\uD83C\uDD94\n" +
                 "10. View status of my items\uD83C\uDD94\n" +
-                "11. Approve meetings.Meeting\uD83C\uDD94\n" +
+                "11. Approve Meeting\uD83C\uDD94\n" +
                 "12. Confirm Meetings for Approved Trades\uD83C\uDD94\n" +
                 "13. View status of outbound requests\uD83C\uDD94\n" +
-                "14. Message accounts.admins.Admin and view replies\uD83C\uDD94\n" +
-                "15. Change accounts.Account Settings\uD83C\uDD94\n" +
+                "14. Message Admin and view replies\uD83C\uDD94\n" +
+                "15. Change Account Settings\uD83C\uDD94\n" +
                 "16. Go on vacation\uD83C\uDD94\n" +
                 "17. Logout\n" +
                 "Enter 'exit' to exit the system at any time.\n");
@@ -86,7 +86,7 @@ public class DemoUserMainMenu implements DifferentUserMainMenu{
                 case "2":  //view inventory
                     System.out.print("-------------------------------------------------------" +
                             "\n\uD83D\uDC81 As a user, you can add items to be added to your inventory. " +
-                            "Once you add an item, the item is sent to approval to accounts.admins.Admin.\n");
+                            "Once you add an item, the item is sent to approval to Admin.\n");
                     return user;
                 case "3": { //browse items
                     System.out.print("-------------------------------------------------------" +
@@ -122,7 +122,7 @@ public class DemoUserMainMenu implements DifferentUserMainMenu{
                             "\n\uD83D\uDC81 As a user, you can add items to your inventory. However, once added, " +
                             "the request will be sent to admin for approval. \n" +
                             "Once approved, the item will show up in your inventory and it will be visible to other " +
-                            "accounts.users when browsing.\n");
+                            "users when browsing.\n");
                     return user;
                 case "8":  //View most recent trades
                     System.out.print("-------------------------------------------------------\n" +
@@ -162,7 +162,7 @@ public class DemoUserMainMenu implements DifferentUserMainMenu{
                     System.out.print("-------------------------------------------------------" +
                             "\n\uD83D\uDC81 As a user, you can change your account settings; this includes changing" +
                             " your username, password and set location.\nYou can view a log of all actions" +
-                            " taken against your account by the accounts.admins.Admin!\n");
+                            " taken against your account by the Admin!\n");
                     return user;
                 case "16":
                     System.out.print("-------------------------------------------------------" +

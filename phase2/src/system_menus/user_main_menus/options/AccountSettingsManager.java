@@ -27,7 +27,7 @@ public class AccountSettingsManager implements UserMainMenuOptions {
                           AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages, CurrencyManager currencyManager) {
         System.out.println("Please select the number beside the option you would like or 'back'" +
                 "to return to the main menu.");
-        System.out.println("1. View accounts.admins.Admin Change log");
+        System.out.println("1. View Admin Change log");
         System.out.println("2. Change username");
         System.out.println("3. Change password");
         System.out.println("4. Change location");
@@ -37,7 +37,7 @@ public class AccountSettingsManager implements UserMainMenuOptions {
             return "back";
         } else if (input.equals("1")) {
             if (user.getAdminActionHistory().size() == 0) {
-                System.out.println("accounts.admins.Admin has not taken actions against your account! :)");
+                System.out.println("Admin has not taken actions against your account! :)");
             }
             for (int i = 0; i < user.getAdminActionHistory().size(); i++) {
                 System.out.println(user.getAdminActionHistory().get(i));
@@ -91,7 +91,7 @@ public class AccountSettingsManager implements UserMainMenuOptions {
             System.out.println("\nYour current set location is " + user.getLocation());
         }
         System.out.println("\nHot tip: By setting a location, you will have the option to sort browse items" +
-                " so you will only see items from accounts.users in the same location as you!\n");
+                " so you will only see items from users in the same location as you!\n");
         System.out.println("Please select from the following options:");
         System.out.println("1.Set location");
         System.out.println("2.Remove location");

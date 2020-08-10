@@ -44,13 +44,13 @@ public class FrozenUserMainMenu implements  DifferentUserMainMenu{
 
         System.out.print("----------------------------------------------------------------------------------------------" +
                 "\n\uD83D\uDC4B Welcome back, " + user.getName() + "!\n");
-        String actionTaker = "by accounts.admins.Admin.";
+        String actionTaker = "by Admin.";
         if (user.getIsPseudoFrozen())
             actionTaker = "by System.";
 
         System.out.print("\uD83E\uDD76 Your account is frozen " + actionTaker +
                 " You are not able to do any trades until you are unfrozen by admin.\n" +
-                "\uD83C\uDFC1 Please ask accounts.admins.Admin to unfreeze your account!\n\n");
+                "\uD83C\uDFC1 Please ask Admin to unfreeze your account!\n\n");
 
         if (allUsers.getUser(user).getAdminMessages().size() > 0) {
             System.out.println("You have " + allUsers.getUser(user).getAdminMessages().size() + " messages from accounts.admins.Admin!");
@@ -64,9 +64,17 @@ public class FrozenUserMainMenu implements  DifferentUserMainMenu{
         NotifyUserOfVIPStatusChange notification = new NotifyUserOfVIPStatusChange();
         notification.notify(user, allUsers);
 
-        System.out.print("Please select number from the following:\n1. View and edit Wishlist\n2. View Inventory\n" +
-                "3. system_options.user_main_menus.options.Browse Items\n4. Add items.Item to inventory\n5. View most recent trades\n6. View most frequent trading partners\n" +
-                "7. View status of my items\n8. Request unfreeze!\n9. Message accounts.admins.Admin\n10. Change accounts.Account Settings\n11. Logout" +
+        System.out.print("Please select number from the following:\n" +
+                "1. View and edit Wishlist\n" +
+                "2. View Inventory\n" +
+                "3. Browse Items\n" +
+                "4. Add items.Item to inventory\n" +
+                "5. View most recent trades\n" +
+                "6. View most frequent trading partners\n" +
+                "7. View status of my items\n" +
+                "8. Request unfreeze!\n" +
+                "9. Message Admin\n" +
+                "10. Change Account Settings\n11. Logout" +
                 "\nEnter 'exit' to exit the system at any time.\n");
 
         ChosenOption option = new ChosenOption();

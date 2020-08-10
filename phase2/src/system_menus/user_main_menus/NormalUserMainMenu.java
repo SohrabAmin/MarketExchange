@@ -60,7 +60,7 @@ public class NormalUserMainMenu implements DifferentUserMainMenu {
             System.out.print("\u23F3 You have " + allUsers.getUser(user).getPendingTrades().size() +
                     " Pending Transactions!\n");
         } if (allUsers.getUser(user).getAdminMessages().size() > 0) {
-            System.out.println("You have " + allUsers.getUser(user).getAdminMessages().size() + " messages from accounts.admins.Admin!");
+            System.out.println("You have " + allUsers.getUser(user).getAdminMessages().size() + " messages from Admin!");
         }
 
         // if admin has undone any actions on user's account, a String will be printed when user logs in
@@ -78,15 +78,15 @@ public class NormalUserMainMenu implements DifferentUserMainMenu {
                 "4. Initiate Trade\n" +
                 "5. Manage Payment Options\n" +
                 "6. Approve Pending Trade Requests\n" +
-                "7. Add items.Item to inventory\n" +
+                "7. Add Item to inventory\n" +
                 "8. View most recent trades\n" +
                 "9. View most frequent trading partners\n" +
                 "10. View status of my items\n" +
                 "11. Approve meetings.Meeting\n" +
                 "12. Confirm trade is done from your side\n" +
                 "13. View status of outbound requests\n" +
-                "14. Message accounts.admins.Admin and view replies\n" +
-                "15. Change accounts.Account Settings\n" +
+                "14. Message Admin and view replies\n" +
+                "15. Change Account Settings\n" +
                 "16. Go on vacation\n" +
                 "17. Check my points\n" +
                 "18. Logout\n" +
