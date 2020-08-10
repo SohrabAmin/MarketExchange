@@ -1,9 +1,9 @@
 package system;
 
-import accounts.users.UserManager;
-import accounts.users.UserMessageManager;
 import accounts.admins.Admin;
 import accounts.admins.AdminManager;
+import accounts.users.UserManager;
+import accounts.users.UserMessageManager;
 import currency.CurrencyManager;
 import items.Item;
 import items.ItemManager;
@@ -86,6 +86,12 @@ public class AdminInputGetter {
         if (allPendingItems.size() > 0) {
             System.out.println("\uD83D\uDCE9 You have " + allPendingItems.size() + " Pending items.Item Requests!");
         }
+
+        // if a super admin has changed this admin's super admin status,
+        // a notification will be printed when this admin logs in
+        NotifyAdminOfSuperAdminStatusChange notification = new NotifyAdminOfSuperAdminStatusChange();
+        notification.notify(admin, allAdmins);
+
         System.out.println("Please select from the following by entering the number beside the option:" +
                 " \n1. Add new admin\n2. Change system threshold\n3. View items that need to be approved\n" +
                 "4. Freeze or unfreeze accounts.users\n5. Promote a user or demote a VIP user\n" +

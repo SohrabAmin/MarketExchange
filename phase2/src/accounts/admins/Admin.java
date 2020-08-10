@@ -2,11 +2,15 @@ package accounts.admins;
 
 import accounts.Account;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Represents an accounts.admins.Admin with name and password
  */
 public class Admin extends Account {
     private boolean isInitialAdmin;
+    private List<String> SuperAdminStatusChangeNotifications = new ArrayList<>();
 
     /**
      * constructs an instance of accounts.admins.Admin with name and password
@@ -35,5 +39,9 @@ public class Admin extends Account {
      */
     public void setIsSuperAdmin(boolean isInitialAdmin) {
         this.isInitialAdmin = isInitialAdmin;
+    }
+
+    public List<String> getSuperAdminStatusChangeNotifications (){
+        return this.SuperAdminStatusChangeNotifications;
     }
 }

@@ -155,6 +155,14 @@ public class AdminManager implements Serializable {
     public void removeFromFrozenRequest(User user) {
         frozenRequests.remove(user);
     }
+
+    public void addToSuperAdminStatusChangeNotifications(Admin admin, String SuperAdminStatusChangeNotification) {
+        admin.getSuperAdminStatusChangeNotifications().add(SuperAdminStatusChangeNotification);
+    }
+
+    public void removeFromSuperAdminStatusChangeNotifications(Admin admin, String SuperAdminStatusChangeNotification) {
+        admin.getSuperAdminStatusChangeNotifications().remove(SuperAdminStatusChangeNotification);
+    }
 }
 
 

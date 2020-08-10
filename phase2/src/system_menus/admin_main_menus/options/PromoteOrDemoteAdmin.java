@@ -71,7 +71,11 @@ public class PromoteOrDemoteAdmin implements AdminMainMenuOptions {
                         for (Admin indexedAdmin : allAdmins.getAllAdmins()) {
                             if (indexedAdmin.getName().equals(nameOfAdminChosenForPromotion)) {
                                 indexedAdmin.setIsSuperAdmin(true);
-                                System.out.println("accounts.admins.Admin " + nameOfAdminChosenForPromotion + " was promoted to super admin!");
+                                allAdmins.addToSuperAdminStatusChangeNotifications(indexedAdmin,
+                                        "Super admin " + admin.getName() +
+                                                " has promoted you to super admin!");
+                                System.out.println("accounts.admins.Admin " + nameOfAdminChosenForPromotion +
+                                        " was promoted to super admin!");
                             }
                         }
                         return admin;
@@ -111,7 +115,11 @@ public class PromoteOrDemoteAdmin implements AdminMainMenuOptions {
                         for (Admin indexedAdmin : allAdmins.getAllAdmins()) {
                             if (indexedAdmin.getName().equals(nameOfSuperAdminChosenForDemotion)) {
                                 indexedAdmin.setIsSuperAdmin(false);
-                                System.out.println("Super admin " + nameOfSuperAdminChosenForDemotion + " was demoted to admin!");
+                                allAdmins.addToSuperAdminStatusChangeNotifications(indexedAdmin,
+                                        "Super admin " + admin.getName() +
+                                                " has demoted you to admin!");
+                                System.out.println("Super admin " + nameOfSuperAdminChosenForDemotion +
+                                        " was demoted to admin!");
                             }
                         }
                         return admin;
