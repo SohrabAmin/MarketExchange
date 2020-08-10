@@ -26,8 +26,8 @@ public class LogInSystem {
 
     public Object LogIn() {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("\uD83D\uDECD Welcome To Trade Market! \uD83D\uDECD\nIf you are a user, please press 1. " +
-                "If you are an admin, please press 2. To enter demo mode, please press 3. " +
+        System.out.println("\uD83D\uDECD Welcome To Trade Market! \uD83D\uDECD\nPlease press 1 if you are a user. \n" +
+                "Please press 2 if you are an admin. \nPlease press 3 to enter demo mode. " +
                 "\nEnter 'exit' to exit the system.");
         try {
             String input = br.readLine();

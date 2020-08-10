@@ -27,7 +27,7 @@ public class PointsManager implements userMainMenuOptions{
      * @param allAdmins       AdminManager that stores all admins
      * @param allUserMessages UserMessageManager that stores all user's messages to admin.
      * @param currencyManager CurrencyManger which manages in-app currency for users
-     * return null if the user selects to become VIP and if user enter wrong information that is not required by the sysem.
+     * return null if the user selects to become VIP and if user enter wrong information that is not required by the system.
      * return user so that user can go back to the main menu
      *
      */
@@ -36,22 +36,22 @@ public class PointsManager implements userMainMenuOptions{
                           MeetingManager allMeetings, TransactionManager allTransactions, AdminManager allAdmins,
                           Logger undoLogger, UserMessageManager allUserMessages, CurrencyManager currencyManager) {
         System.out.println("Your points: " + user.getPoints());
+        String chosenOption = scanner.nextLine();
         if (!(user.getIsVIP()) && user.getPoints() >= 20) {
-            System.out.println("Hey " + user.getName() + ", you're eligible to become a \u2B50 VIP \u2B50 \npress 1 " +
+            System.out.println("Hey " + user.getName() + ", you're eligible to become a \u2B50VIP\u2B50 \nPress 1 " +
                     "to use 20 of your " + user.getPoints() + " points to upgrade to VIP status");
+            if (chosenOption.equals("1")) {
+                allUsers.setUserVIP(user);
+                System.out.println("Congrats, you're now a \u2B50VIP\u2B50");
+                return null;
+            }
         }
         System.out.println("Press 2 to go back to main menu");
-        String chosenOption = scanner.nextLine();
-        if (chosenOption.equals("1")) {
-            allUsers.setUserVIP(user);
-            System.out.println("Congrats, you're a \u2B50 VIP \u2B50");
-            return null;
-        }
-        else if (chosenOption.equals("2")) {
+        if (chosenOption.equals("2")) {
             return user;
         }
         else {
-            System.out.println("Invalid Input Please Try Again");
+            System.out.println("Invalid input. Please try again.");
             return null;
         }
     }
