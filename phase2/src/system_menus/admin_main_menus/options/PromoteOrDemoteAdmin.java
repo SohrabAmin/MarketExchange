@@ -12,6 +12,7 @@ import transactions.TransactionManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class PromoteOrDemoteAdmin implements AdminMainMenuOptions {
 
@@ -30,7 +31,7 @@ public class PromoteOrDemoteAdmin implements AdminMainMenuOptions {
      */
     public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,
                           UserMessageManager allUserMessages, TransactionManager allTransactions,
-                          TradeRequestManager allRequests, CurrencyManager allCurrency) {
+                          TradeRequestManager allRequests, CurrencyManager allCurrency, Logger undoLogger) {
 
         if (!admin.getIsSuperAdmin()) {
             System.out.println("Sorry, but only super accounts.admins can access this menu!");

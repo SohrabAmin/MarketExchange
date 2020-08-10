@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import java.util.logging.Logger;
+
 public class PromoteOrDemoteUser implements AdminMainMenuOptions {
 
     /**
@@ -29,7 +31,7 @@ public class PromoteOrDemoteUser implements AdminMainMenuOptions {
      */
     public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,
                           UserMessageManager allUserMessages, TransactionManager allTransactions,
-                          TradeRequestManager allRequests, CurrencyManager allCurrency) {
+                          TradeRequestManager allRequests, CurrencyManager allCurrency, Logger undoLogger) {
 
         // the following four lines are commented out because currently any admin can promote accounts.users or demote VIPs
         //if (!admin.getIsSuperAdmin()) {

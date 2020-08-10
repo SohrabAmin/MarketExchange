@@ -13,6 +13,7 @@ import transactions.TransactionManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class ApprovePendingItem implements AdminMainMenuOptions {
 
@@ -32,7 +33,7 @@ public class ApprovePendingItem implements AdminMainMenuOptions {
      */
     public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,
                           UserMessageManager allUserMessages, TransactionManager allTransactions,
-                          TradeRequestManager allRequests, CurrencyManager allCurrency) {
+                          TradeRequestManager allRequests, CurrencyManager allCurrency, Logger undoLogger) {
         //Creates a list of all pending items in the system
         List<Item> allPendingItems = new ArrayList<>();
         for (int i = 0; i < allUsers.getAllUsers().size(); i++) {

@@ -12,6 +12,7 @@ import transactions.TransactionManager;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.logging.Logger;
 
 public class ChangeThreshold implements AdminMainMenuOptions {
 
@@ -30,7 +31,7 @@ public class ChangeThreshold implements AdminMainMenuOptions {
      */
     public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,
                           UserMessageManager allUserMessages, TransactionManager allTransactions,
-                          TradeRequestManager allRequests, CurrencyManager allCurrency) {
+                          TradeRequestManager allRequests, CurrencyManager allCurrency, Logger undoLogger) {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         //prints the current thresholds of the system
         System.out.println("\nHere are the current thresholds:");

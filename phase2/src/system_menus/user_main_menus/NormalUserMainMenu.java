@@ -82,7 +82,7 @@ public class NormalUserMainMenu implements DifferentUserMainMenu {
                 "8. View most recent trades\n" +
                 "9. View most frequent trading partners\n" +
                 "10. View status of my items\n" +
-                "11. Approve meetings.Meeting\n" +
+                "11. Approve meetings\n" +
                 "12. Confirm trade is done from your side\n" +
                 "13. View status of outbound requests\n" +
                 "14. Message Admin and view replies\n" +
