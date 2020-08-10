@@ -8,6 +8,7 @@ import accounts.users.UserMessageManager;
 import currency.CurrencyManager;
 import items.ItemManager;
 import requests.TradeRequestManager;
+import system.NotifyUserOfVIPStatusChange;
 import transactions.TransactionManager;
 
 import java.util.ArrayList;
@@ -77,7 +78,7 @@ public class PromoteOrDemoteUser implements AdminMainMenuOptions {
                         for (User indexedUser : allUsers.getAllUsers()) {
                             if (indexedUser.getName().equals(listOfUserNames.get((int)idOfUserChosenForPromotion - 1))) {
                                 indexedUser.setIsVIP(true);
-                                System.out.println("accounts.users.User " + (listOfUserNames.get((int)idOfUserChosenForPromotion - 1)) + " was promoted to VIP!");
+                                System.out.println("User " + (listOfUserNames.get((int)idOfUserChosenForPromotion - 1)) + " was promoted to VIP!");
                             }
                         }
                         return admin;

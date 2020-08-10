@@ -9,6 +9,7 @@ import items.ItemManager;
 import meetings.MeetingManager;
 import requests.TradeRequestManager;
 import system.NotifyUserOfAdminUndo;
+import system.NotifyUserOfVIPStatusChange;
 import system_menus.ChosenOption;
 import system_menus.user_main_menus.options.*;
 import transactions.TransactionManager;
@@ -62,9 +63,13 @@ public class NormalUserMainMenu implements DifferentUserMainMenu {
             System.out.println("You have " + allUsers.getUser(user).getAdminMessages().size() + " messages from accounts.admins.Admin!");
         }
 
-        //if admin has undone any actions on user's account, a string will be printed when they log in
+        // if admin has undone any actions on user's account, a String will be printed when user logs in
         NotifyUserOfAdminUndo notifyActions = new NotifyUserOfAdminUndo();
         notifyActions.notify(user, allUsers);
+
+        // if admin has changed user's VIP status, a String will be printed when user logs in
+        NotifyUserOfVIPStatusChange notification = new NotifyUserOfVIPStatusChange();
+        notification.notify(user, allUsers);
 
         System.out.print("Please select number from the following:\n" +
                 "1. View and edit Wishlist\n" +

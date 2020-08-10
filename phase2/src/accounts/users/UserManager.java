@@ -586,16 +586,6 @@ public class UserManager implements Serializable {
     }
 
     /**
-     * Setter for AdminActionHistory, add admin's undo action to AdminAction History
-     *
-     * @param user   the user that has action being undone by admin
-     * @param action the action that is being undone by admin
-     */
-    public void addToAdminActionHistory(User user, String action) {
-        user.getAdminActionHistory().add(action);
-    }
-
-    /**
      * remove admin's undo action notification(as string)from the List of all undo actions when user logged in and saw the message.
      *
      * @param user   the user who logged in and saw this message
@@ -603,6 +593,16 @@ public class UserManager implements Serializable {
      */
     public void removeFromNotifyUndo(User user, String undone) {
         user.getNotifyUndo().remove(undone);
+    }
+
+    /**
+     * Setter for AdminActionHistory, add admin's undo action to AdminAction History
+     *
+     * @param user   the user that has action being undone by admin
+     * @param action the action that is being undone by admin
+     */
+    public void addToAdminActionHistory(User user, String action) {
+        user.getAdminActionHistory().add(action);
     }
 
     /**
@@ -643,5 +643,13 @@ public class UserManager implements Serializable {
      */
     public void removeFromApprovedThreeWay(User user, TypeThreeRequest request) {
         user.getApprovedThreeWay().remove(request);
+    }
+
+    public void addToVIPStatusChangeHistory(User user, String VIPStatusChange) {
+        user.getVIPStatusChangeHistory().add(VIPStatusChange);
+    }
+
+    public void removeFromVIPStatusChangeNotifications(User user, String VIPStatusChangeNotification) {
+        user.getVIPStatusChangeNotifications().remove(VIPStatusChangeNotification);
     }
 }

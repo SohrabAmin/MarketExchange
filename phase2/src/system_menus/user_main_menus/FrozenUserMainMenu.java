@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.util.logging.Logger;
 
 import system.NotifyUserOfAdminUndo;
+import system.NotifyUserOfVIPStatusChange;
 import system_menus.ChosenOption;
 import transactions.*;
 import meetings.*;
@@ -55,8 +56,13 @@ public class FrozenUserMainMenu implements  DifferentUserMainMenu{
             System.out.println("You have " + allUsers.getUser(user).getAdminMessages().size() + " messages from accounts.admins.Admin!");
         }
 
+        // if admin has undone any actions on user's account, a String will be printed when user logs in
         NotifyUserOfAdminUndo notifyActions = new NotifyUserOfAdminUndo();
         notifyActions.notify(user, allUsers);
+
+        // if admin has changed user's VIP status, a String will be printed when user logs in
+        NotifyUserOfVIPStatusChange notification = new NotifyUserOfVIPStatusChange();
+        notification.notify(user, allUsers);
 
         System.out.print("Please select number from the following:\n1. View and edit Wishlist\n2. View Inventory\n" +
                 "3. system_options.user_main_menus.options.Browse Items\n4. Add items.Item to inventory\n5. View most recent trades\n6. View most frequent trading partners\n" +

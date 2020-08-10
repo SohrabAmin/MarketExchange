@@ -9,6 +9,7 @@ import items.Item;
 import items.ItemManager;
 import meetings.MeetingManager;
 import requests.TradeRequestManager;
+import system.NotifyUserOfVIPStatusChange;
 import system_menus.ChosenOption;
 import system_menus.user_main_menus.options.ConfirmMeetings;
 import transactions.TransactionManager;
@@ -41,6 +42,11 @@ public class VacationUserMainMenu implements DifferentUserMainMenu {
         Scanner scanner = new Scanner(System.in);
         System.out.print("----------------------------------------------------------------------------------------------" +
                 "\n\uD83D\uDC4B Welcome back, " + user.getName() + "!\n");
+
+        // if admin has changed user's VIP status, a String will be printed when user logs in
+        NotifyUserOfVIPStatusChange notification = new NotifyUserOfVIPStatusChange();
+        notification.notify(user, allUsers);
+
         System.out.println("Press 1 to remain on vacation. Press 2 to return from vacation. Press 3 to confirm a trade " +
                 "is done from your side.");
         String confirmation = scanner.nextLine();

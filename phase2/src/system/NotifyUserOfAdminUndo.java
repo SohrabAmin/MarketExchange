@@ -20,8 +20,8 @@ public class NotifyUserOfAdminUndo {
                 allUsers.addToAdminActionHistory(user, user.getNotifyUndo().get(i));
                 allUsers.removeFromNotifyUndo(user, user.getNotifyUndo().get(i));
             }
-            System.out.println("For further information, please message accounts.admins.Admin. To read these notifications again, please" +
-                    " go to accounts.Account Settings to view accounts.admins.Admin Change Log.\n");
+            System.out.println("For further information, please message Admin. To read these notifications again, " +
+                    "please go to Account Settings to view Admin Change Log.\n");
         }
     }
 }
