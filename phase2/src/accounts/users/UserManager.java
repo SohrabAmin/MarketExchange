@@ -19,6 +19,7 @@ public class UserManager implements Serializable {
     /**
      * Constructs the instance of accounts.users.UserManager with an empty list of Users
      */
+
     public UserManager() {
         userList = new ArrayList<>();
     }

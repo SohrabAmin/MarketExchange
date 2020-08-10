@@ -14,6 +14,7 @@ import system_menus.user_main_menus.options.*;
 
 public class PointsManager implements userMainMenuOptions{
     Scanner scanner = new Scanner(System.in);
+
     /**
      * Displays the points of the user and allow user to become VIP user if they are eligible.
      *

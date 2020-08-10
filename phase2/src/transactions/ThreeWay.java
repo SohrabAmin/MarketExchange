@@ -13,9 +13,11 @@ import system_menus.admin_main_menus.options.*;
 import system_menus.user_main_menus.options.*;
 
 import java.util.*;
+
 /**
  * Represents threeway transactions, store and getter for all values of threeway transactions
  */
+
 public class ThreeWay extends Transaction {
 
 

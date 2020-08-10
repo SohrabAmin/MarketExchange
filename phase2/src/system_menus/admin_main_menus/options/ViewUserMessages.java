@@ -11,6 +11,7 @@ import requests.TradeRequestManager;
 import transactions.TransactionManager;
 
 import java.util.Scanner;
+
 /**
  * Display in Admin's menu. Allow admin to view, reply and delete user's messages.
  */

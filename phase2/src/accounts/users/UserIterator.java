@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+
 /**
  * Allow user to add location(optional)
  */
+
 public class UserIterator implements Iterator<String> {
     private List<String> properties = new ArrayList<>(); //username and password
     private int current = 0;

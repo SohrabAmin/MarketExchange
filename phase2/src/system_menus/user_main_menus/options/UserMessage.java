@@ -1,7 +1,4 @@
 package system_menus.user_main_menus.options;
-/**
- * Display in User's main menu. Allow user to send and view messages to and from Admin.
- */
 import java.io.Serializable;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -15,6 +12,11 @@ import requests.*;
 import currency.*;
 import system_menus.admin_main_menus.options.*;
 import system_menus.user_main_menus.options.*;
+
+/**
+ * Display in User's main menu. Allow user to send and view messages to and from Admin.
+ */
+
 public class UserMessage implements userMainMenuOptions, Serializable {
     /**
      *

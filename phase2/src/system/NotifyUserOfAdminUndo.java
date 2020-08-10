@@ -6,6 +6,7 @@ import accounts.users.UserManager;
 /**
  * notify user of all the admin undo actions
  */
+
 public class NotifyUserOfAdminUndo {
     /**
      * notify user of all the admin undo actions when user logged in

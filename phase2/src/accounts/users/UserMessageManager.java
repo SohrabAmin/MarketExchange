@@ -2,9 +2,11 @@ package accounts.users;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+
 /**
  *  Creates, keeps track of, and changes values of Users Messages to Admin.
  */
+
 public class UserMessageManager implements Serializable {
     /**
      * Constructs the instance of UserManager with an empty list of Users

@@ -7,6 +7,7 @@ import java.io.Serializable;
 /**
  * represent an item, store and getter for all variables of an item.
  */
+
 public class Item implements Serializable {
     private String name;
     private User owner;
@@ -36,6 +37,7 @@ public class Item implements Serializable {
      * @param rentPrice
      * @param rentDuration how long the owner wants to rent this item
      */
+
     public Item(String name, User owner, String description, String category, boolean virtual, boolean tradable, boolean sellable, boolean rentable,
                 Double sellPrice, Double rentPrice, Integer rentDuration) {
         this.name = name;

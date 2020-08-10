@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * Creates, keeps track of, and changes values of Users.
  */
+
 public class ItemManager implements Serializable {
 
     private List<Item> systemInventory;

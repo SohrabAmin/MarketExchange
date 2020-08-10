@@ -13,9 +13,11 @@ import requests.*;
 import currency.*;
 import system_menus.admin_main_menus.options.*;
 import system_menus.user_main_menus.options.*;
+
 /**
  * Display in user's Main Menu, Allow user to manage their payment( credit card and in-app currency)
  */
+
 public class ManagePaymentOptions implements userMainMenuOptions {
     /**
      * @param user             the user that is currently logged in to the system

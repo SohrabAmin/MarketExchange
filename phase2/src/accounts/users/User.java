@@ -15,6 +15,7 @@ import java.util.Map;
 /**
  * represent a accounts.users.User with name and password. store and getter for all values of a user.
  */
+
 public class User extends Account {
 
     private ArrayList<Item> wishlist;
