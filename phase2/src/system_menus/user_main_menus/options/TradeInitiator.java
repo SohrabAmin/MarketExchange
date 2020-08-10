@@ -48,7 +48,7 @@ public class TradeInitiator implements UserMainMenuOptions {
 
         //----------- SO FAR IVE DISPLAYED THE ITEMS, NOW I NEED THE PERSON TO SELECT THE ITEM THEY WANT
 
-        System.out.print("Please type in the ID of the item you would like or 'back' to return to the main menu.\n Reminder that if the item is virtual," +
+        System.out.print("Please type in the ID of the item you would like or 'back' to return to the main menu.\nReminder that if the item is virtual," +
                 "you will only be able to buy the item!\n");
         Object inum = sc.nextLine();
         if (inum.equals("back")) {
