@@ -3,9 +3,15 @@ package system;
 import accounts.users.User;
 import accounts.users.UserManager;
 
-
+/**
+ * notify user of all the admin undo actions
+ */
 public class NotifyUserOfAdminUndo {
-
+    /**
+     * notify user of all the admin undo actions when user logged in
+     * @param user user who logged in
+     * @param allUsers all users stored in UserManager
+     */
     public void notify(User user, UserManager allUsers) {
         if (user.getNotifyUndo().size() > 0) {
             for (int i = 0; i < user.getNotifyUndo().size(); i++) {

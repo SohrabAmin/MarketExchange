@@ -13,9 +13,23 @@ import requests.*;
 import currency.*;
 import system_menus.admin_main_menus.options.*;
 import system_menus.user_main_menus.options.*;
-
+/**
+ * Display in user's Main Menu, Allow user to manage their payment( credit card and in-app currency)
+ */
 public class ManagePaymentOptions implements userMainMenuOptions {
-
+    /**
+     * @param user             the user that is currently logged in to the system
+     * @param allItems         ItemManager that stores the system's inventory
+     * @param allTradeRequests TradeRequestManager that stores all the Trade Requests in the system
+     * @param allUsers         UserManager that stores all the Users in the system
+     * @param allMeetings      MeetingManager that deals with the creation of meetings
+     * @param allTransactions  TransactionManager that stores all the Transactions in the system
+     * @param allAdmins        AdminManager that stores all admins
+     * @param allUserMessages  UserMessageManager which stores all the Users messages to Admin
+     * @param currencyManager  CurrencyManger which manges all in-app currency of this user
+     * @return depending on what the User inputs it will return different objects:
+     * returns User to set up new credit card, change default credit card,add fund to in-app currency or to the main menu.
+     */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                           UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
                           AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages, CurrencyManager currencyManager) {

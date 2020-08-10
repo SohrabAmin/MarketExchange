@@ -18,9 +18,25 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
+/**
+ *Display in Admin Main Menu, Allow Admin to undo actions of all users.
+ */
 public class UndoAction implements adminMainMenuOptions {
-
+    /**
+     *
+     * @param admin admin who is currently in the system
+     * @param allAdmins AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
+     * @param allUsers UserManager which stores all the Users in the system
+     * @param allItems ItemManager which stores the system's inventory
+     * @param allUserMessages UserMassageManager that stores all user massages
+     * @param allTransactions TransactionManager which stores and edits all Transactions in the system
+     * @param allRequests TradeRequestManager which store all tradeRequests
+     * @param allCurrency
+     * @return depend on admin's input
+     * return "back" so that admin can go back to the main menu for other options.
+     * return null if there is no actions to undo, or values of users not match, or admins finished the undo actions
+     *
+     */
     public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,
                           UserMessageManager allUserMessages, TransactionManager allTransactions,
                           TradeRequestManager allRequests, CurrencyManager allCurrency) {

@@ -101,7 +101,10 @@ public class User extends Account {
         this.FrequentCategory.put("Office Supplies", 0);
         this.FrequentCategory.put("Gaming", 0);
     }
-
+    /**
+     * Getter for FrequentCategory; what is the  frequency for each category
+     * @return each category with its frequency as Map of string and integer
+     */
 
     public Map<String, Integer> getFrequentCategory() {
         return FrequentCategory;
@@ -363,18 +366,34 @@ public class User extends Account {
 
     //TODO: consider overriding the equals method inherited from Object
 
+    /**
+     * setter for this user's location
+     * @param location this user's currect location
+     */
     public void setLocation(String location) {
         this.location = location;
     }
 
+    /**
+     * Getter for this user's location
+     * @return this user's location as String
+     */
     public String getLocation() {
         return this.location;
     }
 
+    /**
+     * Getter for this user's points
+     * @return this user's points as int
+     */
     public Integer getPoints() {
         return this.points;
     }
 
+    /**
+     * Setter for this user's point
+     * @param newPoints
+     */
     public void setPoints(int newPoints) {
         this.points = newPoints;
     }
@@ -405,39 +424,81 @@ public class User extends Account {
         return vacationStorage;
     }
 
-
-    public List<String> getNotifyUndo(){return this.notifyUndo;}
-
+    /**
+     * Getter for the adminActionHistory as a List for this user
+     * @return all the undone actions by the admin for this user as a List of strings
+     */
     public ArrayList<String> getAdminActionHistory() {return adminActionHistory;}
 
+    /**
+     * Getter for the admin's messages to this user
+     * @return the admin's messages to this user as a List of strings
+     */
     public ArrayList<String> getAdminMessages() {return AdminMessages;}
 
+    /**
+     * update this user's in-app currency
+     * @param x the remaining in-app currency of this user
+     */
     public void updateCapital(double x){
         this.capital += x;
     }
 
+    /**
+     * Setter to add a new Credit Card to this user
+     * @param card new credit card of this user
+     */
     public void addCreditCard(CreditCard card){
         this.creditCards.add(card);
     }
+
+    /**
+     * Getter all the credit cards for this user
+     * @return this user's credit card as a list of Creditcards.
+     */
     public List<CreditCard> getCreditCards(){
         return this.creditCards;
     }
 
+    /**
+     * Setter for this user's default credit card
+     * @param card the default credit card
+     */
     public void setDefaultCreditCard(CreditCard card){
         this.defaultCreditCard = card;
     }
 
+    /**
+     * Getter for this user's in-app currency
+     * @return this user's in-app currency as double.
+     */
     public double getCapital(){
         return this.capital;
     }
 
+    /**
+     * Getter for this user's default credit card
+     * @return this user's credit card as CreditCard
+     */
     public CreditCard getDefaultCreditCard(){
         return this.defaultCreditCard;
     }
 
+    /**
+     * Getter for Approved three way trade for this user
+     * @return all the approved three way trade requests that are approved by this user.
+     */
     public List<typeThreeRequest> getApprovedThreeWay(){
         return this.approvedThreeWay;
     }
+
+    /**
+     * Getter for the Undo Actions by Admin( used for notifying user what is undone by admin)
+     * @return all Admin's undo action to this user as a List of strings.
+     * (eg, itemName is removed from your wishlist)
+     */
+    public List<String> getNotifyUndo(){return this.notifyUndo;}
+
 
 
 }

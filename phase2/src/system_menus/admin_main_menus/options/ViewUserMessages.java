@@ -11,9 +11,25 @@ import requests.TradeRequestManager;
 import transactions.TransactionManager;
 
 import java.util.Scanner;
-
+/**
+ * Display in Admin's menu. Allow admin to view, reply and delete user's messages.
+ */
 
 public class ViewUserMessages implements adminMainMenuOptions {
+    /**
+     * Display in Admin's menu. Allow admin to view, reply and delete user's messages.
+     * @param admin The Admin currently logged into the system
+     * @param allAdmins AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
+     * @param allUsers UserManager which stores all the Users in the system
+     * @param allUserMessages UserMessageManager which stores all the messages sent to Admin
+     * @param allItems ItemManager which stores the system's inventory
+     * @param allTransactions TransactionManager which stores and edits all Transactions in the system
+     * @param allCurrency CurrencyManager which manage all in-app currency for this user
+     * return depending on what the User inputs it will return different objects:
+     * returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
+     * returns null if the input is invalid, or the admin's input is successfully done with messages shown to admin.
+     * returns String "exit" to prompt TradeSystem to save all the information and exit the System
+     */
     public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,
                           UserMessageManager allUserMessages, TransactionManager allTransactions,
                           TradeRequestManager allRequests, CurrencyManager allCurrency) {
