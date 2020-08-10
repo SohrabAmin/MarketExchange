@@ -18,7 +18,7 @@ public class AdminWriting {
      * @throws ClassNotFoundException
      */
     public static AdminManager demoAdminRead(String fileName) throws IOException, ClassNotFoundException {
-        // creates AdminReadWrite which manages the saving and loading users.
+        // creates AdminReadWrite which manages the saving and loading accounts.users.
         AdminReadWrite adminRW = new AdminReadWrite(fileName);
 
         // Deserializes contents of the SER file
@@ -31,7 +31,7 @@ public class AdminWriting {
     }
 
     /**
-     * Saves the admins from adminManager into the AdminList file.
+     * Saves the accounts.admins from adminManager into the AdminList file.
      *
      * @param adminManager AdminManager object which stores all Admin information
      * @throws IOException

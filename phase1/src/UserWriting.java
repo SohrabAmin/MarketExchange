@@ -9,7 +9,7 @@ import java.io.IOException;
 public class UserWriting {
 
     public static void demoUserRead(String fileName, UserManager u) throws IOException, ClassNotFoundException {
-        // creates UserReadWrite which manages the saving and loading users.
+        // creates UserReadWrite which manages the saving and loading accounts.users.
         UserReadWrite userRW = new UserReadWrite(fileName);
 
         // Deserializes contents of the SER file
@@ -18,7 +18,7 @@ public class UserWriting {
     }
 
     /**
-     * Saves the users from userManager into the UserList file.
+     * Saves the accounts.users from userManager into the UserList file.
      *
      * @param userManager
      * @throws IOException

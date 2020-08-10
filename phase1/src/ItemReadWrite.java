@@ -52,7 +52,7 @@ public class ItemReadWrite implements Serializable {
             List temp = (List<Item>) input.readObject();
             //closes the file
             input.close();
-            // as long as the file is not empty, it will populate users with the list stored in the file
+            // as long as the file is not empty, it will populate accounts.users with the list stored in the file
             if (temp != null) {
                 items = temp;
             }

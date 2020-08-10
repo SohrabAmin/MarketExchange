@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class UserReadWrite implements Serializable {
     /**
-     * A List containing all users.
+     * A List containing all accounts.users.
      */
     private List<User> users;
 
@@ -34,7 +34,7 @@ public class UserReadWrite implements Serializable {
     }
 
     /**
-     * Stores the users from the file at path filePath.
+     * Stores the accounts.users from the file at path filePath.
      *
      * @param fileName the path of the data file
      * @throws FileNotFoundException if filePath is not a valid path
@@ -52,7 +52,7 @@ public class UserReadWrite implements Serializable {
             List temp = (List<User>) input.readObject();
             //closes the file
             input.close();
-            // as long as the file is not empty, it will populate users with the list stored in the file
+            // as long as the file is not empty, it will populate accounts.users with the list stored in the file
             if (temp != null) {
                 users = temp;
             }
@@ -61,7 +61,7 @@ public class UserReadWrite implements Serializable {
     }
 
     /**
-     * Writes the users from UserManager u to file at filePath.
+     * Writes the accounts.users from UserManager u to file at filePath.
      *
      * @param fileName the file to write the records to
      * @throws IOException
@@ -84,7 +84,7 @@ public class UserReadWrite implements Serializable {
      * @param um the UserManager that is to be populated.
      */
     public void populateUserManager(UserManager um) {
-        // As long as users is not null and contains a list of Users from the file
+        // As long as accounts.users is not null and contains a list of Users from the file
         // (i.e. file is not empty), then populate the UserManager of the system.
         if (users != null) {
             um.setAllUsers(users);

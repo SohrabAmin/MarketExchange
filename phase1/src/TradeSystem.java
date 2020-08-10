@@ -77,7 +77,7 @@ public class TradeSystem {
 
         System.out.print("Goodbye!\uD83D\uDEAA \n");
 
-        //saves all the users in UserManager to an external file
+        //saves all the accounts.users in UserManager to an external file
         UserWriting.demoUserSave("UserList.ser", allUsers);
         //saves current AdminManager object allAdmins to external file
         AdminWriting.demoAdminSave("AdminList.ser", allAdmins);

@@ -111,9 +111,9 @@ public class AdminInputGetter {
         if (frozenRequests.size() > 0)
             System.out.println("\uD83D\uDCF3 You have " + frozenRequests.size() + " Frozen user requests!");
 
-        //if they have frozen users, show it here
+        //if they have frozen accounts.users, show it here
         if (allFrozenUsers.size() > 0) {
-            System.out.println("\u2603 You have " + allFrozenUsers.size() + " Frozen users!");
+            System.out.println("\u2603 You have " + allFrozenUsers.size() + " Frozen accounts.users!");
         }
 
         //if they have pending items, show it here
@@ -122,7 +122,7 @@ public class AdminInputGetter {
         }
         System.out.println("Please select from the following by entering the number beside the option:" +
                 " \n1.Add new admin\n2.Change system threshold \n" +
-                "3.View items that need to be approved\n4.Freeze or unfreeze users\n5.Log out\n" +
+                "3.View items that need to be approved\n4.Freeze or unfreeze accounts.users\n5.Log out\n" +
                 "Enter 'exit' to exit at any time.");
 
         try {
@@ -155,7 +155,7 @@ public class AdminInputGetter {
                     }
                     //else input was "back", returns to main menu
                     return admin;
-                } else if (input.equals("4")) { //freeze or unfreeze users
+                } else if (input.equals("4")) { //freeze or unfreeze accounts.users
                     Object temp = FreezeOrUnfreeze(allUsers);
                     while (temp == null) {
                         temp = FreezeOrUnfreeze(allUsers);
@@ -176,9 +176,9 @@ public class AdminInputGetter {
     }
 
     /**
-     * Allows admin to either view unfreeze requests, freeze and unfreeze users in the system.
+     * Allows admin to either view unfreeze requests, freeze and unfreeze accounts.users in the system.
      *
-     * @param allUsers UserManager which stores all the users in the system
+     * @param allUsers UserManager which stores all the accounts.users in the system
      * @return depending on what the Admin inputs it will return different objects:
      * returns null to tell mainmenu() to call FreezeOrUnfreeze() again
      * returns String "back" to tell mainmenu() to prompt main menu again so Admin can choose another
@@ -187,7 +187,7 @@ public class AdminInputGetter {
     public Object FreezeOrUnfreeze(UserManager allUsers) {
         System.out.println("What would you like to do? Please select the number beside the option or enter " +
                 "'back' to return to the main menu.");
-        System.out.println("1.View unfreeze requests\n2.Unfreeze frozen users\n3.Freeze users");
+        System.out.println("1.View unfreeze requests\n2.Unfreeze frozen accounts.users\n3.Freeze accounts.users");
         Scanner sc = new Scanner(System.in);
         Object input = sc.nextLine();
         if (input.equals("back")) {
@@ -220,7 +220,7 @@ public class AdminInputGetter {
      * If they unfreeze a User, it will remove their request from frozenRequests and change their status isPseudoFrozen and
      * isFrozen to false.
      *
-     * @param allUsers UserManager which stores all the users in the system
+     * @param allUsers UserManager which stores all the accounts.users in the system
      * @return depending on what the Admin inputs it will return different objects:
      * returns null to tell mainmenu() to call FreezeOrUnfreeze() again
      * returns String "back" to tell mainmenu() to prompt main menu again so Admin can choose another
@@ -270,15 +270,15 @@ public class AdminInputGetter {
         for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
             if (allUsers.getAllUsers().get(i).getIsFrozen() || allUsers.getAllUsers().get(i).getIsPseudoFrozen()) {
                 //if getIsFrozen returns true for frozen accounts
-                // or if getIsPseudoFrozen returns true for pseudo frozen users
+                // or if getIsPseudoFrozen returns true for pseudo frozen accounts.users
                 frozenUsers.add(allUsers.getAllUsers().get(i));
             }
         }
         if (frozenUsers.size() == 0) {
-            System.out.println("\nThere are no frozen users!\n");
+            System.out.println("\nThere are no frozen accounts.users!\n");
             return "back";
         }
-        System.out.println("\nHere are the current frozen users:");
+        System.out.println("\nHere are the current frozen accounts.users:");
         for (int i = 0; i < frozenUsers.size(); i++) {
             String reqUnfreeze = "";
             for (User frozenRequest : frozenRequests) {
@@ -332,15 +332,15 @@ public class AdminInputGetter {
         List<User> unfrozenUsers = new ArrayList<>();
         for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
             if (!allUsers.getAllUsers().get(i).getIsFrozen() || allUsers.getAllUsers().get(i).getIsPseudoFrozen()) {
-                //if getIsFrozen is not true or if getIsPseudoFrozen returns true for pseudo frozen users
+                //if getIsFrozen is not true or if getIsPseudoFrozen returns true for pseudo frozen accounts.users
                 unfrozenUsers.add(allUsers.getAllUsers().get(i));
             }
         }
         if (unfrozenUsers.size() == 0) {
-            System.out.println("\nThere are no non-frozen users!\n");
+            System.out.println("\nThere are no non-frozen accounts.users!\n");
             return "back";
         }
-        System.out.println("\nHere are the current non-frozen users:");
+        System.out.println("\nHere are the current non-frozen accounts.users:");
         for (int i = 0; i < unfrozenUsers.size(); i++) {
             String reqUnfreeze = "";
             for (User frozenRequest : frozenRequests) {
@@ -368,7 +368,7 @@ public class AdminInputGetter {
             } else { //user is not pseudo frozen
                 allUsers.freeze(chosenUser);
             }
-            //users will need to re-request to be unfrozen if they go from pseudo-frozen to actually frozen
+            //accounts.users will need to re-request to be unfrozen if they go from pseudo-frozen to actually frozen
             for (int i = 0; i < frozenRequests.size(); i++) {
                 if (frozenRequests.get(i).getName().equals(chosenUser.getName())) {
                     removeFromfrozenRequest(chosenUser);

@@ -47,7 +47,7 @@ public class TransactionReadWrite implements Serializable {
             TransactionManager temp = (TransactionManager) input.readObject();
             //closes the file
             input.close();
-            // as long as the file is not empty, it will populate admins with the list stored in the file
+            // as long as the file is not empty, it will populate accounts.admins with the list stored in the file
             if (temp != null) {
                 return temp;
             }

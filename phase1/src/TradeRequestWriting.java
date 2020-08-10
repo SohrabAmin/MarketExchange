@@ -10,7 +10,7 @@ import java.io.IOException;
 public class TradeRequestWriting {
 
     public static TradeRequestManager demoTradeRequestRead(String fileName) throws IOException, ClassNotFoundException {
-        // creates TransactionReadWrite which manages the saving and loading users.
+        // creates TransactionReadWrite which manages the saving and loading accounts.users.
         TradeRequestReadWrite trRW = new TradeRequestReadWrite(fileName);
 
         // Deserializes contents of the SER file

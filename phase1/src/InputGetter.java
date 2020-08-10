@@ -85,7 +85,7 @@ public class InputGetter {
                     return input;
                 }
                 //checks to see if the User exists in the System by checking it against
-                //the list of users in UserManager allUsers by comparing username and passwords against
+                //the list of accounts.users in UserManager allUsers by comparing username and passwords against
                 //the inputted username and password
                 //if credentials check out, it will return the User
                 for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
@@ -301,7 +301,7 @@ public class InputGetter {
      *
      * @param user             the User currently logged in and the user that is initiating the trade
      * @param allItems         ItemManager which stores a system inventory containing all the items in the system
-     * @param allTradeRequests TradeRequestManager which deals with sending Trade requests to users
+     * @param allTradeRequests TradeRequestManager which deals with sending Trade requests to accounts.users
      * @param allUsers         UserManager which stores all the Users in the system
      * @return depending on what the User inputs it will return different objects:
      * returns null to tell mainmenu() to call Trade() again
@@ -874,7 +874,7 @@ public class InputGetter {
     }
 
     /**
-     * Displays the pending transactions that the User user has. It will allow users to approve or edit the transactions
+     * Displays the pending transactions that the User user has. It will allow accounts.users to approve or edit the transactions
      * they currently have pending.
      *
      * @param user            the User that wants to view their pending transactions
@@ -1045,7 +1045,7 @@ public class InputGetter {
     }
 
     /**
-     * Displays the pending transactions that the User user has. It will allow users to approve or edit the transactions
+     * Displays the pending transactions that the User user has. It will allow accounts.users to approve or edit the transactions
      * they currently have pending.
      *
      * @param user            the User that wants to view their pending transactions
@@ -1115,7 +1115,7 @@ public class InputGetter {
                     } else if (selectedTransaction.getTemp()) {
                         //if it was a temporary meeting, then I need to set up a second meeting
                         allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 2);
-                        //by now, the second agreed upon meeting is set for both users
+                        //by now, the second agreed upon meeting is set for both accounts.users
                         Calendar date = selectedTransaction.getInitialMeeting().getDate();
                         date.add(Calendar.MONTH, 1);
                         Meeting returnMeeting = new Meeting(date, selectedTransaction.getInitialMeeting().getPlace());
@@ -1209,7 +1209,7 @@ public class InputGetter {
      * items to inventory, view recent trades, view most frequent trading partners, view item statuses, add items to
      * wishlists, view approved trades, approve meetings, confirm meetings, and log out.
      * <p>
-     * Frozen users are able to do the following:
+     * Frozen accounts.users are able to do the following:
      * View wishlist, view inventory, browse items, add items to inventory, view most recent trades, view most
      * frequent trading partners, view item statuses, add items to wishlist, request unfreeze and log out.
      *

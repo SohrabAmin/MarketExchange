@@ -26,7 +26,7 @@ public class AdminReadWrite implements Serializable {
     }
 
     /**
-     * Stores the admins from the file at path filePath.
+     * Stores the accounts.admins from the file at path filePath.
      *
      * @param fileName the path of the data file
      * @throws FileNotFoundException if filePath is not a valid path
@@ -44,7 +44,7 @@ public class AdminReadWrite implements Serializable {
             AdminManager temp = (AdminManager) input.readObject();
             //closes the file
             input.close();
-            // as long as the file is not empty, it will populate admins with the list stored in the file
+            // as long as the file is not empty, it will populate accounts.admins with the list stored in the file
             if (temp != null) {
                 return temp;
             }
