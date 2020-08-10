@@ -30,7 +30,7 @@ public interface UserMainMenuOptions {
      * returns null to tell mainmenu() to call execute() again
      * returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
      * main menu option
-     * returns String "exit" to prompt system.TradeSystem to save all the information and exit the System
+     * returns String "exit" to prompt TradeSystem to save all the information and exit the System
      */
 
     Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,

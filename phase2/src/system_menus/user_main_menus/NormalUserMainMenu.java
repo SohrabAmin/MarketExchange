@@ -39,9 +39,9 @@ public class NormalUserMainMenu implements DifferentUserMainMenu {
      * @param allTransactions  transactions.TransactionManager that stores all the Transactions in the system
      * @param allUserMessages  UserMessageManager which stores all the Users messages to Admin
      * @return depending on what the User inputs it will return different objects:
-     * returns User to system.TradeSystem() to either remain logged into the system and prompt mainMenu
+     * returns User to TradeSystem() to either remain logged into the system and prompt mainMenu
      * returns null to log out of the system and allow another User to log in
-     * returns String "exit" to tell system.TradeSystem() to end the program and save all the data before
+     * returns String "exit" to tell TradeSystem() to end the program and save all the data before
      * exiting the System
      */
     public Object mainMenu(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
@@ -172,10 +172,10 @@ public class NormalUserMainMenu implements DifferentUserMainMenu {
                 if (result.equals("leave")) {
                     return null;
                 }
-                //tells system.TradeSystem() to stay logged in to this user's account; helps with looping the main menu
+                //tells TradeSystem() to stay logged in to this user's account; helps with looping the main menu
                 return user;
             }
-            //tells system.TradeSystem() to log out and bring the user back to the login screen
+            //tells TradeSystem() to log out and bring the user back to the login screen
             return input;
         } catch (IOException e) {
             System.out.println("Something went wrong.");

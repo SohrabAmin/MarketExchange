@@ -64,9 +64,9 @@ public class InputGetter {
      * @param allUserMessages  UserMessageManager which stores all the Users messages to Admin
      * @param allAdmins        AdminManager which stores all the admins in the system
      * @return depending on what the User inputs it will return different objects:
-     * returns User to system.TradeSystem() to either remain logged into the system and prompt mainMenu
+     * returns User to TradeSystem() to either remain logged into the system and prompt mainMenu
      * returns null to log out of the system and allow another User to log in
-     * returns String "exit" to tell system.TradeSystem() to end the program and save all the data before
+     * returns String "exit" to tell TradeSystem() to end the program and save all the data before
      * exiting the System
      */
     public Object callMainMenu(User user, ItemManager allItems, TradeRequestManager allTradeRequests,

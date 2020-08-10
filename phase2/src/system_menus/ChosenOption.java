@@ -44,7 +44,7 @@ public class ChosenOption {
      * returns null to tell mainmenu() to call execute() again
      * returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
      * main menu option
-     * returns String "exit" to prompt system.TradeSystem to save all the information and exit the System
+     * returns String "exit" to prompt TradeSystem to save all the information and exit the System
      */
     public Object executeOption(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                                 UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
@@ -66,7 +66,7 @@ public class ChosenOption {
      * returns null to tell mainmenu() to call system_options.admin_main_menus.options.AddAdmin() again
      * returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
      * main menu option
-     * returns String "exit" to prompt system.TradeSystem to save all the information and exit the System
+     * returns String "exit" to prompt TradeSystem to save all the information and exit the System
      */
     public Object executeOption(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,
                                 UserMessageManager allUserMessages, TransactionManager allTransactions,

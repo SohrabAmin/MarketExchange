@@ -33,16 +33,16 @@ public class LogInSystem {
             String input = br.readLine();
             {
                 //if the user wants to exit the program, it will return "exit"
-                //so system.TradeSystem knows to exit the system
+                //so TradeSystem knows to exit the system
                 switch (input) {
                     case "exit":
                         return "exit";
 
-                    //if they are a user, it will call the authenticator() method in system.InputGetter
+                    //if they are a user, it will call the authenticator() method in InputGetter
                     case "1":
                         return userAuthenticator(usermanager);
 
-                    //if they are admin, it will prompt admin authenticator() method in system.AdminInputGetter
+                    //if they are admin, it will prompt admin authenticator() method in AdminInputGetter
                     case "2":
                         ///Admin temp = adminAuthenticator(adminmanager);
                         //authenticator() returns null when user wants to go back to main welcome screen
@@ -69,15 +69,15 @@ public class LogInSystem {
     /**
      * Method authenticator prompts the User to either login or signup for an Account; proceeds to prompt User for
      * username and password. If they login, authenticator will check the list of Users stored in UserManager allUsers
-     * and will return the user to system.TradeSystem so that they can log in and see main menu if the credentials are correct
+     * and will return the user to TradeSystem so that they can log in and see main menu if the credentials are correct
      * and User exists. Else, it will prompt them to log in or sign up again. If they sign up, it will create a new
-     * User which will be added to the system and returned to system.TradeSystem so they can log in and see main menu. If
+     * User which will be added to the system and returned to TradeSystem so they can log in and see main menu. If
      * username exists, it will prompt to log in or sign up again.
      *
      * @param allUsers UserManager object which stores all the Users in the system
      * @return depending on what the User inputs it will return different objects
-     * returns String "exit" to tell system.TradeSystem.run() to stop trying to log in and exit the system
-     * returns User object to tell system.TradeSystem.run() to prompt main menu for the returned User
+     * returns String "exit" to tell TradeSystem.run() to stop trying to log in and exit the system
+     * returns User object to tell TradeSystem.run() to prompt main menu for the returned User
      */
     public Object userAuthenticator(UserManager allUsers) {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));

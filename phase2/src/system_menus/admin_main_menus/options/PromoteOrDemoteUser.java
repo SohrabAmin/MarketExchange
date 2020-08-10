@@ -33,12 +33,6 @@ public class PromoteOrDemoteUser implements AdminMainMenuOptions {
                           UserMessageManager allUserMessages, TransactionManager allTransactions,
                           TradeRequestManager allRequests, CurrencyManager allCurrency, Logger undoLogger) {
 
-        // the following four lines are commented out because currently any admin can promote users or demote VIPs
-        //if (!admin.getIsSuperAdmin()) {
-        //    System.out.println("Sorry, but only super admins can access this menu!");
-        //    return admin;
-        //}
-
         Scanner scanner = new Scanner(System.in);
         System.out.println("Press 1 to promote a user to VIP user. Press 2 to demote a VIP user to a user. " +
                 "Press 3 to cancel.");

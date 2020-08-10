@@ -31,7 +31,7 @@ public class AddAdmin implements AdminMainMenuOptions {
      * returns null to tell mainmenu() to call execute() again
      * returns String "back" to tell mainmenu() to prompt main menu again so Admin can choose another
      * main menu option
-     * returns String "exit" to prompt system.TradeSystem to save all the information and exit the System
+     * returns String "exit" to prompt TradeSystem to save all the information and exit the System
      */
     public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,
                           UserMessageManager allUserMessages, TransactionManager allTransactions,

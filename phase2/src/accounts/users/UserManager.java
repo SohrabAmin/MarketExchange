@@ -45,7 +45,7 @@ public class UserManager implements Serializable {
     }
 
     /**
-     * Setter for the list of all Users in the system. Only system.ReadWrite should access this method.
+     * Setter for the list of all Users in the system. Only ReadWrite should access this method.
      *
      * @param userList new list of all Users
      */

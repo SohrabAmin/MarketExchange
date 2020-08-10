@@ -15,7 +15,7 @@ import transactions.TransactionManager;
 import java.io.IOException;
 
 /**
- * system.TradeSystem initializes all the controllers and use cases in the system.
+ * TradeSystem initializes all the controllers and use cases in the system.
  */
 public class TradeSystem {
     public InputGetter inputgetter = new InputGetter();

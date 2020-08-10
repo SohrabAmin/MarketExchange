@@ -56,9 +56,9 @@ public class AdminInputGetter {
      *
      * @param admin Account of the Admin.
      * @return depending on what the Admin inputs it will return different objects:
-     * returns Admin to system.TradeSystem() to either remain logged into the system and prompt mainMenu
+     * returns Admin to TradeSystem() to either remain logged into the system and prompt mainMenu
      * returns null to log out of the system and allow another Admin to log in
-     * returns String "exit" to tell system.TradeSystem() to end the program and save all the data before
+     * returns String "exit" to tell TradeSystem() to end the program and save all the data before
      * exiting the System
      */
     public Object mainMenu(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,
