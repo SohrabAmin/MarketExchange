@@ -371,7 +371,7 @@ public class ApproveTrade implements UserMainMenuOptions {
                         "Today is: " + simpleDateformat.format(now));
                 System.out.print("Please put 1 for available and 2 for unavailable for the following days. " +
                         "\nBased on all 3 user's availabilities, we will provide set up earliest meeting for 11am and will notify you.\n" +
-                        "If the system cannot find any common days between the three accounts.users for the next week, the trade request will be automatically cancelled, so put in as many days available as possible!\n");
+                        "If the system cannot find any common days between the three users for the next week, the trade request will be automatically cancelled, so put in as many days available as possible!\n");
 
                 for (int q = 1; q < 8; q++) {
                     Date nextday = DateUtil.addDays(now, q);
@@ -396,11 +396,11 @@ public class ApproveTrade implements UserMainMenuOptions {
                 location = sc2.nextLine();
                 finalReq.addtoFirstUserLocation(location);
 
-                System.out.print("The following three locations will be sent to other two accounts.users where they can choose from:\n");
+                System.out.print("The following three locations will be sent to other two users where they can choose from:\n");
                 for (int s = 0; s < finalReq.getFirstUserLocation().size(); s++) {
                     System.out.print(finalReq.getFirstUserLocation().get(s) + "\n");
                 }
-                System.out.print("Request is now sent to the user two accounts.users!\n");
+                System.out.print("Request is now sent to the user two users!\n");
 
                 return user;
             }
@@ -492,7 +492,7 @@ public class ApproveTrade implements UserMainMenuOptions {
                             "Today is: " + simpleDateformat.format(now));
                     System.out.print("Please put 1 for available and 2 for unavailable for the following days. " +
                             "\nBased on all 3 user's availabilities, we will provide set up earliest meeting for 11am and will notify you.\n" +
-                            "If the system cannot find any common days between the three accounts.users for the next week, the trade request will be automatically cancelled, so put in as many days available as possible!\n");
+                            "If the system cannot find any common days between the three users for the next week, the trade request will be automatically cancelled, so put in as many days available as possible!\n");
 
                     for (int q = 1; q < 8; q++) {
                         Date nextday = DateUtil.addDays(now, q);
@@ -570,7 +570,7 @@ public class ApproveTrade implements UserMainMenuOptions {
                             "Today is: " + simpleDateformat.format(now));
                     System.out.print("Please put 1 for available and 2 for unavailable for the following days. " +
                             "\nBased on all 3 user's availabilities, we will provide set up earliest meeting for 11am and will notify you.\n" +
-                            "If the system cannot find any common days between the three accounts.users for the next week, the trade request will be automatically cancelled, so put in as many days available as possible!\n");
+                            "If the system cannot find any common days between the three users for the next week, the trade request will be automatically cancelled, so put in as many days available as possible!\n");
 
                     for (int q = 1; q < 8; q++) {
                         Date nextday = DateUtil.addDays(now, q);
@@ -620,7 +620,7 @@ public class ApproveTrade implements UserMainMenuOptions {
 
                     if (commonMapbetweenothertwoandU3.isEmpty()) {
                         allTradeRequests.updateRequestStatus(allUsers, cTrade, 2);
-                        System.out.print("Sorry but accounts.users don't seem to be available to meet in the next week. " +
+                        System.out.print("Sorry but users don't seem to be available to meet in the next week. " +
                                 "Cancelling this trade request.\n");
                         return user;
                     }

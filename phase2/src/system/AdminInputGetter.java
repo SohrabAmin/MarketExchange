@@ -79,7 +79,7 @@ public class AdminInputGetter {
         }
         //if they have frozen accounts.users, show it here
         if (allUsers.getAllFrozenUsers().size() > 0) {
-            System.out.println("\u2603 You have " + allUsers.getAllFrozenUsers().size() + " Frozen accounts.users!");
+            System.out.println("\u2603 You have " + allUsers.getAllFrozenUsers().size() + " Frozen users!");
         }
 
         //if they have pending items, show it here
@@ -94,7 +94,7 @@ public class AdminInputGetter {
 
         System.out.println("Please select from the following by entering the number beside the option:" +
                 " \n1. Add new admin\n2. Change system threshold\n3. View items that need to be approved\n" +
-                "4. Freeze or unfreeze accounts.users\n5. Promote a user or demote a VIP user\n" +
+                "4. Freeze or unfreeze users\n5. Promote a user or demote a VIP user\n" +
                 "6. Promote an admin or demote a super admin\n7. View Messages from Users\n8. View and edit System Log\n9. Log out\n" +
                 "Enter 'exit' to exit at any time.");
         ChosenOption option = new ChosenOption();

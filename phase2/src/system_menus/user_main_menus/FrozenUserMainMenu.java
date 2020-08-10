@@ -53,7 +53,7 @@ public class FrozenUserMainMenu implements  DifferentUserMainMenu{
                 "\uD83C\uDFC1 Please ask Admin to unfreeze your account!\n\n");
 
         if (allUsers.getUser(user).getAdminMessages().size() > 0) {
-            System.out.println("You have " + allUsers.getUser(user).getAdminMessages().size() + " messages from accounts.admins.Admin!");
+            System.out.println("You have " + allUsers.getUser(user).getAdminMessages().size() + " message(s) from Admin!");
         }
 
         // if admin has undone any actions on user's account, a String will be printed when user logs in

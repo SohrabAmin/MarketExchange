@@ -35,7 +35,7 @@ public class FreezeOrUnfreeze implements AdminMainMenuOptions {
                           TradeRequestManager allRequests, CurrencyManager allCurrency, Logger undoLogger) {
         System.out.println("What would you like to do? Please select the number beside the option or enter " +
                 "'back' to return to the main menu.");
-        System.out.println("1.View unfreeze requests\n2.Unfreeze frozen accounts.users\n3.Freeze accounts.users");
+        System.out.println("1.View unfreeze requests\n2.Unfreeze frozen users\n3.Freeze users");
         Scanner sc = new Scanner(System.in);
         Object input = sc.nextLine();
         if (input.equals("back")) {
@@ -125,10 +125,10 @@ public class FreezeOrUnfreeze implements AdminMainMenuOptions {
             }
         }
         if (frozenUsers.size() == 0) {
-            System.out.println("\nThere are no frozen accounts.users!\n");
+            System.out.println("\nThere are no frozen users!\n");
             return "back";
         }
-        System.out.println("\nHere are the current frozen accounts.users:");
+        System.out.println("\nHere are the current frozen users:");
         for (int i = 0; i < frozenUsers.size(); i++) {
             String reqUnfreeze = "";
             for (User frozenRequest : allAdmins.getFrozenRequests()) {
@@ -188,10 +188,10 @@ public class FreezeOrUnfreeze implements AdminMainMenuOptions {
             }
         }
         if (unfrozenUsers.size() == 0) {
-            System.out.println("\nThere are no non-frozen accounts.users!\n");
+            System.out.println("\nThere are no non-frozen users!\n");
             return "back";
         }
-        System.out.println("\nHere are the current non-frozen accounts.users:");
+        System.out.println("\nHere are the current non-frozen users:");
         for (int i = 0; i < unfrozenUsers.size(); i++) {
             String reqUnfreeze = "";
             for (User frozenRequest : allAdmins.getFrozenRequests()) {

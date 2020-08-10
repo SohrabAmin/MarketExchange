@@ -56,7 +56,7 @@ public class ViewUserMessages implements AdminMainMenuOptions {
         if (input.equals("back")) {
             return "back";
         } else if (input.equals("1")) {
-            System.out.println("Warning: Deleting a message will delete it for all accounts.admins!");
+            System.out.println("Warning: Deleting a message will delete it for all admins!");
             System.out.println("Please enter the number beside the message you'd like to delete or enter 'back' to return" +
                     " to the main menu");
             Object chosen = sc.nextLine();
@@ -94,7 +94,7 @@ public class ViewUserMessages implements AdminMainMenuOptions {
                 }
             }
             if (person == null) {
-                System.out.println("Something went wrong. accounts.users.User may have changed their username!");
+                System.out.println("Something went wrong. User may have changed their username!");
                 allUserMessages.removeFromAllUserMessage(allUserMessages.getAllUserMessage().get((int) replyTo - 1));
                 return null;
             }

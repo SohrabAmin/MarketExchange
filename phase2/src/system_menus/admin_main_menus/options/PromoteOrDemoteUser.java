@@ -55,7 +55,7 @@ public class PromoteOrDemoteUser implements AdminMainMenuOptions {
                 }
 
                 if (listOfUserNames.isEmpty()) {
-                    System.out.println("No non-VIP accounts.users found!");
+                    System.out.println("No non-VIP users found!");
                     return admin;
                 } else {
                     for (int i = 0; i < listOfUserNames.size(); i++) {

@@ -155,7 +155,7 @@ public class DemoUserMainMenu implements DifferentUserMainMenu{
                     return user;
                 case "14":  //message admin
                     System.out.print("-------------------------------------------------------" +
-                            "\n\uD83D\uDC81 As a user, you message the accounts.admins.Admin about general inquiries, questions, etc!\n" +
+                            "\n\uD83D\uDC81 As a user, you message the Admin about general inquiries, questions, etc!\n" +
                             "You will also be able to view any replies from admin.");
                     return user;
                 case "15":  //change account settings

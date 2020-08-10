@@ -37,7 +37,7 @@ public class AddAdmin implements AdminMainMenuOptions {
                           UserMessageManager allUserMessages, TransactionManager allTransactions,
                           TradeRequestManager allRequests, CurrencyManager allCurrency, Logger undoLogger) {
         if (!admin.getIsSuperAdmin()) {
-            System.out.println("Sorry but you do not have the authorization to add new accounts.admins!");
+            System.out.println("Sorry but you do not have the authorization to add new admins!");
             return "back";
         }
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -46,8 +46,8 @@ public class AddAdmin implements AdminMainMenuOptions {
 
         ArrayList<String> temp = new ArrayList<>();
 
-        System.out.println("Please press 1 to proceed to adding a new accounts.admins.Admin or press 2 to return to " +
-                "the accounts.admins.Admin menu." + " Enter 'exit' to exit the system at any time.");
+        System.out.println("Please press 1 to proceed to adding a new Admin or press 2 to return to " +
+                "the Admin menu." + " Enter 'exit' to exit the system at any time.");
         try {
             String input = br.readLine();
             if (input.equals("exit")) {

@@ -34,7 +34,7 @@ public class PromoteOrDemoteAdmin implements AdminMainMenuOptions {
                           TradeRequestManager allRequests, CurrencyManager allCurrency, Logger undoLogger) {
 
         if (!admin.getIsSuperAdmin()) {
-            System.out.println("Sorry, but only super accounts.admins can access this menu!");
+            System.out.println("Sorry, but only super admins can access this menu!");
             return admin;
         }
 
@@ -55,7 +55,7 @@ public class PromoteOrDemoteAdmin implements AdminMainMenuOptions {
                 }
 
                 if (listOfAdminNames.isEmpty()) {
-                    System.out.println("No non-super accounts.admins found!");
+                    System.out.println("No non-super admins found!");
                     return null;
                 } else {
                     for (String adminName : listOfAdminNames) {
@@ -74,7 +74,7 @@ public class PromoteOrDemoteAdmin implements AdminMainMenuOptions {
                                 allAdmins.addToSuperAdminStatusChangeNotifications(indexedAdmin,
                                         "Super admin " + admin.getName() +
                                                 " has promoted you to super admin!");
-                                System.out.println("accounts.admins.Admin " + nameOfAdminChosenForPromotion +
+                                System.out.println("Admin " + nameOfAdminChosenForPromotion +
                                         " was promoted to super admin!");
                             }
                         }
@@ -99,7 +99,7 @@ public class PromoteOrDemoteAdmin implements AdminMainMenuOptions {
                 }
 
                 if (listOfSuperAdminNames.isEmpty()) {
-                    System.out.println("No other super accounts.admins found!");
+                    System.out.println("No other super admins found!");
                     return null;
                 } else {
                     for (String superAdminName : listOfSuperAdminNames) {

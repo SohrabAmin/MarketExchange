@@ -37,7 +37,7 @@ public class UserMessage implements UserMainMenuOptions, Serializable {
                           AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages, CurrencyManager currencyManager){
 
         Scanner sc = new Scanner(System.in);
-        System.out.println("Please enter '1' to view message replies or '2' to send accounts.admins.Admin a message. Enter 'back' to return to the main menu.");
+        System.out.println("Please enter '1' to view message replies or '2' to send Admin a message. Enter 'back' to return to the main menu.");
         String input = sc.nextLine();
 
         if (input.equals("back")) {
@@ -66,7 +66,7 @@ public class UserMessage implements UserMainMenuOptions, Serializable {
 
     public Object messageAdmin(User user, UserMessageManager allUserMessages) {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Please leave a message to accounts.admins.Admin:");
+        System.out.println("Please leave a message to Admin:");
         String user_message = sc.nextLine();
 
         System.out.println("Your message is: \n" + user_message);

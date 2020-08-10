@@ -85,7 +85,7 @@ public class Browse implements UserMainMenuOptions {
         List<Item> allItems2 = allItems.getSystemInventory();
         if (user.getLocation() != null) {
             Scanner sc = new Scanner(System.in);
-            System.out.println("Please enter '1' to view only items from accounts.users in the same location as you or "
+            System.out.println("Please enter '1' to view only items from users in the same location as you or "
                     + "'2' to view all items in the system.");
             String input = sc.nextLine();
             if (input.equals('1')) {
@@ -96,7 +96,7 @@ public class Browse implements UserMainMenuOptions {
                     }
                 }
                 if (temp.size() == 0) {
-                    System.out.println("There are no items from other accounts.users in the same location as you. "
+                    System.out.println("There are no items from other users in the same location as you. "
                             + "The system will display all current items regardless of location instead.");
                 } else { //temp.size() != 0
                     allItems2 = temp;
