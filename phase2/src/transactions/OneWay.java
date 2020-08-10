@@ -66,4 +66,20 @@ public class OneWay extends Transaction implements Serializable {
         return this.item;
     }
 
+    /**
+     * Returns a String representation of a transactions.Transaction, with nicely formatted attributes
+     *
+     * @return String representation of this transactions.Transaction
+     */
+    public String toString() {
+
+        return "Transaction; One-Way" +
+                "; \nTrader 1: " + getFirstTrader().getName() +
+                "; \nTrader 2: " + getSecondTrader().getName() + " Item: " + getItem().getName() +
+                "; \nStatus: " + getTradeStatus() +
+                "; \nIs temporary?: " + getTemp() +
+                "; \nIs in-person?: " + !getVirtual() +
+                "; \nInitial meeting: " + getInitialMeeting().toString() +
+                "; \nReturn meeting: " + getReturnMeeting().toString() + ".\n";
+    }
 }

@@ -67,4 +67,21 @@ public class TwoWay extends Transaction implements Serializable {
     public Item getSecondItem() {
         return this.items.get(1);
     }
+
+    /**
+     * Returns a String representation of a transactions.Transaction, with nicely formatted attributes
+     *
+     * @return String representation of this transactions.Transaction
+     */
+    public String toString() {
+
+        return "Transaction; Two-way " +
+                "; \nTrader 1: " + getFirstTrader().getName() + " Item: " + getFirstItem().getName() +
+                "; \nTrader 2: " + getSecondTrader().getName() + " Item: " + getSecondItem().getName() +
+                "; \nStatus: " + getTradeStatus() +
+                "; \nIs temporary?: " + getTemp() +
+                "; \nIs in-person?: " + !getVirtual() +
+                "; \nInitial meeting: " + getInitialMeeting().toString() +
+                "; \nReturn meeting: " + getReturnMeeting().toString() + ".\n";
+    }
 }

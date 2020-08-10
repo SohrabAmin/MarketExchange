@@ -106,18 +106,4 @@ public class Transaction {
         this.returnMeeting = meeting;
     }
 
-    /**
-     * Returns a String representation of a transactions.Transaction, with nicely formatted attributes
-     *
-     * @return String representation of this transactions.Transaction
-     */
-    public String toString() {
-        return "transactions.Transaction " +
-                "; \nStatus: " + this.tradeStatus +
-                "; \nIs temporary?: " + this.temp +
-                "; \nIs in-person?: " + !this.virtual +
-                "; \nInitial meeting: " + this.initialMeeting +
-                "; \nReturn meeting: " + this.returnMeeting + ".\n";
-    }
-
 }

@@ -7,11 +7,9 @@ import accounts.users.UserMessageManager;
 import currency.CurrencyManager;
 import items.Item;
 import items.ItemManager;
-import requests.TradeRequest;
-import requests.TradeRequestManager;
-import requests.TypeOneRequest;
-import requests.TypeTwoRequest;
+import requests.*;
 import system.ReadWrite;
+import transactions.Transaction;
 import transactions.TransactionManager;
 
 import java.io.IOException;
@@ -84,7 +82,7 @@ public class UndoAction implements AdminMainMenuOptions {
 
         if (brokenUp[brokenUp.length - 1].equals("wishlist.\n")) {
             return undoWishlist(allUsers, chosenLog);
-        } else if (brokenUp[0].equals("transactions.Transaction")) {
+        } else if (brokenUp[0].equals("Transaction")) {
             return undoTransaction(allUsers, allTransactions, allCurrency, chosenLog);
         } else if (brokenUp[3].equals("trade") && (brokenUp[4].equals("request:") || brokenUp[4].equals("request"))) {
             return undoTradeRequest(allUsers, allRequests, chosenLog);
@@ -98,6 +96,8 @@ public class UndoAction implements AdminMainMenuOptions {
             return undoTwoWay(allUsers, allRequests, chosenLog);
         } else if (brokenUp[2].equals("One-way")) { //if the trade request is three way
             return undoOneWay(allUsers, allRequests, chosenLog);
+        } else if (brokenUp[2].equals("Three-way")) {
+            return undoThreeWay(allUsers, allRequests, chosenLog);
         }
         return null;
     }
@@ -129,10 +129,11 @@ public class UndoAction implements AdminMainMenuOptions {
             }
         }
         if (user1 == null) {
-            System.out.println("accounts.users.User no longer exists or has changed their name. No actions can be undone.");
+            System.out.println("User no longer exists or has changed their name. No actions can be undone.");
             return null;
-        } if (user2 == null) {
-            System.out.println("accounts.users.User no longer exists or has changed their name. No actions can be undone.");
+        }
+        if (user2 == null) {
+            System.out.println("User no longer exists or has changed their name. No actions can be undone.");
             return null;
         }
 
@@ -150,17 +151,18 @@ public class UndoAction implements AdminMainMenuOptions {
                     request = user1.getOutboundRequests().get(j);
                 }
             }
-        } if (request == null) { //if the trade request is not found in the user's outbound request list, prints error msg
-            System.out.println("Trade request cannot be found. No actions can be undone.");
+        }
+        if (request == null) { //if the trade request is not found in the user's outbound request list, prints error msg
+            System.out.println("Request cannot be found. No actions can be undone.");
             return null;
         }
         //otherwise, cancels the trade request and notifies the accounts.users involved
         allRequests.updateRequestStatus(allUsers, request, 1);
-        String string = "Your one-way trade request for <" + user2.getName() + ">'s item <" + itemName + "> has been cancelled by accounts.admins.Admin!";
-        String string2 = "A one-way trade request for your item <" + itemName + "> from accounts.users.User <" + user1.getName() + "> has been cancelled by accounts.admins.Admin!";
+        String string = "Your one-way request for <" + user2.getName() + ">'s item <" + itemName + "> has been cancelled by Admin!";
+        String string2 = "A one-way request for your item <" + itemName + "> from User <" + user1.getName() + "> has been cancelled by Admin!";
         allUsers.addToNotifyUndo(user1, string);
         allUsers.addToNotifyUndo(user2, string2);
-        System.out.println("Trade request has been successfully cancelled!");
+        System.out.println("Request has been successfully cancelled!");
         return null;
     }
 
@@ -192,10 +194,11 @@ public class UndoAction implements AdminMainMenuOptions {
         }
         //if user doesn't exist in allUsers, prints error message
         if (user1 == null) {
-            System.out.println("accounts.users.User no longer exists or has changed their name. No actions can be undone.");
+            System.out.println("User no longer exists or has changed their name. No actions can be undone.");
             return null;
-        } if (user2 == null) {
-            System.out.println("accounts.users.User no longer exists or has changed their name. No actions can be undone.");
+        }
+        if (user2 == null) {
+            System.out.println("User no longer exists or has changed their name. No actions can be undone.");
             return null;
         }
 
@@ -214,56 +217,172 @@ public class UndoAction implements AdminMainMenuOptions {
                     request = user1.getOutboundRequests().get(j);
                 }
             }
-        } if (request == null) { //if the trade request is not found in the user's outbound request list, prints error msg
-            System.out.println("Trade request cannot be found. No actions can be undone.");
+        }
+        if (request == null) { //if the trade request is not found in the user's outbound request list, prints error msg
+            System.out.println("Request cannot be found. No actions can be undone.");
             return null;
         }
         //otherwise, cancels the trade request and notifies the accounts.users involved
         allRequests.updateRequestStatus(allUsers, request, 1);
-        String string = "Your two-way trade request for <" + user2.getName() + ">'s item <" + itemName2 + "> has been cancelled by accounts.admins.Admin!";
-        String string2 = "A two-way trade request for your item <" + itemName2 + "> from accounts.users.User <" + user1.getName() + "> has been cancelled by accounts.admins.Admin!";
+        String string = "Your two-way request for <" + user2.getName() + ">'s item <" + itemName2 + "> has been cancelled by Admin!";
+        String string2 = "A two-way request for your item <" + itemName2 + "> from User <" + user1.getName() + "> has been cancelled by Admin!";
         allUsers.addToNotifyUndo(user1, string);
         allUsers.addToNotifyUndo(user2, string2);
-        System.out.println("Trade request has been successfully cancelled!");
+        System.out.println("Request has been successfully cancelled!");
         return null;
+    }
+
+    public Object undoThreeWay(UserManager allUsers, TradeRequestManager allRequests, String chosenLog) {
+        String[] parseLog = chosenLog.split("; \n");
+        User user1 = null;
+        User user2 = null;
+        User user3 = null;
+        String itemName1 = parseLog[1].split(": ")[3];
+        String itemName2 = parseLog[2].split(": ")[3];
+        String itemName3 = parseLog[3].split(": ")[3];
+        boolean temp = false;
+        boolean virtual = true;
+        TradeRequest request = null;
+        String msg = parseLog[8].split(" ")[1];
+
+        if (parseLog[6].split(": ")[1].equals("true")) {
+            temp = true;
+        }
+        if (parseLog[7].split(": ")[1].equals("true")) {
+            virtual = false;
         }
 
+        for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
+            if (allUsers.getAllUsers().get(i).getName().equals(parseLog[1].split(": ")[1])) {
+                user1 = allUsers.getAllUsers().get(i);
+            } else if (allUsers.getAllUsers().get(i).getName().equals(parseLog[2].split(": ")[1])) {
+                user2 = allUsers.getAllUsers().get(i);
+            } else if (allUsers.getAllUsers().get(i).getName().equals(parseLog[3].split(": ")[1])) {
+                user3 = allUsers.getAllUsers().get(i);
+            }
+        }
+        //if user doesn't exist in allUsers, prints error message
+        if (user1 == null) {
+            System.out.println("User no longer exists or has changed their name. No actions can be undone.");
+            return null;
+        }
+        if (user2 == null) {
+            System.out.println("User no longer exists or has changed their name. No actions can be undone.");
+            return null;
+        }
+        if (user3 == null) {
+            System.out.println("User no longer exists or has changed their name. No actions can be undone.");
+            return null;
+        }
+
+        //parses through all outbound requests in user1's list
+        //user1 is the user that initiated the trade
+        for (int j = 0; j < user1.getOutboundRequests().size(); j++) {
+            if (user1.getOutboundRequests().get(j) instanceof TypeThreeRequest) {
+                //if all the variables match, the request will be saved in variable request
+                if (((TypeThreeRequest) user1.getOutboundRequests().get(j)).getFirstUser().equals(user1) &&
+                        ((TypeThreeRequest) user1.getOutboundRequests().get(j)).getSecondUser().getName().equals(user2.getName()) &&
+                        ((TypeThreeRequest) user1.getOutboundRequests().get(j)).getThirdUser().getName().equals(user3.getName()) &&
+                        ((TypeThreeRequest) user1.getOutboundRequests().get(j)).getFirstItem().getName().equals(itemName1) &&
+                        ((TypeThreeRequest) user1.getOutboundRequests().get(j)).getSecondItem().getName().equals(itemName2) &&
+                        ((TypeThreeRequest) user1.getOutboundRequests().get(j)).getThirdItem().getName().equals(itemName3) &&
+                        user1.getOutboundRequests().get(j).getTemp() == temp &&
+                        user1.getOutboundRequests().get(j).getVirtual() == virtual &&
+                        user1.getOutboundRequests().get(j).getMessage().equals(msg)) {
+                    request = user1.getOutboundRequests().get(j);
+                }
+            }
+        }
+        if (request == null) { //if the trade request is not found in the user's outbound request list, prints error msg
+            System.out.println("Request cannot be found. No actions can be undone.");
+            return null;
+        }
+        //otherwise, cancels the trade request and notifies the accounts.users involved
+        allRequests.updateRequestStatus(allUsers, request, 1);
+        String string = "Your three-way request with <" + user2.getName() + ">'s item <" + itemName2 +
+                "> and <" + user3.getName() + ">'s item <" + itemName3 + "> has been cancelled by Admin!";
+        String string2 = "A three-way request for your item <" + itemName2 + "> from User <" + user1.getName() +
+                "> and <" + user3.getName() + "> has been cancelled by Admin!";
+        allUsers.addToNotifyUndo(user1, string);
+        allUsers.addToNotifyUndo(user2, string2);
+        allUsers.addToNotifyUndo(user3, string2);
+        System.out.println("Request has been successfully cancelled!");
+        return null;
+    }
 
     public Object undoTransaction(UserManager allUsers, TransactionManager allTransactions,
                                   CurrencyManager allCurrency, String chosenLog) {
-    String[] stringSplit = chosenLog.split("; \n");
-    List<String> attributes = new ArrayList<>();
-    for (int i = 0; i < stringSplit.length; i++) {
-        String[] temp = stringSplit[i].split(" ");
-        attributes.add(temp[1]);
-    }
-    //attributes is now list formatted as follows:
-        // [Status, is temporary?, is in-person?, initial meeting, return meeting]
+        String[] stringSplit = chosenLog.split("; \n");
+        List<String> attributes = new ArrayList<>();
+        for (int i = 0; i < stringSplit.length; i++) {
+            String[] temp = stringSplit[i].split(" ");
+            attributes.add(temp[1]);
+        }
+        //attributes is now list formatted as follows:
+        // [User1, User 2, (User3), Status, is temporary?, is in-person?, initial meeting, return meeting]
+
+        if (stringSplit[0].split("; ").equals("Three-way")) {
+
+        } else { //oneway, oneway monetized
+            Transaction transaction = null;
+            User user = null;
+            int status = 1;
+            boolean temp = false;
+            boolean virtual = false;
+            String itemName = stringSplit[2].split(" ")[3];
+
+
+            if (attributes.get(3).equals("true")) {
+                temp = true;
+            }
+            if (attributes.get(4).equals("false")) {
+                virtual = true;
+            }
+            if (attributes.get(2).equals("4")) {
+                status = 4;
+            }
+
+            for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
+                if (allUsers.getAllUsers().get(i).getName().equals(attributes)) {
+                    user = allUsers.getAllUsers().get(i);
+                }
+                if (user == null) { //if user doesn't exist in allUsers, prints error message
+                    System.out.println("User no longer exists or has changed their name. No actions can be undone.");
+                    return null;
+                }
+            }
+            for (int j = 0; j < user.getPendingTrades().size(); j++) {
+                if (user.getPendingTrades().get(j).getTemp() == temp &&
+                        user.getPendingTrades().get(j).getVirtual() == virtual &&
+                        user.getPendingTrades().get(j).getTradeStatus() == status) {
+                    transaction = user.getPendingTrades().get(j);
+                }
+            }
+
+            return null;
+        }
         return null;
     }
 
-    public Object undoWishlist(UserManager allUsers, String chosenLog) {
+    public Object undoWishlist (UserManager allUsers, String chosenLog){
         System.out.println(chosenLog.split(" ")[2]);
         User temp = new User(chosenLog.split(" ")[2], "1");
         User user = allUsers.getUser(temp);
         if (user == null) {
-            System.out.println("This accounts.users.User no longer exists.");
+            System.out.println("This user no longer exists.");
             return null;
         }
         String itemName = chosenLog.split("\"")[1];
         String description = chosenLog.split("\"")[3];
         Item item = user.findInWishlist(itemName, description);
         if (item == null) {
-            System.out.println("items.Item has already been undone by either another accounts.admins.Admin or the accounts.users.User themselves!");
+            System.out.println("Item has already been undone by either another Admin or the User themselves!");
             return null;
         }
-        allUsers.removeFromWishlist(user,item);
-        System.out.println("You have successfully removed " + itemName + " from accounts.users.User " + user.getName() + "'s wishlist!");
-        String string = itemName + " has been removed from your wishlist by accounts.admins.Admin!";
+        allUsers.removeFromWishlist(user, item);
+        System.out.println("You have successfully removed " + itemName + " from User " + user.getName() + "'s wishlist!");
+        String string = itemName + " has been removed from your wishlist by Admin!";
         allUsers.addToNotifyUndo(user, string);
         return null;
     }
-
-
-
 }

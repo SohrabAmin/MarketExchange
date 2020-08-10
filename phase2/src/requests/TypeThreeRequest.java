@@ -8,8 +8,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
- * Constructs a transactions.ThreeWay requests.TradeRequest, that a accounts.users.User can send to another accounts.users.User if the want to initiated a transactions.Transaction. Notice this difference from a transactions.Transaction, as
- * the system does not create an instance of transactions.Transaction unless the corresponding requests.TradeRequest has been approved by the accounts.users.User receiving the requests.TradeRequest. Notice we
+ * Constructs a transactions.ThreeWay requests.TradeRequest, that a accounts.users.User can send to another
+ * accounts.users.User if the want to initiated a transactions.Transaction. Notice this difference from a transactions.
+ * Transaction, as the system does not create an instance of transactions.Transaction unless the corresponding requests.
+ * TradeRequest has been approved by the accounts.users.User receiving the requests.TradeRequest. Notice we
  * assuming noMeeting Transactions are permanent, as it's illogical to "return" and emailed item.
  */
 public class TypeThreeRequest extends TradeRequest {
@@ -112,24 +114,24 @@ public class TypeThreeRequest extends TradeRequest {
         thirdUserLocation = location;
     }
     /**
-     * Gets the accounts.users.User who initially sent the requests.TypeTwoRequest to user2
-     * @return accounts.users.User that initially sent the requests.TypeTwoRequest
+     * Gets the accounts.users.User who initially sent the requests.typeTwoRequest to user2
+     * @return accounts.users.User that initially sent the requests.typeTwoRequest
      */
     public User getFirstUser(){
         return this.user1;
     }
 
     /**
-     * Gets the accounts.users.User who initiated the requests.TypeThreeRequest
-     * @return accounts.users.User that initiated the requests.TypeThreeRequest
+     * Gets the accounts.users.User who initiated the requests.typeThreeRequest
+     * @return accounts.users.User that initiated the requests.typeThreeRequest
      */
     public User getSecondUser(){
         return this.user2;
     }
 
     /**
-     * Gets the accounts.users.User who user2 wanted to bring in for the requests.TypeThreeRequest
-     * @return accounts.users.User that user2 wanted to bring in for the requests.TypeThreeRequest
+     * Gets the accounts.users.User who user2 wanted to bring in for the requests.typeThreeRequest
+     * @return accounts.users.User that user2 wanted to bring in for the requests.typeThreeRequest
      */
     public User getThirdUser(){
         return this.user3;
@@ -211,5 +213,22 @@ public class TypeThreeRequest extends TradeRequest {
      */
     public AvailabilityChart getUser3Availability(){
         return user3Availability;
+    }
+
+    /**
+     * Returns a String representation of a TypeThreeRequest, with nicely formatted attributes
+     *
+     * @return String representation of this TypeThreeRequest
+     */
+    public String toString() {
+        return "Three-way trade request" +
+                "; \nUser 1: " + this.getFirstUser().getName() + " Item1: " + item1.getName() +
+                "; \nUser 2: " + this.getSecondUser().getName() + "Item2: " + item2.getName() +
+                "; \nUser 2: " + this.getThirdUser().getName() + "Item3: " + item3.getName() +
+                "; \nStatus: " + this.getStatus() +
+                "; \nDate: " + this.dateToString() +
+                "; \nIs for a temporary trade?: " + this.getTemp() +
+                "; \nIs meeting in-person?: " + !this.getVirtual() +
+                "; \nMessage: " + this.getMessage() + "\n";
     }
 }

@@ -11,11 +11,13 @@ import currency.*;
 import system_menus.admin_main_menus.options.*;
 import system_menus.user_main_menus.options.*;
 
-/** Constructs a transactions.OneWayMonetized requests.TradeRequest, that a accounts.users.User can send to another accounts.users.User if they want to initiate a transactions.Transaction. Notice this difference from a transactions.Transaction, as
- * the system does not create an instance of transactions.Transaction unless the corresponding requests.TradeRequest has been approved by the accounts.users.User receiving the requests.TradeRequest. Also
- * Notice that this type of transactions.Transaction will involve in-app currency, which distinguishes it from a transactions.OneWay. Notice we are
- * assuming noMeeting Transactions are permanent, as it's illogical to "return" and emailed item.
- *
+/** Constructs a transactions.OneWayMonetized requests.TradeRequest, that a accounts.users.User can send to another
+ * accounts.users.User if they want to initiate a transactions.Transaction. Notice this difference from a transactions.
+ * Transaction, as the system does not create an instance of transactions.Transaction unless the corresponding
+ * requests.TradeRequest has been approved by the accounts.users.User receiving the requests.TradeRequest. Also
+ * Notice that this type of transactions.Transaction will involve in-app currency, which distinguishes it from a
+ * transactions.OneWay. Notice we are assuming noMeeting Transactions are permanent, as it's illogical to "return"
+ * and emailed item.
  */
 public class OneWayMonetized extends OneWay {
 
@@ -34,7 +36,8 @@ public class OneWayMonetized extends OneWay {
      * @param user1 The accounts.users.User who initiated the requests.TradeRequest
      * @param item The items.Item User1 currently wants
      * @param temp A boolean representing if the requests.TradeRequest will be temp or not.
-     * @param virtual A boolean that determines the requests.TradeRequest will have no meeting (true: This transactions.Transaction will not have a meetings.Meeting, false: This transactions.Transaction will have a meetings.Meeting.)
+     * @param virtual A boolean that determines the requests.TradeRequest will have no meeting (true: This transactions.
+     *                Transaction will not have a meetings.Meeting, false: This transactions.Transaction will have a meetings.Meeting.)
      */
     public OneWayMonetized(User user1, Item item, boolean temp, boolean virtual, String email){
         super(user1, item, temp, virtual);
@@ -43,7 +46,6 @@ public class OneWayMonetized extends OneWay {
         this.email = email;
         if(this.getTemp()){
             this.cost = item.getRentPrice();
-            this.rentDuration = item.getRentDuration();
         }else{
             this.cost = item.getSellPrice();
         }
@@ -58,13 +60,13 @@ public class OneWayMonetized extends OneWay {
         person1EmailSent = true;
     }
 
-   public boolean getPerson1Confirmed(){
+    public boolean getPerson1Confirmed(){
         return person1EmailSent;
-   }
+    }
 
-   public void Person2Confirmed(){
+    public void Person2Confirmed(){
         person2EmailSent = true;
-   }
+    }
 
     public boolean getPerson2Confirmed(){
         return person2EmailSent;
@@ -95,5 +97,22 @@ public class OneWayMonetized extends OneWay {
      */
     public int getRentDuration(){
         return this.rentDuration;
+    }
+
+    /**
+     * Returns a String representation of a transactions.Transaction, with nicely formatted attributes
+     *
+     * @return String representation of this transactions.Transaction
+     */
+    public String toString() {
+
+        return "Transaction; Monetized One-way" +
+                "; \nTrader 1: " + getFirstTrader().getName() +
+                "; \nTrader 2: " + getSecondTrader().getName() + " Item: " + getItem().getName() +
+                "; \nStatus: " + getTradeStatus() +
+                "; \nIs temporary?: " + getTemp() +
+                "; \nIs in-person?: " + !getVirtual() +
+                "; \nInitial meeting: " + getInitialMeeting().toString() +
+                "; \nReturn meeting: " + getReturnMeeting().toString() + ".\n";
     }
 }
