@@ -35,15 +35,15 @@ public class TradeSystem {
     /**
      * Run calls multiple gateways in order to populate the System with saved information pertaining Transactions,
      * Admins, Users, Meetings, Items and TradeRequests. It will call methods that allow Users and Admins to log in
-     * and view the main menu as long as an accounts.admins.Admin or User doesn't want to exit the system. If they choose to exit,
+     * and view the main menu as long as an Admin or User doesn't want to exit the system. If they choose to exit,
      * the gateways will be called again and saved the information for future use.
      *
      * @throws IOException
      * @throws ClassNotFoundException
      */
     public void run() throws IOException, ClassNotFoundException {
-        //either returns the saved accounts.admins.AdminManager object with all the stored admin information
-        //or creates a new accounts.admins.AdminManager object with a default admin with user name Tina and password 123456
+        //either returns the saved AdminManager object with all the stored admin information
+        //or creates a new AdminManager object with a default admin with user name Tina and password 123456
         //if the file AdminList.ser is empty
         allAdmins = readwrite.adminPopulate("AdminList.ser");
         //either returns the saved transactions.TransactionManager object with all the stored Transactions
@@ -155,7 +155,7 @@ public class TradeSystem {
 
         //saves all the accounts.users in UserManager to an external file
         readwrite.saveToFile("UserList.ser", allUsers);
-        //saves current accounts.admins.AdminManager object allAdmins to external file
+        //saves current AdminManager object allAdmins to external file
         readwrite.saveToFile("AdminList.ser", allAdmins);
         //saves current transactions.TransactionManager object allTransactions to an external file
         readwrite.saveToFile("TransactionList.ser", allTransactions);

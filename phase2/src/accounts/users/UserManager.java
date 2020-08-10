@@ -72,7 +72,7 @@ public class UserManager implements Serializable {
     }
 
     /**
-     * Pseudo-freezes a User account. A pseudo-frozen User is prevented from conducting transactions until an accounts.admins.Admin
+     * Pseudo-freezes a User account. A pseudo-frozen User is prevented from conducting transactions until an Admin
      * decides to either freeze the User or let the User slide
      *
      * @param user User account to be pseudo-frozen
@@ -82,7 +82,7 @@ public class UserManager implements Serializable {
     }
 
     /**
-     * Un-pseudo-freezes a User account. A pseudo-frozen User is prevented from conducting transactions until an accounts.admins.Admin
+     * Un-pseudo-freezes a User account. A pseudo-frozen User is prevented from conducting transactions until an Admin
      * decides to either freeze the User or let the User slide
      *
      * @param user User account to be un-pseudo-frozen
@@ -142,10 +142,10 @@ public class UserManager implements Serializable {
     }
 
     /**
-     * Moves an items.Item from a User's draft inventory to their inventory (after an accounts.admins.Admin approves this items.Item)
+     * Moves an items.Item from a User's draft inventory to their inventory (after an Admin approves this items.Item)
      *
      * @param user User who will have a draft inventory items.Item approved
-     * @param item items.Item approved by an accounts.admins.Admin
+     * @param item items.Item approved by an Admin
      */
     public void approveDraftInventoryItem(User user, Item item, ItemManager allItems) {
         user.getDraftInventory().remove(item);
@@ -155,10 +155,10 @@ public class UserManager implements Serializable {
     }
 
     /**
-     * Removes an items.Item from a User's draft inventory (after an accounts.admins.Admin rejects this items.Item)
+     * Removes an items.Item from a User's draft inventory (after an Admin rejects this items.Item)
      *
      * @param user User who will have a draft inventory items.Item rejected
-     * @param item items.Item rejected by an accounts.admins.Admin
+     * @param item items.Item rejected by an Admin
      */
     public void rejectDraftInventoryItem(User user, Item item) {
         user.getDraftInventory().remove(item);
@@ -177,7 +177,7 @@ public class UserManager implements Serializable {
 
     /**
      * Changes an items.Item's status (either "Pending", "Approved", or "Rejected") in a User's itemHistory (list of items
-     * that have been submitted to the system). Only an accounts.admins.Admin should change an items.Item's status
+     * that have been submitted to the system). Only an Admin should change an items.Item's status
      *
      * @param user   User whose items.Item will have its status changed
      * @param item   items.Item whose status is to be changed
@@ -190,7 +190,7 @@ public class UserManager implements Serializable {
     /**
      * Checks the number of Transactions a User has requested in a week against the weekly transactions.Transaction limit
      *
-     * @param adminManager The instance of accounts.admins.AdminManager
+     * @param adminManager The instance of AdminManager
      * @param user         User whose number of requested Transactions in a week will be checked against the weekly
      *                     transactions.Transaction limit
      * @param date         A Calendar representing the date, in the week in question

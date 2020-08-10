@@ -23,7 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Deals with the input of an accounts.admins.Admin user-- particularly deals with the login system and displaying of main menu.
+ * Deals with the input of an Admin user-- particularly deals with the login system and displaying of main menu.
  */
 
 public class AdminInputGetter {
@@ -54,10 +54,10 @@ public class AdminInputGetter {
     /**
      * Displays the main menu of an AdminUser and prompts the user for input.
      *
-     * @param admin accounts.Account of the accounts.admins.Admin.
-     * @return depending on what the accounts.admins.Admin inputs it will return different objects:
-     * returns accounts.admins.Admin to system.TradeSystem() to either remain logged into the system and prompt mainMenu
-     * returns null to log out of the system and allow another accounts.admins.Admin to log in
+     * @param admin accounts.Account of the Admin.
+     * @return depending on what the Admin inputs it will return different objects:
+     * returns Admin to system.TradeSystem() to either remain logged into the system and prompt mainMenu
+     * returns null to log out of the system and allow another Admin to log in
      * returns String "exit" to tell system.TradeSystem() to end the program and save all the data before
      * exiting the System
      */
@@ -133,9 +133,9 @@ public class AdminInputGetter {
                         System.out.println("That is not a valid option. Please try again.");
                         return admin;
                 }
-                //the option that is chosen by the accounts.admins.Admin will be run
+                //the option that is chosen by the Admin will be run
                 Object result = option.executeOption(admin, allAdmins, allUsers, allItems, allUserMessages, allTransactions, allRequests, allCurrency, undoLogger);
-                //if the execute() method of the option returns null, the option will be run again until the accounts.admins.Admin
+                //if the execute() method of the option returns null, the option will be run again until the Admin
                 //specifies that they want to return to the main menu
                 while (result == null) {
                     result = option.executeOption(admin, allAdmins, allUsers, allItems, allUserMessages, allTransactions, allRequests, allCurrency, undoLogger);

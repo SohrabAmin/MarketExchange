@@ -30,7 +30,7 @@ public class VacationUserMainMenu implements DifferentUserMainMenu {
      * @param allUsers         The instance of UserManager
      * @param allMeetings      The instance of meetings.MeetingManager
      * @param allTransactions  The instance of transactions.TransactionManager
-     * @param allAdmins        The instance of accounts.admins.AdminManager
+     * @param allAdmins        The instance of AdminManager
      * @param undoLogger       Logger that logs actions in the system
      * @param allUserMessages  The instance of UserMessageManager
      * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;

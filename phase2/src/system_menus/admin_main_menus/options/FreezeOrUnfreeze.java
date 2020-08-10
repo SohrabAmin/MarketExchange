@@ -21,13 +21,13 @@ public class FreezeOrUnfreeze implements AdminMainMenuOptions {
      * Allows admin to either view unfreeze requests, freeze and unfreeze accounts.users in the system.
      *
      * @param allUsers UserManager which stores all the accounts.users in the system
-     * @param admin the current accounts.admins.Admin logged into the system
-     * @param allAdmins accounts.admins.AdminManager which holds all the Admins, FrozenRequests and Thresholds in the system
+     * @param admin the current Admin logged into the system
+     * @param allAdmins AdminManager which holds all the Admins, FrozenRequests and Thresholds in the system
      * @param allItems items.ItemManager which holds the system inventory
-     * @param allUserMessages UserMessageManager which stores all the Users messages to accounts.admins.Admin
-     * @return depending on what the accounts.admins.Admin inputs it will return different objects:
+     * @param allUserMessages UserMessageManager which stores all the Users messages to Admin
+     * @return depending on what the Admin inputs it will return different objects:
      * returns null to tell mainmenu() to call execute() again
-     * returns String "back" to tell mainmenu() to prompt main menu again so accounts.admins.Admin can choose another
+     * returns String "back" to tell mainmenu() to prompt main menu again so Admin can choose another
      * main menu option
      */
     public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,
@@ -70,9 +70,9 @@ public class FreezeOrUnfreeze implements AdminMainMenuOptions {
      *
      * @param allUsers UserManager which stores all the accounts.users in the system
      * @param allAdmins Adminmanager which stores the FrozenRequests
-     * @return depending on what the accounts.admins.Admin inputs it will return different objects:
+     * @return depending on what the Admin inputs it will return different objects:
      * returns null to tell mainmenu() to call system_options.admin_main_menus.options.FreezeOrUnfreeze() again
-     * returns String "back" to tell mainmenu() to prompt main menu again so accounts.admins.Admin can choose another
+     * returns String "back" to tell mainmenu() to prompt main menu again so Admin can choose another
      * main menu option
      */
     public Object ViewUnfreezeRequests(UserManager allUsers, AdminManager allAdmins) {
@@ -105,14 +105,14 @@ public class FreezeOrUnfreeze implements AdminMainMenuOptions {
     }
 
     /**
-     * Displays a list of all frozen and pseudo frozen Users in UserManager and prompts accounts.admins.Admin to input
+     * Displays a list of all frozen and pseudo frozen Users in UserManager and prompts Admin to input
      * which User they wish to unfreeze and unfreezes those Users
      *
      * @param allUsers UserManager which stores all the Users in the system
-     * @param allAdmins accounts.admins.AdminManager which stores the FrozenRequests
-     * @return depending on what the accounts.admins.Admin inputs it will return different objects:
+     * @param allAdmins AdminManager which stores the FrozenRequests
+     * @return depending on what the Admin inputs it will return different objects:
      * returns null to tell system_options.admin_main_menus.options.FreezeOrUnfreeze() to call Unfreeze() again
-     * returns String "back" to tell system_options.admin_main_menus.options.FreezeOrUnfreeze() to prompt main menu again so accounts.admins.Admin can choose another
+     * returns String "back" to tell system_options.admin_main_menus.options.FreezeOrUnfreeze() to prompt main menu again so Admin can choose another
      * main menu option
      */
     public Object Unfreeze(UserManager allUsers, AdminManager allAdmins) {
@@ -169,14 +169,14 @@ public class FreezeOrUnfreeze implements AdminMainMenuOptions {
     }
 
     /**
-     * Displays a list of all unfrozen and pseudo frozen Users in UserManager and prompts accounts.admins.Admin to input
+     * Displays a list of all unfrozen and pseudo frozen Users in UserManager and prompts Admin to input
      * which User they wish to freeze and freezes those Users
      *
      * @param allUsers UserManager which stores all the Users in the system
-     * @param allAdmins accounts.admins.AdminManager which stores the FrozenRequests
-     * @return depending on what the accounts.admins.Admin inputs it will return different objects:
+     * @param allAdmins AdminManager which stores the FrozenRequests
+     * @return depending on what the Admin inputs it will return different objects:
      * returns null to tell system_options.admin_main_menus.options.FreezeOrUnfreeze() to call Freeze() again
-     * returns String "back" to tell system_options.admin_main_menus.options.FreezeOrUnfreeze() to prompt main menu again so accounts.admins.Admin can choose another
+     * returns String "back" to tell system_options.admin_main_menus.options.FreezeOrUnfreeze() to prompt main menu again so Admin can choose another
      * main menu option
      */
     public Object Freeze(UserManager allUsers, AdminManager allAdmins) {

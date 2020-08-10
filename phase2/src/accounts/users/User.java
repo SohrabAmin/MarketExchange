@@ -255,7 +255,7 @@ public class User extends Account {
 
     /**
      * getter for if user is PseudoFrozen, A pseudo-frozen User is prevented from conducting transactions until
-     * an accounts.admins.Admin decides to either freeze the User or let the User slide
+     * an Admin decides to either freeze the User or let the User slide
      *
      * @return the status if this user is PseudoFrozen as a boolean
      */

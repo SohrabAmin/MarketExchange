@@ -13,7 +13,7 @@ import currency.*;
 public class AddItemToSystem implements UserMainMenuOptions {
     /**
      * Deals with requesting to add a new item to the system's inventory. Prompts user for details of the item
-     * and sends a request to the accounts.admins.Admin for approval. Adds the item to the User's item history so they can
+     * and sends a request to the Admin for approval. Adds the item to the User's item history so they can
      * view its current status.
      *  @param user     the User requesting to add a new item to the system
      * @param allUsers UserManager which stores all Users

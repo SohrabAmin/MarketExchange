@@ -102,7 +102,7 @@ public class WishlistManager implements UserMainMenuOptions {
 
     /**
      * Deals with adding a new item to the User's wishlist. Prompts user for details of the item
-     * and sends a request to the accounts.admins.Admin for approval.
+     * and sends a request to the Admin for approval.
      *
      * @param user     the User requesting to add a new item to their wishlist
      * @param allUsers UserManager which stores all Users

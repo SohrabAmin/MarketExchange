@@ -23,11 +23,11 @@ public class PromoteOrDemoteAdmin implements AdminMainMenuOptions {
      * <p>
      * Prevents a non-super admin from accessing this menu.
      *
-     * @param admin     accounts.admins.Admin logged in to the system
-     * @param allAdmins The instance of accounts.admins.AdminManager
+     * @param admin     Admin logged in to the system
+     * @param allAdmins The instance of AdminManager
      * @param allUsers  The instance of UserManager
      * @param allItems  The instance of items.ItemManager
-     * @return null if the current menu is to be reprinted; accounts.admins.Admin admin if the admin is to be redirected to the main menu.
+     * @return null if the current menu is to be reprinted; Admin admin if the admin is to be redirected to the main menu.
      */
     public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,
                           UserMessageManager allUserMessages, TransactionManager allTransactions,

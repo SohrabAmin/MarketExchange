@@ -30,14 +30,14 @@ public class CorrespondingMainMenu {
      * vacationing user or demo user.
      *
      * @param user The User currently logged into the system
-     * @param allAdmins accounts.admins.AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
+     * @param allAdmins AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
      * @param allItems items.ItemManager which stores the system's inventory
      * @param allMeetings meetings.MeetingManager which deals with creating and editing meetings
      * @param allTradeRequests requests.TradeRequestManager which stores and edits all the TradeRequests in the system
      * @param allTransactions transactions.TransactionManager which stores and edits all Transactions in the system
      * @param allUsers UserManager which stores all the Users in the system
      * @param undoLogger Logger that logs actions in the system
-     * @param allUserMessages stores all the User messages to accounts.admins.Admin
+     * @param allUserMessages stores all the User messages to Admin
      * @return depending on what the User inputs it will return different objects:
      * returns User to system.TradeSystem() to either remain logged into the system and prompt mainMenu
      * returns null to log out of the system and allow another User to log in

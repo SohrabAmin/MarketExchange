@@ -56,11 +56,11 @@ public class ReadWrite implements Serializable {
     }
 
     /**
-     * Deals with reading from the external file fileName and if it is not empty, it will return the accounts.admins.AdminManager
-     * object stored in fileName; if it is empty, it will create an initial accounts.admins.Admin and return a new accounts.admins.AdminManager
+     * Deals with reading from the external file fileName and if it is not empty, it will return the AdminManager
+     * object stored in fileName; if it is empty, it will create an initial Admin and return a new AdminManager
      *
      * @param fileName the name of the file the method is reading from
-     * @return returns an accounts.admins.AdminManager object
+     * @return returns an AdminManager object
      * @throws IOException
      * @throws ClassNotFoundException
      */

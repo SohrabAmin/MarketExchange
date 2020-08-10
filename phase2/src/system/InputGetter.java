@@ -61,8 +61,8 @@ public class InputGetter {
      * @param allUsers         UserManager that stores all the Users in the system
      * @param allMeetings      meetings.MeetingManager that deals with the creation of meetings
      * @param allTransactions  transactions.TransactionManager that stores all the Transactions in the system
-     * @param allUserMessages  UserMessageManager which stores all the Users messages to accounts.admins.Admin
-     * @param allAdmins        accounts.admins.AdminManager which stores all the accounts.admins in the system
+     * @param allUserMessages  UserMessageManager which stores all the Users messages to Admin
+     * @param allAdmins        AdminManager which stores all the accounts.admins in the system
      * @return depending on what the User inputs it will return different objects:
      * returns User to system.TradeSystem() to either remain logged into the system and prompt mainMenu
      * returns null to log out of the system and allow another User to log in

@@ -172,8 +172,8 @@ public class LogInSystem {
     /**
      * Reads input from user and lets them 'log in' to their account by verifying their username and password.
      *
-     * @param allAdmins accounts.admins.AdminManager which stores all the admin in the system.
-     * @return returns an accounts.admins.Admin which will be used to prompt the main menu in LogIn System
+     * @param allAdmins AdminManager which stores all the admin in the system.
+     * @return returns an Admin which will be used to prompt the main menu in LogIn System
      */
     public Object adminAuthenticator(AdminManager allAdmins) {
 
@@ -210,7 +210,7 @@ public class LogInSystem {
                                 return (allAdmins.getAllAdmins().get(i));
                             }
                     }
-                    //if accounts.admins.Admin doesn't exist
+                    //if Admin doesn't exist
                     System.out.println("Wrong username or password. Please try Again");
                     return adminAuthenticator(allAdmins);
                 case "2":

@@ -23,7 +23,7 @@ public interface UserMainMenuOptions {
      * @param allUsers UserManager which stores all the Users in the system
      * @param allMeetings meetings.MeetingManager which deals with creating and editing meetings
      * @param allTransactions transactions.TransactionManager which stores and edits all Transactions in the system
-     * @param allAdmins accounts.admins.AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
+     * @param allAdmins AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
      * @param undoLogger Logger that logs actions in the system
      * @param currencyManager
      * @return depending on what the User inputs it will return different objects:

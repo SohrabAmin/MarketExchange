@@ -21,9 +21,9 @@ public class AdminManager implements Serializable {
     private List<User> frozenRequests = new ArrayList<>();
 
     /**
-     * Constructs the instance of accounts.admins.AdminManager with an initial accounts.admins.Admin and a list of Admins
+     * Constructs the instance of AdminManager with an initial Admin and a list of Admins
      *
-     * @param initialAdmin first accounts.admins.Admin in the system
+     * @param initialAdmin first Admin in the system
      */
     public AdminManager(Admin initialAdmin) {
         allAdmins = new ArrayList<>();
@@ -32,10 +32,10 @@ public class AdminManager implements Serializable {
     }
 
     /**
-     * Adds a new accounts.admins.Admin to the list of all Admins
+     * Adds a new Admin to the list of all Admins
      *
-     * @param newAdminUsername new accounts.admins.Admin's account username
-     * @param newAdminPassword new accounts.admins.Admin's account password
+     * @param newAdminUsername new Admin's account username
+     * @param newAdminPassword new Admin's account password
      */
     public void addAdmin(String newAdminUsername, String newAdminPassword) {
         Admin newAdmin = new Admin(newAdminUsername, newAdminPassword);
@@ -62,7 +62,7 @@ public class AdminManager implements Serializable {
 
     /**
      * Setter for the threshold that dictates how much more a user has to have lent than borrowed, before trading;
-     * only an accounts.admins.Admin should change this threshold
+     * only an Admin should change this threshold
      *
      * @param lentMinusBorrowedThreshold new threshold
      */
@@ -82,7 +82,7 @@ public class AdminManager implements Serializable {
 
     /**
      * Setter for the threshold that dictates how many times each user can edit a meeting before the meeting is
-     * cancelled; only an accounts.admins.Admin should change this threshold
+     * cancelled; only an Admin should change this threshold
      *
      * @param meetingEditThreshold new threshold
      */
@@ -101,7 +101,7 @@ public class AdminManager implements Serializable {
 
     /**
      * Setter for the threshold that dictates the number of transactions any one User can conduct in one week; only an
-     * accounts.admins.Admin should change this threshold
+     * Admin should change this threshold
      *
      * @param weeklyTransactionLimit new threshold
      */
