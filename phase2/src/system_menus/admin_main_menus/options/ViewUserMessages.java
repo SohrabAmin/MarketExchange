@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 public class ViewUserMessages implements AdminMainMenuOptions {
     /**
      * Display in Admin's menu. Allow admin to view, reply and delete user's messages.
+     *
      * @param admin The Admin currently logged into the system
      * @param allAdmins AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
      * @param allUsers UserManager which stores all the Users in the system

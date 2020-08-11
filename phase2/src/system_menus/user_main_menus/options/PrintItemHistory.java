@@ -15,9 +15,15 @@ public class PrintItemHistory implements UserMainMenuOptions {
     /**
      * Allows the User to view their item history and it's status. It will display whether it is
      * "Pending", "Approved", or "Rejected".
-     *  @param user     the User who is requesting to see their item history
-     * @param allUsers UserManager that stores all the Users in the system
-     * @param currencyManager
+     * @param user The User currently logged into the system
+     * @param allItems ItemManager which stores the system's inventory
+     * @param allTradeRequests TradeRequestManager which stores and edits all the TradeRequests in the system
+     * @param allUsers UserManager which stores all the Users in the system
+     * @param allMeetings MeetingManager which deals with creating and editing meetings
+     * @param allTransactions TransactionManager which stores and edits all Transactions in the system
+     * @param allAdmins AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
+     * @param undoLogger Logger that logs actions in the system
+     * @param currencyManager CurrencyManger which manages all in-app currency of this user
      * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
      * String "exit" if the user is to be logged out.
      */

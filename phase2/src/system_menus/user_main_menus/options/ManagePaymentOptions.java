@@ -26,7 +26,7 @@ public class ManagePaymentOptions implements UserMainMenuOptions {
      * @param allTransactions  TransactionManager that stores all the Transactions in the system
      * @param allAdmins        AdminManager that stores all admins
      * @param allUserMessages  UserMessageManager which stores all the Users messages to Admin
-     * @param currencyManager  CurrencyManger which manges all in-app currency of this user
+     * @param currencyManager  CurrencyManger which manages all in-app currency of this user
      * @return depending on what the User inputs it will return different objects:
      * returns User to set up new credit card, change default credit card,add fund to in-app currency or to the main menu.
      */
@@ -36,45 +36,38 @@ public class ManagePaymentOptions implements UserMainMenuOptions {
 
         System.out.println("Your current funds: $" + user.getCapital() + "\n");
 
-Object hi = "";
+        Object hi = "";
         if(user.getCreditCards().size() == 0){
             System.out.println("You do not currently have a card on your account. Press 1 to add a new card and 'back' to return to the main menu.");
             Scanner sc = new Scanner(System.in);
             String inum = sc.nextLine();
 
-            if (inum.equals("back"))
+            if (inum.equals("back")) {
                 return user;
-
+            }
             else if(inum.equals("1")){
-                hi = this.addANewCard(sc, currencyManager, user);
+                hi = this.addANewCard(currencyManager, user);
             }
             else {
                 System.out.print("\u274CCommand Invalid. Please try again!\n");
                 return null;
-
             }
         }
 
-        if (hi.equals("back")){
+        if (hi.equals("back")) {
             return user;
-
         }
-
-
-
         System.out.println("Your default credit ends in ***" + user.getDefaultCreditCard().returnEndNumbers() + "\n");
         System.out.println("Press 1 to add a new card, press 2 to remove an existing card, 3 to add funds or 4 to change your default credit card.\nType 'back' to return to previous menu. " +
                 "Note that funds can only be added from your default credit card.");
 
         Scanner sc = new Scanner(System.in);    //System.in is a standard input stream
         String inum = sc.nextLine();
-if (inum.equals("back"))
-return user;
-
-
-
+        if (inum.equals("back")) {
+            return user;
+        }
         if(inum.equals("1")){
-            this.addANewCard(sc, currencyManager, user);
+            this.addANewCard(currencyManager, user);
             return user;
         } else if(inum.equals("2")){
             List<CreditCard> cards = user.getCreditCards();
@@ -117,25 +110,24 @@ return user;
                 double total = amount + user.getCapital();
 
 
-                if(total > 5000){
+                if (total > 5000){
                     double amount2 = 5000 - user.getCapital();
                     boolean check = currencyManager.addFunds(user, user.getDefaultCreditCard(), amount2);
                     if(check){
                         System.out.println("The requested amount exceeds the $5000 limit. Your card was instead charged" +
                                 "$" + amount2 + ". Your new account balance is $5000 \n");
-                    }else{
+                    } else{
                         System.out.println("Sorry, your card is expired. Please navigate back and select a new default credit card.");
                     }
-                    return user;
-                }else{
+                } else{
                     boolean check = currencyManager.addFunds(user, user.getDefaultCreditCard(), amount);
                     if(check){
                         System.out.println("Your funds have been deposited into your account. Your new balance is $"+ user.getCapital() + "\n");
                     }else{
                         System.out.println("Sorry, your card is expired. Please navigate back and select a new default credit card.");
                     }
-                    return user;
                 }
+                return user;
             }
         }else if(inum.equals("4")){
             List<CreditCard> cards = user.getCreditCards();
@@ -171,8 +163,14 @@ return user;
         return user;
     }
 
-
-    public Object addANewCard(Scanner sc1, CurrencyManager currencyManager, User user){
+    /**
+     * Adds a new credit card to the User's account payment options.
+     *
+     * @param currencyManager CurrencyManager which manages the in-system currency
+     * @param user User that wants to add the new card
+     * @return
+     */
+    public Object addANewCard(CurrencyManager currencyManager, User user){
 
         Scanner sc = new Scanner(System.in);
 
@@ -186,9 +184,10 @@ return user;
         while(check){
             System.out.println("Please enter your 16 digit credit card number. Type 'back' to go to main menu. \n");
             inum = sc.nextLine();
-            if (inum.equals("back"))
+            if (inum.equals("back")) {
                 return "back";
-boolean checked = true;
+            }
+            boolean checked = true;
             if (((String) inum).matches("[0-9]+") == false){
 
                 System.out.print("\u274CCommand Invalid. Please try again!\n");
@@ -207,12 +206,11 @@ boolean checked = true;
                         check2 ++;
                     }
                 }
-                if(check2>0){
+                if(check2>0) {
                     System.out.println("This card is already on your account.");
-                }else{
+                } else{
                     check = false;
                 }
-
             }
         }
         System.out.println("Please enter the name of the card holder.\n");
@@ -220,8 +218,9 @@ boolean checked = true;
         temp2 = (String) inum;
         System.out.println("Please enter the expiration date of your card in the format mm-yyyy. Type 'back' to go to main menu.\n");
         inum = sc.nextLine();
-        if (inum.equals("back")) return "back";
-
+        if (inum.equals("back")) {
+            return "back";
+        }
         temp3 = currencyManager.getDate((String) inum);
         System.out.println("Please enter the 3 digit CVV on the back of your card. Type 'back' to go to main menu.\n");
         inum = sc.nextLine();
@@ -233,10 +232,10 @@ boolean checked = true;
             user.setDefaultCreditCard(card);
             System.out.println("Congratulations, you have added a new card to your account. Note that this card is" +
                     " automatically set as your default.\n");
-        }else{
+        } else{
             System.out.println("Congratulations, you have added a new card to your account. Note that this has " +
                     "not changed your default card. \n");
         }
-    return "back"; }
+        return "back"; }
 
 }

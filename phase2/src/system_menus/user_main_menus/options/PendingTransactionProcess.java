@@ -23,8 +23,8 @@ public class PendingTransactionProcess implements UserMainMenuOptions {
      * @param allUsers        UserManager that stores all the Users in the system
      * @param allMeetings     MeetingManager that deals with the creation of meetings
      * @param allTransactions TransactionManager that stores all the information of all system transactions
-     * @param currencyManager
-     * @return
+     * @param currencyManager CurrencyManager which deals with the in-system currency
+     * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
      */
 
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,

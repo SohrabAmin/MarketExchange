@@ -685,6 +685,7 @@ public class UndoAction implements AdminMainMenuOptions {
 
     /**
      * Undoes additions to wishlist by removing the item from the wishlist.
+     *
      * @param allUsers UserManager which stores all the Users in the system
      * @param chosenLog chosenLog the Log containing information about the wishlist addition
      * @return null so admin can return back to the list of logs when undoTradeRequest is done

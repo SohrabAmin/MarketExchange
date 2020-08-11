@@ -40,6 +40,8 @@ public class ChosenOption {
      * @param allTransactions TransactionManager which stores and edits all Transactions in the system
      * @param allUsers UserManager which stores all the Users in the system
      * @param undoLogger Logger that logs actions in the system
+     * @param allUserMessages UserMessageManager which stores all the User messages in the system
+     * @param allCurrency CurrencyManager which deals with the in-system currency
      * @return depending on what the User inputs it will return different objects:
      * returns null to tell mainmenu() to call execute() again
      * returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
@@ -48,7 +50,8 @@ public class ChosenOption {
      */
     public Object executeOption(User user, ItemManager allItems, TradeRequestManager allTradeRequests,
                                 UserManager allUsers, MeetingManager allMeetings, TransactionManager allTransactions,
-                                AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages, CurrencyManager allCurrency) {
+                                AdminManager allAdmins, Logger undoLogger, UserMessageManager allUserMessages,
+                                CurrencyManager allCurrency) {
 
         return ((UserMainMenuOptions) chosenOption).execute(user, allItems, allTradeRequests, allUsers,
                 allMeetings, allTransactions, allAdmins, undoLogger, allUserMessages, allCurrency );
@@ -57,11 +60,14 @@ public class ChosenOption {
     /**
      * Calls the method stored in chosenOption and returns an Object.
      *
-     * @param
-     * admin the current Admin logged into the system
-     * @param allAdmins AdminManager which holds all the Admins, FrozenRequests and Thresholds in the system
-     * @param allUsers UserManager which holds all the Users in the system
-     * @param allItems ItemManager which holds the system inventory
+     * @param admin the current Admin logged into the system
+     * @param allAdmins AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
+     * @param allItems ItemManager which stores the system's inventory
+     * @param allTransactions TransactionManager which stores and edits all Transactions in the system
+     * @param allUsers UserManager which stores all the Users in the system
+     * @param undoLogger Logger that logs actions in the system
+     * @param allUserMessages UserMessageManager which stores all the User messages in the system
+     * @param allCurrency CurrencyManager which deals with the in-system currency
      * @return depending on what the Admin inputs it will return different objects:
      * returns null to tell mainmenu() to call system_options.admin_main_menus.options.AddAdmin() again
      * returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
