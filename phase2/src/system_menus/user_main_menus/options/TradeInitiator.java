@@ -54,16 +54,28 @@ public class TradeInitiator implements UserMainMenuOptions {
         if (inum.equals("back")) {
             return "back";
         }
+
+        if (((String) inum).matches("[0-9]+") == false){
+
+            System.out.print("\u274CCommand Invalid. Please try again!\n");
+            return null;
+        }
+
+
+
+
         try {
             inum = Integer.parseInt((String) inum);
         } catch (NumberFormatException e) {
             return null;
         }
 
-        if (allItems.getSystemInventory().size() < (Integer) inum) {
-            System.out.print("\uD83E\uDDD0 Item does not exist! Please try again!\n");
+        if (((Integer)inum < 1) || ((Integer)inum > allItems.getSystemInventory().size())){
+            System.out.print("\uD83D\uDE35Input is out of bound. Please try again!\n");
             return null;
+
         }
+
 
 
         //the item they have selected
