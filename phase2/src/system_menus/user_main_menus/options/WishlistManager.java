@@ -37,9 +37,21 @@ public class WishlistManager implements UserMainMenuOptions {
         if (wishlist.size() == 0) {
             System.out.print("\uD83D\uDE14Your wishlist is empty!\n");
             System.out.println("Enter '1' if you would like to add to your wishlist or 'back' to return to the main menu.");
+
+            boolean bypass = false;
+            while (!bypass){
             String choice = sc.nextLine();
             if (choice.equals("1")) {
                 return addToWishlist(user, allUsers, undoLogger);
+            }
+            else if (choice.equals("back"))
+            {return "back";
+           }
+            else {
+                System.out.print("\u274CCommand Invalid. Please try again!\n");
+                }
+
+
             }
             return "back";
         } else { //if wishlist is not empty, prints out all the items in the wishlist and the description of the item
@@ -128,10 +140,10 @@ public class WishlistManager implements UserMainMenuOptions {
         System.out.print("1.Electronics\n2.Automotive and car accessories\n3.Baby\n4.Beauty, Health and Personal Care\n5.Books\n6.Home and Kitchen Supplies\n" +
                 "7.Clothing\n8.Movies, music and TV\n9.Office Supplies\n10.Gaming\n");
 
-        String ID = sc.nextLine();
-
+String ID = "";
         String category = "Undefined";
         while (category.equals("Undefined")) {
+             ID = sc.nextLine();
             if (ID.equals("back")) {
                 return "back";
             } else if (ID.equals("1")) {
@@ -170,7 +182,7 @@ public class WishlistManager implements UserMainMenuOptions {
         String confirmation = sc.nextLine();
         if (!confirmation.equals("1")) {
             if (!confirmation.equals("2")) {
-                System.out.println("\nInvalid input. Please try adding the item again.\n");
+                System.out.print("\u274CCommand Invalid. Please try again!\n");
                 return null;
             }
             return null;
@@ -203,7 +215,6 @@ public class WishlistManager implements UserMainMenuOptions {
             allUsers.addToFC("Gaming", user);
         }
         System.out.print("\nItem has been added to your wishlist \uD83C\uDF20\n");
-
         return null;
     }
 
