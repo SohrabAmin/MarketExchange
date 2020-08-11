@@ -1,14 +1,14 @@
 package system;
 
 import accounts.admins.AdminManager;
+import accounts.users.User;
+import accounts.users.UserManager;
+import accounts.users.UserMessageManager;
 import currency.CurrencyManager;
 import items.ItemManager;
 import meetings.MeetingManager;
 import requests.TradeRequestManager;
 import system_menus.user_main_menus.*;
-import accounts.users.User;
-import accounts.users.UserManager;
-import accounts.users.UserMessageManager;
 import transactions.TransactionManager;
 
 import java.io.File;
@@ -18,6 +18,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 //Note: how to put emojis in the code was found here: http://dplatz.de/blog/2019/emojis-for-java-commandline.html
+
+/**
+ * Master controller for user input. Based on user input, InputGetter first calls the corresponding user main menu.
+ * Then the user main menu calls the appropriate user main menu options ("strategy" classes)
+ */
 public class InputGetter {
     private static final Logger undoLogger = Logger.getLogger(AdminInputGetter.class.getName());
     private File undoLog = new File("UndoLog.txt");
@@ -32,6 +37,9 @@ public class InputGetter {
         }
     }
 
+    /**
+     * Creates InputGetter with a logger and handler for Admin-undoable actions
+     */
     public InputGetter() {
         undoLogger.setLevel(Level.ALL);
         fileHandler.setLevel(Level.ALL);

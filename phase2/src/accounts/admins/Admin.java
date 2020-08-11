@@ -24,7 +24,7 @@ public class Admin extends Account {
     }
 
     /**
-     * Getter for if the Admin is a super admin as boolean. Only super admins can add Admins to the system
+     * Getter for if this Admin is a super admin as boolean. Only super admins can add Admins to the system
      *
      * @return the result of if this Admin is the initial admin as boolean
      */
@@ -33,7 +33,7 @@ public class Admin extends Account {
     }
 
     /**
-     * Setter for if the Admin is a super admin admin as boolean. Only super admins can add Admins to the system
+     * Setter for if this Admin is a super admin as boolean. Only super admins can add Admins to the system
      *
      * @param isInitialAdmin of this Admin as boolean
      */
@@ -41,6 +41,11 @@ public class Admin extends Account {
         this.isInitialAdmin = isInitialAdmin;
     }
 
+    /**
+     * Getter for this Admin's list of notifications regarding a change in their "super admin" status
+     *
+     * @return this Admin's list of "super admin" status change notifications
+     */
     public List<String> getSuperAdminStatusChangeNotifications (){
         return this.SuperAdminStatusChangeNotifications;
     }

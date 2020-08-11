@@ -51,7 +51,9 @@ public class User extends Account {
 
     //potential hash map for outbound requests to help admins undo
 
-
+    /**
+     * no-arg constructor
+     */
     public User() {
     }
 
@@ -159,15 +161,6 @@ public class User extends Account {
      */
     public List<Transaction> getTradeHistory() {
         return this.tradeHistory;
-    }
-
-    /**
-     * setter for user's successful trade history
-     *
-     * @param transaction to add a transaction to this user's trade history
-     */
-    public void addTradeHistory(Transaction transaction) {
-        this.tradeHistory.add(transaction);
     }
 
     /**
@@ -369,12 +362,10 @@ public class User extends Account {
         return this.weeklyRequestLimit;
     }
 
-    //TODO: consider overriding the equals method inherited from Object
-
     /**
      * setter for this user's location
      *
-     * @param location this user's currect location
+     * @param location this user's current location
      */
     public void setLocation(String location) {
         this.location = location;
@@ -399,9 +390,9 @@ public class User extends Account {
     }
 
     /**
-     * Setter for this user's point
+     * Setter for this user's points
      *
-     * @param newPoints
+     * @param newPoints this user's new point amount
      */
     public void setPoints(int newPoints) {
         this.points = newPoints;
@@ -463,7 +454,7 @@ public class User extends Account {
     /**
      * Getter all the credit cards for this user
      *
-     * @return this user's credit card as a list of Creditcards.
+     * @return this user's credit card as a list of CreditCards.
      */
     public List<CreditCard> getCreditCards() {
         return this.creditCards;
@@ -524,6 +515,11 @@ public class User extends Account {
         return adminActionHistory;
     }
 
+    /**
+     * Getter for this user's list of notifications regarding a change in their "VIP" status
+     *
+     * @return this user's list of "VIP" status change notifications
+     */
     public List<String> getVIPStatusChangeNotifications() {
         return this.VIPStatusChangeNotifications;
     }
