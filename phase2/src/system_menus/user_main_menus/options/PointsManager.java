@@ -40,7 +40,7 @@ public class PointsManager implements UserMainMenuOptions {
             System.out.println("Hey " + user.getName() + ", you're eligible to become a \u2B50VIP\u2B50 \nPress 1 " +
                     "to use 20 of your " + user.getPoints() + " points to upgrade to VIP status. You can also " +
                     "exchange each point for 1 dollar of currency. Press 2 to exchange points.");
-            System.out.println("Type back to go back to main menu.");
+            System.out.println("Type 'back' to go back to main menu.");
             String chosenOption = scanner.nextLine();
             if (chosenOption.equals("1")) {
                 user.setPoints(user.getPoints() - 20);
@@ -76,7 +76,7 @@ public class PointsManager implements UserMainMenuOptions {
             }
         }
         else if (user.getPoints() > 0){
-            System.out.println("You can exchange 1 point for 1 dollar of currency. Press 1 to exchange. Type back to " +
+            System.out.println("You can exchange 1 point for 1 dollar of currency. Press 1 to exchange. Type 'back' to " +
                     "go back to main menu");
             String otherChosen = scanner.nextLine();
             if (otherChosen.equals("1")){
