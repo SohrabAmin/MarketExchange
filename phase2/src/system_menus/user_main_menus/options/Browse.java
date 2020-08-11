@@ -46,12 +46,28 @@ public class Browse implements UserMainMenuOptions {
         if (input.equals("back")) {
             return "back";
         }
+        if (((String) input).matches("[0-9]+") == false){
+
+            System.out.print("\u274CCommand Invalid. Please try again!\n");
+            return null;
+        }
         try {
             input = Integer.parseInt((String) input);
         } catch (NumberFormatException e) {
-            System.out.println("\n\uD83E\uDDD0 This ID is invalid. Please try again!");
+            System.out.print("\u274CCommand Invalid. Please try again!\n");
             return null;
         }
+
+
+
+        if (((Integer)input < 1) || ((Integer)input > allItems2.size())){
+            System.out.print("\uD83D\uDE35Input is out of bound. Please try again!\n");
+            return null;
+
+        }
+
+
+
         //checks to see if the ID of the item actually exists
         if ((Integer) input <= allItems2.size()) {
             Item item = allItems2.get((Integer) input - 1);
@@ -62,6 +78,16 @@ public class Browse implements UserMainMenuOptions {
                     return null;
                 }
             }
+
+            //making sure its not their own item
+            for (int i = 0; i < user.getInventory().size(); i++) {
+                if (item.equals(user.getInventory().get(i))) {
+                    System.out.println("\n\uD83D\uDE04Item is already in your inventory!\n");
+                    return null;
+                }
+            }
+
+
             allUsers.addToFC(item.getCategory(), user);
             allUsers.addToWishlist(user, item);
             System.out.println("\nItem has been added to your wishlist \uD83C\uDF20");
