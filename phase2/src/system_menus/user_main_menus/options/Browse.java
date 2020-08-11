@@ -142,11 +142,13 @@ public class Browse implements UserMainMenuOptions {
             String sell = "";
             String rent = "";
             String trade = "";
+            String virtual = "";
 
 
             if (allItems2.get(i).getSellable()) sell = " [SELLABLE] price: " + allItems2.get(i).getSellPrice() + " ";
             if (allItems2.get(i).getRentable()) rent = " [RENTABLE] price: " + allItems2.get(i).getRentPrice() + " per " + allItems2.get(i).getRentDuration() + " days ";
             if (allItems2.get(i).getTradable()) trade = " [TRADABLE] ";
+            if (allItems2.get(i).getVirtual()) virtual = " [VIRTUAL] ";
 
 
 
@@ -156,7 +158,7 @@ public class Browse implements UserMainMenuOptions {
                 emoji = "\u2714 ";
             }
 
-            System.out.println(emoji + (i + 1) + ". " + allItems2.get(i).getName() + ": "
+            System.out.println(emoji + (i + 1) + ". " + virtual + allItems2.get(i).getName() + ": "
                     + allItems2.get(i).getDescription() + selfowned + sell + rent + trade + "\n");
         }
         return allItems2;

@@ -187,6 +187,15 @@ public class TradeInitiator implements UserMainMenuOptions {
         if (tradeItem.getRentable() && tradeItem.getSellable() && !tradeItem.getTradable()){ //rentable and sellable but not tradable
             System.out.print("Please enter 1 if you want to rent the item. Enter 2 if you want to buy the item.\n");
             Object in = sc.nextLine();
+
+            if (!in.equals("1") || !in.equals("2"))
+            {
+                System.out.print("\u274CCommand Invalid. Please try again!\n");
+                return user;
+
+            }
+
+
             String mssge = "";
 
             System.out.print("Please enter message for the owner of the item\n");
@@ -234,6 +243,13 @@ public class TradeInitiator implements UserMainMenuOptions {
         else if (!tradeItem.getRentable() && tradeItem.getSellable() && tradeItem.getTradable()){ //if it is sellable or tradable
             System.out.print("Please enter 1 if you want to buy the item. Enter 2 if you want to trade the item.\n");
             Object in = sc.nextLine();
+            if (!in.equals("1") || !in.equals("2"))
+            {
+                System.out.print("\u274CCommand Invalid. Please try again!\n");
+                return user;
+
+            }
+
             String mssge = "";
             System.out.print("Please enter message for the owner of the item\n");
             mssge =  sc.nextLine();
@@ -269,8 +285,18 @@ public class TradeInitiator implements UserMainMenuOptions {
         //rentable and tradable
         else if (tradeItem.getRentable() && !tradeItem.getSellable() && tradeItem.getTradable()) { //if it is rentable or tradable
 
+
             System.out.print("Please enter 1 if you want to rent the item. Enter 2 if you want to trade the item.\n");
             Object in = sc.nextLine();
+
+            if (!in.equals("1") || !in.equals("2"))
+            {
+                System.out.print("\u274CCommand Invalid. Please try again!\n");
+                return user;
+
+            }
+
+
             String mssge = "";
             System.out.print("Please enter message for the owner of the item\n");
             mssge =  sc.nextLine();

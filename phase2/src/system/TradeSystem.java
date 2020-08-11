@@ -72,40 +72,39 @@ public class TradeSystem {
         User Mo = new User ("Mo", "123");
         User A = new User ("A", "123");
 
-        Item  shoe = new Item("shoe", allUsers.getUser(Tina) , "hi" , "Electronics" , false, false, true, false, 2.0, null, null);
+        Item  shoe = new Item("shoe", allUsers.getUser(Tina) , "Brown from my great grandpa" , "Clothing" , false, false, true, false, 35.0, null, null);
         allUsers.addToInventory(allUsers.getUser(Tina), shoe);
         allItems.addItem(shoe);
 
 
-        Item  ebook = new Item("ebook", allUsers.getUser(Tina) , "hi" , "Electronics" , true, true, true, false, 2.0, null, null);
+        Item  ebook = new Item("ebook", allUsers.getUser(Tina) , "A book about CSC207" , "Books" , true, false, true, false, 11.0, null, null);
         allUsers.addToInventory(allUsers.getUser(Tina), ebook);
         allItems.addItem(ebook);
 
 
-        Item sock = new Item("sock", allUsers.getUser(Tina), "hi", "Electronics", false, true, true, true,
-                2.0, 2.0, 2);
+        Item sock = new Item("socks", allUsers.getUser(Tina), "I found it somewhere under my bed", "Clothing", false, true, true, true,
+                5.0, 1.0, 1);
         allUsers.addToInventory(allUsers.getUser(Tina), sock);
         allItems.addItem(sock);
 
 
 
-        Item book = new Item("book", allUsers.getUser(Tina), "hi", "Electronics", false, true, true, true,
-                2.0, 2.0, 2);
+        Item book = new Item("book", allUsers.getUser(Tina), "Harry Potter", "Books", false, true, true, true,
+                25.0, 2.0, 30);
         allUsers.addToInventory(allUsers.getUser(Tina), book);
         allItems.addItem(book);
 
-        Item pen = new Item("pen", allUsers.getUser(Mo), "hi", "Electronics", false, true, true, true,
-                2.0, 2.0, 2);
+        Item pen = new Item("pen", allUsers.getUser(Mo), "It's my lucky pen!", "Office Supplies", false, true, true, true,
+                2.0, 50.0, 1);
         allUsers.addToInventory(allUsers.getUser(Mo), pen);
         allItems.addItem(pen);
 
-        Item phone = new Item("phone", allUsers.getUser(A), "hi", "Electronics", false, true, true, true,
-                2.0, 2.0, 2);
+        Item phone = new Item("phone", allUsers.getUser(A), "iPhone 11", "Electronics", false, true, true, false,
+                1000.0, null, null);
         allUsers.addToInventory(allUsers.getUser(A), phone);
         allItems.addItem(phone);
 
-        // testing PointsManager
-        allUsers.getUser(Tina).setPoints(40);
+
 
 
 
