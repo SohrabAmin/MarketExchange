@@ -27,7 +27,7 @@ public class VacationPrompter implements UserMainMenuOptions {
      * @param allTransactions  The instance of TransactionManager
      * @param allAdmins        The instance of AdminManager
      * @param undoLogger       Logger that logs actions in the system
-     * @param currencyManager  CurrencyManger which manages all in-app currency of this user
+     * @param currencyManager CurrencyManager which deals with the in-system currency
      * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
      * String "exit" if the user is to be logged out.
      */

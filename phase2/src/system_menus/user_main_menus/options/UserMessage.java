@@ -27,7 +27,7 @@ public class UserMessage implements UserMainMenuOptions, Serializable {
      * @param allTransactions TransactionManager which stores and edits all Transactions in the system
      * @param allAdmins AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
      * @param undoLogger Logger that logs actions in the system
-     * @param currencyManager CurrencyManger which manages all in-app currency of this user
+     * @param currencyManager CurrencyManager which deals with the in-system currency
      * @return depend on user's input
      * return back that bring user back to the main menu, so that user can choose other options
      * return null if user has no messages, or user has viewed or sent massage successfully, or the input is not valid.

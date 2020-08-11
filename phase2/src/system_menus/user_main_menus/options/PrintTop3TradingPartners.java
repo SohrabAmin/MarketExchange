@@ -23,7 +23,7 @@ public class PrintTop3TradingPartners implements UserMainMenuOptions {
      * @param allTransactions TransactionManager which stores and edits all Transactions in the system
      * @param allAdmins AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
      * @param undoLogger Logger that logs actions in the system
-     * @param currencyManager CurrencyManger which manages all in-app currency of this user
+     * @param currencyManager CurrencyManager which deals with the in-system currency
      * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
      * String "exit" if the user is to be logged out.
      */

@@ -26,7 +26,7 @@ public class WishlistManager implements UserMainMenuOptions {
      * @param allTransactions TransactionManager which stores and edits all Transactions in the system
      * @param allAdmins AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
      * @param undoLogger Logger that logs actions in the system
-     * @param currencyManager CurrencyManger which manages all in-app currency of this user
+     * @param currencyManager CurrencyManager which deals with the in-system currency
      * @return depending on what the User inputs it will return different objects
      * returns null to tell mainmenu() to call wishlist() again
      * returns String "back" to tell mainmenu() to prompt main menu again so User can choose another

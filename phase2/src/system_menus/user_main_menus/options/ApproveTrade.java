@@ -41,7 +41,7 @@ public class ApproveTrade implements UserMainMenuOptions {
      * @param allUsers        UserManager that stores all Users
      * @param allMeetings     MeetingManager that deals with creating meetings
      * @param allTransactions TransactionManager that deals with the System's Transactions
-     * @param currencyManager
+     * @param currencyManager CurrencyManager which deals with the in-system currency
      * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
      * String "exit" if the user is to be logged out.
      */

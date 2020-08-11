@@ -21,10 +21,10 @@ public interface AdminMainMenuOptions {
      * @param allAdmins       AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
      * @param allUsers        UserManager which stores all the Users in the system
      * @param allItems        ItemManager which stores the system's inventory
-     * @param allUserMessages
+     * @param allUserMessages UserMessageManager which stores all the User messages to Admin
      * @param allTransactions TransactionManager which stores and edits all Transactions in the system
      * @param allRequests     TradeRequestManager which stores and edits all the TradeRequests in the system
-     * @param allCurrency
+     * @param allCurrency     CurrencyManager which deals with the in-system currency
      * @param undoLogger      Logger that logs actions in the system
      * @return depending on what the Admin inputs it will return different objects:
      * returns null to tell mainmenu() to call execute() again

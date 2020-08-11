@@ -17,7 +17,7 @@ public class AddItemToSystem implements UserMainMenuOptions {
      * view its current status.
      *  @param user     the User requesting to add a new item to the system
      * @param allUsers UserManager which stores all Users
-     * @param currencyManager
+     * @param currencyManager CurrencyManager which deals with the in-system currency
      * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
      * String "exit" if the user is to be logged out.
      */

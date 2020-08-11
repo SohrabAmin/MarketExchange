@@ -26,7 +26,7 @@ public class ManagePaymentOptions implements UserMainMenuOptions {
      * @param allTransactions  TransactionManager that stores all the Transactions in the system
      * @param allAdmins        AdminManager that stores all admins
      * @param allUserMessages  UserMessageManager which stores all the Users messages to Admin
-     * @param currencyManager  CurrencyManger which manages all in-app currency of this user
+     * @param currencyManager CurrencyManager which deals with the in-system currency
      * @return depending on what the User inputs it will return different objects:
      * returns User to set up new credit card, change default credit card,add fund to in-app currency or to the main menu.
      */
@@ -166,7 +166,7 @@ public class ManagePaymentOptions implements UserMainMenuOptions {
     /**
      * Adds a new credit card to the User's account payment options.
      *
-     * @param currencyManager CurrencyManager which manages the in-system currency
+     * @param currencyManager CurrencyManager which deals with the in-system currency
      * @param user User that wants to add the new card
      * @return
      */

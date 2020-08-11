@@ -27,7 +27,7 @@ public class ViewUserMessages implements AdminMainMenuOptions {
      * @param allUserMessages UserMessageManager which stores all the messages sent to Admin
      * @param allItems ItemManager which stores the system's inventory
      * @param allTransactions TransactionManager which stores and edits all Transactions in the system
-     * @param allCurrency CurrencyManager which manage all in-app currency for this user
+     * @param allCurrency CurrencyManager which deals with the in-system currency
      * return depending on what the User inputs it will return different objects:
      * returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
      * returns null if the input is invalid, or the admin's input is successfully done with messages shown to admin.

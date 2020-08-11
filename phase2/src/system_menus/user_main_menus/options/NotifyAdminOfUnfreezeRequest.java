@@ -25,7 +25,7 @@ public class NotifyAdminOfUnfreezeRequest implements UserMainMenuOptions {
      * @param allTransactions TransactionManager which stores and edits all Transactions in the system
      * @param allAdmins AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
      * @param undoLogger Logger that logs actions in the system
-     * @param currencyManager CurrencyManger which manages all in-app currency of this user
+     * @param currencyManager CurrencyManager which deals with the in-system currency
      * @return returns User so that they can be redirected to the main menu
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,

@@ -31,7 +31,7 @@ public class UndoAction implements AdminMainMenuOptions {
      * @param allUserMessages UserMassageManager that stores all user massages
      * @param allTransactions TransactionManager which stores and edits all Transactions in the system
      * @param allRequests TradeRequestManager which store all tradeRequests
-     * @param allCurrency CurrencyManager which in-app currency
+     * @param allCurrency CurrencyManager which deals with the in-system currency
      * @return depend on admin's input
      * return "back" so that admin can go back to the main menu for other options.
      * return null if there is no actions to undo, or values of users not match, or admins finished the undo actions
@@ -355,7 +355,7 @@ public class UndoAction implements AdminMainMenuOptions {
      * @param allUsers UserManager which stores all the Users in the system
      * @param allItems ItemManager which stores the system's inventory
      * @param allTransactions TransactionManager which stores and edits all Transactions in the system
-     * @param allCurrency CurrencyManager which in-app currency
+     * @param allCurrency CurrencyManager which deals with the in-system currency
      * @param undoLogger Logger that logs actions that happen in the system
      * @param chosenLog the Log containing information about the trade request
      * @return null so admin can return back to the list of logs when undoTradeRequest is done
@@ -397,7 +397,7 @@ public class UndoAction implements AdminMainMenuOptions {
      * @param allUsers UserManager which stores all the Users in the system
      * @param allItems ItemManager which stores the system's inventory
      * @param allTransactions TransactionManager which stores and edits all Transactions in the system
-     * @param allCurrency CurrencyManager which in-app currency
+     * @param allCurrency CurrencyManager which deals with the in-system currency
      * @param undoLogger Logger that logs actions that happen in the system
      * @param attributes the attributes of the log- contains user info, item info and transaction info
      * @param stringSplit helper variable which just stores a split version of the log
@@ -488,7 +488,7 @@ public class UndoAction implements AdminMainMenuOptions {
      * @param allUsers UserManager which stores all the Users in the system
      * @param allItems ItemManager which stores the system's inventory
      * @param allTransactions TransactionManager which stores and edits all Transactions in the system
-     * @param allCurrency CurrencyManager which in-app currency
+     * @param allCurrency CurrencyManager which deals with the in-system currency
      * @param undoLogger Logger that logs actions that happen in the system
      * @param attributes the attributes of the log- contains user info, item info and transaction info
      * @param stringSplit helper variable which just stores a split version of the log
@@ -578,7 +578,7 @@ public class UndoAction implements AdminMainMenuOptions {
      * @param allUsers UserManager which stores all the Users in the system
      * @param allItems ItemManager which stores the system's inventory
      * @param allTransactions TransactionManager which stores and edits all Transactions in the system
-     * @param allCurrency CurrencyManager which in-app currency
+     * @param allCurrency CurrencyManager which deals with the in-system currency
      * @param undoLogger Logger that logs actions that happen in the system
      * @param attributes the attributes of the log- contains user info, item info and transaction info
      * @param stringSplit helper variable which just stores a split version of the log

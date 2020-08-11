@@ -18,7 +18,7 @@ public class AccountSettingsManager implements UserMainMenuOptions {
      *
      * @param user            the User who wants to change their account settings
      * @param allUsers        UserManager which stores all the users in the system
-     * @param currencyManager CurrencyManger which manages all in-app currency of this user
+     * @param currencyManager CurrencyManager which deals with the in-system currency
      * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
      * String "exit" if the user is to be logged out.
      */
