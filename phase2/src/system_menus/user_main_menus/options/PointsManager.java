@@ -40,7 +40,7 @@ public class PointsManager implements UserMainMenuOptions {
             System.out.println("Hey " + user.getName() + ", you're eligible to become a \u2B50VIP\u2B50 \nPress 1 " +
                     "to use 20 of your " + user.getPoints() + " points to upgrade to VIP status. You can also " +
                     "exchange each point for 1 dollar of currency. Press 2 to exchange points.");
-            System.out.println("Press 3 to go back to main menu.");
+            System.out.println("Type back to go back to main menu.");
             String chosenOption = scanner.nextLine();
             if (chosenOption.equals("1")) {
                 user.setPoints(user.getPoints() - 20);
@@ -49,7 +49,7 @@ public class PointsManager implements UserMainMenuOptions {
                 return null;
             }
             else if (chosenOption.equals("2")) {
-                System.out.println("How many of your " + user.getPoints() + " would you like to exchange?");
+                System.out.println("How many of your " + user.getPoints() + " points would you like to exchange?");
                 String chosenAmount = scanner.nextLine();
                 if (Integer.parseInt(chosenAmount) > user.getPoints()){
                     System.out.println("Sorry! You have chosen a value greater than the amount of points you have!");
@@ -67,7 +67,7 @@ public class PointsManager implements UserMainMenuOptions {
                     return null;
                 }
             }
-            else if (chosenOption.equals("3")){
+            else if (chosenOption.equals("back")){
                 return user;
             }
             else {
@@ -76,11 +76,11 @@ public class PointsManager implements UserMainMenuOptions {
             }
         }
         else if (user.getPoints() > 0){
-            System.out.println("You can exchange 1 point for 1 dollar of currency. Press 1 to exchange. Press 2 to " +
+            System.out.println("You can exchange 1 point for 1 dollar of currency. Press 1 to exchange. Type back to " +
                     "go back to main menu");
             String otherChosen = scanner.nextLine();
             if (otherChosen.equals("1")){
-                System.out.println("How many of your " + user.getPoints() + " would you like to exchange?");
+                System.out.println("How many of your " + user.getPoints() + " points would you like to exchange?");
                 String amount = scanner.nextLine();
                 if (Integer.parseInt(amount) > user.getPoints()){
                     System.out.println("Sorry! You have chosen a value greater than the amount of points you have!");
@@ -98,7 +98,7 @@ public class PointsManager implements UserMainMenuOptions {
                     return null;
                 }
             }
-            else if (otherChosen.equals("2")){
+            else if (otherChosen.equals("back")){
                 return user;
             }
             else {
@@ -107,8 +107,8 @@ public class PointsManager implements UserMainMenuOptions {
             }
         }
         else {
-            System.out.println("Press 1 to go back to main menu.");
-            if (scanner.nextLine().equals("1")) {
+            System.out.println("Type back to go back to main menu.");
+            if (scanner.nextLine().equals("back")) {
                 return user;
             }
             else {
