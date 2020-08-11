@@ -48,7 +48,6 @@ public class PendingTransactionProcess implements UserMainMenuOptions {
                 if (user.getName().equals(b.getName())) {
                     b = t.getFirstTrader();
                 }
-                System.out.print((i + 1) + " . Item " + t.getItem().getName() + " with " + b.getName() + "\n");
                 System.out.print("[One Way] " + Integer.toString(i + 1) + " . Item " + t.getItem().getName() +
                         " with " + b.getName() + "\n");
             }
