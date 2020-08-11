@@ -107,7 +107,7 @@ public class PointsManager implements UserMainMenuOptions {
             }
         }
         else {
-            System.out.println("Type back to go back to main menu.");
+            System.out.println("Type 'back' to go back to main menu.");
             if (scanner.nextLine().equals("back")) {
                 return user;
             }
