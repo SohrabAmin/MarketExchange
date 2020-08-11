@@ -57,7 +57,7 @@ public class TransactionManager implements Serializable {
      * @param userManager Class that manages Users.
      * @param transaction The given Transaction.
      * @param tradeStatus The current status of a given Transaction.
-     * @param undoLogger
+     * @param undoLogger Keeps track of all actions that can be reasonably undone.
      */
     public void updateTransactionStatus(ItemManager itemManager, UserManager userManager, AdminManager adminManager,
                                         Transaction transaction, int tradeStatus, CurrencyManager currencyManager, Logger undoLogger) {
@@ -118,7 +118,7 @@ public class TransactionManager implements Serializable {
 
         transaction.setTradeStatus(tradeStatus);
         if (!(transaction instanceof OneWayMonetized))
-        transaction.getInitialMeeting().setConfirmedTrue(); /////////WHY
+        transaction.getInitialMeeting().setConfirmedTrue();
 
         undoLogger.log(Level.INFO, transaction.toString());
 
@@ -433,6 +433,10 @@ public class TransactionManager implements Serializable {
         }
     }
 
+    /**
+     * Returns a List of all System Transactions
+     * @return List of Transactions
+     */
     public List<Transaction> getAllTransactions() {
         return allTransactions;
     }

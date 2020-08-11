@@ -16,7 +16,7 @@ public class PrintOutboundRequests implements UserMainMenuOptions {
      * Prints a User's outbound TradeRequests
      *
      * @param user User whose outbound TradeRequests are to be printed
-     * @param currencyManager
+     * @param currencyManager CurrencyManager which deals with the in-system currency
      * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
      * String "exit" if the user is to be logged out.
      */

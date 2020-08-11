@@ -22,16 +22,19 @@ public class AddAdmin implements AdminMainMenuOptions {
     /**
      * Adds a new admin to the list of all Admins in AdminManager. Only the initial admin should be able to add new
      *
-     *
-     * @param admin the current Admin logged into the system
-     * @param allAdmins AdminManager which holds all the Admins, FrozenRequests and Thresholds in the system
-     * @param allUsers UserManager which holds all the Users in the system
-     * @param allItems ItemManager which holds the system inventory
+     * @param admin           The Admin currently logged into the system
+     * @param allAdmins       AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
+     * @param allUsers        UserManager which stores all the Users in the system
+     * @param allItems        ItemManager which stores the system's inventory
+     * @param allUserMessages UserMessageManager which stores all the User messages to Admin
+     * @param allTransactions TransactionManager which stores and edits all Transactions in the system
+     * @param allRequests     TradeRequestManager which stores and edits all the TradeRequests in the system
+     * @param allCurrency     CurrencyManager which deals with the in-system currency
+     * @param undoLogger      Logger that logs actions in the system
      * @return depending on what the Admin inputs it will return different objects:
      * returns null to tell mainmenu() to call execute() again
      * returns String "back" to tell mainmenu() to prompt main menu again so Admin can choose another
      * main menu option
-     * returns String "exit" to prompt TradeSystem to save all the information and exit the System
      */
     public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,
                           UserMessageManager allUserMessages, TransactionManager allTransactions,

@@ -25,7 +25,7 @@ public class PointsManager implements UserMainMenuOptions {
      * @param allTransactions  TransactionManager that stores all the information of all system transactions
      * @param allAdmins        AdminManager that stores all admins
      * @param allUserMessages  UserMessageManager that stores all user's messages to admin.
-     * @param currencyManager  CurrencyManger which manages in-app currency for users
+     * @param currencyManager CurrencyManager which deals with the in-system currency
      * @return return null if the user selects to become VIP or if user enters wrong information that is not required by
      * the system; or return user so that user can go back to the main menu
      */

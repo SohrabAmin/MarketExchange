@@ -516,6 +516,12 @@ public class UserManager implements Serializable {
         return null;
     }
 
+    /**
+     * Adds an Item category to a User's list of frequent categories
+     *
+     * @param category Item category to be added to this User's list of frequent categories
+     * @param user     User whose list of frequent categories is being added to
+     */
     public void addToFC(String category, User user) {
         Integer old = user.getFrequentCategory().get(category);
         Integer score = old + 1;
@@ -539,9 +545,9 @@ public class UserManager implements Serializable {
     }
 
     /**
-     * Getter for all PseudoFrozenUsers
+     * Getter for all PseudoFrozen Users
      *
-     * @return all PsudoFrozenUsers as a List of User
+     * @return all PseudoFrozen Users as a List of User
      */
     public List<User> getAllPseudoFrozenUsers() {
         List<User> possibleFrozenPeople = new ArrayList<>();
@@ -636,19 +642,31 @@ public class UserManager implements Serializable {
     }
 
     /**
-     * Remove the three way trade request from the List of all approved three way trade for a specific user.
+     * Removes a three-way trade request from a User's list of all approved three-way trade requests.
      *
-     * @param user    the user who
-     * @param request
+     * @param user    the user whose list of approved three-way trade requests is being subtracted from
+     * @param request three-way trade request to be removed from this user's list of approved three-way trade requests
      */
     public void removeFromApprovedThreeWay(User user, TypeThreeRequest request) {
         user.getApprovedThreeWay().remove(request);
     }
 
+    /**
+     * Adds a notification, regarding a change in a User's "VIP" status, to the User's list of such notifications
+     *
+     * @param user                        User whose list of "VIP" status change notifications is being added to
+     * @param VIPStatusChangeNotification a notification regarding a change in this User's "VIP" status
+     */
     public void addToVIPStatusChangeNotifications(User user, String VIPStatusChangeNotification) {
         user.getVIPStatusChangeNotifications().add(VIPStatusChangeNotification);
     }
 
+    /**
+     * Removes a notification, regarding a change in an User's "VIP" status, from the User's list of such notifications
+     *
+     * @param user                        User whose list of "VIP" status change notifications is being subtracted from
+     * @param VIPStatusChangeNotification a notification regarding a change in this User's "VIP" status
+     */
     public void removeFromVIPStatusChangeNotifications(User user, String VIPStatusChangeNotification) {
         user.getVIPStatusChangeNotifications().remove(VIPStatusChangeNotification);
     }

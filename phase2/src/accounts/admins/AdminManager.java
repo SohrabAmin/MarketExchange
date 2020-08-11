@@ -156,13 +156,27 @@ public class AdminManager implements Serializable {
         frozenRequests.remove(user);
     }
 
-    public void addToSuperAdminStatusChangeNotifications(Admin admin, String SuperAdminStatusChangeNotification) {
-        admin.getSuperAdminStatusChangeNotifications().add(SuperAdminStatusChangeNotification);
+    /**
+     * Adds a notification, regarding a change in an Admin's "super admin" status, to the Admin's list of such
+     * notifications
+     *
+     * @param admin                              admin whose list of "super admin" status change notifications is being
+     *                                           added to
+     * @param superAdminStatusChangeNotification a notification regarding a change in this Admin's "super admin" status
+     */
+    public void addToSuperAdminStatusChangeNotifications(Admin admin, String superAdminStatusChangeNotification) {
+        admin.getSuperAdminStatusChangeNotifications().add(superAdminStatusChangeNotification);
     }
 
-    public void removeFromSuperAdminStatusChangeNotifications(Admin admin, String SuperAdminStatusChangeNotification) {
-        admin.getSuperAdminStatusChangeNotifications().remove(SuperAdminStatusChangeNotification);
+    /**
+     * Removes a notification, regarding a change in an Admin's "super admin" status, from the Admin's list of such
+     * notifications
+     *
+     * @param admin                              admin whose list of "super admin" status change notifications is being
+     *                                           subtracted from
+     * @param superAdminStatusChangeNotification a notification regarding a change in this Admin's "super admin" status
+     */
+    public void removeFromSuperAdminStatusChangeNotifications(Admin admin, String superAdminStatusChangeNotification) {
+        admin.getSuperAdminStatusChangeNotifications().remove(superAdminStatusChangeNotification);
     }
 }
-
-

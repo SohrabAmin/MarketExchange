@@ -84,7 +84,7 @@ public class CurrencyManager {
     public Calendar getDate(String date) {
         Calendar cal = Calendar.getInstance();
         String[] temp = date.split("-");
-        cal.set(Integer.parseInt(temp[1]), Integer.parseInt(temp[0]), 30);
+        cal.set(Integer.parseInt(temp[1]), Integer.parseInt(temp[0]), 1);
         return cal;
     }
 

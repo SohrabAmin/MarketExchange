@@ -17,9 +17,15 @@ public class NotifyAdminOfUnfreezeRequest implements UserMainMenuOptions {
     /**
      * Notifies the Admin of a Request to Unfreeze from User user.
      *
-     * @param user      frozen user sending the request to admin to be unfrozen
-     * @param allAdmins contains the method for adding frozen requests
-     * @param currencyManager
+     * @param user The User currently logged into the system
+     * @param allItems ItemManager which stores the system's inventory
+     * @param allTradeRequests TradeRequestManager which stores and edits all the TradeRequests in the system
+     * @param allUsers UserManager which stores all the Users in the system
+     * @param allMeetings MeetingManager which deals with creating and editing meetings
+     * @param allTransactions TransactionManager which stores and edits all Transactions in the system
+     * @param allAdmins AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
+     * @param undoLogger Logger that logs actions in the system
+     * @param currencyManager CurrencyManager which deals with the in-system currency
      * @return returns User so that they can be redirected to the main menu
      */
     public Object execute(User user, ItemManager allItems, TradeRequestManager allTradeRequests,

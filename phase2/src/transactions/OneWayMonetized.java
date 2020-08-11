@@ -23,7 +23,6 @@ public class OneWayMonetized extends OneWay {
 
 
     private final double cost;
-    private int rentDuration;
     private boolean person1EmailSent ;
     private boolean person2EmailSent ;
     private String email;
@@ -104,24 +103,7 @@ public class OneWayMonetized extends OneWay {
      * initiated if this TradeRequest is temporary.
      * @param days Integer of the number of days the owner of the Item will allow the receiver of the Item to borrow it for.
      */
-    public void setRentDuration(int days){
-        this.rentDuration = days;
-    }
 
-    /**
-     * Gets the duration for which the owner of the Item will allow the receiver of the Item to borrow it for. Notice this is only
-     * initiated if this TradeRequest is temporary.
-     * @return Integer of the number of days the owner of the Item will allow the receiver of the Item to borrow it for.
-     */
-    public int getRentDuration(){
-        return this.rentDuration;
-    }
-
-    /**
-     * Returns a String representation of a Transaction, with nicely formatted attributes
-     *
-     * @return String representation of this Transaction
-     */
     public String toString() {
 
         return "Transaction; Monetized One-way" +

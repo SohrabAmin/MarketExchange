@@ -18,9 +18,15 @@ public class WishlistManager implements UserMainMenuOptions {
      * Prints out the wishlist of the User user showing the name and description of the items. Allows user to edit
      * their wishlist by adding or removing items.
      *
-     * @param user     the User that is requesting to see/edit their wishlist.
-     * @param allUsers UserManager which stores the User user.
-     * @param currencyManager
+     * @param user The User currently logged into the system
+     * @param allItems ItemManager which stores the system's inventory
+     * @param allTradeRequests TradeRequestManager which stores and edits all the TradeRequests in the system
+     * @param allUsers UserManager which stores all the Users in the system
+     * @param allMeetings MeetingManager which deals with creating and editing meetings
+     * @param allTransactions TransactionManager which stores and edits all Transactions in the system
+     * @param allAdmins AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
+     * @param undoLogger Logger that logs actions in the system
+     * @param currencyManager CurrencyManager which deals with the in-system currency
      * @return depending on what the User inputs it will return different objects
      * returns null to tell mainmenu() to call wishlist() again
      * returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
