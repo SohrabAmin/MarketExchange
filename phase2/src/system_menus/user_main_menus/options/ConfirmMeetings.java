@@ -61,8 +61,6 @@ public class ConfirmMeetings implements UserMainMenuOptions {
 
                 }
                 else {
-
-
                 String otherSide = "";
                 Integer confirmed = userTransactions.get(i).getInitialMeeting().userconfirmed(user.getName());
                 String status = "";
@@ -71,18 +69,22 @@ public class ConfirmMeetings implements UserMainMenuOptions {
                 }
                 //SAMPLE : 1 . Sat, Aug 8, 2020 11:00AM at 1 With: Mo
 
-
-
-
-
-
                 System.out.print((i + 1) + " . " + userTransactions.get(i).getInitialMeeting() + " With: " + userTransactions.get(i).getInitialMeeting().getOtherSide(user.getName()) + status + "\n");
             }
             }
 
-            System.out.print("Please enter the ID of the transaction you would like to confirm.\n");
+            System.out.print("Please enter the ID of the transaction you would like to confirm or 'back' to return.\n");
             Scanner sc11 = new Scanner(System.in);
-            int meetingIndex = (Integer.parseInt(sc11.nextLine())) - 1;
+            if (sc11.equals("back")) {
+                return "back";
+            }
+            int meetingIndex;
+            try {
+                meetingIndex = (Integer.parseInt(sc11.nextLine())) - 1;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input! Please try again!");
+                return null;
+            }
             Transaction selectedTransaction = userTransactions.get(meetingIndex);
 
             //VIRTUAL
@@ -108,7 +110,6 @@ public class ConfirmMeetings implements UserMainMenuOptions {
                         t.Person1Confirmed();
                         System.out.print("Confirmed by you! Waiting on " + otherSide + " to confirm!\n");
                         return user;
-
                     }
 
                     else if (t.getPerson1Confirmed()){
@@ -118,7 +119,6 @@ public class ConfirmMeetings implements UserMainMenuOptions {
                         //i probably should deal with money here or moe/aidan should idk
                         System.out.print("Confirmed by you! Looks like both sides have confirmed!\n");
                         return user;
-
                     }
                 } else if (action.equals("2")){
                     System.out.print("\u2639 Cancelling this transaction! We are sorry to hear that! Better luck next time!\n");
@@ -177,11 +177,8 @@ public class ConfirmMeetings implements UserMainMenuOptions {
                             System.out.print("REMINDER: You need to return the borrowed item(s) back by " + returnMeeting.toString() + "\n");
                             //need to add return meeting to transactions
                             allTransactions.setFinalMeeting(selectedTransaction, returnMeeting);
-
                         }
-
                     }
-
 
                     else if (selectedTransaction instanceof TwoWay){
                         System.out.print("\uD83E\uDD29 Looks like the meeting was confirmed by both sides!\n ");
@@ -272,13 +269,10 @@ public class ConfirmMeetings implements UserMainMenuOptions {
                 //lets check if both people have confirmed meeting
                 if (selectedTransaction.getReturnMeeting().confirmedByBothSides()) {
                     //looks like the meeting was confirmed by both parties!
-
                     if (selectedTransaction instanceof OneWay){
                         System.out.print("\uD83E\uDD29 Looks like the meeting was confirmed by both sides!\n ");
                         allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 3, currencyManager, undoLogger);
                     }
-
-
                     if (selectedTransaction instanceof TwoWay){
                     System.out.print("\uD83E\uDD29 Looks like the meeting was confirmed by both sides!\n ");
                     allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 3, currencyManager, undoLogger);
@@ -291,16 +285,10 @@ public class ConfirmMeetings implements UserMainMenuOptions {
                             System.out.print("Looks like everyone confirmed!\n");
                             allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedTransaction, 3, currencyManager,undoLogger );
                         }
-
-
-
-
-
                     }
                 }
             }
         }
         return user;
     }
-
 }

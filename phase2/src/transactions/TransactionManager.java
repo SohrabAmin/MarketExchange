@@ -433,4 +433,7 @@ public class TransactionManager implements Serializable {
         }
     }
 
+    public List<Transaction> getAllTransactions() {
+        return allTransactions;
+    }
 }

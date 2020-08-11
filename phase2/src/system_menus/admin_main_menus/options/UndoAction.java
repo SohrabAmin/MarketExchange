@@ -441,37 +441,36 @@ public class UndoAction implements AdminMainMenuOptions {
         } else if (user2 == null) { //if user doesn't exist in allUsers, prints error message
             System.out.println("User no longer exists or has changed their name. No actions can be undone.");
             return null;
-        } for (int j = 0; j < user1.getPendingTrades().size(); j++) {
-            if (user1.getPendingTrades().get(j) instanceof OneWay &&
-                    user1.getPendingTrades().get(j).getTemp() == temp &&
-                    user1.getPendingTrades().get(j).getVirtual() == virtual &&
-                    user1.getPendingTrades().get(j).getTradeStatus() == status &&
-                    ((OneWay) user1.getPendingTrades().get(j)).getItem().getName().equals(itemName) &&
-                    ((OneWay) user1.getPendingTrades().get(j)).getFirstTrader().getName().equals(user1.getName()) &&
-                    ((OneWay) user1.getPendingTrades().get(j)).getSecondTrader().getName().equals(user2.getName())) {
-                transaction = user1.getPendingTrades().get(j);
+        } for (int j = 0; j < allTransactions.getAllTransactions().size(); j++) {
+            if (allTransactions.getAllTransactions().get(j) instanceof OneWay &&
+                    allTransactions.getAllTransactions().get(j).getTemp() == temp &&
+                    allTransactions.getAllTransactions().get(j).getVirtual() == virtual &&
+                    allTransactions.getAllTransactions().get(j).getTradeStatus() == status &&
+                    ((OneWay) allTransactions.getAllTransactions().get(j)).getItem().getName().equals(itemName) &&
+                    ((OneWay) allTransactions.getAllTransactions().get(j)).getFirstTrader().getName().equals(user1.getName()) &&
+                    ((OneWay) allTransactions.getAllTransactions().get(j)).getSecondTrader().getName().equals(user2.getName())) {
+                transaction = allTransactions.getAllTransactions().get(j);
             } else if (user1.getPendingTrades().get(j) instanceof OneWayMonetized &&
-                    user1.getPendingTrades().get(j).getTemp() == temp &&
-                    user1.getPendingTrades().get(j).getVirtual() == virtual &&
-                    user1.getPendingTrades().get(j).getTradeStatus() == status &&
-                    ((OneWayMonetized) user1.getPendingTrades().get(j)).getItem().getName().equals(itemName) &&
-                    ((OneWayMonetized) user1.getPendingTrades().get(j)).getFirstTrader().getName().equals(user1.getName()) &&
-                    ((OneWayMonetized) user1.getPendingTrades().get(j)).getSecondTrader().getName().equals(user2.getName())) {
-                transaction = user1.getPendingTrades().get(j);
+                    allTransactions.getAllTransactions().get(j).getTemp() == temp &&
+                    allTransactions.getAllTransactions().get(j).getVirtual() == virtual &&
+                    allTransactions.getAllTransactions().get(j).getTradeStatus() == status &&
+                    ((OneWayMonetized) allTransactions.getAllTransactions().get(j)).getItem().getName().equals(itemName) &&
+                    ((OneWayMonetized) allTransactions.getAllTransactions().get(j)).getFirstTrader().getName().equals(user1.getName()) &&
+                    ((OneWayMonetized) allTransactions.getAllTransactions().get(j)).getSecondTrader().getName().equals(user2.getName())) {
+                transaction = allTransactions.getAllTransactions().get(j);
             }
         } if (transaction == null) {
             System.out.println("Transaction could not be found! No actions can be undone.");
             return null;
-        } if (status == 4) { //cancelled
+        } if (status != 4) { //cancelled
             //changes transaction to in progress
-            allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, transaction, 0, allCurrency, undoLogger);
+            allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, transaction, 4, allCurrency, undoLogger);
             String string = "Your one-way transaction with User <" + user2.getName() + "> for their item <" + itemName + "> has been cancelled by Admin!";
             String string2 = "Your one-way transaction with User <" + user1.getName() + "> for your item <" + itemName + "> has been cancelled by Admin!";
             allUsers.addToNotifyUndo(user1, string);
             allUsers.addToNotifyUndo(user2, string2);
-            System.out.println("Transaction has been successfully cancelled!");
-        } else { //otherwise cancels the transaction
-            allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, transaction, 4, allCurrency, undoLogger);
+
+        } else { //otherwise reopens
             allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, transaction, 0, allCurrency, undoLogger);
             String string = "Your one-way transaction with User <" + user2.getName() + "> for their item <" + itemName + "> has been re-opened by Admin!";
             String string2 = "Your one-way transaction with User <" + user1.getName() + "> for your item <" + itemName + "> has been re-opened by Admin!";
@@ -536,22 +535,22 @@ public class UndoAction implements AdminMainMenuOptions {
             System.out.println("User no longer exists or has changed their name. No actions can be undone.");
             return null;
         } for (int j = 0; j < user1.getPendingTrades().size(); j++) {
-            if (user1.getPendingTrades().get(j) instanceof TwoWay &&
-                    user1.getPendingTrades().get(j).getTemp() == temp &&
-                    user1.getPendingTrades().get(j).getVirtual() == virtual &&
-                    user1.getPendingTrades().get(j).getTradeStatus() == status &&
-                    ((TwoWay) user1.getPendingTrades().get(j)).getFirstItem().getName().equals(itemName1) &&
-                    ((TwoWay) user1.getPendingTrades().get(j)).getSecondItem().getName().equals(itemName2) &&
-                    ((TwoWay) user1.getPendingTrades().get(j)).getFirstTrader().getName().equals(user1.getName()) &&
-                    ((TwoWay) user1.getPendingTrades().get(j)).getSecondTrader().getName().equals(user2.getName())) {
-                transaction = user1.getPendingTrades().get(j);
+            if (allTransactions.getAllTransactions().get(j) instanceof TwoWay &&
+                    allTransactions.getAllTransactions().get(j).getTemp() == temp &&
+                    allTransactions.getAllTransactions().get(j).getVirtual() == virtual &&
+                    allTransactions.getAllTransactions().get(j).getTradeStatus() == status &&
+                    ((TwoWay) allTransactions.getAllTransactions().get(j)).getFirstItem().getName().equals(itemName1) &&
+                    ((TwoWay) allTransactions.getAllTransactions().get(j)).getSecondItem().getName().equals(itemName2) &&
+                    ((TwoWay) allTransactions.getAllTransactions().get(j)).getFirstTrader().getName().equals(user1.getName()) &&
+                    ((TwoWay) allTransactions.getAllTransactions().get(j)).getSecondTrader().getName().equals(user2.getName())) {
+                transaction = allTransactions.getAllTransactions().get(j);
             }
         } if (transaction == null) {
             System.out.println("Transaction could not be found! No actions can be undone.");
             return null;
-        } if (status == 4) { //cancelled
-            //changes transaction to in progress
-            allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, transaction, 0, allCurrency, undoLogger);
+        } if (status != 4) { //cancelled
+            //cancels
+            allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, transaction, 4, allCurrency, undoLogger);
             String string = "Your two-way transaction with User <" + user2.getName() + "> for their item <" + itemName2 + "> in \n" +
                     "exchange for your item <" + itemName1 + "> has been cancelled by Admin!";
             String string2 = "Your two-way transaction with User <" + user1.getName() + "> for their item <" + itemName1 + "> in \n" +
@@ -559,8 +558,8 @@ public class UndoAction implements AdminMainMenuOptions {
             allUsers.addToNotifyUndo(user1, string);
             allUsers.addToNotifyUndo(user2, string2);
             System.out.println("Transaction has been successfully cancelled!");
-        } else { //otherwise cancels the transaction
-            allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, transaction, 4, allCurrency, undoLogger);
+        } else { //reopens if status == 4
+            allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, transaction, 0, allCurrency, undoLogger);
             String string = "Your two-way transaction with User <" + user2.getName() + "> for their item <" + itemName2 + "> in \n" +
                     "exchange for your item <" + itemName1 + "> has been reopened by Admin!";
             String string2 = "Your two-way transaction with User <" + user1.getName() + "> for their item <" + itemName1 + "> in \n" +
@@ -634,24 +633,24 @@ public class UndoAction implements AdminMainMenuOptions {
             return null;
         }
         for (int j = 0; j < user1.getPendingTrades().size(); j++) {
-            if (user1.getPendingTrades().get(j) instanceof ThreeWay &&
-                    user1.getPendingTrades().get(j).getTemp() == temp &&
-                    user1.getPendingTrades().get(j).getVirtual() == virtual &&
-                    user1.getPendingTrades().get(j).getTradeStatus() == status &&
-                    ((ThreeWay) user1.getPendingTrades().get(j)).getFirstItem().getName().equals(itemName1) &&
-                    ((ThreeWay) user1.getPendingTrades().get(j)).getSecondItem().getName().equals(itemName2) &&
-                    ((ThreeWay) user1.getPendingTrades().get(j)).getThirdItem().getName().equals(itemName3) &&
-                    ((ThreeWay) user1.getPendingTrades().get(j)).getFirstTrader().getName().equals(user1.getName()) &&
-                    ((ThreeWay) user1.getPendingTrades().get(j)).getSecondTrader().getName().equals(user2.getName()) &&
-                    ((ThreeWay) user1.getPendingTrades().get(j)).getThirdTrader().getName().equals(user3.getName())) {
+            if (allTransactions.getAllTransactions().get(j) instanceof ThreeWay &&
+                    allTransactions.getAllTransactions().get(j).getTemp() == temp &&
+                    allTransactions.getAllTransactions().get(j).getVirtual() == virtual &&
+                    allTransactions.getAllTransactions().get(j).getTradeStatus() == status &&
+                    ((ThreeWay) allTransactions.getAllTransactions().get(j)).getFirstItem().getName().equals(itemName1) &&
+                    ((ThreeWay) allTransactions.getAllTransactions().get(j)).getSecondItem().getName().equals(itemName2) &&
+                    ((ThreeWay) allTransactions.getAllTransactions().get(j)).getThirdItem().getName().equals(itemName3) &&
+                    ((ThreeWay) allTransactions.getAllTransactions().get(j)).getFirstTrader().getName().equals(user1.getName()) &&
+                    ((ThreeWay) allTransactions.getAllTransactions().get(j)).getSecondTrader().getName().equals(user2.getName()) &&
+                    ((ThreeWay) allTransactions.getAllTransactions()).getThirdTrader().getName().equals(user3.getName())) {
                 transaction = user1.getPendingTrades().get(j);
             }
         } if (transaction == null) {
             System.out.println("Transaction could not be found! No actions can be undone.");
             return null;
-        } if (status == 4) { //cancelled
+        } if (status != 4) { //cancelled
             //changes transaction to in progress
-            allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, transaction, 0, allCurrency, undoLogger);
+            allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, transaction, 4, allCurrency, undoLogger);
             String string = "Your three-way transaction with User <" + user2.getName() + "> for their item <" + itemName2 + "> and \n" +
                     "User <" + user3.getName() + "> for their item <" + itemName3 + "> in exchange for your item <" + itemName1 +
                     "> has been cancelled by Admin!";
@@ -665,8 +664,8 @@ public class UndoAction implements AdminMainMenuOptions {
             allUsers.addToNotifyUndo(user2, string2);
             allUsers.addToNotifyUndo(user3, string3);
             System.out.println("Transaction has been successfully cancelled!");
-        } else { //otherwise cancels the transaction
-            allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, transaction, 4, allCurrency, undoLogger);
+        } else { //otherwise reopens if status == 4
+            allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, transaction, 0, allCurrency, undoLogger);
             String string = "Your three-way transaction with User <" + user2.getName() + "> for their item <" + itemName2 + "> and \n" +
                     "User <" + user3.getName() + "> for their item <" + itemName3 + "> in exchange for your item <" + itemName1 +
                     "> has been reopened by Admin!";
