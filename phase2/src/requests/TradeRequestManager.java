@@ -114,6 +114,13 @@ public class TradeRequestManager implements Serializable {
             }
         }
     }
+
+    /**
+     * Handles when one of the three User's in the process of a ThreeWayRequest has approved the request.
+     * @param userManager The instance of UserManager
+     * @param request The given ThreeWayRequest
+     * @param user The User that approved the ThreeWay.
+     */
     public void handleSingleApproved(UserManager userManager, TypeThreeRequest request, User user){
         if(user.getName().equals(request.getFirstUser().getName())){
             User user1 = userManager.getUser(user);
