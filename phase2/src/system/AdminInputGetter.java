@@ -92,18 +92,30 @@ public class AdminInputGetter {
         System.out.println("----------------------------------------------------------------------------------------------" +
                 "\n\uD83D\uDC4B Welcome back, " + admin.getName());
 
+
+
+
         List<Item> allPendingItems = new ArrayList<>();
         for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
             allPendingItems.addAll(allUsers.getAllUsers().get(i).getDraftInventory());
         }
-        int frozenaccount = allUsers.getAllFrozenUsers().size();
+
+
+
+        int frozenaccout = allUsers.getAllFrozenUsers().size();
         int pendingItem = allPendingItems.size();
-        if (frozenaccount != 0 || pendingItem != 0) {
-            System.out.print("You have notifications!\n");
-        }
+        if (frozenaccout != 0 || pendingItem != 0)
+        System.out.print("You have notifications!\n");
+
+
         if (allAdmins.getFrozenRequests().size() > 0) {
             System.out.println("\uD83D\uDCF3 You have " + allAdmins.getFrozenRequests().size() + " Frozen user requests!");
         }
+
+
+
+
+
 
         // if a super admin has changed this admin's super admin status,
         // a notification will be printed when this admin logs in
@@ -112,7 +124,7 @@ public class AdminInputGetter {
 
         System.out.println("Please select from the following by entering the number beside the option:" +
                 " \n1. Add new admin\n2. Change system threshold\n3. View items that need to be approved"+supcreater(pendingItem)+"\n" +
-                "4. Freeze or unfreeze users"+supcreater(frozenaccount) +"\n5. Promote a user or demote a VIP user\n" +
+                "4. Freeze or unfreeze users"+supcreater(frozenaccout) +"\n5. Promote a user or demote a VIP user\n" +
                 "6. Promote an admin or demote a super admin\n7. View Messages from Users\n8. View and edit System Log\n9. Log out\n" +
                 "Enter 'exit' to exit at any time.");
         ChosenOption option = new ChosenOption();

@@ -80,45 +80,67 @@ public class NormalUserMainMenu implements DifferentUserMainMenu {
         }
 
         int pendingTradeRequests = allUsers.getUser(user).getPendingRequests().size();
+
+
+
         int pendingTransactions = allUsers.getUser(user).getPendingTrades().size();
 
-        for (int t = 0; t <allUsers.getUser(user).getPendingTrades().size() ; t++){
-            if (allUsers.getUser(user).getPendingTrades().get(t) instanceof OneWay) {
-            OneWay tt = (OneWay) allUsers.getUser(user).getPendingTrades().get(t);
-            User b = tt.getSecondTrader();
-            if (user.getName().equals(b.getName())) {
-                b = tt.getFirstTrader();
-        } if (tt.getInitialMeeting().geteditHistory(user.getName()) > tt.getInitialMeeting().geteditHistory(b.getName()) || tt.getInitialMeeting().viewLastEdit().equals(user.getName())) {
+for (int t = 0; t <allUsers.getUser(user).getPendingTrades().size() ; t++ ) {
+
+    if (allUsers.getUser(user).getPendingTrades().get(t) instanceof OneWay) {
+        OneWay tt = (OneWay) allUsers.getUser(user).getPendingTrades().get(t);
+        User b = tt.getSecondTrader();
+        if (user.getName().equals(b.getName())) {
+            b = tt.getFirstTrader();
+        }
+        if (tt.getInitialMeeting().geteditHistory(user.getName()) > tt.getInitialMeeting().geteditHistory(b.getName()) || tt.getInitialMeeting().viewLastEdit().equals(user.getName())) {
             pendingTransactions = pendingTransactions - 1;
-            }
         }
-        if (allUsers.getUser(user).getPendingTrades().get(t) instanceof TwoWay) {
-            TwoWay tt2 = (TwoWay) allUsers.getUser(user).getPendingTrades().get(t);
-            User b2 = tt2.getFirstTrader(); //user b is the other party of this trade
-            if (user.getName().equals(b2.getName())) {
-                b2 = tt2.getSecondTrader();
-            } if (tt2.getInitialMeeting().geteditHistory(user.getName()) > tt2.getInitialMeeting().geteditHistory(b2.getName()) || tt2.getInitialMeeting().viewLastEdit().equals(user.getName())) {
+    }
+    if (allUsers.getUser(user).getPendingTrades().get(t) instanceof TwoWay) {
+        TwoWay tt2 = (TwoWay) allUsers.getUser(user).getPendingTrades().get(t);
+        User b2 = tt2.getFirstTrader(); //user b is the other party of this trade
+        if (user.getName().equals(b2.getName())) {
+            b2 = tt2.getSecondTrader();
+        }
+        if (tt2.getInitialMeeting().geteditHistory(user.getName()) > tt2.getInitialMeeting().geteditHistory(b2.getName()) || tt2.getInitialMeeting().viewLastEdit().equals(user.getName())) {
             //if they have already made an edit and we are waiting on the other person to approve/suggest a new meeting
-                pendingTransactions = pendingTransactions - 1;
-            }
+            pendingTransactions = pendingTransactions - 1;
+
         }
-        }
+    }
+
+    }
+
+
+
+
+
         int outboundRequests = allUsers.getUser(user).getOutboundRequests().size();
+
+
+
+
         int meetings = 0;
         for (int i = 0 ; i < allUsers.getUser(user).getAgreedUponMeeting().size(); i++){
-            if (allUsers.getUser(user).getAgreedUponMeeting().get(i).getInitialMeeting().userconfirmed(user.getName()) == 0) {
+            if (allUsers.getUser(user).getAgreedUponMeeting().get(i).getInitialMeeting().userconfirmed(user.getName()) == 0)
                 meetings = meetings + 1;
-            }
-        } for (int i = 0 ; i < allUsers.getUser(user).getSecondAgreedUponMeeting().size(); i++){
-            if (allUsers.getUser(user).getSecondAgreedUponMeeting().get(i).getReturnMeeting().userconfirmed(user.getName()) == 0) {
-                meetings = meetings + 1;
-            }
         }
+        for (int i = 0 ; i < allUsers.getUser(user).getSecondAgreedUponMeeting().size(); i++){
+            if (allUsers.getUser(user).getSecondAgreedUponMeeting().get(i).getReturnMeeting().userconfirmed(user.getName()) == 0)
+                meetings = meetings + 1;
+        }
+
+
+
         int adminmssge = allUsers.getUser(user).getAdminMessages().size();
 
-        if (adminmssge != 0 || meetings != 0 || outboundRequests != 0 || pendingTradeRequests != 0 || pendingTransactions != 0) {
+
+
+        if (adminmssge != 0 || meetings != 0 || outboundRequests != 0 || pendingTradeRequests != 0 ||
+        pendingTransactions != 0)
             System.out.print("You got notifications!\n");
-        }
+
         // if admin has undone any actions on user's account, a String will be printed when user logs in
         NotifyUserOfAdminUndo notifyActions = new NotifyUserOfAdminUndo();
         notifyActions.notify(user, allUsers);
@@ -238,4 +260,5 @@ public class NormalUserMainMenu implements DifferentUserMainMenu {
             return user;
         }
     }
+
 }
