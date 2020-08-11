@@ -135,6 +135,12 @@ for (int t = 0; t <allUsers.getUser(user).getPendingTrades().size() ; t++ ) {
 
         int adminmssge = allUsers.getUser(user).getAdminMessages().size();
 
+
+
+        if (adminmssge != 0 || meetings != 0 || outboundRequests != 0 || pendingTradeRequests != 0 ||
+        pendingTransactions != 0)
+            System.out.print("You got notifications!\n");
+
         // if admin has undone any actions on user's account, a String will be printed when user logs in
         NotifyUserOfAdminUndo notifyActions = new NotifyUserOfAdminUndo();
         notifyActions.notify(user, allUsers);

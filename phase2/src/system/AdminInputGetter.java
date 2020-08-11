@@ -52,6 +52,28 @@ public class AdminInputGetter {
         // https://stackoverflow.com/questions/2533227/how-can-i-disable-the-default-console-handler-while-using-the-java-logging-api
     }
 
+
+    /**
+     * Displays number of notifications into a superscript format
+     * @param i is the number of notifications
+     * @return the string format in superscript
+     */
+    String supcreater (int i){
+        if (i==0) return "";
+        else if  (i ==1) return  "¹";
+        else if (i == 2 ) return   "²";
+        else  if (i == 3 ) return   "³";
+        else  if (i == 4 ) return   "⁴";
+        else  if (i == 5 ) return   "⁵";
+        else  if (i == 6 ) return   "⁶";
+        else  if (i == 7 ) return   "⁷";
+        else  if (i == 8 ) return   "⁸";
+        else if (i == 9 ) return   "⁹";
+        else {
+            return  "⁹⁺";
+        }
+    }
+
     /**
      * Displays the main menu of an AdminUser and prompts the user for input.
      *
@@ -70,23 +92,30 @@ public class AdminInputGetter {
         System.out.println("----------------------------------------------------------------------------------------------" +
                 "\n\uD83D\uDC4B Welcome back, " + admin.getName());
 
+
+
+
         List<Item> allPendingItems = new ArrayList<>();
         for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
             allPendingItems.addAll(allUsers.getAllUsers().get(i).getDraftInventory());
         }
 
+
+
+        int frozenaccout = allUsers.getAllFrozenUsers().size();
+        int pendingItem = allPendingItems.size();
+        if (frozenaccout != 0 || pendingItem != 0)
+        System.out.print("You have notifications!\n");
+
+
         if (allAdmins.getFrozenRequests().size() > 0) {
             System.out.println("\uD83D\uDCF3 You have " + allAdmins.getFrozenRequests().size() + " Frozen user requests!");
         }
-        //if they have frozen users, show it here
-        if (allUsers.getAllFrozenUsers().size() > 0) {
-            System.out.println("\u2603 You have " + allUsers.getAllFrozenUsers().size() + " Frozen users!");
-        }
 
-        //if they have pending items, show it here
-        if (allPendingItems.size() > 0) {
-            System.out.println("\uD83D\uDCE9 You have " + allPendingItems.size() + " Pending Item Requests!");
-        }
+
+
+
+
 
         // if a super admin has changed this admin's super admin status,
         // a notification will be printed when this admin logs in
@@ -94,8 +123,8 @@ public class AdminInputGetter {
         notification.notify(admin, allAdmins);
 
         System.out.println("Please select from the following by entering the number beside the option:" +
-                " \n1. Add new admin\n2. Change system threshold\n3. View items that need to be approved\n" +
-                "4. Freeze or unfreeze users\n5. Promote a user or demote a VIP user\n" +
+                " \n1. Add new admin\n2. Change system threshold\n3. View items that need to be approved"+supcreater(pendingItem)+"\n" +
+                "4. Freeze or unfreeze users"+supcreater(frozenaccout) +"\n5. Promote a user or demote a VIP user\n" +
                 "6. Promote an admin or demote a super admin\n7. View Messages from Users\n8. View and edit System Log\n9. Log out\n" +
                 "Enter 'exit' to exit at any time.");
         ChosenOption option = new ChosenOption();

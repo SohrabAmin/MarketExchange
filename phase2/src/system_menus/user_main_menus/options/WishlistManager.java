@@ -35,7 +35,7 @@ public class WishlistManager implements UserMainMenuOptions {
         List<Item> wishlist = user.getWishlist();
         //if wishlist is empty, returns "back" which will bring them back to main menu
         if (wishlist.size() == 0) {
-            System.out.print("Your wishlist is empty!\n");
+            System.out.print("\uD83D\uDE14Your wishlist is empty!\n");
             System.out.println("Enter '1' if you would like to add to your wishlist or 'back' to return to the main menu.");
             String choice = sc.nextLine();
             if (choice.equals("1")) {
