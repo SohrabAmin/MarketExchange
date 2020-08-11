@@ -60,17 +60,17 @@ public class AdminInputGetter {
      */
     String supcreater (int i){
         if (i==0) return "";
-        else if  (i ==1) return  "¹";
-        else if (i == 2 ) return   "²";
-        else  if (i == 3 ) return   "³";
-        else  if (i == 4 ) return   "⁴";
-        else  if (i == 5 ) return   "⁵";
-        else  if (i == 6 ) return   "⁶";
-        else  if (i == 7 ) return   "⁷";
-        else  if (i == 8 ) return   "⁸";
-        else if (i == 9 ) return   "⁹";
+        else if  (i ==1) return  "[1]";
+        else if (i == 2 ) return   "[2]";
+        else  if (i == 3 ) return   "[3]";
+        else  if (i == 4 ) return   "[4]";
+        else  if (i == 5 ) return   "[5]";
+        else  if (i == 6 ) return   "[6]";
+        else  if (i == 7 ) return   "[7]";
+        else  if (i == 8 ) return   "[8]";
+        else if (i == 9 ) return   "[9]";
         else {
-            return  "⁹⁺";
+            return  "[+9]";
         }
     }
 

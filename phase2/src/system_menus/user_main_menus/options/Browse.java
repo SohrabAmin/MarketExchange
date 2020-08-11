@@ -46,11 +46,11 @@ public class Browse implements UserMainMenuOptions {
         if (input.equals("back")) {
             return "back";
         }
-        if (((String) input).matches("[0-9]+") == false){
+            if (((String) input).matches("[0-9]+") == false){
 
-            System.out.print("\u274CCommand Invalid. Please try again!\n");
-            return null;
-        }
+                System.out.print("\u274CCommand Invalid. Please try again!\n");
+                return null;
+            }
         try {
             input = Integer.parseInt((String) input);
         } catch (NumberFormatException e) {

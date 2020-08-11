@@ -214,6 +214,10 @@ public class TradeInitiator implements UserMainMenuOptions {
                 return user;
 
             }
+            else {
+                System.out.print("\u274CCommand Invalid. Please try again!\n");
+                return user;
+            }
         }
 
 
@@ -245,7 +249,11 @@ public class TradeInitiator implements UserMainMenuOptions {
                          allUsers,  allMeetings,  allTransactions,
                          allAdmins,  undoLogger,  allUserMessages, tradeItem, monetized, myList);
 
-
+            }
+            else
+            {
+                System.out.print("\u274CCommand Invalid. Please try again!\n");
+            return user;
             }
         }
 
@@ -279,7 +287,15 @@ public class TradeInitiator implements UserMainMenuOptions {
                         allAdmins,  undoLogger,  allUserMessages, tradeItem, monetized, myList);
 
             }
+            else {
+
+                System.out.print("\u274CCommand Invalid. Please try again!\n");
+                return user;
+            }
+
         }
+
+
         else if (!tradeItem.getRentable() && !tradeItem.getSellable() && tradeItem.getTradable()){ //if only tradable
             monetized = false;
             return tradableDealer( user,  allItems,  allTradeRequests,
@@ -333,10 +349,14 @@ public class TradeInitiator implements UserMainMenuOptions {
                         allUsers,  allMeetings,  allTransactions,
                         allAdmins,  undoLogger,  allUserMessages, tradeItem, monetized, myList);
             }
+            else {
+                System.out.print("\u274CCommand Invalid. Please try again!\n");
+                return user;
+            }
             //error check here!
         }
 
-      return user;
+      //return user;
     }
 
 
