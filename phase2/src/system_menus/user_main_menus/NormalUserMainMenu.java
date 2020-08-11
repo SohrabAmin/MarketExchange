@@ -233,7 +233,7 @@ for (int t = 0; t <allUsers.getUser(user).getPendingTrades().size() ; t++ ) {
                     case "18":  //logout
                         return null;
                     default:  //returns to main menu
-                        System.out.println("That is not a valid option. Please try again.");
+                        System.out.print("\u274CCommand Invalid. Please try again!\n");
                         return user;
                 }
                 //the option that is chosen by the user will be run

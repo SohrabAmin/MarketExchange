@@ -43,6 +43,17 @@ public class InventoryManager implements UserMainMenuOptions {
         if (input.equals("back")) {
             return "back";
         }
+        if (((String) input).matches("[0-9]+") == false){
+
+            System.out.print("\u274CCommand Invalid. Please try again!\n");
+            return null;
+        }
+
+        if (!((Integer.parseInt((String) input) > 1) && (Integer.parseInt((String) input) < in.size()))){
+            System.out.print("\uD83D\uDE35Input is out of bound. Please try again!\n");
+            return null;
+
+        }
         try {
             //will try to turn the input into an integer
             //if input is not an integer, returns null and recalls wishlist()
