@@ -433,6 +433,10 @@ public class TransactionManager implements Serializable {
         }
     }
 
+    /**
+     * Returns a List of all System Transactions
+     * @return List of Transactions
+     */
     public List<Transaction> getAllTransactions() {
         return allTransactions;
     }

@@ -59,17 +59,26 @@ public class AdminInputGetter {
      * @return the string format in superscript
      */
     String supcreater (int i){
-        if (i==0) return "";
-        else if  (i ==1) return  "¹";
-        else if (i == 2 ) return   "²";
-        else  if (i == 3 ) return   "³";
-        else  if (i == 4 ) return   "⁴";
-        else  if (i == 5 ) return   "⁵";
-        else  if (i == 6 ) return   "⁶";
-        else  if (i == 7 ) return   "⁷";
-        else  if (i == 8 ) return   "⁸";
-        else if (i == 9 ) return   "⁹";
-        else {
+        if (i==0) {return "";
+        } else if (i ==1) {
+            return "¹";
+        } else if (i == 2 ) {
+            return  "²";
+        } else if (i == 3 ) {
+            return "³";
+        } else if (i == 4 ) {
+            return   "⁴";
+        } else if (i == 5 ) {
+            return   "⁵";
+        } else if (i == 6 ) {
+            return "⁶";
+        } else if (i == 7 ) {
+            return   "⁷";
+        } else if (i == 8 ) {
+            return   "⁸";
+        } else if (i == 9 ) {
+            return   "⁹";
+        } else {
             return  "⁹⁺";
         }
     }
@@ -92,30 +101,18 @@ public class AdminInputGetter {
         System.out.println("----------------------------------------------------------------------------------------------" +
                 "\n\uD83D\uDC4B Welcome back, " + admin.getName());
 
-
-
-
         List<Item> allPendingItems = new ArrayList<>();
         for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
             allPendingItems.addAll(allUsers.getAllUsers().get(i).getDraftInventory());
         }
-
-
-
-        int frozenaccout = allUsers.getAllFrozenUsers().size();
+        int frozenaccount = allUsers.getAllFrozenUsers().size();
         int pendingItem = allPendingItems.size();
-        if (frozenaccout != 0 || pendingItem != 0)
-        System.out.print("You have notifications!\n");
-
-
+        if (frozenaccount != 0 || pendingItem != 0) {
+            System.out.print("You have notifications!\n");
+        }
         if (allAdmins.getFrozenRequests().size() > 0) {
             System.out.println("\uD83D\uDCF3 You have " + allAdmins.getFrozenRequests().size() + " Frozen user requests!");
         }
-
-
-
-
-
 
         // if a super admin has changed this admin's super admin status,
         // a notification will be printed when this admin logs in
@@ -124,7 +121,7 @@ public class AdminInputGetter {
 
         System.out.println("Please select from the following by entering the number beside the option:" +
                 " \n1. Add new admin\n2. Change system threshold\n3. View items that need to be approved"+supcreater(pendingItem)+"\n" +
-                "4. Freeze or unfreeze users"+supcreater(frozenaccout) +"\n5. Promote a user or demote a VIP user\n" +
+                "4. Freeze or unfreeze users"+supcreater(frozenaccount) +"\n5. Promote a user or demote a VIP user\n" +
                 "6. Promote an admin or demote a super admin\n7. View Messages from Users\n8. View and edit System Log\n9. Log out\n" +
                 "Enter 'exit' to exit at any time.");
         ChosenOption option = new ChosenOption();
