@@ -318,7 +318,7 @@ public class UserManager implements Serializable {
     }
 
     /**
-     * Updates a User's trade history
+     * Updates a User's trade history and updates a User's points according to that trade
      *
      * @param user        User whose trade history is to be updated
      * @param transaction Transaction to be added to this User's trade history
