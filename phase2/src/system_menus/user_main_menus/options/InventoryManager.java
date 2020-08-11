@@ -49,7 +49,7 @@ public class InventoryManager implements UserMainMenuOptions {
             return null;
         }
 
-        if (!((Integer.parseInt((String) input) > 1) && (Integer.parseInt((String) input) < in.size()))){
+        if (!((Integer.parseInt((String) input) >= 1) && (Integer.parseInt((String) input) <= in.size()))){
             System.out.print("\uD83D\uDE35Input is out of bound. Please try again!\n");
             return null;
 
@@ -71,7 +71,7 @@ public class InventoryManager implements UserMainMenuOptions {
         }
         //remove the item they requested from inventory
         allUsers.removeFromInventory(allUsers.getUser(user), in.get((Integer) input - 1));
-        System.out.println("Item has been removed successfully!");
+        System.out.println("\uD83D\uDDD1Item has been removed successfully!");
         return null;
     }
 }
