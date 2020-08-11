@@ -98,4 +98,9 @@ public class CurrencyManager {
         DateFormat dateFormat = new SimpleDateFormat("EEE, MMM d, yyyy");
         return dateFormat.format(date.getTime());
     }
+
+    public boolean checkExpiration(Calendar date){
+        Calendar today = Calendar.getInstance();
+        return date.after(today);
+    }
 }

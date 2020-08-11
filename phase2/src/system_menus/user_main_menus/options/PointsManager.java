@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 public class PointsManager implements UserMainMenuOptions {
     /**
      * Displays the points of the user and allow user to become VIP user if they are eligible.
+     * Also allows users to exchange 1 point for 1 dollar of capital.
      *
      * @param user             the User that wants to view their pending transactions
      * @param allItems         ItemManager that stores the system's inventory
