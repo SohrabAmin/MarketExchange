@@ -36,21 +36,40 @@ public class ManagePaymentOptions implements UserMainMenuOptions {
 
         System.out.println("Your current funds: $" + user.getCapital() + "\n");
 
+Object hi = "";
         if(user.getCreditCards().size() == 0){
-            System.out.println("You do not currently have a card on your account. Press 1 to add a new card and 2 to return to the main menu.");
+            System.out.println("You do not currently have a card on your account. Press 1 to add a new card and 'back' to return to the main menu.");
             Scanner sc = new Scanner(System.in);
             String inum = sc.nextLine();
-            if(inum.equals("1")){
-                this.addANewCard(sc, currencyManager, user);
+
+            if (inum.equals("back"))
+                return user;
+
+            else if(inum.equals("1")){
+                hi = this.addANewCard(sc, currencyManager, user);
             }
-            return user;
+            else {
+                System.out.print("\u274CCommand Invalid. Please try again!\n");
+                return null;
+
+            }
         }
+
+        if (hi.equals("back")){
+            return user;
+
+        }
+
+
+
         System.out.println("Your default credit ends in ***" + user.getDefaultCreditCard().returnEndNumbers() + "\n");
-        System.out.println("Press 1 to add a new card, press 2 to remove an existing card, 3 to add funds or 4 to change your default credit card. " +
+        System.out.println("Press 1 to add a new card, press 2 to remove an existing card, 3 to add funds or 4 to change your default credit card.\nType 'back' to return to previous menu. " +
                 "Note that funds can only be added from your default credit card.");
 
         Scanner sc = new Scanner(System.in);    //System.in is a standard input stream
         String inum = sc.nextLine();
+if (inum.equals("back"))
+return user;
 
 
 
@@ -143,11 +162,17 @@ public class ManagePaymentOptions implements UserMainMenuOptions {
                 user.setDefaultCreditCard(newDefault);
             }
         }
+        else { //invalid input
+            System.out.print("\u274CCommand Invalid. Please try again!\n");
+
+            return user;
+
+        }
         return user;
     }
 
 
-    public void addANewCard(Scanner sc1, CurrencyManager currencyManager, User user){
+    public Object addANewCard(Scanner sc1, CurrencyManager currencyManager, User user){
 
         Scanner sc = new Scanner(System.in);
 
@@ -159,11 +184,21 @@ public class ManagePaymentOptions implements UserMainMenuOptions {
         Object inum;
         List<CreditCard> cards = user.getCreditCards();
         while(check){
-            System.out.println("Please enter your 16 digit credit card number. \n");
+            System.out.println("Please enter your 16 digit credit card number. Type 'back' to go to main menu. \n");
             inum = sc.nextLine();
-            if(((String) inum).length() != 16){
-                System.out.println("Incorrect input, please try again! \n");
-            } else{
+            if (inum.equals("back"))
+                return "back";
+boolean checked = true;
+            if (((String) inum).matches("[0-9]+") == false){
+
+                System.out.print("\u274CCommand Invalid. Please try again!\n");
+                checked = false;
+            }
+
+            if(((String) inum).length() != 16 && checked == true){
+                System.out.println("\u274CThe card should have at least 16 digits! please try again! \n");
+                checked = false;
+            } else if (checked){
                 inum = Long.parseLong((String) inum);
                 temp1 = (Long) inum;
                 int check2 = 0;
@@ -180,14 +215,17 @@ public class ManagePaymentOptions implements UserMainMenuOptions {
 
             }
         }
-        System.out.println("Please enter the name of the card holder. \n");
+        System.out.println("Please enter the name of the card holder.\n");
         inum = sc.nextLine();
         temp2 = (String) inum;
-        System.out.println("Please enter the expiration date of your card in the format mm-yyyy. \n");
+        System.out.println("Please enter the expiration date of your card in the format mm-yyyy. Type 'back' to go to main menu.\n");
         inum = sc.nextLine();
+        if (inum.equals("back")) return "back";
+
         temp3 = currencyManager.getDate((String) inum);
-        System.out.println("Please enter the 3 digit CVV on the back of your card. \n");
+        System.out.println("Please enter the 3 digit CVV on the back of your card. Type 'back' to go to main menu.\n");
         inum = sc.nextLine();
+        if (inum.equals("back")) return "back";
         temp4 = Integer.parseInt((String) inum);
         CreditCard card = new CreditCard(temp1, temp2, temp3, user, temp4);
         user.addCreditCard(card);
@@ -199,5 +237,6 @@ public class ManagePaymentOptions implements UserMainMenuOptions {
             System.out.println("Congratulations, you have added a new card to your account. Note that this has " +
                     "not changed your default card. \n");
         }
-    }
+    return "back"; }
+
 }
