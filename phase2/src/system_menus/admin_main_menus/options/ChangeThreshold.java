@@ -20,10 +20,15 @@ public class ChangeThreshold implements AdminMainMenuOptions {
      * Changes the lentMinusBorrowedThreshold which dictates how much more a user has to have lent than borrowed,
      * before trading. The threshold change affects all Users in the system.
      *
-     * @param allUsers  changes LentMinusBorrowedThreshold variable in the system's UserManager
-     * @param allAdmins changes LentMinusBorrowedThreshold variable in the system's AdminManager
-     * @param admin the current Admin logged into the system
-     * @param allItems ItemManager which holds the system inventory
+     * @param admin           The Admin currently logged into the system
+     * @param allAdmins       AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
+     * @param allUsers        UserManager which stores all the Users in the system
+     * @param allItems        ItemManager which stores the system's inventory
+     * @param allUserMessages UserMessageManager which stores all the User messages to Admin
+     * @param allTransactions TransactionManager which stores and edits all Transactions in the system
+     * @param allRequests     TradeRequestManager which stores and edits all the TradeRequests in the system
+     * @param allCurrency     CurrencyManager which deals with the in-system currency
+     * @param undoLogger      Logger that logs actions in the system
      * @return depending on what the Admin inputs it will return different objects:
      * returns null to tell mainmenu() to call execute() again
      * returns String "back" to tell mainmenu() to prompt main menu again so Admin can choose another

@@ -23,19 +23,21 @@ import java.util.logging.Logger;
 
 public class UndoAction implements AdminMainMenuOptions {
     /**
+     * Allows Admin to undo particular User actions such as addition to wishlist, transactions and trade requests.
      *
-     * @param admin admin who is currently in the system
-     * @param allAdmins AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
-     * @param allUsers UserManager which stores all the Users in the system
-     * @param allItems ItemManager which stores the system's inventory
-     * @param allUserMessages UserMassageManager that stores all user massages
+     * @param admin           The Admin currently logged into the system
+     * @param allAdmins       AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
+     * @param allUsers        UserManager which stores all the Users in the system
+     * @param allItems        ItemManager which stores the system's inventory
+     * @param allUserMessages UserMessageManager which stores all the User messages to Admin
      * @param allTransactions TransactionManager which stores and edits all Transactions in the system
-     * @param allRequests TradeRequestManager which store all tradeRequests
-     * @param allCurrency CurrencyManager which deals with the in-system currency
-     * @return depend on admin's input
-     * return "back" so that admin can go back to the main menu for other options.
-     * return null if there is no actions to undo, or values of users not match, or admins finished the undo actions
-     *
+     * @param allRequests     TradeRequestManager which stores and edits all the TradeRequests in the system
+     * @param allCurrency     CurrencyManager which deals with the in-system currency
+     * @param undoLogger      Logger that logs actions in the system
+     * @return depending on what the Admin inputs it will return different objects:
+     * returns null to tell mainmenu() to call execute() again
+     * returns String "back" to tell mainmenu() to prompt main menu again so Admin can choose another
+     * main menu option
      */
     public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,
                           UserMessageManager allUserMessages, TransactionManager allTransactions,

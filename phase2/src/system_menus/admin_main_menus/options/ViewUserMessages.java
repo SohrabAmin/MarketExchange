@@ -28,10 +28,10 @@ public class ViewUserMessages implements AdminMainMenuOptions {
      * @param allItems ItemManager which stores the system's inventory
      * @param allTransactions TransactionManager which stores and edits all Transactions in the system
      * @param allCurrency CurrencyManager which deals with the in-system currency
+     * @param undoLogger Logger that logs actions in the system
      * return depending on what the User inputs it will return different objects:
      * returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
      * returns null if the input is invalid, or the admin's input is successfully done with messages shown to admin.
-     * returns String "exit" to prompt TradeSystem to save all the information and exit the System
      */
     public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,
                           UserMessageManager allUserMessages, TransactionManager allTransactions,
