@@ -61,7 +61,8 @@ public class DemoUserMainMenu implements DifferentUserMainMenu{
                 "14. Message Admin and view replies\uD83C\uDD94\n" +
                 "15. Change Account Settings\uD83C\uDD94\n" +
                 "16. Go on vacation\uD83C\uDD94\n" +
-                "17. Logout\n" +
+                "17. Check my points\n" +
+                "18. Logout\n" +
                 "Enter 'exit' to exit the system at any time.\n");
 
 
@@ -168,9 +169,14 @@ public class DemoUserMainMenu implements DifferentUserMainMenu{
                     System.out.print("-------------------------------------------------------" +
                             "\n\uD83D\uDC81 By 'going on vacation', all your current items will be stored and not" +
                             "shown in the system inventory \nuntil you return! This prevents attempts to trade while you" +
-                            "are out of town.");
+                            "are out of town.\n");
                     return user;
+
                 case "17":
+                    System.out.print("-------------------------------------------------------" +
+                            "\n\uD83D\uDC81 This is where you can see how many points you have. You can get more points by completing more transactions.\n");
+                    return user;
+                    case "18":
                     System.out.print("-------------------------------------------------------" +
                             "\n\uD83D\uDC81 Logging out as Demo!\n");
                     //logout

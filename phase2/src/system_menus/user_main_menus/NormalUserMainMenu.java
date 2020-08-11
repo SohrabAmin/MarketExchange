@@ -149,6 +149,8 @@ for (int t = 0; t <allUsers.getUser(user).getPendingTrades().size() ; t++ ) {
         NotifyUserOfVIPStatusChange notification = new NotifyUserOfVIPStatusChange();
         notification.notify(user, allUsers);
 
+        System.out.print("\uD83D\uDCB5Your money: $" + user.getCapital() + "\n");
+
         System.out.print("Please select number from the following:\n" +
                 "1. View and edit Wishlist\n" +
                 "2. View Inventory\n" +
