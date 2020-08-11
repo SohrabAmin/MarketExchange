@@ -1,9 +1,9 @@
-package system;
+package notifications;
 
 import accounts.admins.Admin;
 import accounts.admins.AdminManager;
 
-public class NotifyAdminOfSuperAdminStatusChange {
+public class NotifyAdminOfSuperAdminStatusChange implements AdminNotification {
     /**
      * Notify admin of a change to their "super admin" status when they log in
      *
@@ -15,6 +15,7 @@ public class NotifyAdminOfSuperAdminStatusChange {
             for (int i = 0; i < admin.getSuperAdminStatusChangeNotifications().size(); i++) {
                 System.out.println(admin.getSuperAdminStatusChangeNotifications().get(i));
                 allAdmins.removeFromSuperAdminStatusChangeNotifications(admin, admin.getSuperAdminStatusChangeNotifications().get(i));
+                i = i - 1;
             }
         }
     }

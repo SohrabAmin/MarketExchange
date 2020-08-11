@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.*;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.HashMap;
 import transactions.*;
@@ -140,7 +141,6 @@ public class ApproveTrade implements UserMainMenuOptions {
                         foryouritem = t.getThirdItem();
 
                     }
-
                     System.out.print(t.getSecondUser().getName() + " decided to extend the 3 way trade! You will now get " + youget.getName() + " in exchange " +
                             "for " + foryouritem.getName() + "\n");
 
@@ -199,16 +199,16 @@ public class ApproveTrade implements UserMainMenuOptions {
                     OneWayMonetized final1 = new OneWayMonetized(t.getFirstUser(), t.getItem(), false, t.getVirtual(), t.getMessage());
                     //no one has approved yet.
 
-                                        System.out.print("Funds are now held until you confirm that you have sent the email and " + t.getFirstUser().getName() +
+                    System.out.print("Funds are now held until you confirm that you have sent the email and " + t.getFirstUser().getName() +
                             " confirms that they have received the email.\n");
                     allTransactions.addToPendingTransactions(final1, allUsers, currencyManager);
+                    undoLogger.log(Level.INFO, final1.toString());
                     allTradeRequests.updateRequestStatus(allUsers, cTrade, 1);
 
                     allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, final1, 1, currencyManager, undoLogger);
                     return user;
 
                 }
-
 
                 //check if it is monetized
                 //check if it is temporary
@@ -229,6 +229,7 @@ public class ApproveTrade implements UserMainMenuOptions {
                     }
                 }
                 allTransactions.addToPendingTransactions(final1, allUsers, currencyManager);
+                undoLogger.log(Level.INFO, final1.toString());
 
                 Meeting meeting = meetingInitiator(allMeetings);
                 User temp1 = t.getFirstUser(); //initiating the trade
@@ -265,6 +266,7 @@ public class ApproveTrade implements UserMainMenuOptions {
                     final1 = new TwoWay(t.getFirstItem(), t.getSecondItem(), false, t.getVirtual());
                 }
                 allTransactions.addToPendingTransactions(final1, allUsers, currencyManager);
+                undoLogger.log(Level.INFO, final1.toString());
 
                 Meeting meeting = meetingInitiator(allMeetings);
                 User temp1 = t.getFirstUser(); //initiating the trade
@@ -659,23 +661,21 @@ public class ApproveTrade implements UserMainMenuOptions {
                     finalizedmeeting.initial3confirm(t.getFirstUser().getName(), t.getSecondUser().getName(), t.getThirdUser().getName());
                     ThreeWay final3 = new ThreeWay(t.getFirstItem(), t.getSecondItem(), t.getThirdItem(), t.getTemp(), t.getVirtual());
                         allTransactions.addToPendingTransactions(final3, allUsers, currencyManager);
+                    undoLogger.log(Level.INFO, final3.toString());
 
 
-                         final3.setInitialMeeting(finalizedmeeting);
-                        allTradeRequests.updateRequestStatus(allUsers, cTrade, 1);
+                    final3.setInitialMeeting(finalizedmeeting);
+                    allTradeRequests.updateRequestStatus(allUsers, cTrade, 1);
 
-                        allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, final3, 1, currencyManager, undoLogger);
+                    allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, final3, 1, currencyManager, undoLogger);
 
                         //FINALLY EVERYONE IS HAPPY LETS PROPOSE A MEETING
 
-                        return user;
+                    return user;
                     } else if (input.equals("2")) {
                         allTradeRequests.updateRequestStatus(allUsers, cTrade, 2);
                         System.out.print("Denied!\n");
-
-
                         return null;
-
                     }
                 }
             }

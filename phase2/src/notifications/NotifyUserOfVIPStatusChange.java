@@ -1,9 +1,9 @@
-package system;
+package notifications;
 
 import accounts.users.User;
 import accounts.users.UserManager;
 
-public class NotifyUserOfVIPStatusChange {
+public class NotifyUserOfVIPStatusChange implements UserNotification {
     /**
      * Notify user of a change to their VIP status when they log in
      *
@@ -16,6 +16,7 @@ public class NotifyUserOfVIPStatusChange {
                 System.out.println(user.getVIPStatusChangeNotifications().get(i));
                 allUsers.addToAdminActionHistory(user, user.getVIPStatusChangeNotifications().get(i));
                 allUsers.removeFromVIPStatusChangeNotifications(user, user.getVIPStatusChangeNotifications().get(i));
+                i = i - 1;
             }
             System.out.println("For further information, please message Admin. To read these notifications again, " +
                     "please go to Account Settings to view Admin Change Log.\n");

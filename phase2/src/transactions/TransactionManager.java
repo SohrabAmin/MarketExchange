@@ -24,6 +24,7 @@ public class TransactionManager implements Serializable {
     private List<Transaction> pendingSecondExchange; //2
     private List<Transaction> completedTransaction; //3
     private List<Transaction> cancelledTransaction; //4
+    private List<Transaction> allTransactions; // stores every Transaction ever instantiated.
 
 
     /**
@@ -36,6 +37,7 @@ public class TransactionManager implements Serializable {
         cancelledTransaction = new ArrayList<>();
         pendingSecondExchange = new ArrayList<>();
         finalizedMeeting = new ArrayList<>();
+        allTransactions = new ArrayList<>();
     }
 
     /**
@@ -122,16 +124,6 @@ public class TransactionManager implements Serializable {
 
     }
 
-    /**
-     * Initiates and stores the initialMeeting of a given Transaction. Required for all types of Transactions.
-     *
-     * @param transaction The given Transaction.
-     * @param meeting     The given Meeting.
-     */
-    public void setInitialMeeting(Transaction transaction, Meeting meeting) {
-        transaction.setInitialMeeting(meeting);
-
-    }
 
     /**
      * Initiates and stores the finalMeeting within Transaction. Only accessed if Transaction temp = True, otherwise is kept Null
@@ -177,7 +169,7 @@ public class TransactionManager implements Serializable {
         if(user3 != null){
             userManager.addToPendingTrades(user3, transaction);
         }
-
+        this.allTransactions.add(transaction);
         inProgressTransaction.add(transaction);
     }
 
@@ -441,4 +433,7 @@ public class TransactionManager implements Serializable {
         }
     }
 
+    public List<Transaction> getAllTransactions() {
+        return allTransactions;
+    }
 }

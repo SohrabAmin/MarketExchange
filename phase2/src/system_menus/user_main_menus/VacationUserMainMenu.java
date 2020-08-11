@@ -9,7 +9,7 @@ import items.Item;
 import items.ItemManager;
 import meetings.MeetingManager;
 import requests.TradeRequestManager;
-import system.NotifyUserOfVIPStatusChange;
+import notifications.NotifyUserOfVIPStatusChange;
 import system_menus.ChosenOption;
 import system_menus.user_main_menus.options.ConfirmMeetings;
 import transactions.TransactionManager;
