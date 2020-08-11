@@ -218,10 +218,17 @@ public class ManagePaymentOptions implements UserMainMenuOptions {
         temp2 = (String) inum;
         System.out.println("Please enter the expiration date of your card in the format mm-yyyy. Type 'back' to go to main menu.\n");
         inum = sc.nextLine();
+        Calendar date = currencyManager.getDate((String) inum);
+        if(currencyManager.checkExpiration(date)){
+            temp3 = date;
+        }else{
+            System.out.println("This card is expired.");
+            return "back";
+        }
         if (inum.equals("back")) {
             return "back";
         }
-        temp3 = currencyManager.getDate((String) inum);
+
         System.out.println("Please enter the 3 digit CVV on the back of your card. Type 'back' to go to main menu.\n");
         inum = sc.nextLine();
         if (inum.equals("back")) return "back";
