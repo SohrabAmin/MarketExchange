@@ -78,7 +78,6 @@ public class TransactionManager implements Serializable {
 
         if (tradeStatus == 0) {
             this.inProgressTransaction.add(transaction);
-            this.allTransactions.add(transaction);
         } else if (tradeStatus == 1) {
             this.finalizedMeeting.add(transaction);
             if (transaction instanceof OneWay) {
@@ -170,7 +169,7 @@ public class TransactionManager implements Serializable {
         if(user3 != null){
             userManager.addToPendingTrades(user3, transaction);
         }
-
+        this.allTransactions.add(transaction);
         inProgressTransaction.add(transaction);
     }
 
