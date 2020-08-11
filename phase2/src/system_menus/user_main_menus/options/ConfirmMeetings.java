@@ -149,7 +149,7 @@ public class ConfirmMeetings implements UserMainMenuOptions {
 
                             if (selectedTransaction instanceof OneWayMonetized){ //if it is rent
                                 OneWayMonetized temp = (OneWayMonetized) selectedTransaction;
-                               date.add(Calendar.DATE, temp.getRentDuration());
+                               date.add(Calendar.DATE, temp.getItem().getRentDuration());
 
                            } else {
                                 date.add(Calendar.MONTH, 1);
