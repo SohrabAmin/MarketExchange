@@ -449,7 +449,6 @@ public class TradeInitiator implements UserMainMenuOptions {
             if (confirmation.equals("1")) {
                 TradeRequest trades = new TypeOneRequest(user, tradeItem, message, temp, today, tradeItem.getVirtual(), monetized);
                 allUsers.addToWeeklyRequestLimit(user, trades);
-                allUsers.addToOutboundRequests(user, trades);
                 allTradeRequests.receiveTradeRequest(allUsers, trades);
 
                 undoLogger.log(Level.INFO, trades.toString());
@@ -536,7 +535,6 @@ public class TradeInitiator implements UserMainMenuOptions {
                 myList.add(tradeItem);
                 TradeRequest request = new TypeTwoRequest(salam, tradeItem, message, temp, today, tradeItem.getVirtual());;
                 allTradeRequests.receiveTradeRequest(allUsers, request);
-                allUsers.addToOutboundRequests(user, request);
                 allUsers.addToWeeklyRequestLimit(user, request);
 
                 undoLogger.log(Level.INFO, request.toString());
