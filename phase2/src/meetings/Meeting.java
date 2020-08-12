@@ -45,7 +45,7 @@ public class Meeting {
         return counter == 2 || counter == 3;
     }
 
-    public boolean confirmByThreeSides(){
+    public boolean confirmByThreeSides() {
 
         //Used https://stackoverflow.com/questions/27254302/counting-duplicate-values-in-hashmap as reference
         int counter = 0;
@@ -86,7 +86,6 @@ public class Meeting {
     public void meetingConfirmed(String name) {
         confirm.replace(name, 1);
     }
-
 
 
     /**

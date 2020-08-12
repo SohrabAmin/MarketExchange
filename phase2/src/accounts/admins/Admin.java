@@ -46,7 +46,7 @@ public class Admin extends Account {
      *
      * @return this Admin's list of "super admin" status change notifications
      */
-    public List<String> getSuperAdminStatusChangeNotifications (){
+    public List<String> getSuperAdminStatusChangeNotifications() {
         return this.SuperAdminStatusChangeNotifications;
     }
 }

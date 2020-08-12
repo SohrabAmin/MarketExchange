@@ -1,9 +1,9 @@
 package system;
 
-import accounts.users.UserManager;
-import accounts.users.UserMessageManager;
 import accounts.admins.Admin;
 import accounts.admins.AdminManager;
+import accounts.users.UserManager;
+import accounts.users.UserMessageManager;
 import items.ItemManager;
 import requests.TradeRequestManager;
 import transactions.TransactionManager;
@@ -189,10 +189,11 @@ public class ReadWrite implements Serializable {
         }
         return listLogs;
     }
+
     /**
      * Writes Object object to external file at filePath.
      *
-     * @param object the Object that is instantiated in the current System that needs to be saved.
+     * @param object   the Object that is instantiated in the current System that needs to be saved.
      * @param fileName the file to write the records to
      * @throws IOException
      */

@@ -55,22 +55,23 @@ public class AdminInputGetter {
 
     /**
      * Displays number of notifications into a superscript format
+     *
      * @param i is the number of notifications
      * @return the string format in superscript
      */
-    String supcreater (int i){
-        if (i==0) return "";
-        else if  (i ==1) return  "[1]";
-        else if (i == 2 ) return   "[2]";
-        else  if (i == 3 ) return   "[3]";
-        else  if (i == 4 ) return   "[4]";
-        else  if (i == 5 ) return   "[5]";
-        else  if (i == 6 ) return   "[6]";
-        else  if (i == 7 ) return   "[7]";
-        else  if (i == 8 ) return   "[8]";
-        else if (i == 9 ) return   "[9]";
+    String supcreater(int i) {
+        if (i == 0) return "";
+        else if (i == 1) return "[1]";
+        else if (i == 2) return "[2]";
+        else if (i == 3) return "[3]";
+        else if (i == 4) return "[4]";
+        else if (i == 5) return "[5]";
+        else if (i == 6) return "[6]";
+        else if (i == 7) return "[7]";
+        else if (i == 8) return "[8]";
+        else if (i == 9) return "[9]";
         else {
-            return  "[+9]";
+            return "[+9]";
         }
     }
 
@@ -93,28 +94,21 @@ public class AdminInputGetter {
                 "\n\uD83D\uDC4B Welcome back, " + admin.getName());
 
 
-
-
         List<Item> allPendingItems = new ArrayList<>();
         for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
             allPendingItems.addAll(allUsers.getAllUsers().get(i).getDraftInventory());
         }
 
 
-
         int frozenaccout = allUsers.getAllFrozenUsers().size();
         int pendingItem = allPendingItems.size();
         if (frozenaccout != 0 || pendingItem != 0)
-        System.out.print("You have notifications!\n");
+            System.out.print("You have notifications!\n");
 
 
         if (allAdmins.getFrozenRequests().size() > 0) {
             System.out.println("\uD83D\uDCF3 You have " + allAdmins.getFrozenRequests().size() + " Frozen user requests!");
         }
-
-
-
-
 
 
         // if a super admin has changed this admin's super admin status,
@@ -123,9 +117,9 @@ public class AdminInputGetter {
         notification.notify(admin, allAdmins);
 
         System.out.println("Please select from the following by entering the number beside the option:" +
-                " \n1. Add new admin\n2. Change system threshold\n3. View items that need to be approved"+supcreater(pendingItem)+"\n" +
-                "4. Freeze or unfreeze users"+supcreater(frozenaccout) +"\n5. Promote a user or demote a VIP user\n" +
-                "6. Promote an admin or demote a super admin\n7. View Messages from Users\n8. View and edit System Log\n9. Log out\n" +
+                " \n1. Add new admin\n2. Change system threshold\n3. View items that need to be approved" + supcreater(pendingItem) + "\n" +
+                "4. Freeze or unfreeze users" + supcreater(frozenaccout) + "\n5. Promote a user or demote a VIP user\n" +
+                "6. Promote an admin or demote a super admin\n7. View Messages from Users\n8. View and edit Undoable Actions Log\n9. Log out\n" +
                 "Enter 'exit' to exit at any time.");
         ChosenOption option = new ChosenOption();
         try {

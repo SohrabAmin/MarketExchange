@@ -24,15 +24,16 @@ public class Item implements Serializable {
 
     /**
      * construct an instance of an item.
-     * @param name name of this item
-     * @param owner the user who owns this item
-     * @param description description of this item
-     * @param category 1.Electronics 2.Automotive and car accessories 3.Baby 4.Beauty, Health and Personal Care 5.Books
-     *                 6.Home and Kitchen Supplies 7.Clothing 8.Movies, music and TV 9.Office Supplies 10.Gaming
+     *
+     * @param name         name of this item
+     * @param owner        the user who owns this item
+     * @param description  description of this item
+     * @param category     1.Electronics 2.Automotive and car accessories 3.Baby 4.Beauty, Health and Personal Care 5.Books
+     *                     6.Home and Kitchen Supplies 7.Clothing 8.Movies, music and TV 9.Office Supplies 10.Gaming
      * @param virtual
-     * @param tradable if the owner wants to trade this item
-     * @param sellable if the owner wants to sell this item
-     * @param rentable if the owner wans to rent this item
+     * @param tradable     if the owner wants to trade this item
+     * @param sellable     if the owner wants to sell this item
+     * @param rentable     if the owner wans to rent this item
      * @param sellPrice
      * @param rentPrice
      * @param rentDuration how long the owner wants to rent this item
@@ -54,8 +55,10 @@ public class Item implements Serializable {
         this.rentDuration = rentDuration;
     }
 
+
     /**
      * getter for item name
+     *
      * @return item name
      */
     public String getName() {
@@ -64,6 +67,7 @@ public class Item implements Serializable {
 
     /**
      * setter for item name
+     *
      * @param name
      */
     public void setName(String name) {
@@ -72,13 +76,16 @@ public class Item implements Serializable {
 
     /**
      * getter for item's owner
+     *
      * @return the owner as User
      */
     public User getOwner() {
         return this.owner;
     }
+
     /**
      * Getter for the user who now is having this item( e.g who borrowed this item)
+     *
      * @return the user who is now having this item but may not be the owner as User
      */
     public User getCurrentHolder() {
@@ -87,6 +94,7 @@ public class Item implements Serializable {
 
     /**
      * Setter for owner
+     *
      * @param owner the user who owns this item
      */
     public void setOwner(User owner) {
@@ -95,6 +103,7 @@ public class Item implements Serializable {
 
     /**
      * setter for the user who now is having this item( e.g who borrowed this item)
+     *
      * @param holder the user who is now having this item but may not be the owner
      */
     public void setCurrentHolder(User holder) {
@@ -103,6 +112,7 @@ public class Item implements Serializable {
 
     /**
      * update the description to the item
+     *
      * @param description
      */
     public void updateDescription(String description) {
@@ -111,6 +121,7 @@ public class Item implements Serializable {
 
     /**
      * Getter for this item's description
+     *
      * @return this item's description as String
      */
     public String getDescription() {
@@ -119,6 +130,7 @@ public class Item implements Serializable {
 
     /**
      * Getter for the category this item belongs to
+     *
      * @return the category for this item as String
      */
     public String getCategory() {
@@ -127,6 +139,7 @@ public class Item implements Serializable {
 
     /**
      * Getter for if the item is virtual
+     *
      * @return if the item is virtual as boolean
      */
     public boolean getVirtual() {
@@ -135,6 +148,7 @@ public class Item implements Serializable {
 
     /**
      * Change the status of tradeble for this item from
+     *
      * @param tradable boolean if the owner want to trade this item or not
      */
     public void changeTradable(boolean tradable) {
@@ -143,13 +157,16 @@ public class Item implements Serializable {
 
     /**
      * change selleble status for this item
+     *
      * @param sellable boolean if the owner want to sell this item or not
      */
     public void changeSellable(boolean sellable) {
         this.sellable = sellable;
     }
+
     /**
      * change rentable status for this item
+     *
      * @param rentable boolean if the owner want to rent this item or not
      */
     public void changeRentable(boolean rentable) {
@@ -158,13 +175,16 @@ public class Item implements Serializable {
 
     /**
      * Setter for the sell price
+     *
      * @param price sell price for this item as double
      */
     public void setSellPrice(double price) {
         this.sellPrice = price;
     }
+
     /**
      * Setter for the rent price
+     *
      * @param price rent price for this item as double
      */
     public void setRentPrice(double price) {
@@ -173,44 +193,55 @@ public class Item implements Serializable {
 
     /**
      * Getter for if this item is sellable
+     *
      * @return if this item can be sold as boolean
      */
     public boolean getSellable() {
         return this.sellable;
     }
+
     /**
      * Getter for if this item is rentable
+     *
      * @return if this item can be rent as boolean
      */
     public boolean getRentable() {
         return this.rentable;
     }
+
     /**
      * Getter for if this item is tradable
+     *
      * @return if this item can be traded as boolean
      */
     public boolean getTradable() {
         return this.tradable;
     }
+
     /**
      * Getter for this item's selling price
+     *
      * @return the selling price as double
      */
     public double getSellPrice() {
         return this.sellPrice;
     }
+
     /**
      * Getter for this item's rent price
+     *
      * @return the rent price as double
      */
     public double getRentPrice() {
         return this.rentPrice;
     }
+
     /**
      * Getter for this item's duration of rent
+     *
      * @return number of days this item can be rent as int
      */
-    public int getRentDuration(){
+    public int getRentDuration() {
         return rentDuration;
     }
 

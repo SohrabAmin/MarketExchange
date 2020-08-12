@@ -34,9 +34,10 @@ public class Transaction {
 
     /**
      * Gets if the Transaction is virtual or not
+     *
      * @return boolean if the Transaction is virtual or not
      */
-    public boolean getVirtual(){
+    public boolean getVirtual() {
         return virtual;
     }
 

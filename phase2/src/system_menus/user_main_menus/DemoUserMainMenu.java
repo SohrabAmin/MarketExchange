@@ -1,19 +1,22 @@
 package system_menus.user_main_menus;
 
+import accounts.admins.AdminManager;
+import accounts.users.User;
+import accounts.users.UserManager;
+import accounts.users.UserMessageManager;
+import currency.CurrencyManager;
+import items.ItemManager;
+import meetings.MeetingManager;
+import requests.TradeRequestManager;
+import system_menus.ChosenOption;
+import system_menus.user_main_menus.options.Browse;
+import system_menus.user_main_menus.options.WishlistManager;
+import transactions.TransactionManager;
+
 import java.util.Scanner;
 import java.util.logging.Logger;
 
-import system_menus.ChosenOption;
-import transactions.*;
-import meetings.*;
-import items.*;
-import accounts.users.*;
-import accounts.admins.*;
-import requests.*;
-import currency.*;
-import system_menus.admin_main_menus.options.*;
-import system_menus.user_main_menus.options.*;
-public class DemoUserMainMenu implements DifferentUserMainMenu{
+public class DemoUserMainMenu implements DifferentUserMainMenu {
 
     /**
      * Displays the main menu for a demo user and prompts user for input depending on what they want to do.
@@ -176,7 +179,7 @@ public class DemoUserMainMenu implements DifferentUserMainMenu{
                     System.out.print("-------------------------------------------------------" +
                             "\n\uD83D\uDC81 This is where you can see how many points you have. You can get more points by completing more transactions.\n");
                     return user;
-                    case "18":
+                case "18":
                     System.out.print("-------------------------------------------------------" +
                             "\n\uD83D\uDC81 Logging out as Demo!\n");
                     //logout

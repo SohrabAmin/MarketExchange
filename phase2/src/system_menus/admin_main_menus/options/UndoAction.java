@@ -1,4 +1,5 @@
 package system_menus.admin_main_menus.options;
+
 import accounts.admins.Admin;
 import accounts.admins.AdminManager;
 import accounts.users.User;
@@ -18,7 +19,7 @@ import java.util.Scanner;
 import java.util.logging.Logger;
 
 /**
- *Display in Admin Main Menu, Allow Admin to undo actions of all users.
+ * Display in Admin Main Menu, Allow Admin to undo actions of all users.
  */
 
 public class UndoAction implements AdminMainMenuOptions {
@@ -100,9 +101,9 @@ public class UndoAction implements AdminMainMenuOptions {
     /**
      * Undoes a trade request based on the log.
      *
-     * @param allUsers UserManager which stores all the users in the system
+     * @param allUsers    UserManager which stores all the users in the system
      * @param allRequests TradeRequestManager which stores all the Trade Requests in the system
-     * @param chosenLog the Log containing information about the trade request
+     * @param chosenLog   the Log containing information about the trade request
      * @return null so admin can return back to the list of logs when undoTradeRequest is done
      */
     public Object undoTradeRequest(UserManager allUsers, TradeRequestManager allRequests, String chosenLog) {
@@ -121,9 +122,9 @@ public class UndoAction implements AdminMainMenuOptions {
     /**
      * Helper function for undoTradeRequest(); deals with undoing OneWay trade requests
      *
-     * @param allUsers UserManager which stores all the users in the system
+     * @param allUsers    UserManager which stores all the users in the system
      * @param allRequests TradeRequestManager which stores all the Trade Requests in the system
-     * @param chosenLog the Log containing information about the trade request
+     * @param chosenLog   the Log containing information about the trade request
      * @return null so admin can return back to the list of logs when undoTradeRequest is done
      */
     public Object undoOneWayRequest(UserManager allUsers, TradeRequestManager allRequests, String chosenLog) {
@@ -193,9 +194,9 @@ public class UndoAction implements AdminMainMenuOptions {
     /**
      * Helper function for undoTradeRequest(); deals with undoing TwoWay trade requests
      *
-     * @param allUsers UserManager which stores all the users in the system
+     * @param allUsers    UserManager which stores all the users in the system
      * @param allRequests TradeRequestManager which stores all the Trade Requests in the system
-     * @param chosenLog the Log containing information about the trade request
+     * @param chosenLog   the Log containing information about the trade request
      * @return null so admin can return back to the list of logs when undoTradeRequest is done
      */
     public Object undoTwoWayRequest(UserManager allUsers, TradeRequestManager allRequests, String chosenLog) {
@@ -267,9 +268,9 @@ public class UndoAction implements AdminMainMenuOptions {
     /**
      * Helper function for undoTradeRequest(); deals with undoing ThreeWay trade requests
      *
-     * @param allUsers UserManager which stores all the users in the system
+     * @param allUsers    UserManager which stores all the users in the system
      * @param allRequests TradeRequestManager which stores all the Trade Requests in the system
-     * @param chosenLog the Log containing information about the trade request
+     * @param chosenLog   the Log containing information about the trade request
      * @return null so admin can return back to the list of logs when undoTradeRequest is done
      */
     public Object undoThreeWayRequest(UserManager allUsers, TradeRequestManager allRequests, String chosenLog) {
@@ -353,13 +354,13 @@ public class UndoAction implements AdminMainMenuOptions {
     /**
      * Undoes Transactions by either cancelling in-progress transactions or reopening transactions.
      *
-     * @param allAdmins AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
-     * @param allUsers UserManager which stores all the Users in the system
-     * @param allItems ItemManager which stores the system's inventory
+     * @param allAdmins       AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
+     * @param allUsers        UserManager which stores all the Users in the system
+     * @param allItems        ItemManager which stores the system's inventory
      * @param allTransactions TransactionManager which stores and edits all Transactions in the system
-     * @param allCurrency CurrencyManager which deals with the in-system currency
-     * @param undoLogger Logger that logs actions that happen in the system
-     * @param chosenLog the Log containing information about the trade request
+     * @param allCurrency     CurrencyManager which deals with the in-system currency
+     * @param undoLogger      Logger that logs actions that happen in the system
+     * @param chosenLog       the Log containing information about the trade request
      * @return null so admin can return back to the list of logs when undoTradeRequest is done
      */
     public Object undoTransaction(UserManager allUsers, TransactionManager allTransactions,
@@ -374,19 +375,19 @@ public class UndoAction implements AdminMainMenuOptions {
         // [User1, User 2, (User3), Status, is temporary?, is in-person?, initial meeting, return meeting]
 
         if (stringSplit[0].split("; ")[1].equals("Three-way")) {
-            attributes.set(0,stringSplit[1].split("Trader 1: ")[1]);
-            attributes.set(1,stringSplit[2].split("Trader 2: ")[1]);
-            attributes.set(2,stringSplit[3].split("Trader 3: ")[1]);
+            attributes.set(0, stringSplit[1].split("Trader 1: ")[1]);
+            attributes.set(1, stringSplit[2].split("Trader 2: ")[1]);
+            attributes.set(2, stringSplit[3].split("Trader 3: ")[1]);
             return undoThreeWayTransaction(allUsers, allTransactions, allCurrency, stringSplit, attributes, allItems, allAdmins, undoLogger);
         } else if (stringSplit[0].split("; ")[1].equals("Two-way")) {
-            attributes.set(0,stringSplit[1].split("Trader 1: ")[1]);
-            attributes.set(1,stringSplit[2].split("Trader 2: ")[1]);
+            attributes.set(0, stringSplit[1].split("Trader 1: ")[1]);
+            attributes.set(1, stringSplit[2].split("Trader 2: ")[1]);
             return undoTwoWayTransaction(allUsers, allTransactions, allCurrency, stringSplit, attributes, allItems, allAdmins, undoLogger);
         } else if (stringSplit[0].split("; ")[1].equals("One-way")) {
-            attributes.set(1,stringSplit[2].split("Trader 2: ")[1]);
+            attributes.set(1, stringSplit[2].split("Trader 2: ")[1]);
             return undoOneWayTransaction(allUsers, allTransactions, allCurrency, stringSplit, attributes, allItems, allAdmins, undoLogger);
         } else if (stringSplit[0].split("; ")[1].equals("Monetized One-way")) {
-            attributes.set(1,stringSplit[2].split("Trader 2: ")[1]);
+            attributes.set(1, stringSplit[2].split("Trader 2: ")[1]);
             return undoOneWayTransaction(allUsers, allTransactions, allCurrency, stringSplit, attributes, allItems, allAdmins, undoLogger);
         }
         return null;
@@ -395,14 +396,14 @@ public class UndoAction implements AdminMainMenuOptions {
     /**
      * Helper function for undoTransaction(); deals with undoing one-way and monetized one-way transactions
      *
-     * @param allAdmins AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
-     * @param allUsers UserManager which stores all the Users in the system
-     * @param allItems ItemManager which stores the system's inventory
+     * @param allAdmins       AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
+     * @param allUsers        UserManager which stores all the Users in the system
+     * @param allItems        ItemManager which stores the system's inventory
      * @param allTransactions TransactionManager which stores and edits all Transactions in the system
-     * @param allCurrency CurrencyManager which deals with the in-system currency
-     * @param undoLogger Logger that logs actions that happen in the system
-     * @param attributes the attributes of the log- contains user info, item info and transaction info
-     * @param stringSplit helper variable which just stores a split version of the log
+     * @param allCurrency     CurrencyManager which deals with the in-system currency
+     * @param undoLogger      Logger that logs actions that happen in the system
+     * @param attributes      the attributes of the log- contains user info, item info and transaction info
+     * @param stringSplit     helper variable which just stores a split version of the log
      * @return null so admin can return back to the list of logs when undoTradeRequest is done
      */
     public Object undoOneWayTransaction(UserManager allUsers, TransactionManager allTransactions,
@@ -443,7 +444,8 @@ public class UndoAction implements AdminMainMenuOptions {
         } else if (user2 == null) { //if user doesn't exist in allUsers, prints error message
             System.out.println("User no longer exists or has changed their name. No actions can be undone.");
             return null;
-        } for (int j = 0; j < allTransactions.getAllTransactions().size(); j++) {
+        }
+        for (int j = 0; j < allTransactions.getAllTransactions().size(); j++) {
             if (allTransactions.getAllTransactions().get(j) instanceof OneWay &&
                     allTransactions.getAllTransactions().get(j).getTemp() == temp &&
                     allTransactions.getAllTransactions().get(j).getVirtual() == virtual &&
@@ -461,10 +463,12 @@ public class UndoAction implements AdminMainMenuOptions {
                     ((OneWayMonetized) allTransactions.getAllTransactions().get(j)).getSecondTrader().getName().equals(user2.getName())) {
                 transaction = allTransactions.getAllTransactions().get(j);
             }
-        } if (transaction == null) {
+        }
+        if (transaction == null) {
             System.out.println("Transaction could not be found! No actions can be undone.");
             return null;
-        } if (status != 4) { //cancelled
+        }
+        if (status != 4) { //cancelled
             //changes transaction to in progress
             allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, transaction, 4, allCurrency, undoLogger);
             String string = "Your one-way transaction with User <" + user2.getName() + "> for their item <" + itemName + "> has been cancelled by Admin!";
@@ -486,20 +490,20 @@ public class UndoAction implements AdminMainMenuOptions {
     /**
      * Helper function for undoTransaction(); deals with undoing two-way transactions
      *
-     * @param allAdmins AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
-     * @param allUsers UserManager which stores all the Users in the system
-     * @param allItems ItemManager which stores the system's inventory
+     * @param allAdmins       AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
+     * @param allUsers        UserManager which stores all the Users in the system
+     * @param allItems        ItemManager which stores the system's inventory
      * @param allTransactions TransactionManager which stores and edits all Transactions in the system
-     * @param allCurrency CurrencyManager which deals with the in-system currency
-     * @param undoLogger Logger that logs actions that happen in the system
-     * @param attributes the attributes of the log- contains user info, item info and transaction info
-     * @param stringSplit helper variable which just stores a split version of the log
+     * @param allCurrency     CurrencyManager which deals with the in-system currency
+     * @param undoLogger      Logger that logs actions that happen in the system
+     * @param attributes      the attributes of the log- contains user info, item info and transaction info
+     * @param stringSplit     helper variable which just stores a split version of the log
      * @return null so admin can return back to the list of logs when undoTradeRequest is done
      */
     private Object undoTwoWayTransaction(UserManager allUsers, TransactionManager allTransactions,
-                                           CurrencyManager allCurrency, String[] stringSplit,
-                                           List<String> attributes, ItemManager allItems, AdminManager allAdmins,
-                                           Logger undoLogger) {
+                                         CurrencyManager allCurrency, String[] stringSplit,
+                                         List<String> attributes, ItemManager allItems, AdminManager allAdmins,
+                                         Logger undoLogger) {
         Transaction transaction = null;
         User user1 = null;
         User user2 = null;
@@ -536,7 +540,8 @@ public class UndoAction implements AdminMainMenuOptions {
         } else if (user2 == null) { //if user doesn't exist in allUsers, prints error message
             System.out.println("User no longer exists or has changed their name. No actions can be undone.");
             return null;
-        } for (int j = 0; j < user1.getPendingTrades().size(); j++) {
+        }
+        for (int j = 0; j < user1.getPendingTrades().size(); j++) {
             if (allTransactions.getAllTransactions().get(j) instanceof TwoWay &&
                     allTransactions.getAllTransactions().get(j).getTemp() == temp &&
                     allTransactions.getAllTransactions().get(j).getVirtual() == virtual &&
@@ -547,10 +552,12 @@ public class UndoAction implements AdminMainMenuOptions {
                     ((TwoWay) allTransactions.getAllTransactions().get(j)).getSecondTrader().getName().equals(user2.getName())) {
                 transaction = allTransactions.getAllTransactions().get(j);
             }
-        } if (transaction == null) {
+        }
+        if (transaction == null) {
             System.out.println("Transaction could not be found! No actions can be undone.");
             return null;
-        } if (status != 4) { //cancelled
+        }
+        if (status != 4) { //cancelled
             //cancels
             allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, transaction, 4, allCurrency, undoLogger);
             String string = "Your two-way transaction with User <" + user2.getName() + "> for their item <" + itemName2 + "> in \n" +
@@ -576,14 +583,14 @@ public class UndoAction implements AdminMainMenuOptions {
     /**
      * Helper function for undoTransaction(); deals with undoing three-way transactions
      *
-     * @param allAdmins AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
-     * @param allUsers UserManager which stores all the Users in the system
-     * @param allItems ItemManager which stores the system's inventory
+     * @param allAdmins       AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
+     * @param allUsers        UserManager which stores all the Users in the system
+     * @param allItems        ItemManager which stores the system's inventory
      * @param allTransactions TransactionManager which stores and edits all Transactions in the system
-     * @param allCurrency CurrencyManager which deals with the in-system currency
-     * @param undoLogger Logger that logs actions that happen in the system
-     * @param attributes the attributes of the log- contains user info, item info and transaction info
-     * @param stringSplit helper variable which just stores a split version of the log
+     * @param allCurrency     CurrencyManager which deals with the in-system currency
+     * @param undoLogger      Logger that logs actions that happen in the system
+     * @param attributes      the attributes of the log- contains user info, item info and transaction info
+     * @param stringSplit     helper variable which just stores a split version of the log
      * @return null so admin can return back to the list of logs when undoTradeRequest is done
      */
     private Object undoThreeWayTransaction(UserManager allUsers, TransactionManager allTransactions,
@@ -647,10 +654,12 @@ public class UndoAction implements AdminMainMenuOptions {
                     ((ThreeWay) allTransactions.getAllTransactions()).getThirdTrader().getName().equals(user3.getName())) {
                 transaction = user1.getPendingTrades().get(j);
             }
-        } if (transaction == null) {
+        }
+        if (transaction == null) {
             System.out.println("Transaction could not be found! No actions can be undone.");
             return null;
-        } if (status != 4) { //cancelled
+        }
+        if (status != 4) { //cancelled
             //changes transaction to in progress
             allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, transaction, 4, allCurrency, undoLogger);
             String string = "Your three-way transaction with User <" + user2.getName() + "> for their item <" + itemName2 + "> and \n" +
@@ -688,11 +697,11 @@ public class UndoAction implements AdminMainMenuOptions {
     /**
      * Undoes additions to wishlist by removing the item from the wishlist.
      *
-     * @param allUsers UserManager which stores all the Users in the system
+     * @param allUsers  UserManager which stores all the Users in the system
      * @param chosenLog chosenLog the Log containing information about the wishlist addition
      * @return null so admin can return back to the list of logs when undoTradeRequest is done
      */
-    public Object undoWishlist (UserManager allUsers, String chosenLog){
+    public Object undoWishlist(UserManager allUsers, String chosenLog) {
         User temp = new User(chosenLog.split(" ")[2], "1");
         User user = allUsers.getUser(temp);
         if (user == null) {

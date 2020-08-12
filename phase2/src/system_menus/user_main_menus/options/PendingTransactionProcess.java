@@ -1,24 +1,30 @@
 package system_menus.user_main_menus.options;
 
+import accounts.admins.AdminManager;
+import accounts.users.User;
+import accounts.users.UserManager;
+import accounts.users.UserMessageManager;
+import currency.CurrencyManager;
+import items.ItemManager;
+import meetings.MeetingManager;
+import requests.TradeRequestManager;
+import transactions.OneWay;
+import transactions.Transaction;
+import transactions.TransactionManager;
+import transactions.TwoWay;
+
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;
-import transactions.*;
-import meetings.*;
-import items.*;
-import accounts.users.*;
-import accounts.admins.*;
-import requests.*;
-import currency.*;
 
 public class PendingTransactionProcess implements UserMainMenuOptions {
-
 
 
     /**
      * Displays the pending transactions that the User user has. It will allow users to approve or edit the transactions
      * they currently have pending.
-     *  @param user            the User that wants to view their pending transactions
+     *
+     * @param user            the User that wants to view their pending transactions
      * @param allItems        ItemManager that stores the system's inventory
      * @param allUsers        UserManager that stores all the Users in the system
      * @param allMeetings     MeetingManager that deals with the creation of meetings
@@ -92,7 +98,7 @@ public class PendingTransactionProcess implements UserMainMenuOptions {
                 if (input.equals("1")) { //if they approve
                     //need another method for usermanager so that transactions in progress but meeting is set
                     System.out.print("Your meeting has been set!\n");
-                    allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 1, currencyManager, undoLogger );
+                    allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 1, currencyManager, undoLogger);
 
                 } else if (input.equals(("2"))) {
                     //they want to propose a new time
@@ -106,7 +112,7 @@ public class PendingTransactionProcess implements UserMainMenuOptions {
                     if (tt.getInitialMeeting().geteditHistory(user.getName()) == allAdmins.getMeetingEditThreshold()) {
                         //one person reached 3 edits, its time to delete this transaction
                         allTransactions.handleCancelledTrade(allAdmins, allUsers, selectedT, currencyManager);
-                        allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 4, currencyManager, undoLogger );
+                        allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 4, currencyManager, undoLogger);
 
                         System.out.print("\uD83D\uDE22 Sorry! You couldn't agree on a time so we deleted the transaction!\n" +
                                 "Please try again!\n");
@@ -128,7 +134,7 @@ public class PendingTransactionProcess implements UserMainMenuOptions {
                 } else if (input.equals("3")) {
                     //need another method for usermanager so that transactions in progress but meeting is set
                     System.out.print("Your meeting has been cancelled!\n");
-                    allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 4, currencyManager, undoLogger );
+                    allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 4, currencyManager, undoLogger);
                 }
             }
         }
@@ -151,7 +157,7 @@ public class PendingTransactionProcess implements UserMainMenuOptions {
                 String input = sc1.nextLine();
                 if (input.equals("1")) { //if they approve
                     //need another method for usermanager so that transactions in progress but meeting is set
-                    allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 1, currencyManager, undoLogger );
+                    allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, selectedT, 1, currencyManager, undoLogger);
 
 
                 } else if (input.equals(("2"))) { //they want to propose a new time

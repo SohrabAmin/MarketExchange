@@ -1,5 +1,17 @@
 package system_menus.user_main_menus.options;
 
+import accounts.admins.AdminManager;
+import accounts.users.User;
+import accounts.users.UserManager;
+import accounts.users.UserMessageManager;
+import currency.CurrencyManager;
+import items.Item;
+import items.ItemManager;
+import meetings.Meeting;
+import meetings.MeetingManager;
+import requests.*;
+import transactions.*;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -7,25 +19,14 @@ import java.time.Month;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.HashMap;
-import transactions.*;
-import meetings.*;
-import items.*;
-import accounts.users.*;
-import accounts.admins.*;
-import requests.*;
-import currency.*;
 
 public class ApproveTrade implements UserMainMenuOptions {
 
 
-
     //this is taken from
 // https://stackoverflow.com/questions/22195093/android-how-to-get-tomorrows-date
-    public static class DateUtil
-    {
-        public static Date addDays(Date date, int days)
-        {
+    public static class DateUtil {
+        public static Date addDays(Date date, int days) {
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
             cal.add(Calendar.DATE, days); //minus number would decrement the days
@@ -67,23 +68,23 @@ public class ApproveTrade implements UserMainMenuOptions {
                     //its either buy or rent
                     if (t.getTemp()) { //renting over here
                         System.out.print("\uD83E\uDD1D" + (i + 1) + ". " + t.getFirstUser().getName() +
-                                " Wants to rent " + t.getItem().getName() + "\n");
+                                " wants to rent " + t.getItem().getName() + "\n");
                     } else {
                         String virtually = "";
-                        if (t.getVirtual()){
+                        if (t.getVirtual()) {
                             virtually = " virtually via email " + t.getMessage();
                         }
 
                         System.out.print("\uD83E\uDD1D" + (i + 1) + ". " + t.getFirstUser().getName() +
-                                " Wants to buy " + t.getItem().getName() + virtually +  "\n");
+                                " wants to buy " + t.getItem().getName() + virtually + "\n");
                     }
                 } else { //then they are one way trades
                     if (t.getTemp()) { //trading temporary over here
                         System.out.print("\uD83E\uDD1D" + (i + 1) + ". " + t.getFirstUser().getName() +
-                                " Wants to temporarily borrow " + t.getItem().getName() + "\n");
+                                " wants to temporarily borrow " + t.getItem().getName() + "\n");
                     } else {
                         System.out.print("\uD83E\uDD1D" + (i + 1) + ". " + t.getFirstUser().getName() +
-                                " Wants to permanently have " + t.getItem().getName() + "\n");
+                                " wants to permanently have " + t.getItem().getName() + "\n");
                     }
 
                 }
@@ -91,7 +92,7 @@ public class ApproveTrade implements UserMainMenuOptions {
             if (Trades.get(i) instanceof TypeTwoRequest) {
                 TypeTwoRequest t = (TypeTwoRequest) Trades.get(i);
                 //monitized or not
-                System.out.print(t.getFirstUser().getName() + " wants item: " + t.getSecondItem().getName() + " in return for " + t.getFirstItem().getName() +
+                System.out.print("\uD83E\uDD1D" + (i + 1) + ". " + t.getFirstUser().getName() + " wants item: " + t.getSecondItem().getName() + " in return for " + t.getFirstItem().getName() +
                         "\n");
             }
             if (Trades.get(i) instanceof TypeThreeRequest) {
@@ -116,7 +117,7 @@ public class ApproveTrade implements UserMainMenuOptions {
                         foryouritem = t.getThirdItem();
 
                     }
-                    System.out.print("You are asked to join 3 way trade with " + one + " and " + two +
+                    System.out.print("\uD83E\uDD1D" + (i + 1) + ". " + "You are asked to join 3 way trade with " + one + " and " + two +
                             " and you will get item " +
                             youget.getName() + " for your item " + foryouritem.getName() + "\n");
 
@@ -141,7 +142,7 @@ public class ApproveTrade implements UserMainMenuOptions {
                         foryouritem = t.getThirdItem();
 
                     }
-                    System.out.print(t.getSecondUser().getName() + " decided to extend the 3 way trade! You will now get " + youget.getName() + " in exchange " +
+                    System.out.print("\uD83E\uDD1D" + (i + 1) + ". " + t.getSecondUser().getName() + " decided to extend the 3 way trade! You will now get " + youget.getName() + " in exchange " +
                             "for " + foryouritem.getName() + "\n");
 
                 }
@@ -183,7 +184,7 @@ public class ApproveTrade implements UserMainMenuOptions {
             //if monetized
             System.out.print("Here is the trade you selected: " + t.getItem() + "\n");
             //if its a virtual trade
-            if (t.getVirtual()){
+            if (t.getVirtual()) {
                 System.out.print("This is a virtual trade.\n");
             }
 
@@ -194,8 +195,7 @@ public class ApproveTrade implements UserMainMenuOptions {
 
 
                 //if it is virtual
-                if (t.getVirtual())
-                {
+                if (t.getVirtual()) {
                     OneWayMonetized final1 = new OneWayMonetized(t.getFirstUser(), t.getItem(), false, t.getVirtual(), t.getMessage());
                     //no one has approved yet.
 
@@ -643,7 +643,7 @@ public class ApproveTrade implements UserMainMenuOptions {
                     int meetingDay = currentdate.getDayOfMonth() + commonDayIncrement;
                     String meetingDayString = String.valueOf(meetingDay);
 
-                    int meetingMonth = Calendar.getInstance().get(Calendar.MONTH) + 1 ;
+                    int meetingMonth = Calendar.getInstance().get(Calendar.MONTH) + 1;
                     //adding 1 cuz months in java are 0 indexed
 
                     String meetingMonthString = String.valueOf(meetingMonth);
@@ -660,7 +660,7 @@ public class ApproveTrade implements UserMainMenuOptions {
                     finalizedmeeting.setConfirmedTrue();
                     finalizedmeeting.initial3confirm(t.getFirstUser().getName(), t.getSecondUser().getName(), t.getThirdUser().getName());
                     ThreeWay final3 = new ThreeWay(t.getFirstItem(), t.getSecondItem(), t.getThirdItem(), t.getTemp(), t.getVirtual());
-                        allTransactions.addToPendingTransactions(final3, allUsers, currencyManager);
+                    allTransactions.addToPendingTransactions(final3, allUsers, currencyManager);
                     undoLogger.log(Level.INFO, final3.toString());
 
 
@@ -669,23 +669,23 @@ public class ApproveTrade implements UserMainMenuOptions {
 
                     allTransactions.updateTransactionStatus(allItems, allUsers, allAdmins, final3, 1, currencyManager, undoLogger);
 
-                        //FINALLY EVERYONE IS HAPPY LETS PROPOSE A MEETING
+                    //FINALLY EVERYONE IS HAPPY LETS PROPOSE A MEETING
 
                     return user;
-                    } else if (input.equals("2")) {
-                        allTradeRequests.updateRequestStatus(allUsers, cTrade, 2);
-                        System.out.print("Denied!\n");
-                        return null;
-                    }
+                } else if (input.equals("2")) {
+                    allTradeRequests.updateRequestStatus(allUsers, cTrade, 2);
+                    System.out.print("Denied!\n");
+                    return null;
                 }
             }
+        }
         return null;
 
     }
 
-        private int getMonthNumber(String monthName) {
-            return Month.valueOf(monthName.toUpperCase()).getValue();
-        }
+    private int getMonthNumber(String monthName) {
+        return Month.valueOf(monthName.toUpperCase()).getValue();
+    }
 
     /**
      * Helper function. If User user rejects the trade, it will remove the Trade Request from the user's pending
