@@ -117,6 +117,10 @@ public class NormalUserMainMenu implements DifferentUserMainMenu {
 
         int meetings = 0;
         for (int i = 0; i < allUsers.getUser(user).getAgreedUponMeeting().size(); i++) {
+           if (allUsers.getUser(user).getAgreedUponMeeting().get(i).getVirtual()) {
+               meetings = meetings + 1;
+               continue;
+           }
             if (allUsers.getUser(user).getAgreedUponMeeting().get(i).getInitialMeeting().userconfirmed(user.getName()) == 0)
                 meetings = meetings + 1;
         }
