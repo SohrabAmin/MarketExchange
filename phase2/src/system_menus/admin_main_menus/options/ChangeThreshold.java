@@ -71,6 +71,9 @@ public class ChangeThreshold implements AdminMainMenuOptions {
             System.out.println("Invalid input. Please try again.");
             return null;
         }
+        if ((int) thresholdOption > 4) {
+            System.out.println("Invalid input! Please try again.");
+        }
         //input was valid, now prompts admin to input what they want the new threshold to be
         System.out.println("Please enter the integer you wish to change the system threshold to or 'back' to the previous page.");
         Object newThreshold = null;
