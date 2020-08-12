@@ -40,13 +40,13 @@ public class ChangeThreshold implements AdminMainMenuOptions {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         //prints the current thresholds of the system
         System.out.println("\nHere are the current thresholds:");
-        System.out.println("Lent - borrowed threshold: " + allAdmins.getLentMinusBorrowedThreshold());
+        System.out.println("Lent - Borrowed Threshold: " + allAdmins.getLentMinusBorrowedThreshold());
         System.out.println("Weekly transaction limit: " + allAdmins.getWeeklyTransactionLimit());
         System.out.println("Incomplete transaction limit: " + allAdmins.getIncompleteTransactionLimit());
         System.out.println("Meeting edits threshold: " + allAdmins.getMeetingEditThreshold());
         //prompts user to enter what threshold they wish to edit
         System.out.println("\nWhich threshold would you like to edit? Please enter the number beside the option.");
-        System.out.println("1. Lent - borrowed threshold\n2. Weekly Transaction Limit\n" +
+        System.out.println("1. Lent - Borrowed Threshold\n2. Weekly Transaction Limit\n" +
                 "3. Incomplete Transaction Limit\n4. Meeting Edits Threshold\n");
         System.out.println("Enter 'back' to return to the main menu.");
         Object thresholdOption = null;
@@ -93,7 +93,7 @@ public class ChangeThreshold implements AdminMainMenuOptions {
         if (newThreshold instanceof Integer) {
             if ((Integer) thresholdOption == 1) {
                 allAdmins.setLentMinusBorrowedThreshold((Integer) newThreshold);
-                System.out.println("\nThe threshold has been changed successfully. The lend - borrow threshold is now: " +
+                System.out.println("\nThe threshold has been changed successfully. The lent - borrowed threshold is now: " +
                         newThreshold + ".");
             } else if ((Integer) thresholdOption == 2) {
                 allAdmins.setWeeklyTransactionLimit((Integer) newThreshold);
@@ -109,7 +109,7 @@ public class ChangeThreshold implements AdminMainMenuOptions {
                         "threshold is now: " + newThreshold + ".");
             }
         } else {
-            System.out.println("\nThe threshold has been changed unsuccessfully. Please try again.");
+            System.out.println("\nNo threshold has been changed. Please try again.");
             return null;
         }
         return null;
