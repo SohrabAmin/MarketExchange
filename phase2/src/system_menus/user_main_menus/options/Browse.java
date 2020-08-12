@@ -117,7 +117,7 @@ public class Browse implements UserMainMenuOptions {
             System.out.println("Please enter '1' to view only items from users in the same location as you or "
                     + "'2' to view all items in the system.");
             String input = sc.nextLine();
-            if (input.equals('1')) {
+            if (input.equals("1")) {
                 List<Item> temp = new ArrayList<>();
                 for (int i = 0; i < allItems.getSystemInventory().size(); i++) {
                     if (allItems.getSystemInventory().get(i).getOwner().getLocation().equals(user.getLocation())) {
@@ -130,7 +130,7 @@ public class Browse implements UserMainMenuOptions {
                 } else { //temp.size() != 0
                     allItems2 = temp;
                 }
-            } else if (!input.equals('2')) {
+            } else if (!input.equals("2")) {
                 System.out.println("That is not a valid option, please try again!");
                 return null;
             }
