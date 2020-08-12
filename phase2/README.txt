@@ -20,6 +20,12 @@ Username: Tina - Password: 123 - items they own: Shoe, ebook, sock, book
 Username: Mo - Password: 123 - items they own: pen
 Username: A -  Password: 123 - items they own: phone
 
+The current system thresholds are as follows:
+lentMinusBorrowedThreshold = 1
+meetingEditThreshold = 3
+weeklyTransactionLimit = 7
+incompleteTransactionLimit = 3
+
 
 
 
