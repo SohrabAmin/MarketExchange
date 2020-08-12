@@ -33,11 +33,6 @@ public class ItemManager implements Serializable {
     }
 
 
-    public void change(String option, boolean status) {
-        return;
-
-
-    }
 
 
     /**
