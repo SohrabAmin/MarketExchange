@@ -1,16 +1,19 @@
 package system_menus.user_main_menus.options;
 
+import accounts.admins.AdminManager;
+import accounts.users.User;
+import accounts.users.UserManager;
+import accounts.users.UserMessageManager;
+import currency.CurrencyManager;
+import items.Item;
+import items.ItemManager;
+import meetings.MeetingManager;
+import requests.TradeRequestManager;
+import transactions.TransactionManager;
+
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;
-
-import transactions.*;
-import meetings.*;
-import items.*;
-import accounts.users.*;
-import accounts.admins.*;
-import requests.*;
-import currency.*;
 
 public class InventoryManager implements UserMainMenuOptions {
     /**
@@ -118,8 +121,7 @@ public class InventoryManager implements UserMainMenuOptions {
             //remove the item they requested from inventory
             Item itemSelected = in.get((Integer) input2 - 1);
 
-            if (!itemSelected.getRentable() || !itemSelected.getSellable())
-            {
+            if (!itemSelected.getRentable() || !itemSelected.getSellable()) {
                 System.out.print("This item is not rentable or sellable!\n");
                 return user;
             }
@@ -136,10 +138,10 @@ public class InventoryManager implements UserMainMenuOptions {
                     "\nCurrently the item is:" + output + "\n");
 
             //only sellable
-            if (itemSelected.getSellable() && !itemSelected.getRentable()){
+            if (itemSelected.getSellable() && !itemSelected.getRentable()) {
                 System.out.print("Please enter the new price.\n");
 
-                 input2 = sc.nextLine();
+                input2 = sc.nextLine();
 
                 try {
                     //will try to turn the input into an integer
@@ -151,13 +153,7 @@ public class InventoryManager implements UserMainMenuOptions {
                 }
 
 
-
-
-
             }
-
-
-
 
 
             return user;
