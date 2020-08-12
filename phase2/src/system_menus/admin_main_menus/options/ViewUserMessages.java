@@ -21,17 +21,17 @@ public class ViewUserMessages implements AdminMainMenuOptions {
     /**
      * Display in Admin's menu. Allow admin to view, reply and delete user's messages.
      *
-     * @param admin The Admin currently logged into the system
-     * @param allAdmins AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
-     * @param allUsers UserManager which stores all the Users in the system
+     * @param admin           The Admin currently logged into the system
+     * @param allAdmins       AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
+     * @param allUsers        UserManager which stores all the Users in the system
      * @param allUserMessages UserMessageManager which stores all the messages sent to Admin
-     * @param allItems ItemManager which stores the system's inventory
+     * @param allItems        ItemManager which stores the system's inventory
      * @param allTransactions TransactionManager which stores and edits all Transactions in the system
-     * @param allCurrency CurrencyManager which deals with the in-system currency
-     * @param undoLogger Logger that logs actions in the system
-     * return depending on what the User inputs it will return different objects:
-     * returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
-     * returns null if the input is invalid, or the admin's input is successfully done with messages shown to admin.
+     * @param allCurrency     CurrencyManager which deals with the in-system currency
+     * @param undoLogger      Logger that logs actions in the system
+     *                        return depending on what the User inputs it will return different objects:
+     *                        returns String "back" to tell mainmenu() to prompt main menu again so User can choose another
+     *                        returns null if the input is invalid, or the admin's input is successfully done with messages shown to admin.
      */
     public Object execute(Admin admin, AdminManager allAdmins, UserManager allUsers, ItemManager allItems,
                           UserMessageManager allUserMessages, TransactionManager allTransactions,
@@ -47,7 +47,7 @@ public class ViewUserMessages implements AdminMainMenuOptions {
         for (int i = 0; i < allUserMessages.getAllUserMessage().size(); i++) {
             String person = allUserMessages.getAllUserMessage().get(i).get(0);
             String mess = allUserMessages.getAllUserMessage().get(i).get(1);
-            System.out.println((i+1) + ". " + "From user:" + person + "\nMessage: " + mess);
+            System.out.println((i + 1) + ". " + "From user:" + person + "\nMessage: " + mess);
         }
 
         Scanner sc = new Scanner(System.in);
@@ -110,7 +110,7 @@ public class ViewUserMessages implements AdminMainMenuOptions {
             if (confirmation.equals("1")) {
                 allUsers.addToAdminMessages(person, reply + "\nRE: " + allUserMessages.getAllUserMessage().get((Integer) replyTo - 1).get(1));
                 System.out.println("Your message has been sent successfully!");
-            } else if(confirmation.equals("2")) {
+            } else if (confirmation.equals("2")) {
                 System.out.println("Your message has been cancelled.");
                 return null;
             } else {

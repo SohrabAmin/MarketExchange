@@ -1,25 +1,30 @@
 package system_menus.user_main_menus.options;
 
+import accounts.admins.AdminManager;
+import accounts.users.User;
+import accounts.users.UserManager;
+import accounts.users.UserMessageManager;
+import currency.CurrencyManager;
+import items.Item;
+import items.ItemManager;
+import meetings.MeetingManager;
+import requests.TradeRequestManager;
+import transactions.TransactionManager;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;
-import transactions.*;
-import meetings.*;
-import items.*;
-import accounts.users.*;
-import accounts.admins.*;
-import requests.*;
-import currency.*;
 
 public class Browse implements UserMainMenuOptions {
 
     /**
      * Allows User user to browse the System's inventory and add any of the items in the System's inventory to
      * their wishlist.
-     *  @param user     the User that wishes to browse the inventory and add items to their wishlist
-     * @param allItems the ItemManager that stores the system's inventory
-     * @param allUsers the UserManager that stores the User user
+     *
+     * @param user            the User that wishes to browse the inventory and add items to their wishlist
+     * @param allItems        the ItemManager that stores the system's inventory
+     * @param allUsers        the UserManager that stores the User user
      * @param currencyManager CurrencyManager which deals with the in-system currency
      * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
      * String "exit" if the user is to be logged out.
@@ -46,11 +51,11 @@ public class Browse implements UserMainMenuOptions {
         if (input.equals("back")) {
             return "back";
         }
-            if (((String) input).matches("[0-9]+") == false){
+        if (((String) input).matches("[0-9]+") == false) {
 
-                System.out.print("\u274CCommand Invalid. Please try again!\n");
-                return null;
-            }
+            System.out.print("\u274CCommand Invalid. Please try again!\n");
+            return null;
+        }
         try {
             input = Integer.parseInt((String) input);
         } catch (NumberFormatException e) {
@@ -59,13 +64,11 @@ public class Browse implements UserMainMenuOptions {
         }
 
 
-
-        if (((Integer)input < 1) || ((Integer)input > allItems2.size())){
+        if (((Integer) input < 1) || ((Integer) input > allItems2.size())) {
             System.out.print("\uD83D\uDE35Input is out of bound. Please try again!\n");
             return null;
 
         }
-
 
 
         //checks to see if the ID of the item actually exists
@@ -146,10 +149,10 @@ public class Browse implements UserMainMenuOptions {
 
 
             if (allItems2.get(i).getSellable()) sell = " [SELLABLE] price: " + allItems2.get(i).getSellPrice() + " ";
-            if (allItems2.get(i).getRentable()) rent = " [RENTABLE] price: " + allItems2.get(i).getRentPrice() + " per " + allItems2.get(i).getRentDuration() + " days ";
+            if (allItems2.get(i).getRentable())
+                rent = " [RENTABLE] price: " + allItems2.get(i).getRentPrice() + " per " + allItems2.get(i).getRentDuration() + " days ";
             if (allItems2.get(i).getTradable()) trade = " [TRADABLE] ";
             if (allItems2.get(i).getVirtual()) virtual = "[VIRTUAL] ";
-
 
 
             String emoji = "\uD83D\uDCE6 ";

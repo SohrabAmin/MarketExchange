@@ -1,8 +1,5 @@
 package meetings;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.HashMap;
 
 /**
@@ -11,7 +8,7 @@ import java.util.HashMap;
  */
 public class AvailabilityChart {
 
-    private HashMap <Integer, Boolean> chart;
+    private HashMap<Integer, Boolean> chart;
 
 
     /**
@@ -19,34 +16,34 @@ public class AvailabilityChart {
      * instantiated (1-7), and the value as a boolean
      * representing whether they are available or not (True: They are available. False: They are not available). All values are initially false.
      */
-    public AvailabilityChart (){
+    public AvailabilityChart() {
         chart = new HashMap<>();
-
 
 
         //initializing the chart so that the person is completely unavailable
         for (int i = 1; i < 8; i++)
-        chart.put((Integer) i,false);
+            chart.put((Integer) i, false);
 
     }
 
     /**
      * Alters the values of the chart. This is called when a User wants to choose a day in which the are free to meet up (set the corresponding day to true).
-     * @param day an Integer representing the day in question.
+     *
+     * @param day       an Integer representing the day in question.
      * @param available a boolean for whether they are free to meet up or not.
      */
-    public void editChart (Integer day, boolean available){
-      chart.replace(day, available);
+    public void editChart(Integer day, boolean available) {
+        chart.replace(day, available);
     }
 
     /**
      * Gets the current version of a User's chart.
+     *
      * @return HashMap of chart (key: Integer, value: Boolean)
      */
-    public HashMap <Integer, Boolean> getChart(){
-      return chart;
+    public HashMap<Integer, Boolean> getChart() {
+        return chart;
     }
-
 
 
 }

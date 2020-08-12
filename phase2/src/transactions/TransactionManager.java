@@ -1,18 +1,18 @@
 package transactions;
 
+import accounts.admins.AdminManager;
 import accounts.users.User;
 import accounts.users.UserManager;
-import accounts.admins.AdminManager;
+import currency.CurrencyManager;
+import items.Item;
+import items.ItemManager;
+import meetings.Meeting;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import meetings.*;
-import items.*;
-import currency.*;
 
 /**
  * Manages all Transactions. Changing their values by accessing their setters/getters. Stores all instances of Transactions. Should only be instantiated once.
@@ -53,11 +53,12 @@ public class TransactionManager implements Serializable {
      * Cancelled implies one of the following: User(s) did not show up to the Meeting or User(s) altered
      * meeting too many times, and completed means the Transaction was successful, and the Item(s) have been officially swapped.
      * Completed means either the finalizedMeeting had occurred (for permanent Transaction), or the secondExchange has occurred.
-     *  @param itemManager Class that manages Items.
+     *
+     * @param itemManager Class that manages Items.
      * @param userManager Class that manages Users.
      * @param transaction The given Transaction.
      * @param tradeStatus The current status of a given Transaction.
-     * @param undoLogger Keeps track of all actions that can be reasonably undone.
+     * @param undoLogger  Keeps track of all actions that can be reasonably undone.
      */
     public void updateTransactionStatus(ItemManager itemManager, UserManager userManager, AdminManager adminManager,
                                         Transaction transaction, int tradeStatus, CurrencyManager currencyManager, Logger undoLogger) {
@@ -84,11 +85,11 @@ public class TransactionManager implements Serializable {
                 user1 = userManager.getUser(((OneWay) transaction).getFirstTrader());
                 user2 = userManager.getUser(((OneWay) transaction).getSecondTrader());
                 user3 = null;
-            } else if(transaction instanceof TwoWay) {
+            } else if (transaction instanceof TwoWay) {
                 user1 = userManager.getUser(((TwoWay) transaction).getFirstTrader());
                 user2 = userManager.getUser(((TwoWay) transaction).getSecondTrader());
                 user3 = null;
-            }else{
+            } else {
                 user1 = userManager.getUser(((ThreeWay) transaction).getFirstTrader());
                 user2 = userManager.getUser(((ThreeWay) transaction).getSecondTrader());
                 user3 = userManager.getUser(((ThreeWay) transaction).getThirdTrader());
@@ -97,7 +98,7 @@ public class TransactionManager implements Serializable {
             userManager.removeFromPendingTrades(user2, transaction);
             userManager.addToAgreedUponMeetings(user1, transaction);
             userManager.addToAgreedUponMeetings(user2, transaction);
-            if(user3 != null){
+            if (user3 != null) {
                 userManager.removeFromPendingTrades(user3, transaction);
                 userManager.addToAgreedUponMeetings(user3, transaction);
             }
@@ -118,7 +119,7 @@ public class TransactionManager implements Serializable {
 
         transaction.setTradeStatus(tradeStatus);
         if (!(transaction instanceof OneWayMonetized))
-        transaction.getInitialMeeting().setConfirmedTrue();
+            transaction.getInitialMeeting().setConfirmedTrue();
 
         undoLogger.log(Level.INFO, transaction.toString());
 
@@ -151,22 +152,22 @@ public class TransactionManager implements Serializable {
             user1 = userManager.getUser(((OneWay) transaction).getFirstTrader());
             user2 = userManager.getUser(((OneWay) transaction).getSecondTrader());
             user3 = null;
-            if(transaction instanceof OneWayMonetized){
+            if (transaction instanceof OneWayMonetized) {
                 currencyManager.holdFunds((OneWayMonetized) transaction, userManager);
             }
 
-        } else if(transaction instanceof TwoWay) {
+        } else if (transaction instanceof TwoWay) {
             user1 = userManager.getUser(((TwoWay) transaction).getFirstTrader());
             user2 = userManager.getUser(((TwoWay) transaction).getSecondTrader());
             user3 = null;
-        }else{
+        } else {
             user1 = userManager.getUser(((ThreeWay) transaction).getFirstTrader());
             user2 = userManager.getUser(((ThreeWay) transaction).getSecondTrader());
             user3 = userManager.getUser(((ThreeWay) transaction).getThirdTrader());
         }
         userManager.addToPendingTrades(user1, transaction);
         userManager.addToPendingTrades(user2, transaction);
-        if(user3 != null){
+        if (user3 != null) {
             userManager.addToPendingTrades(user3, transaction);
         }
         this.allTransactions.add(transaction);
@@ -189,14 +190,14 @@ public class TransactionManager implements Serializable {
             user1 = userManager.getUser(((OneWay) transaction).getFirstTrader());
             user2 = userManager.getUser(((OneWay) transaction).getSecondTrader());
             user3 = null;
-            if(transaction instanceof OneWayMonetized){
+            if (transaction instanceof OneWayMonetized) {
                 currencyManager.reverseHold((OneWayMonetized) transaction, userManager);
             }
-        } else if(transaction instanceof TwoWay){
+        } else if (transaction instanceof TwoWay) {
             user1 = userManager.getUser(((TwoWay) transaction).getFirstTrader());
             user2 = userManager.getUser(((TwoWay) transaction).getSecondTrader());
             user3 = null;
-        }else{
+        } else {
             user1 = userManager.getUser(((ThreeWay) transaction).getFirstTrader());
             user2 = userManager.getUser(((ThreeWay) transaction).getSecondTrader());
             user3 = userManager.getUser(((ThreeWay) transaction).getThirdTrader());
@@ -219,7 +220,7 @@ public class TransactionManager implements Serializable {
             userManager.pseudoFreeze(user2);
         }
 
-        if(user3 != null){
+        if (user3 != null) {
             userManager.addToCancelledTransactions(user3, transaction);
 
             if (transaction.getTradeStatus() == 0) {
@@ -257,7 +258,7 @@ public class TransactionManager implements Serializable {
 
             //item 1 is for user 1, item 2 is for user 2 etc, probably called wrong items when creating transaction
             //aka requesterItem vs receiverItem
-        } else if(transaction instanceof TwoWay) {
+        } else if (transaction instanceof TwoWay) {
             user1 = userManager.getUser(((TwoWay) transaction).getFirstTrader());
             user2 = userManager.getUser(((TwoWay) transaction).getSecondTrader());
             user3 = null;
@@ -270,7 +271,7 @@ public class TransactionManager implements Serializable {
             itemManager.setCurrentHolder(item1, user2);
             itemManager.setCurrentHolder(item2, user1);
 
-        }else{
+        } else {
             user1 = userManager.getUser(((ThreeWay) transaction).getFirstTrader());
             user2 = userManager.getUser(((ThreeWay) transaction).getSecondTrader());
             user3 = userManager.getUser(((ThreeWay) transaction).getThirdTrader());
@@ -291,7 +292,7 @@ public class TransactionManager implements Serializable {
         userManager.updateTradeHistory(user2, transaction);
         userManager.removeFromSecondAgreedUponMeetings(user1, transaction);
         userManager.removeFromSecondAgreedUponMeetings(user2, transaction);
-        if(user3 != null){
+        if (user3 != null) {
             userManager.updateTradeHistory(user3, transaction);
             userManager.removeFromSecondAgreedUponMeetings(user3, transaction);
         }
@@ -319,10 +320,10 @@ public class TransactionManager implements Serializable {
             itemManager.setCurrentHolder(item1, user1);
             user1.increaseEligibility();
             user2.decreaseEligibility();
-            if(transaction instanceof OneWayMonetized){
+            if (transaction instanceof OneWayMonetized) {
                 currencyManger.completeSale((OneWayMonetized) transaction, userManager);
             }
-        } else if(transaction instanceof TwoWay){
+        } else if (transaction instanceof TwoWay) {
             user1 = userManager.getUser(((TwoWay) transaction).getFirstTrader());
             user2 = userManager.getUser(((TwoWay) transaction).getSecondTrader());
             user3 = null;
@@ -335,7 +336,7 @@ public class TransactionManager implements Serializable {
             itemManager.setCurrentHolder(item1, user2);
             itemManager.setCurrentHolder(item2, user1);
 
-        }else{
+        } else {
             user1 = userManager.getUser(((ThreeWay) transaction).getFirstTrader());
             user2 = userManager.getUser(((ThreeWay) transaction).getSecondTrader());
             user3 = userManager.getUser(((ThreeWay) transaction).getThirdTrader());
@@ -356,7 +357,7 @@ public class TransactionManager implements Serializable {
         userManager.removeFromAgreedUponMeetings(user2, transaction);
         userManager.addToSecondAgreedUponMeetings(user1, transaction);
         userManager.addToSecondAgreedUponMeetings(user2, transaction);
-        if(user3 != null){
+        if (user3 != null) {
             userManager.removeFromAgreedUponMeetings(user3, transaction);
             userManager.addToSecondAgreedUponMeetings(user3, transaction);
         }
@@ -386,10 +387,10 @@ public class TransactionManager implements Serializable {
             itemManager.setOwner(item1, user1);
             user1.decreaseEligibility();
             user2.increaseEligibility();
-            if(transaction instanceof OneWayMonetized){
+            if (transaction instanceof OneWayMonetized) {
                 currencyManager.completeSale((OneWayMonetized) transaction, userManager);
             }
-        } else if(transaction instanceof TwoWay) {
+        } else if (transaction instanceof TwoWay) {
             user1 = userManager.getUser(((TwoWay) transaction).getFirstTrader());
             user2 = userManager.getUser(((TwoWay) transaction).getSecondTrader());
             user3 = null;
@@ -403,7 +404,7 @@ public class TransactionManager implements Serializable {
             itemManager.setCurrentHolder(item2, user1);
             itemManager.setOwner(item1, user2);
             itemManager.setOwner(item2, user1);
-        }else{
+        } else {
             user1 = userManager.getUser(((ThreeWay) transaction).getFirstTrader());
             user2 = userManager.getUser(((ThreeWay) transaction).getSecondTrader());
             user3 = userManager.getUser(((ThreeWay) transaction).getThirdTrader());
@@ -427,7 +428,7 @@ public class TransactionManager implements Serializable {
         userManager.updateTradeHistory(user2, transaction);
         userManager.removeFromAgreedUponMeetings(user1, transaction);
         userManager.removeFromAgreedUponMeetings(user2, transaction);
-        if(user3 != null){
+        if (user3 != null) {
             userManager.updateTradeHistory(user3, transaction);
             userManager.removeFromAgreedUponMeetings(user3, transaction);
         }
@@ -435,6 +436,7 @@ public class TransactionManager implements Serializable {
 
     /**
      * Returns a List of all System Transactions
+     *
      * @return List of Transactions
      */
     public List<Transaction> getAllTransactions() {

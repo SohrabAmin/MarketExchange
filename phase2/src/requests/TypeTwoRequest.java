@@ -22,11 +22,12 @@ public class TypeTwoRequest extends TradeRequest {
     /**
      * Constructs a TwoWay TradeRequest instance. This class is instantiated by the User that attempts to initiate the Transaction, and should be stored within the receiving User's
      * pendingRequest. If the receiving User accepts the conditions of the Transaction, they may accept the TradeRequest, and an instance of Transaction is created.
-     * @param item1 The User initiated the TradeRequest's Item.
-     * @param item2 The Item belonging to the
+     *
+     * @param item1   The User initiated the TradeRequest's Item.
+     * @param item2   The Item belonging to the
      * @param message A String representation of any message user1 may want to send user2.
-     * @param temp A boolean representing if the TradeRequest will be temp or not.
-     * @param date A Calender representing the date/time the TradeRequest was sent.
+     * @param temp    A boolean representing if the TradeRequest will be temp or not.
+     * @param date    A Calender representing the date/time the TradeRequest was sent.
      * @param virtual A boolean that determines the TradeRequest will have no meeting (true: This Transaction will not have a Meeting, false: This Transaction will have a Meeting.)
      */
     public TypeTwoRequest(Item item1, Item item2, String message, boolean temp, Calendar date, boolean virtual) {
@@ -39,6 +40,7 @@ public class TypeTwoRequest extends TradeRequest {
 
     /**
      * Gets the User who initiates the TypeTwoRequest
+     *
      * @return User that initiated the TypeTwoRequest
      */
     public User getFirstUser() {
@@ -47,6 +49,7 @@ public class TypeTwoRequest extends TradeRequest {
 
     /**
      * Gets the User who receives the TypeTwoRequest
+     *
      * @return User that received TypeTwoRequest
      */
     public User getSecondUser() {
@@ -55,6 +58,7 @@ public class TypeTwoRequest extends TradeRequest {
 
     /**
      * Gets the Item that the firstUser is offering.
+     *
      * @return The Item the firstUser is offering.
      */
     public Item getFirstItem() {
@@ -63,6 +67,7 @@ public class TypeTwoRequest extends TradeRequest {
 
     /**
      * Get the Item that the FirstUser wants from the secondUser.
+     *
      * @return The Item the firstUser wants.
      */
     public Item getSecondItem() {

@@ -7,13 +7,12 @@ import accounts.users.UserMessageManager;
 import currency.CurrencyManager;
 import items.ItemManager;
 import meetings.MeetingManager;
-import requests.TradeRequestManager;
 import notifications.NotifyUserOfAdminUndo;
 import notifications.NotifyUserOfVIPStatusChange;
+import requests.TradeRequestManager;
 import system_menus.ChosenOption;
 import system_menus.user_main_menus.options.*;
 import transactions.OneWay;
-import transactions.Transaction;
 import transactions.TransactionManager;
 import transactions.TwoWay;
 
@@ -27,22 +26,23 @@ public class NormalUserMainMenu implements DifferentUserMainMenu {
 
     /**
      * Displays number of notifications into a superscript format
+     *
      * @param i is the number of notifications
      * @return the string format in superscript
      */
-    String supcreater (int i){
-        if (i==0) return "";
-        else if  (i ==1) return  "[1]";
-        else if (i == 2 ) return   "[2]";
-        else  if (i == 3 ) return   "[3]";
-        else  if (i == 4 ) return   "[4]";
-        else  if (i == 5 ) return   "[5]";
-        else  if (i == 6 ) return   "[6]";
-        else  if (i == 7 ) return   "[7]";
-        else  if (i == 8 ) return   "[8]";
-        else if (i == 9 ) return   "[9]";
+    String supcreater(int i) {
+        if (i == 0) return "";
+        else if (i == 1) return "[1]";
+        else if (i == 2) return "[2]";
+        else if (i == 3) return "[3]";
+        else if (i == 4) return "[4]";
+        else if (i == 5) return "[5]";
+        else if (i == 6) return "[6]";
+        else if (i == 7) return "[7]";
+        else if (i == 8) return "[8]";
+        else if (i == 9) return "[9]";
         else {
-            return  "[+9]";
+            return "[+9]";
         }
     }
 
@@ -82,63 +82,55 @@ public class NormalUserMainMenu implements DifferentUserMainMenu {
         int pendingTradeRequests = allUsers.getUser(user).getPendingRequests().size();
 
 
-
         int pendingTransactions = allUsers.getUser(user).getPendingTrades().size();
 
-for (int t = 0; t <allUsers.getUser(user).getPendingTrades().size() ; t++ ) {
+        for (int t = 0; t < allUsers.getUser(user).getPendingTrades().size(); t++) {
 
-    if (allUsers.getUser(user).getPendingTrades().get(t) instanceof OneWay) {
-        OneWay tt = (OneWay) allUsers.getUser(user).getPendingTrades().get(t);
-        User b = tt.getSecondTrader();
-        if (user.getName().equals(b.getName())) {
-            b = tt.getFirstTrader();
+            if (allUsers.getUser(user).getPendingTrades().get(t) instanceof OneWay) {
+                OneWay tt = (OneWay) allUsers.getUser(user).getPendingTrades().get(t);
+                User b = tt.getSecondTrader();
+                if (user.getName().equals(b.getName())) {
+                    b = tt.getFirstTrader();
+                }
+                if (tt.getInitialMeeting().geteditHistory(user.getName()) > tt.getInitialMeeting().geteditHistory(b.getName()) || tt.getInitialMeeting().viewLastEdit().equals(user.getName())) {
+                    pendingTransactions = pendingTransactions - 1;
+                }
+            }
+            if (allUsers.getUser(user).getPendingTrades().get(t) instanceof TwoWay) {
+                TwoWay tt2 = (TwoWay) allUsers.getUser(user).getPendingTrades().get(t);
+                User b2 = tt2.getFirstTrader(); //user b is the other party of this trade
+                if (user.getName().equals(b2.getName())) {
+                    b2 = tt2.getSecondTrader();
+                }
+                if (tt2.getInitialMeeting().geteditHistory(user.getName()) > tt2.getInitialMeeting().geteditHistory(b2.getName()) || tt2.getInitialMeeting().viewLastEdit().equals(user.getName())) {
+                    //if they have already made an edit and we are waiting on the other person to approve/suggest a new meeting
+                    pendingTransactions = pendingTransactions - 1;
+
+                }
+            }
+
         }
-        if (tt.getInitialMeeting().geteditHistory(user.getName()) > tt.getInitialMeeting().geteditHistory(b.getName()) || tt.getInitialMeeting().viewLastEdit().equals(user.getName())) {
-            pendingTransactions = pendingTransactions - 1;
-        }
-    }
-    if (allUsers.getUser(user).getPendingTrades().get(t) instanceof TwoWay) {
-        TwoWay tt2 = (TwoWay) allUsers.getUser(user).getPendingTrades().get(t);
-        User b2 = tt2.getFirstTrader(); //user b is the other party of this trade
-        if (user.getName().equals(b2.getName())) {
-            b2 = tt2.getSecondTrader();
-        }
-        if (tt2.getInitialMeeting().geteditHistory(user.getName()) > tt2.getInitialMeeting().geteditHistory(b2.getName()) || tt2.getInitialMeeting().viewLastEdit().equals(user.getName())) {
-            //if they have already made an edit and we are waiting on the other person to approve/suggest a new meeting
-            pendingTransactions = pendingTransactions - 1;
-
-        }
-    }
-
-    }
-
-
-
 
 
         int outboundRequests = allUsers.getUser(user).getOutboundRequests().size();
 
 
-
-
         int meetings = 0;
-        for (int i = 0 ; i < allUsers.getUser(user).getAgreedUponMeeting().size(); i++){
+        for (int i = 0; i < allUsers.getUser(user).getAgreedUponMeeting().size(); i++) {
             if (allUsers.getUser(user).getAgreedUponMeeting().get(i).getInitialMeeting().userconfirmed(user.getName()) == 0)
                 meetings = meetings + 1;
         }
-        for (int i = 0 ; i < allUsers.getUser(user).getSecondAgreedUponMeeting().size(); i++){
+        for (int i = 0; i < allUsers.getUser(user).getSecondAgreedUponMeeting().size(); i++) {
             if (allUsers.getUser(user).getSecondAgreedUponMeeting().get(i).getReturnMeeting().userconfirmed(user.getName()) == 0)
                 meetings = meetings + 1;
         }
 
 
-
         int adminmssge = allUsers.getUser(user).getAdminMessages().size();
 
 
-
         if (adminmssge != 0 || meetings != 0 || outboundRequests != 0 || pendingTradeRequests != 0 ||
-        pendingTransactions != 0)
+                pendingTransactions != 0)
             System.out.print("You got notifications!\n");
 
         // if admin has undone any actions on user's account, a String will be printed when user logs in
@@ -157,15 +149,15 @@ for (int t = 0; t <allUsers.getUser(user).getPendingTrades().size() ; t++ ) {
                 "3. Browse Items\n" +
                 "4. Initiate Trade\n" +
                 "5. Manage Payment Options\n" +
-                "6. Approve Pending Trade Requests" + supcreater(pendingTradeRequests) +"\n" +
+                "6. Approve Pending Trade Requests" + supcreater(pendingTradeRequests) + "\n" +
                 "7. Add Item to inventory\n" +
                 "8. View most recent trades\n" +
                 "9. View most frequent trading partners\n" +
                 "10. View status of my items\n" +
-                "11. Approve meetings for pending transactions"+supcreater(pendingTransactions)+"\n" +
-                "12. Confirm trade is done from your side"+supcreater(meetings)+"\n" +
-                "13. View status of outbound requests"+supcreater(outboundRequests)+"\n" +
-                "14. Message Admin and view replies"+supcreater(adminmssge)+"\n" +
+                "11. Approve meetings for pending transactions" + supcreater(pendingTransactions) + "\n" +
+                "12. Confirm trade is done from your side" + supcreater(meetings) + "\n" +
+                "13. View status of outbound requests" + supcreater(outboundRequests) + "\n" +
+                "14. Message Admin and view replies" + supcreater(adminmssge) + "\n" +
                 "15. Change Account Settings\n" +
                 "16. Go on vacation\n" +
                 "17. Check my points\n" +

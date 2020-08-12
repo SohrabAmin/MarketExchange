@@ -1,29 +1,32 @@
 package system_menus.user_main_menus.options;
 
+import accounts.admins.AdminManager;
+import accounts.users.User;
+import accounts.users.UserManager;
+import accounts.users.UserMessageManager;
+import currency.CurrencyManager;
+import items.ItemManager;
+import meetings.MeetingManager;
+import requests.TradeRequestManager;
+import transactions.TransactionManager;
+
 import java.util.List;
 import java.util.logging.Logger;
-import transactions.*;
-import meetings.*;
-import items.*;
-import accounts.users.*;
-import accounts.admins.*;
-import requests.*;
-import currency.*;
 
 public class PrintTop3TradingPartners implements UserMainMenuOptions {
 
     /**
      * Prints out the User user's top 3 trading partners.
      *
-     * @param user The User currently logged into the system
-     * @param allItems ItemManager which stores the system's inventory
+     * @param user             The User currently logged into the system
+     * @param allItems         ItemManager which stores the system's inventory
      * @param allTradeRequests TradeRequestManager which stores and edits all the TradeRequests in the system
-     * @param allUsers UserManager which stores all the Users in the system
-     * @param allMeetings MeetingManager which deals with creating and editing meetings
-     * @param allTransactions TransactionManager which stores and edits all Transactions in the system
-     * @param allAdmins AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
-     * @param undoLogger Logger that logs actions in the system
-     * @param currencyManager CurrencyManager which deals with the in-system currency
+     * @param allUsers         UserManager which stores all the Users in the system
+     * @param allMeetings      MeetingManager which deals with creating and editing meetings
+     * @param allTransactions  TransactionManager which stores and edits all Transactions in the system
+     * @param allAdmins        AdminManager which holds all the information about Admins, system thresholds and FrozenRequests
+     * @param undoLogger       Logger that logs actions in the system
+     * @param currencyManager  CurrencyManager which deals with the in-system currency
      * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
      * String "exit" if the user is to be logged out.
      */

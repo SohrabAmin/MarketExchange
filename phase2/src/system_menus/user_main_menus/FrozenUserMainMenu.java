@@ -1,22 +1,25 @@
 package system_menus.user_main_menus;
 
+import accounts.admins.AdminManager;
+import accounts.users.User;
+import accounts.users.UserManager;
+import accounts.users.UserMessageManager;
+import currency.CurrencyManager;
+import items.ItemManager;
+import meetings.MeetingManager;
+import notifications.NotifyUserOfAdminUndo;
+import notifications.NotifyUserOfVIPStatusChange;
+import requests.TradeRequestManager;
+import system_menus.ChosenOption;
+import system_menus.user_main_menus.options.*;
+import transactions.TransactionManager;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.logging.Logger;
 
-import notifications.NotifyUserOfAdminUndo;
-import notifications.NotifyUserOfVIPStatusChange;
-import system_menus.ChosenOption;
-import transactions.*;
-import meetings.*;
-import items.*;
-import accounts.users.*;
-import accounts.admins.*;
-import requests.*;
-import currency.*;
-import system_menus.user_main_menus.options.*;
-public class FrozenUserMainMenu implements  DifferentUserMainMenu{
+public class FrozenUserMainMenu implements DifferentUserMainMenu {
     /**
      * Displays the main menu for a frozen or pseudoFrozen user and prompts user for input depending on what they want to do.
      * <p>
@@ -120,10 +123,10 @@ public class FrozenUserMainMenu implements  DifferentUserMainMenu{
                         return user;
                 }
                 Object result = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
-                        allTransactions, allAdmins, undoLogger, allUserMessages , currencyManager);
+                        allTransactions, allAdmins, undoLogger, allUserMessages, currencyManager);
                 while (result == null) {
                     result = option.executeOption(user, allItems, allTradeRequests, allUsers, allMeetings,
-                            allTransactions, allAdmins, undoLogger, allUserMessages,  currencyManager);
+                            allTransactions, allAdmins, undoLogger, allUserMessages, currencyManager);
                 }
                 return user;
             }

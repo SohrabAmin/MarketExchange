@@ -1,21 +1,25 @@
 package system_menus.user_main_menus.options;
 
+import accounts.admins.AdminManager;
+import accounts.users.User;
+import accounts.users.UserManager;
+import accounts.users.UserMessageManager;
+import currency.CurrencyManager;
+import items.ItemManager;
+import meetings.MeetingManager;
+import requests.TradeRequest;
+import requests.TradeRequestManager;
+import transactions.TransactionManager;
+
 import java.util.List;
 import java.util.logging.Logger;
-import transactions.*;
-import meetings.*;
-import items.*;
-import accounts.users.*;
-import accounts.admins.*;
-import requests.*;
-import currency.*;
 
 public class PrintOutboundRequests implements UserMainMenuOptions {
 
     /**
      * Prints a User's outbound TradeRequests
      *
-     * @param user User whose outbound TradeRequests are to be printed
+     * @param user            User whose outbound TradeRequests are to be printed
      * @param currencyManager CurrencyManager which deals with the in-system currency
      * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
      * String "exit" if the user is to be logged out.
@@ -31,7 +35,7 @@ public class PrintOutboundRequests implements UserMainMenuOptions {
             return user;
         }
         for (int i = 0; i < outbound.size(); i++) {
-            System.out.println( (i+1) + ". " + outbound.get(i).toString());
+            System.out.println((i + 1) + ". " + outbound.get(i).toString());
             int status = outbound.get(i).getStatus();
             //0: In progress, 1: Declined, 2: Accepted
             if (status == 0) {

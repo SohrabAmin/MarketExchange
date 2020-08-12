@@ -72,7 +72,7 @@ public class FreezeOrUnfreeze implements AdminMainMenuOptions {
      * If they unfreeze a User, it will remove their request from frozenRequests and change their status isPseudoFrozen and
      * isFrozen to false.
      *
-     * @param allUsers UserManager which stores all the users in the system
+     * @param allUsers  UserManager which stores all the users in the system
      * @param allAdmins Adminmanager which stores the FrozenRequests
      * @return depending on what the Admin inputs it will return different objects:
      * returns null to tell mainmenu() to call system_options.admin_main_menus.options.FreezeOrUnfreeze() again
@@ -112,7 +112,7 @@ public class FreezeOrUnfreeze implements AdminMainMenuOptions {
      * Displays a list of all frozen and pseudo frozen Users in UserManager and prompts Admin to input
      * which User they wish to unfreeze and unfreezes those Users
      *
-     * @param allUsers UserManager which stores all the Users in the system
+     * @param allUsers  UserManager which stores all the Users in the system
      * @param allAdmins AdminManager which stores the FrozenRequests
      * @return depending on what the Admin inputs it will return different objects:
      * returns null to tell system_options.admin_main_menus.options.FreezeOrUnfreeze() to call Unfreeze() again
@@ -176,7 +176,7 @@ public class FreezeOrUnfreeze implements AdminMainMenuOptions {
      * Displays a list of all unfrozen and pseudo frozen Users in UserManager and prompts Admin to input
      * which User they wish to freeze and freezes those Users
      *
-     * @param allUsers UserManager which stores all the Users in the system
+     * @param allUsers  UserManager which stores all the Users in the system
      * @param allAdmins AdminManager which stores the FrozenRequests
      * @return depending on what the Admin inputs it will return different objects:
      * returns null to tell system_options.admin_main_menus.options.FreezeOrUnfreeze() to call Freeze() again

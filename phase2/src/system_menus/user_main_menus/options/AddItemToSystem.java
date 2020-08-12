@@ -1,22 +1,27 @@
 package system_menus.user_main_menus.options;
 
+import accounts.admins.AdminManager;
+import accounts.users.User;
+import accounts.users.UserManager;
+import accounts.users.UserMessageManager;
+import currency.CurrencyManager;
+import items.Item;
+import items.ItemManager;
+import meetings.MeetingManager;
+import requests.TradeRequestManager;
+import transactions.TransactionManager;
+
 import java.util.Scanner;
 import java.util.logging.Logger;
-import transactions.*;
-import meetings.*;
-import items.*;
-import accounts.users.*;
-import accounts.admins.*;
-import requests.*;
-import currency.*;
 
 public class AddItemToSystem implements UserMainMenuOptions {
     /**
      * Deals with requesting to add a new item to the system's inventory. Prompts user for details of the item
      * and sends a request to the Admin for approval. Adds the item to the User's item history so they can
      * view its current status.
-     *  @param user     the User requesting to add a new item to the system
-     * @param allUsers UserManager which stores all Users
+     *
+     * @param user            the User requesting to add a new item to the system
+     * @param allUsers        UserManager which stores all Users
      * @param currencyManager CurrencyManager which deals with the in-system currency
      * @return null if the current menu is to be reprinted; User user if the user is to be redirected to the main menu;
      * String "exit" if the user is to be logged out.
@@ -39,7 +44,7 @@ public class AddItemToSystem implements UserMainMenuOptions {
         boolean digital = false;
         System.out.println("If this item is digital, please enter '1'. Otherwise enter '2'. Enter 'back' to return to the main menu.");
         String input = sc.nextLine();
-        if (input.equals("back")){
+        if (input.equals("back")) {
             return "back";
         } else if (input.equals(1)) {
             digital = true;
@@ -66,25 +71,24 @@ public class AddItemToSystem implements UserMainMenuOptions {
             } else if (option.equals("3")) {
                 r = true;
                 break;
-            }else if (option.equals("12")) {
+            } else if (option.equals("12")) {
                 t = true;
                 s = true;
                 break;
-            }else if (option.equals("13")) {
+            } else if (option.equals("13")) {
                 r = true;
                 t = true;
                 break;
-            }else if (option.equals("23")) {
+            } else if (option.equals("23")) {
                 s = true;
                 r = true;
                 break;
-            }else if (option.equals("123")) {
+            } else if (option.equals("123")) {
                 s = true;
                 r = true;
-                t= true;
+                t = true;
                 break;
-            }
-            else {
+            } else {
                 System.out.println("That is not a valid option! Please try again.");
             }
         }
@@ -92,7 +96,7 @@ public class AddItemToSystem implements UserMainMenuOptions {
         Double sprice = null;
 
 
-        if (s){ //if just sellable
+        if (s) { //if just sellable
             System.out.println("Please enter the price you would like to sell this item for \n");
             String priceInput = sc.nextLine();
             if (priceInput.equals("back")) {
@@ -107,7 +111,7 @@ public class AddItemToSystem implements UserMainMenuOptions {
         }
 
         Integer days = null;
-        if (r){ //if just sellable
+        if (r) { //if just sellable
             System.out.println("Please enter the price you would like to rent this item for \n");
             String priceInput = sc.nextLine();
             if (priceInput.equals("back")) {
@@ -126,14 +130,12 @@ public class AddItemToSystem implements UserMainMenuOptions {
                 return "back";
             }
             try {
-                days  = Integer.parseInt(input2);
+                days = Integer.parseInt(input2);
             } catch (NumberFormatException e) {
                 System.out.println("Invalid price! Please try again.");
             }
 
         }
-
-
 
 
         System.out.print("Please choose the category of item you would like to add " +

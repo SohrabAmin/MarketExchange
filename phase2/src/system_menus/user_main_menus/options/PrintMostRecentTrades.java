@@ -1,22 +1,27 @@
 package system_menus.user_main_menus.options;
 
+import accounts.admins.AdminManager;
+import accounts.users.User;
+import accounts.users.UserManager;
+import accounts.users.UserMessageManager;
+import currency.CurrencyManager;
+import items.Item;
+import items.ItemManager;
+import meetings.MeetingManager;
+import requests.TradeRequestManager;
+import transactions.TransactionManager;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-import transactions.*;
-import meetings.*;
-import items.*;
-import accounts.users.*;
-import accounts.admins.*;
-import requests.*;
-import currency.*;
 
 public class PrintMostRecentTrades implements UserMainMenuOptions {
 
     /**
      * Prints out the User user's most recent trades.
-     *  @param user     User that is requesting to see their most recent trades
-     * @param allUsers UserManager which stores all Users in the system
+     *
+     * @param user            User that is requesting to see their most recent trades
+     * @param allUsers        UserManager which stores all Users in the system
      * @param currencyManager CurrencyManager which deals with the in-system currency
      * @return User object to return to the main menu
      */

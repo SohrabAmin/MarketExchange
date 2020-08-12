@@ -34,6 +34,7 @@ public class ItemManager implements Serializable {
 
     /**
      * Getter for the symtem inventory
+     *
      * @return all the item in the system as List
      */
     public List<Item> getSystemInventory() {
@@ -42,22 +43,34 @@ public class ItemManager implements Serializable {
 
     /**
      * Getter for all tradable items
+     *
      * @return all tradable items in the system as List
      */
-    public List<Item> getTradableItem(){return this.tradableItem;}
+    public List<Item> getTradableItem() {
+        return this.tradableItem;
+    }
+
     /**
      * Getter for all sellable items
+     *
      * @return all sellable items in the system as List
      */
-    public List<Item> getSellableItem(){return this.sellableItem;}
+    public List<Item> getSellableItem() {
+        return this.sellableItem;
+    }
+
     /**
      * Getter for all rentable items
+     *
      * @return all rentable items in the system as List
      */
-    public List<Item> getRentableItem(){return this.rentableItem;}
+    public List<Item> getRentableItem() {
+        return this.rentableItem;
+    }
 
     /**
      * add item to system inventory, tradable list , rentable list and sellable list
+     *
      * @param item add item to inventory list
      *             if tradable, add to tradable list
      *             if rentable, add to rentable list
@@ -65,17 +78,18 @@ public class ItemManager implements Serializable {
      */
     public void addItem(Item item) {
         systemInventory.add(item);
-        if(item.getTradable()){
+        if (item.getTradable()) {
             this.tradableItem.add(item);
-        }else if(item.getRentable()){
+        } else if (item.getRentable()) {
             this.rentableItem.add(item);
-        }else{
+        } else {
             this.sellableItem.add(item);
         }
     }
 
     /**
      * setter for item's owner
+     *
      * @param item
      * @param user
      */
@@ -85,6 +99,7 @@ public class ItemManager implements Serializable {
 
     /**
      * setter for current holder( who current have this item, e.g. the borrower)
+     *
      * @param item
      * @param user
      */
@@ -94,19 +109,22 @@ public class ItemManager implements Serializable {
 
     /**
      * setter for systemInventory
+     *
      * @param inventory
      */
     public void setSystemInventory(List<Item> inventory) {
         this.systemInventory = inventory;
     }
 
-    public void changeTradable(Item item, boolean tradable){
+    public void changeTradable(Item item, boolean tradable) {
         item.changeTradable(tradable);
     }
-    public void changeSellable(Item item, boolean sellable){
+
+    public void changeSellable(Item item, boolean sellable) {
         item.changeSellable(sellable);
     }
-    public void changeRentable(Item item, boolean rentable){
+
+    public void changeRentable(Item item, boolean rentable) {
         item.changeRentable(rentable);
     }
 

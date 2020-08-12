@@ -19,10 +19,11 @@ public class TradeRequest implements Serializable {
     /**
      * Constructs a TradeRequest instance. This class is instantiated by the User that attempts to initiate the Transaction, and should be stored within the receiving User's
      * pendingRequest. If the receiving User accepts the conditions of the Transaction, they may accept the TradeRequest, and an instance of Transaction is created.
-     * @param date        A Calender representing the date/time the TradeRequest was initiated.
-     * @param virtual   A boolean representing if a meeting will be required or not.
-     * @param message     A string representation of any message the requester User may want to send to the receiver User.
-     * @param temp        A boolean regarding if the User requesting a TradeRequest wants a temporary Transaction or not.
+     *
+     * @param date    A Calender representing the date/time the TradeRequest was initiated.
+     * @param virtual A boolean representing if a meeting will be required or not.
+     * @param message A string representation of any message the requester User may want to send to the receiver User.
+     * @param temp    A boolean regarding if the User requesting a TradeRequest wants a temporary Transaction or not.
      */
     public TradeRequest(String message, boolean temp, Calendar date, boolean virtual) {
         this.message = message;
@@ -71,6 +72,7 @@ public class TradeRequest implements Serializable {
 
     /**
      * Gets the date for which the TradeRequest was initiated.
+     *
      * @return A Calender that represents the date for which the TradeRequest was sent.
      */
     public Calendar getDate() {
@@ -81,6 +83,7 @@ public class TradeRequest implements Serializable {
      * Gets whether the User would like the potential Transaction to be "online" or not. Notice: Only certain Items
      * will be eligible to be involved in a Virtual trade. These Transactions also do not require any meeting, and
      * is always a permanent Transaction.
+     *
      * @return Boolean of whether the potential Transaction will be virtual or not.
      */
     public Boolean getVirtual() {
@@ -89,6 +92,7 @@ public class TradeRequest implements Serializable {
 
     /**
      * Gets a String representation of this TradeRequest's date (which is of type Calender). It is of format yyyy-mm-dd.
+     *
      * @return A String representation of the date.
      */
     public String dateToString() {

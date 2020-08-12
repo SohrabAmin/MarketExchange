@@ -29,6 +29,7 @@ public abstract class Account implements Serializable {
 
     /**
      * setter for account name
+     *
      * @param name the account's name
      */
     public void setName(String name) {
@@ -37,9 +38,10 @@ public abstract class Account implements Serializable {
 
     /**
      * setter for account password
+     *
      * @param password the password of the account
      */
-    public void setPassword(String password){
+    public void setPassword(String password) {
         this.password = password;
     }
 }

@@ -1,10 +1,10 @@
 package system;
 
+import accounts.admins.Admin;
+import accounts.admins.AdminManager;
 import accounts.users.User;
 import accounts.users.UserManager;
 import accounts.users.UserMessageManager;
-import accounts.admins.Admin;
-import accounts.admins.AdminManager;
 import currency.CurrencyManager;
 import items.Item;
 import items.ItemManager;
@@ -63,21 +63,21 @@ public class TradeSystem {
 
 
         //jsut for testing broo
-        allUsers.createUser ("Tina", "123");
+        allUsers.createUser("Tina", "123");
         allUsers.createUser("Mo", "123");
         allUsers.createUser("A", "123");
 
 
         User Tina = new User("Tina", "123");
-        User Mo = new User ("Mo", "123");
-        User A = new User ("A", "123");
+        User Mo = new User("Mo", "123");
+        User A = new User("A", "123");
 
-        Item  shoe = new Item("shoe", allUsers.getUser(Tina) , "Brown from my great grandpa" , "Clothing" , false, false, true, false, 35.0, null, null);
+        Item shoe = new Item("shoe", allUsers.getUser(Tina), "Brown from my great grandpa", "Clothing", false, false, true, false, 35.0, null, null);
         allUsers.addToInventory(allUsers.getUser(Tina), shoe);
         allItems.addItem(shoe);
 
 
-        Item  ebook = new Item("ebook", allUsers.getUser(Tina) , "A book about CSC207" , "Books" , true, false, true, false, 11.0, null, null);
+        Item ebook = new Item("ebook", allUsers.getUser(Tina), "A book about CSC207", "Books", true, false, true, false, 11.0, null, null);
         allUsers.addToInventory(allUsers.getUser(Tina), ebook);
         allItems.addItem(ebook);
 
@@ -86,7 +86,6 @@ public class TradeSystem {
                 5.0, 1.0, 1);
         allUsers.addToInventory(allUsers.getUser(Tina), sock);
         allItems.addItem(sock);
-
 
 
         Item book = new Item("book", allUsers.getUser(Tina), "Harry Potter", "Books", false, true, true, true,
@@ -103,19 +102,6 @@ public class TradeSystem {
                 1000.0, null, null);
         allUsers.addToInventory(allUsers.getUser(A), phone);
         allItems.addItem(phone);
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         //If there is no current User, prompts log in and prompts the correct menu depending on the type of Account

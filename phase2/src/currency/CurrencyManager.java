@@ -22,19 +22,20 @@ public class CurrencyManager {
      * Always instantiated when the main method is initially called. Creates a HashMap that stores all the sales in progress, where the key
      * is the OneWayMonetized TradeRequest, and value is the Double.
      */
-    public CurrencyManager(){
+    public CurrencyManager() {
         this.inProgressSale = new HashMap<>();
     }
 
     /**
      * Adds in-app currency to the User. It requires that the CreditCard is not expired. It is assumed that the User always has enough to upload.
-     * @param user The User that is uploading in-app currency
-     * @param card The associated CreditCard
+     *
+     * @param user   The User that is uploading in-app currency
+     * @param card   The associated CreditCard
      * @param amount The amount the User would like to upload
      * @return a boolean. True: The funds were successfully added. False: The card is expired)
      */
-    public boolean addFunds(User user, CreditCard card, double amount){
-        if(card.checkExpiration()){
+    public boolean addFunds(User user, CreditCard card, double amount) {
+        if (card.checkExpiration()) {
             user.updateCapital(amount);
             return true;
         }
@@ -44,10 +45,11 @@ public class CurrencyManager {
     /**
      * Takes the appropriate amount of in-app currency from user1, and stores it. When the Transaction has been confirmed, the amount will be deposited into
      * user2's account. If the Transaction has been cancelled, the currency will be returned to user1.
-     * @param trade The given OneWayMonetized request.
+     *
+     * @param trade       The given OneWayMonetized request.
      * @param userManager The instance of UserManager, to call getUser()
      */
-    public void holdFunds(OneWayMonetized trade, UserManager userManager){
+    public void holdFunds(OneWayMonetized trade, UserManager userManager) {
         this.inProgressSale.put(trade, trade.getCost());
         User user1 = userManager.getUser(trade.getFirstTrader());
         user1.updateCapital(-trade.getCost());
@@ -55,10 +57,11 @@ public class CurrencyManager {
 
     /**
      * Returns the "held" currency into user1's account.
-     * @param trade The given OneWayMonetized request.
+     *
+     * @param trade       The given OneWayMonetized request.
      * @param userManager The instance of UserManager, to call getUser()
      */
-    public void reverseHold(OneWayMonetized trade, UserManager userManager){
+    public void reverseHold(OneWayMonetized trade, UserManager userManager) {
         User user1 = userManager.getUser(trade.getFirstTrader());
         user1.updateCapital(trade.getCost());
         this.inProgressSale.remove(trade);
@@ -66,10 +69,11 @@ public class CurrencyManager {
 
     /**
      * Deposits the "held" funds into user2's account
-     * @param trade The given OneWayMonetized request.
+     *
+     * @param trade       The given OneWayMonetized request.
      * @param userManager The instance of UserManager, to call getUser()
      */
-    public void completeSale(OneWayMonetized trade, UserManager userManager){
+    public void completeSale(OneWayMonetized trade, UserManager userManager) {
         User user2 = userManager.getUser(trade.getSecondTrader());
         user2.updateCapital(trade.getCost());
         this.inProgressSale.remove(trade);
@@ -78,6 +82,7 @@ public class CurrencyManager {
 
     /**
      * Gets the current date, with setting the day to the 30th (as only month and year are on credit card's)
+     *
      * @param date A string of the date dd-mm-yyyy
      * @return A Calender representation of the current date.
      */
@@ -90,6 +95,7 @@ public class CurrencyManager {
 
     /**
      * Gets the date in SimpleDateFormat
+     *
      * @param date Calender object representing the date
      * @return SimpleDateFormat of the date.
      */
@@ -99,7 +105,7 @@ public class CurrencyManager {
         return dateFormat.format(date.getTime());
     }
 
-    public boolean checkExpiration(Calendar date){
+    public boolean checkExpiration(Calendar date) {
         Calendar today = Calendar.getInstance();
         return date.after(today);
     }

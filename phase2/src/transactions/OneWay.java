@@ -1,16 +1,7 @@
 package transactions;
 
 import accounts.users.User;
-import transactions.Transaction;
-import transactions.*;
-import meetings.*;
-import items.*;
-import accounts.users.*;
-import accounts.admins.*;
-import requests.*;
-import currency.*;
-import system_menus.admin_main_menus.options.*;
-import system_menus.user_main_menus.options.*;
+import items.Item;
 
 import java.io.Serializable;
 
@@ -29,8 +20,8 @@ public class OneWay extends Transaction implements Serializable {
      * Constructor for OneWay. Requires a borrower of type User, an Item for the User to attain, and a boolean temp which specifies if OneWay is temporary.
      *
      * @param user1 The User that intends to borrow an item from another User.
-     * @param item     The Item the borrower intends to attain.
-     * @param temp     If the OneWay is temporary or not.
+     * @param item  The Item the borrower intends to attain.
+     * @param temp  If the OneWay is temporary or not.
      */
     public OneWay(User user1, Item item, boolean temp, boolean virtual) {
         super(temp, virtual);
