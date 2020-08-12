@@ -77,7 +77,6 @@ public class InventoryManager implements UserMainMenuOptions {
             }
 
 
-
             if (((Integer) input2 < 1) || (Integer) input2 > in.size()) {
                 System.out.print("\uD83D\uDE35Input is out of bound. Please try again!\n");
                 return null;
@@ -98,9 +97,7 @@ public class InventoryManager implements UserMainMenuOptions {
 
             System.out.println("\uD83D\uDDD1Item has been removed successfully!");
             return null;
-        }
-
-        else {
+        } else {
             System.out.print("\u274CCommand Invalid. Please try again!\n");
             return null;
 
