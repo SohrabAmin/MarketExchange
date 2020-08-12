@@ -67,7 +67,7 @@ public class ApproveTrade implements UserMainMenuOptions {
                     //its either buy or rent
                     if (t.getTemp()) { //renting over here
                         System.out.print("\uD83E\uDD1D" + (i + 1) + ". " + t.getFirstUser().getName() +
-                                " Wants to rent " + t.getItem().getName() + "\n");
+                                " wants to rent " + t.getItem().getName() + "\n");
                     } else {
                         String virtually = "";
                         if (t.getVirtual()){
@@ -75,15 +75,15 @@ public class ApproveTrade implements UserMainMenuOptions {
                         }
 
                         System.out.print("\uD83E\uDD1D" + (i + 1) + ". " + t.getFirstUser().getName() +
-                                " Wants to buy " + t.getItem().getName() + virtually +  "\n");
+                                " wants to buy " + t.getItem().getName() + virtually +  "\n");
                     }
                 } else { //then they are one way trades
                     if (t.getTemp()) { //trading temporary over here
                         System.out.print("\uD83E\uDD1D" + (i + 1) + ". " + t.getFirstUser().getName() +
-                                " Wants to temporarily borrow " + t.getItem().getName() + "\n");
+                                " wants to temporarily borrow " + t.getItem().getName() + "\n");
                     } else {
                         System.out.print("\uD83E\uDD1D" + (i + 1) + ". " + t.getFirstUser().getName() +
-                                " Wants to permanently have " + t.getItem().getName() + "\n");
+                                " wants to permanently have " + t.getItem().getName() + "\n");
                     }
 
                 }
@@ -91,7 +91,7 @@ public class ApproveTrade implements UserMainMenuOptions {
             if (Trades.get(i) instanceof TypeTwoRequest) {
                 TypeTwoRequest t = (TypeTwoRequest) Trades.get(i);
                 //monitized or not
-                System.out.print(t.getFirstUser().getName() + " wants item: " + t.getSecondItem().getName() + " in return for " + t.getFirstItem().getName() +
+                System.out.print("\uD83E\uDD1D" + (i + 1) + ". " + t.getFirstUser().getName() + " wants item: " + t.getSecondItem().getName() + " in return for " + t.getFirstItem().getName() +
                         "\n");
             }
             if (Trades.get(i) instanceof TypeThreeRequest) {
@@ -116,7 +116,7 @@ public class ApproveTrade implements UserMainMenuOptions {
                         foryouritem = t.getThirdItem();
 
                     }
-                    System.out.print("You are asked to join 3 way trade with " + one + " and " + two +
+                    System.out.print("\uD83E\uDD1D" + (i + 1) + ". " +"You are asked to join 3 way trade with " + one + " and " + two +
                             " and you will get item " +
                             youget.getName() + " for your item " + foryouritem.getName() + "\n");
 
@@ -141,7 +141,7 @@ public class ApproveTrade implements UserMainMenuOptions {
                         foryouritem = t.getThirdItem();
 
                     }
-                    System.out.print(t.getSecondUser().getName() + " decided to extend the 3 way trade! You will now get " + youget.getName() + " in exchange " +
+                    System.out.print("\uD83E\uDD1D" + (i + 1) + ". " + t.getSecondUser().getName() + " decided to extend the 3 way trade! You will now get " + youget.getName() + " in exchange " +
                             "for " + foryouritem.getName() + "\n");
 
                 }

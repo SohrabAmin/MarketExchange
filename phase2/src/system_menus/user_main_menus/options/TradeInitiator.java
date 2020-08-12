@@ -49,7 +49,6 @@ public class TradeInitiator implements UserMainMenuOptions {
             return user;
         }
 
-        System.out.println("Here are the available items!:");
         Browse browsing = new Browse();
         browsing.DisplayBrowse(user, allItems);
 

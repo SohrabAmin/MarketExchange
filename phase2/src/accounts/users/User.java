@@ -45,7 +45,7 @@ public class User extends Account {
     private ArrayList<String> adminActionHistory;
     private ArrayList<String> VIPStatusChangeNotifications;
     private ArrayList<String> AdminMessages;
-    private double capital = 0; //US dollars
+    private double capital = 250; //US dollars
     private List<CreditCard> creditCards;
     private CreditCard defaultCreditCard;
 

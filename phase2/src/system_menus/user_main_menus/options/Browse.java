@@ -148,7 +148,7 @@ public class Browse implements UserMainMenuOptions {
             if (allItems2.get(i).getSellable()) sell = " [SELLABLE] price: " + allItems2.get(i).getSellPrice() + " ";
             if (allItems2.get(i).getRentable()) rent = " [RENTABLE] price: " + allItems2.get(i).getRentPrice() + " per " + allItems2.get(i).getRentDuration() + " days ";
             if (allItems2.get(i).getTradable()) trade = " [TRADABLE] ";
-            if (allItems2.get(i).getVirtual()) virtual = " [VIRTUAL] ";
+            if (allItems2.get(i).getVirtual()) virtual = "[VIRTUAL] ";
 
 
 
