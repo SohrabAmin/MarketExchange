@@ -1,0 +1,15 @@
+Design Patterns
+• Strategy (system_menu package)
+    ◦ Strategy design pattern was used to organize our Admin and User main menus—each menu option is considered a different “algorithm” or “strategy” (e.g. Browse.java, WishlistManager.java, etc.)
+    ◦ To implement this design, we created an interface for each user menu (e.g. AdminMainMenuOptions is the interface implemented by the strategies/algorithms used by AdminMainMenu)—all these interfaces contain the same method (execute()) and depending on which menu option the user chooses, the strategy will be instantiated and executed
+    ◦ We chose to implement this design because originally we had all these strategies/algorithms within the same class, but by splitting it up, we were able to better encapsulate the code and it would follow the Open/Closed Principle (the refactor made it very easy to add and remove new menu options)
+• Iterator (UserIterator.java)
+    ◦ Iterator design pattern is used in UserIterator to iterate through prompts needed when a User or Admin creates a new account—it asks for a username, password and location. When User or Admin logs in, it only asks for username and password
+    ◦ To implement this design, we created a class called UserIterator which contains the prompts and has hasNext(), next() and remove() methods; the class is instantiated and called in LogInSystem.java when a user/admin is trying to log in or sign up
+    ◦ We chose to implement this design because we think it allows for LogInSystem.java to have a single responsibility; now LogInSystem.java only needs to deal with authenticating the username and password or creating a new User account and returning the correct User/Admin object, while UserIterator.java deals with User/Admin inputs
+    ◦ The class also conforms to the Open/Closed principle—originally it only stored prompts for username and password, but for Phase 2, it was very easy to extend it to factor in the addition of a location if the user is signing up for a new account
+• Observer (notifications package)
+    ◦ The Observer design pattern is used by the classes in the notifications package (e.g. NotifyUserOfAdminUndo.java, NotifyAdminOfSuperAdminStatusChange.java, etc.) and is used to notify users/admins of actions done to their account
+    ◦ To implement this design, we created Notify classes that implement a User/Admin notification interface, which says that the Notify classes need to contain the method notify(). Then whenever we need to notify a user/admin in another class, we can simply call the notify() method
+    ◦ We chose to implement this design because it allows for better encapsulation—the notifying of the actual user/admin is done in a different class so it adheres to the Single Responsibility Principle, and the way in which the user/admin is notified can be changed without affecting other parts of the code
+    ◦ In addition, the design helps us follow the Open/Closed Principle: we can introduce new types of notifications easily by making the new class implement the interfaces we have created, and we can also remove types of notifications that we may no longer need

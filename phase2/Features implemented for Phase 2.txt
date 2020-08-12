@@ -1,0 +1,46 @@
+• Admin has the ability of undoing an item being added to a user’s wishlist. They are also capable of undoing trade requests (cancelling in progress trade requests) and transactions. In addition, if a transaction is cancelled, the admin can undo the cancellation and put the status of the transaction back to pending.
+• Allow users to enter their home city when creating an account, so that the system will only show them other users in the same city.
+• Monetize the system. In other words, give users the option to sell or rent items (through in-app currency, uploaded via credit card). Items can now be rented/sold, in addition to being traded (sold being permanent, rent being temporary). User’s may add one or more credit cards to the system, but only the “default” one will be charged (provided the card is not expired; otherwise payment will be declined).
+• Have the automated trade suggestion always return the most reasonable trade, even if it's not an exact match. (Our algorithm: If person A requests to trade with person B, the system looks at person B’s wishlist. If the item exists in person B’s wishlist, that item gets recommended. If not, we look through person B’s wishlist and find what category of items they are most interested in. If person A has an item in person B’s most popular category, that item will get selected. If not, the oldest item in person A’s inventory gets selected.)
+• New statuses for accounts:
+    ◦ Users:
+        ▪ VIP
+            • Increases a User’s eligibility (items lent minus items borrowed) by ten “lent” points, allowing them to conduct more trades
+        ▪ On Vacation
+            • A user on vacation cannot participate in the trade system, and will not have their items listed in the system, until they return from vacation. They can, however, confirm that a trade happened (in case they had trades in progress when they went on vacation).
+            • The “on vacation” user main menu is therefore different from the normal user main menu.
+        ▪ Pseudo-frozen
+            • Similar to “frozen” in that a pseudo-frozen User is prevented from conducting transactions, except:
+                ◦ pseudo-freezing happens automatically when a User’s trade eligibility (items lent minus items borrowed) falls below the required threshold
+                ◦ when a User is pseudo-frozen, an Admin must decide either to freeze the User or let the User slide.
+    ◦ Admins:
+        ▪ Super Admin
+            • Only Super Admins can add new Admins to the system and choose to promote or demote Admins
+• Admins can promote and demote both users and admins.
+    ◦ User promotion: User becomes VIP
+    ◦ Admin promotion: Admin becomes Super Admin
+• Create a points system that allows users who trade most frequently, to become VIP members, or trade their points for in-app currency.
+• Three-way temporary and permanent trade was implemented. How it works is as follows:
+
+Tina owns: Sock and Book
+Moe owns: Pen
+Aidan owns: gloves
+
+If Mo requests a two-way trade for Tina’s Sock and gives Pen in return, Tina can either accept/reject this trade or she can extend it to three-way, in which she will keep her Sock but will offer a different item. Then, the system will find an item closest to what Moe wanted (the Sock) and brings the owner of that person to this trade. So in our case, Tina decides to keep her Sock but gives away Book, and the system finds Gloves to be the closest match; the system will bring Aidan into the trade. Then the three users will provide their availability and the system chooses the earliest day all three people are available to do the trade.
+
+• Virtual Trade where items can get exchanged through email (no meeting is required)—this can only be done through a one way permanent trade. In addition, only items that are “virtual” can be traded/sold through a virtual trade
+• We also include a demo account in which the person can choose each menu option and see an explanation of what they do. This is in extension to the mandatory feature. (Create a new type of account that allows a user to look at the various parts of the program without being able to trade or communicate with the admin user. This would be useful, if you ever wanted to set up the program as a demo for people to explore without creating an account and joining the trading community.) 
+• Types of User main menus (other than the normal one) include
+    ◦ Frozen User
+    ◦ Vacation User
+    ◦ Demo User
+• In a trade request from User A to User B, User A can include a message to User B for the trade
+• Ability for users to change their usernames and passwords as well as their location
+• Added “notifications,” where Admins and Users can receive notifications. This feature is explained in more depth under “Observer” in our list of our Design Patterns below.
+• User has the ability to message admin—this feature is mostly so they could ask admins to undo certain actions or ask them questions
+    ◦ Admins have the ability to view and reply to these user messages as well
+• Admin has the ability to edit all thresholds in the system:
+    ◦ Trade eligibility threshold (items lent minus items borrowed)
+    ◦ Meeting edits threshold
+    ◦ Weekly transaction limit
+    ◦ Incomplete transaction limit
