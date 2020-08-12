@@ -57,23 +57,6 @@ public class Item implements Serializable {
 
 
     /**
-     * changes the price of the item
-     *
-     * @param option is which boolean being changed
-     * @param price  is the status of the boolean being changed to
-     */
-
-
-    public void changePrice(String option, int price) {
-
-
-        return;
-
-
-    }
-
-
-    /**
      * getter for item name
      *
      * @return item name
