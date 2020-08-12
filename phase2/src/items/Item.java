@@ -55,6 +55,11 @@ public class Item implements Serializable {
         this.rentDuration = rentDuration;
     }
 
+
+
+
+
+
     /**
      * getter for item name
      *

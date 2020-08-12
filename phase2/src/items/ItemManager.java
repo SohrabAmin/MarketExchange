@@ -32,6 +32,14 @@ public class ItemManager implements Serializable {
         this.rentableItem = new ArrayList<>();
     }
 
+
+    public void change(String option, boolean status) {
+        return;
+
+
+    }
+
+
     /**
      * Getter for the symtem inventory
      *
@@ -116,16 +124,26 @@ public class ItemManager implements Serializable {
         this.systemInventory = inventory;
     }
 
-    public void changeTradable(Item item, boolean tradable) {
-        item.changeTradable(tradable);
-    }
+    /**
+     * removes item from the system
+     *
+     * @param thing which is the item that is being deleted from the system
+     */
 
-    public void changeSellable(Item item, boolean sellable) {
-        item.changeSellable(sellable);
-    }
+    public void RemoveFromSystem(Item thing) {
+        for (int i = 0; i < systemInventory.size(); i++) {
+            if (systemInventory.get(i).getName().equals(thing.getName()) &&
+                    systemInventory.get(i).getDescription().equals(thing.getDescription())) {
+                systemInventory.remove(thing);
+                if (thing.getSellable()) sellableItem.remove(thing);
+                if (thing.getRentable()) rentableItem.remove(thing);
+                if (thing.getTradable()) tradableItem.remove(thing);
 
-    public void changeRentable(Item item, boolean rentable) {
-        item.changeRentable(rentable);
+            }
+
+        }
+
+        return;
     }
 
 }
