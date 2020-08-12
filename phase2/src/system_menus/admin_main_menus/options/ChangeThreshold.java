@@ -40,14 +40,14 @@ public class ChangeThreshold implements AdminMainMenuOptions {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         //prints the current thresholds of the system
         System.out.println("\nHere are the current thresholds:");
-        System.out.println("Lent - borrow threshold: " + allAdmins.getLentMinusBorrowedThreshold());
+        System.out.println("Lent - borrowed threshold: " + allAdmins.getLentMinusBorrowedThreshold());
         System.out.println("Weekly transaction limit: " + allAdmins.getWeeklyTransactionLimit());
         System.out.println("Incomplete transaction limit: " + allAdmins.getIncompleteTransactionLimit());
         System.out.println("Meeting edits threshold: " + allAdmins.getMeetingEditThreshold());
         //prompts user to enter what threshold they wish to edit
         System.out.println("\nWhich threshold would you like to edit? Please enter the number beside the option.");
-        System.out.println("1.Lent - borrow threshold\n2.Weekly Transaction Limit\n3.Incomplete Transaction Limit" +
-                "\n4.Meeting Edits Threshold\n");
+        System.out.println("1. Lent - borrowed threshold\n2. Weekly Transaction Limit\n" +
+                "3. Incomplete Transaction Limit\n4. Meeting Edits Threshold\n");
         System.out.println("Enter 'back' to return to the main menu.");
         Object thresholdOption = null;
         //checks to see if they entered a valid input (one of the options)
