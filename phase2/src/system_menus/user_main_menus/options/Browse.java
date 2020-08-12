@@ -120,8 +120,10 @@ public class Browse implements UserMainMenuOptions {
             if (input.equals("1")) {
                 List<Item> temp = new ArrayList<>();
                 for (int i = 0; i < allItems.getSystemInventory().size(); i++) {
-                    if (allItems.getSystemInventory().get(i).getOwner().getLocation().equals(user.getLocation())) {
-                        temp.add(allItems.getSystemInventory().get(i));
+                    if (allItems.getSystemInventory().get(i).getOwner().getLocation() != null) {
+                        if (allItems.getSystemInventory().get(i).getOwner().getLocation().equals(user.getLocation())) {
+                            temp.add(allItems.getSystemInventory().get(i));
+                        }
                     }
                 }
                 if (temp.size() == 0) {
