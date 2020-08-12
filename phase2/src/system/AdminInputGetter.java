@@ -119,7 +119,7 @@ public class AdminInputGetter {
         System.out.println("Please select from the following by entering the number beside the option:" +
                 " \n1. Add new admin\n2. Change system threshold\n3. View items that need to be approved" + supcreater(pendingItem) + "\n" +
                 "4. Freeze or unfreeze users" + supcreater(frozenaccout) + "\n5. Promote a user or demote a VIP user\n" +
-                "6. Promote an admin or demote a super admin\n7. View Messages from Users\n8. View and edit System Log\n9. Log out\n" +
+                "6. Promote an admin or demote a super admin\n7. View Messages from Users\n8. View and edit Undoable Actions Log\n9. Log out\n" +
                 "Enter 'exit' to exit at any time.");
         ChosenOption option = new ChosenOption();
         try {
